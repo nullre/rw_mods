@@ -69,7 +69,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="About\preview.png" />
-    <Content Include="About\PublishedFileId.txt" />
     <Content Include="Assemblies\NR_AutoMachineTool.dll" />
     <Content Include="Defs\DesignationCategoryDef\NR_AutoMachineTool.xml" />
     <Content Include="Defs\ResearchProjectDefs\NR_AutoMachineTool.xml" />
