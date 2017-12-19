@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <!-- AutoMachineTool -->
+  <NR_AutoMachineTool.SelectOutputDirectionLabel>出力位置設定</NR_AutoMachineTool.SelectOutputDirectionLabel>
+  <NR_AutoMachineTool.SelectOutputDirectionDesc>完成品の出力先を指定します。出力先が備蓄ゾーンの一部で完成品が格納可能な場合には、その中に出力します。
+出力先が備蓄ゾーンで完成品が配置不可でも、出力先に指定したセルには配置されます。</NR_AutoMachineTool.SelectOutputDirectionDesc>
+  
+  <NR_AutoMachineTool.SupplyPowerTab>電力</NR_AutoMachineTool.SupplyPowerTab>
+  <NR_AutoMachineTool.SupplyPowerText>供給する電力を設定します。電力の供給量が大きければ、作成にかかる時間が短くなります。</NR_AutoMachineTool.SupplyPowerText>
+
+  <NR_AutoMachineTool.SupplyPowerValueLabel>供給電力量</NR_AutoMachineTool.SupplyPowerValueLabel>
+  <NR_AutoMachineTool.ForbidOutputItemLabel>出力アイテムを禁止する</NR_AutoMachineTool.ForbidOutputItemLabel>
+  <NR_AutoMachineTool.ForbidOutputItemDesc>完成品として出力されるアイテムを禁止し、入植者が関われないようにします。</NR_AutoMachineTool.ForbidOutputItemDesc>
+
+  <NR_AutoMachineTool.StatWorking>作成中. [{0} / {1} ({2} %)]</NR_AutoMachineTool.StatWorking>
+  <NR_AutoMachineTool.StatReady>準備中</NR_AutoMachineTool.StatReady>
+  <NR_AutoMachineTool.StatPlacing>配置中. [配置待ち {0}]</NR_AutoMachineTool.StatPlacing>
+  <NR_AutoMachineTool.SkillLevel>スキルレベル : {0}</NR_AutoMachineTool.SkillLevel>
+
+  <NR_AutoMachineTool.OutputDirection>出力先. [{0}]</NR_AutoMachineTool.OutputDirection>
+  <NR_AutoMachineTool.OutputDirectionN>北</NR_AutoMachineTool.OutputDirectionN>
+  <NR_AutoMachineTool.OutputDirectionNE>北東</NR_AutoMachineTool.OutputDirectionNE>
+  <NR_AutoMachineTool.OutputDirectionE>東</NR_AutoMachineTool.OutputDirectionE>
+  <NR_AutoMachineTool.OutputDirectionSE>南東</NR_AutoMachineTool.OutputDirectionSE>
+  <NR_AutoMachineTool.OutputDirectionS>南</NR_AutoMachineTool.OutputDirectionS>
+  <NR_AutoMachineTool.OutputDirectionSW>南西</NR_AutoMachineTool.OutputDirectionSW>
+  <NR_AutoMachineTool.OutputDirectionW>西</NR_AutoMachineTool.OutputDirectionW>
+  <NR_AutoMachineTool.OutputDirectionNW>北西</NR_AutoMachineTool.OutputDirectionNW>
+
+  <NR_AutoMachineTool.SettingName>自動工作機械設定</NR_AutoMachineTool.SettingName>
+  <NR_AutoMachineTool.SettingTier>Tier [{0}]</NR_AutoMachineTool.SettingTier>
+  <NR_AutoMachineTool.SettingSkillLevel>スキルレベル({0})</NR_AutoMachineTool.SettingSkillLevel>
+  <NR_AutoMachineTool.SettingMaxSupplyPower>設定可能最大電力供給量({0})</NR_AutoMachineTool.SettingMaxSupplyPower>
+  <NR_AutoMachineTool.SettingMinSupplyPower>設定可能最小電力供給量({0})</NR_AutoMachineTool.SettingMinSupplyPower>
+  <NR_AutoMachineTool.SettingSpeedFactor>速度係数({0})</NR_AutoMachineTool.SettingSpeedFactor>
+  <NR_AutoMachineTool.SettingReset>デフォルトに戻す</NR_AutoMachineTool.SettingReset>
+  
+  <NR_AutoMachineTool.SettingCarrySpeedFactor>ベルトコンベア速度係数({0})</NR_AutoMachineTool.SettingCarrySpeedFactor>
+  <NR_AutoMachineTool.SettingPullSpeedFactor>引き出し機速度係数({0})</NR_AutoMachineTool.SettingPullSpeedFactor>
+
+  <NR_AutoMachineTool.PlaceNotAllowed>自動工作機械はワークテーブルに面して、作業用の位置に設置しなければなりません。</NR_AutoMachineTool.PlaceNotAllowed>
+
+  <!-- BeltConveyor -->
+  <NR_AutoMachineTool_Conveyor.OutputItemFilterTab>フィルタ</NR_AutoMachineTool_Conveyor.OutputItemFilterTab>
+  <NR_AutoMachineTool_Conveyor.OutputItemFilterText>出力する方向のアイテムのフィルタを設定します。</NR_AutoMachineTool_Conveyor.OutputItemFilterText>
+  <NR_AutoMachineTool_Conveyor.OutputItemFilterNotOutputDestination> (未接続)</NR_AutoMachineTool_Conveyor.OutputItemFilterNotOutputDestination>
+  <NR_AutoMachineTool_Conveyor.MustInWall>壁の中に設置しなければなりません。</NR_AutoMachineTool_Conveyor.MustInWall>
+  
+  <!-- ItemPuller -->
+  <NR_AutoMachineTool_Puller.OutputItemFilterTab>フィルタ</NR_AutoMachineTool_Puller.OutputItemFilterTab>
+  <NR_AutoMachineTool_Puller.OutputItemFilterText>引き出すアイテムのフィルタ設定をします。</NR_AutoMachineTool_Puller.OutputItemFilterText>
+
+  <NR_AutoMachineTool_Puller.SwitchActiveLabel>稼働状態切替</NR_AutoMachineTool_Puller.SwitchActiveLabel>
+  <NR_AutoMachineTool_Puller.SwitchActiveDesc>稼働状態を切り替えます。</NR_AutoMachineTool_Puller.SwitchActiveDesc>
+
+</LanguageData>

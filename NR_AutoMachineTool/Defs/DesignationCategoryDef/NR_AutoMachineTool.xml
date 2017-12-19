@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <DesignationCategoryDef>
+    <defName>NR_AutoMachineTool_DesignationCategory</defName>
+    <label>Auto machine</label>
+    <description>Auto machine</description>
+    <order>100</order>
+  </DesignationCategoryDef>
+</Defs>

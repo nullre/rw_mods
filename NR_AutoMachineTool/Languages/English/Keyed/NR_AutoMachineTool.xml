@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <!-- AutoMachineTool -->
+  <NR_AutoMachineTool.SelectOutputDirectionLabel>Output setting</NR_AutoMachineTool.SelectOutputDirectionLabel>
+  <NR_AutoMachineTool.SelectOutputDirectionDesc>Specify the output destination of the finished product. If the output destination is part of the stockpiling zone and the finished product can be stored, it is output in it.
+Even if the output destination is in the stockpiling zone, the finished product can not be placed, but it is placed in the cell specified as the output destination.</NR_AutoMachineTool.SelectOutputDirectionDesc>
+
+  <NR_AutoMachineTool.SupplyPowerTab>Power</NR_AutoMachineTool.SupplyPowerTab>
+  <NR_AutoMachineTool.SupplyPowerText>Set the power to be supplied. If the power supply amount is large, it takes less time to create.</NR_AutoMachineTool.SupplyPowerText>
+  
+  <NR_AutoMachineTool.SupplyPowerValueLabel>Supply power</NR_AutoMachineTool.SupplyPowerValueLabel>
+  <NR_AutoMachineTool.ForbidOutputItemLabel>Forbid output items</NR_AutoMachineTool.ForbidOutputItemLabel>
+  <NR_AutoMachineTool.ForbidOutputItemDesc>Machine tools forbid items that are output as finished goods, so that colonists are not involved.</NR_AutoMachineTool.ForbidOutputItemDesc>
+
+  <NR_AutoMachineTool.StatWorking>crafting. [{0} / {1} ({2} %)]</NR_AutoMachineTool.StatWorking>
+  <NR_AutoMachineTool.StatReady>ready.</NR_AutoMachineTool.StatReady>
+  <NR_AutoMachineTool.StatPlacing>placing. [pending placement {0}]</NR_AutoMachineTool.StatPlacing>
+  <NR_AutoMachineTool.SkillLevel>skill level : {0}</NR_AutoMachineTool.SkillLevel>
+
+  <NR_AutoMachineTool.OutputDirection>Output destination. [{0}]</NR_AutoMachineTool.OutputDirection>
+  <NR_AutoMachineTool.OutputDirectionN>North</NR_AutoMachineTool.OutputDirectionN>
+  <NR_AutoMachineTool.OutputDirectionNE>Northeast</NR_AutoMachineTool.OutputDirectionNE>
+  <NR_AutoMachineTool.OutputDirectionE>East</NR_AutoMachineTool.OutputDirectionE>
+  <NR_AutoMachineTool.OutputDirectionSE>Southeast</NR_AutoMachineTool.OutputDirectionSE>
+  <NR_AutoMachineTool.OutputDirectionS>South</NR_AutoMachineTool.OutputDirectionS>
+  <NR_AutoMachineTool.OutputDirectionSW>Southwest</NR_AutoMachineTool.OutputDirectionSW>
+  <NR_AutoMachineTool.OutputDirectionW>West</NR_AutoMachineTool.OutputDirectionW>
+  <NR_AutoMachineTool.OutputDirectionNW>Northwest</NR_AutoMachineTool.OutputDirectionNW>
+
+  <NR_AutoMachineTool.SettingName>AutoMachineTool setting</NR_AutoMachineTool.SettingName>
+  <NR_AutoMachineTool.SettingTier>Tier [{0}]</NR_AutoMachineTool.SettingTier>
+  <NR_AutoMachineTool.SettingSkillLevel>Skill level({0})</NR_AutoMachineTool.SettingSkillLevel>
+  <NR_AutoMachineTool.SettingMaxSupplyPower>Settable max supply power({0})</NR_AutoMachineTool.SettingMaxSupplyPower>
+  <NR_AutoMachineTool.SettingMinSupplyPower>Settable min supply power({0})</NR_AutoMachineTool.SettingMinSupplyPower>
+  <NR_AutoMachineTool.SettingSpeedFactor>Speed factor({0})</NR_AutoMachineTool.SettingSpeedFactor>
+  <NR_AutoMachineTool.SettingReset>Restore default</NR_AutoMachineTool.SettingReset>
+
+  <NR_AutoMachineTool.SettingCarrySpeedFactor>BeltConveyor speed factor({0})</NR_AutoMachineTool.SettingCarrySpeedFactor>
+  <NR_AutoMachineTool.SettingPullSpeedFactor>Puller speed factor({0})</NR_AutoMachineTool.SettingPullSpeedFactor>
+
+  <NR_AutoMachineTool.PlaceNotAllowed>AutoMachineTool must face work table and be placed in working position.</NR_AutoMachineTool.PlaceNotAllowed>
+
+  <!-- BeltConveyor -->
+  <NR_AutoMachineTool_Conveyor.OutputItemFilterTab>Filter</NR_AutoMachineTool_Conveyor.OutputItemFilterTab>
+  <NR_AutoMachineTool_Conveyor.OutputItemFilterText>Set the filter for items in the output direction. direction</NR_AutoMachineTool_Conveyor.OutputItemFilterText>
+  <NR_AutoMachineTool_Conveyor.OutputItemFilterNotOutputDestination> (Disconnected)</NR_AutoMachineTool_Conveyor.OutputItemFilterNotOutputDestination>
+  <NR_AutoMachineTool_Conveyor.MustInWall>It must be installed in the wall.</NR_AutoMachineTool_Conveyor.MustInWall>
+
+  <!-- ItemPuller -->
+  <NR_AutoMachineTool_Puller.OutputItemFilterTab>Filter</NR_AutoMachineTool_Puller.OutputItemFilterTab>
+  <NR_AutoMachineTool_Puller.OutputItemFilterText>Set the filter for the item to be pulled out.</NR_AutoMachineTool_Puller.OutputItemFilterText>
+
+  <NR_AutoMachineTool_Puller.SwitchActiveLabel>Switch operating status</NR_AutoMachineTool_Puller.SwitchActiveLabel>
+  <NR_AutoMachineTool_Puller.SwitchActiveDesc>Switch the operating status.</NR_AutoMachineTool_Puller.SwitchActiveDesc>
+
+</LanguageData>

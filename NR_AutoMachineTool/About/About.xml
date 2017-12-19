@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>NR_AutoMachineTool</name>
+  <author>nullre</author>
+  <targetVersion>0.18.0</targetVersion>
+  <description>
+自動化するための自動工作機とベルトコンベアを追加します。
+
+使い方
+https://github.com/nullre/rw_mods/blob/master/NR_AutoMachineTool/
+開発中のため、仕様が頻繁に変わる可能性があります。
+あと、バギーかもしれません。
+
+- S.A.L.: Auto-crafters 2.0 を参考に作られています。( http://steamcommunity.com/sharedfiles/filedetails/?id=932193652 )
+- S.A.L.: Extra Crafters を参考に作られています。( http://steamcommunity.com/sharedfiles/filedetails/?id=940984361 )
+- Industrial Rollers を参考に作られています。( http://steamcommunity.com/sharedfiles/filedetails/?id=784327493 )
+これらのMODの製作者様に感謝します。
+
+注意
+当MODの再配布を禁じます。
+
+I'm Japanese. I can't understand English, sorry...
+
+***** machine translation *****
+
+Add automatic machine tool and belt conveyor for automation
+
+Usage
+https://github.com/nullre/rw_mods/blob/master/NR_AutoMachineTool/
+Because it is under development, specifications may change frequently.
+Also, it may be a buggy.
+
+- It is made with reference to S.A.L.: Auto-crafters 2.0.( http://steamcommunity.com/sharedfiles/filedetails/?id=932193652 )
+- It is made with reference to S.A.L.: Extra Crafters.( http://steamcommunity.com/sharedfiles/filedetails/?id=940984361 )
+- It is made with reference to Industrial Rollers.( http://steamcommunity.com/sharedfiles/filedetails/?id=940984361 )
+Thanks to the producers of these mods.
+
+Caution
+Redistribution of this MOD data is prohibited.
+  </description>
+</ModMetaData>

@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef Name="Building_NR_AutoMachineTool_Puller_Base" Parent="BuildingBase" Abstract="true">
+    <defName>Building_NR_AutoMachineTool_Puller_Base</defName>
+    <category>Building</category>
+    <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
+    <drawerType>RealtimeOnly</drawerType>
+    
+    <thingClass>NR_AutoMachineTool.Building_ItemPuller</thingClass>
+    <tickerType>Normal</tickerType>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>1000</WorkToBuild>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <fillPercent>0.15</fillPercent>
+
+    <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
+    <pathCost>0</pathCost>
+    <rotatable>true</rotatable>
+
+    <repairEffect>Repair</repairEffect>
+    <constructEffect>ConstructMetal</constructEffect>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <filthLeaving>BuildingRubble</filthLeaving>
+    <size>(1,1)</size>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <passability>Standable</passability>
+    <selectable>True</selectable>
+
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/Puller</texPath>
+      <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Steel>100</Steel>
+      <Component>2</Component>
+    </costList>
+    
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_BeltConveyor</li>
+    </researchPrerequisites>
+    
+    <modExtensions>
+    </modExtensions>
+    
+    <inspectorTabs>
+      <li>NR_AutoMachineTool.ITab_PullerFilter</li>
+    </inspectorTabs>
+
+  </ThingDef>
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_Puller_Base">
+    <defName>Building_NR_AutoMachineTool_Puller</defName>
+    <label>Item Puller</label>
+    <passability>Impassable</passability>
+    <description>
+Place it next to the pulling zone. Pull out from the opposite side of the installed orientation and output it in the installed orientation.
+Since the drawing machine is in a non-operating state in the post-installation state, it selects the drawing machine and put it in the operating state from the button.
+    </description>
+    <altitudeLayer>Building</altitudeLayer>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>false</startElectricalFires>
+        <basePowerConsumption>1000</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <placeWorkers>
+      <li>NR_AutoMachineTool.PlaceWorker_OutputHighlight</li>
+      <li>NR_AutoMachineTool.PlaceWorker_InputHighlight</li>
+    </placeWorkers>
+  </ThingDef>
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_Puller_Base">
+    <defName>Building_NR_AutoMachineTool_Puller_Wall</defName>
+    <label>Wall embedding Item Puller</label>
+    <description>
+Place it next to the pulling zone. Pull out from the opposite side of the installed orientation and output it in the installed orientation.(In the wall)
+Since the drawing machine is in a non-operating state in the post-installation state, it selects the drawing machine and put it in the operating state from the button.
+    </description>
+    <altitudeLayer>BuildingOnTop</altitudeLayer>
+    <building>
+      <isEdifice>false</isEdifice>
+    </building>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>false</startElectricalFires>
+        <basePowerConsumption>1000</basePowerConsumption>
+        <transmitsPower>false</transmitsPower>
+      </li>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <clearBuildingArea>false</clearBuildingArea>
+    <graphicData>
+      <drawSize>(0.8,0.8)</drawSize>
+    </graphicData>
+    <placeWorkers>
+      <li>NR_AutoMachineTool.PlaceWorker_WallEmbedded</li>
+      <li>NR_AutoMachineTool.PlaceWorker_OutputHighlight</li>
+      <li>NR_AutoMachineTool.PlaceWorker_InputHighlight</li>
+    </placeWorkers>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- base -->
+  <ThingDef Name="Building_NR_AutoMachineTool_Base" Parent="BuildingBase" Abstract="True">
+    <defName>Building_NR_AutoMachineTool_Base</defName>
+    <thingClass>NR_AutoMachineTool.Building_AutoMachineTool</thingClass>
+    <description>
+Place the AutoMachineTool facing the work table.
+Set the output destination of the finished product.
+The AutoMachineTool executes a requested craft that can be created with the material in the surrounding eight squares from the work table creation request.
+    </description>
+    <altitudeLayer>Building</altitudeLayer>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <fillPercent>1</fillPercent>
+    
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    
+    <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
+    <pathCost>0</pathCost>
+    <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
+    <rotatable>true</rotatable>
+
+    <placeWorkers>
+      <li>NR_AutoMachineTool.PlaceWorker_AutoMachineTool</li>
+    </placeWorkers>
+
+    <category>Building</category>
+    <tickerType>Normal</tickerType>
+
+    <repairEffect>Repair</repairEffect>
+    <constructEffect>ConstructMetal</constructEffect>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <filthLeaving>BuildingRubble</filthLeaving>
+    <size>(1,1)</size>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <passability>Standable</passability>
+    <selectable>True</selectable>
+
+    <inspectorTabs>
+      <li>NR_AutoMachineTool.ITab_PowerSupply</li>
+    </inspectorTabs>
+  </ThingDef>
+
+
+  <!-- tier 1-->
+  <ThingDef ParentName="Building_NR_AutoMachineTool_Base">
+    <defName>Building_NR_AutoMachineTool_TierOne</defName>
+    <label>AutoMachineTool Tier1</label>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AutoMachineTool1</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Steel>200</Steel>
+      <Plasteel>100</Plasteel>
+      <Component>2</Component>
+    </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_Tier1</li>
+    </researchPrerequisites>
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <tier>1</tier>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- tier 2-->
+  <ThingDef ParentName="Building_NR_AutoMachineTool_Base">
+    <defName>Building_NR_AutoMachineTool_TierTwo</defName>
+    <label>AutoMachineTool Tier2</label>
+    <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AutoMachineTool2</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Steel>800</Steel>
+      <Plasteel>500</Plasteel>
+      <Silver>2000</Silver>
+      <Component>5</Component>
+    </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_Tier2</li>
+    </researchPrerequisites>
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <tier>2</tier>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- tier 3-->
+  <ThingDef ParentName="Building_NR_AutoMachineTool_Base">
+    <defName>Building_NR_AutoMachineTool_TierThree</defName>
+    <label>AutoMachineTool Tier3</label>
+    <constructionSkillPrerequisite>15</constructionSkillPrerequisite>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AutoMachineTool3</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Steel>4000</Steel>
+      <Plasteel>2000</Plasteel>
+      <Gold>2000</Gold>
+      <Component>15</Component>
+    </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_Tier3</li>
+    </researchPrerequisites>
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <tier>3</tier>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  
+</Defs>

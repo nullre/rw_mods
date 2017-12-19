@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <Building_NR_AutoMachineTool_BeltConveyor.description>
+運搬したい方向に向けて設置します。
+上にアイテムを配置します。(アイテム引き出し器や自動工作機を利用できます。)
+ベルトコンベア同士は向きを垂直に隣り合って配置すると接続します。
+  </Building_NR_AutoMachineTool_BeltConveyor.description>
+
+  <Building_NR_AutoMachineTool_BeltConveyor_Wall.description>
+運搬したい方向に向けて設置します。(壁内)
+上にアイテムを配置します。(アイテム引き出し器や自動工作機を利用できます。)
+ベルトコンベア同士は向きを垂直に隣り合って配置すると接続します。
+  </Building_NR_AutoMachineTool_BeltConveyor_Wall.description>
+
+  <Building_NR_AutoMachineTool_BeltConveyor.label>ベルトコンベア</Building_NR_AutoMachineTool_BeltConveyor.label>
+  <Building_NR_AutoMachineTool_BeltConveyor_Wall.label>ベルトコンベア(壁内)</Building_NR_AutoMachineTool_BeltConveyor_Wall.label>
+</LanguageData>
