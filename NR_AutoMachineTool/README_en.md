@@ -112,7 +112,7 @@ Thanks to the producers of these mods.
 
 ![Harvester](/NR_AutoMachineTool/About/image06.png)
 
-### 使い方
+### Usage
 - Research on Automatic Agriculture.
 - Place the Harvester inside or near the agricultural zone.
 - Harvester starts harvesting plants in the agricultural zone within range.
