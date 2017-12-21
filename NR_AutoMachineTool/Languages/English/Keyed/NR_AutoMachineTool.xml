@@ -12,7 +12,7 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool.ForbidOutputItemLabel>Forbid output items</NR_AutoMachineTool.ForbidOutputItemLabel>
   <NR_AutoMachineTool.ForbidOutputItemDesc>Machine tools forbid items that are output as finished goods, so that colonists are not involved.</NR_AutoMachineTool.ForbidOutputItemDesc>
 
-  <NR_AutoMachineTool.StatWorking>crafting. [{0} / {1} ({2} %)]</NR_AutoMachineTool.StatWorking>
+  <NR_AutoMachineTool.StatWorking>working. [{0} / {1} ({2} %)]</NR_AutoMachineTool.StatWorking>
   <NR_AutoMachineTool.StatReady>ready.</NR_AutoMachineTool.StatReady>
   <NR_AutoMachineTool.StatPlacing>placing. [pending placement {0}]</NR_AutoMachineTool.StatPlacing>
   <NR_AutoMachineTool.SkillLevel>skill level : {0}</NR_AutoMachineTool.SkillLevel>
@@ -53,4 +53,10 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool_Puller.SwitchActiveLabel>Switch operating status</NR_AutoMachineTool_Puller.SwitchActiveLabel>
   <NR_AutoMachineTool_Puller.SwitchActiveDesc>Switch the operating status.</NR_AutoMachineTool_Puller.SwitchActiveDesc>
 
+  <!-- Planter & Harvester -->
+  <NR_AutoMachineTool.SupplyPowerForSpeedValueLabel>Supply power(for speed)</NR_AutoMachineTool.SupplyPowerForSpeedValueLabel>
+  <NR_AutoMachineTool.SupplyPowerForRangeValueLabel>Supply power(for range)</NR_AutoMachineTool.SupplyPowerForRangeValueLabel>
+
+  <NR_AutoMachineTool.SupplyPowerForSpeedText>Set the power to be supplied. If the power supply amount is large, it takes less time to work.</NR_AutoMachineTool.SupplyPowerForSpeedText>
+  <NR_AutoMachineTool.SupplyPowerForRangeText>Set the power to be supplied. If the power supply amount is large, the range of work can be widened.</NR_AutoMachineTool.SupplyPowerForRangeText>
 </LanguageData>

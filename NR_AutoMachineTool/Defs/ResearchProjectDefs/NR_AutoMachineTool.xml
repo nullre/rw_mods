@@ -62,4 +62,49 @@
     </requiredResearchFacilities>
   </ResearchProjectDef>
 
+
+  <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier1</defName>
+    <label>Automatic Agriculture Tier1</label>
+    <description>Planter and Harvester Tier 1 can be created.</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>MultiAnalyzer</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier2</defName>
+    <label>Automatic Agriculture Tier2</label>
+    <description>Planter and Harvester Tier 2 can be created.</description>
+    <baseCost>4000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier1</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier3</defName>
+    <label>Automatic Agriculture Tier3</label>
+    <description>Planter and Harvester Tier 3 can be created.</description>
+    <baseCost>6000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier2</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+  </ResearchProjectDef>
 </Defs>

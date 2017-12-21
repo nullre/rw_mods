@@ -12,7 +12,7 @@
   <NR_AutoMachineTool.ForbidOutputItemLabel>出力アイテムを禁止する</NR_AutoMachineTool.ForbidOutputItemLabel>
   <NR_AutoMachineTool.ForbidOutputItemDesc>完成品として出力されるアイテムを禁止し、入植者が関われないようにします。</NR_AutoMachineTool.ForbidOutputItemDesc>
 
-  <NR_AutoMachineTool.StatWorking>作成中. [{0} / {1} ({2} %)]</NR_AutoMachineTool.StatWorking>
+  <NR_AutoMachineTool.StatWorking>作業中. [{0} / {1} ({2} %)]</NR_AutoMachineTool.StatWorking>
   <NR_AutoMachineTool.StatReady>準備中</NR_AutoMachineTool.StatReady>
   <NR_AutoMachineTool.StatPlacing>配置中. [配置待ち {0}]</NR_AutoMachineTool.StatPlacing>
   <NR_AutoMachineTool.SkillLevel>スキルレベル : {0}</NR_AutoMachineTool.SkillLevel>
@@ -53,4 +53,10 @@
   <NR_AutoMachineTool_Puller.SwitchActiveLabel>稼働状態切替</NR_AutoMachineTool_Puller.SwitchActiveLabel>
   <NR_AutoMachineTool_Puller.SwitchActiveDesc>稼働状態を切り替えます。</NR_AutoMachineTool_Puller.SwitchActiveDesc>
 
+  <!-- Planter & Harvester -->
+  <NR_AutoMachineTool.SupplyPowerForSpeedValueLabel>供給電力量(速度用)</NR_AutoMachineTool.SupplyPowerForSpeedValueLabel>
+  <NR_AutoMachineTool.SupplyPowerForRangeValueLabel>供給電力量(範囲用)</NR_AutoMachineTool.SupplyPowerForRangeValueLabel>
+
+  <NR_AutoMachineTool.SupplyPowerForSpeedText>供給する電力を設定します。電力の供給量が大きければ、作業にかかる時間が短くなります。</NR_AutoMachineTool.SupplyPowerForSpeedText>
+  <NR_AutoMachineTool.SupplyPowerForRangeText>供給する電力を設定します。電力の供給量が大きければ、作業できる範囲が広くなります。</NR_AutoMachineTool.SupplyPowerForRangeText>
 </LanguageData>

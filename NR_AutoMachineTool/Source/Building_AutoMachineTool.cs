@@ -137,7 +137,7 @@ namespace NR_AutoMachineTool
             Scribe_Values.Look<float>(ref this.workLeft, "workLeft");
             Scribe_Values.Look<float>(ref this.workAmount, "workAmount");
             Scribe_Values.Look<int>(ref this.outputIndex, "outputIndex");
-            Scribe_Values.Look<float>(ref this.supplyPower, "supplyPower");
+            Scribe_Values.Look<float>(ref this.supplyPower, "supplyPower", this.MinPower);
             Scribe_Values.Look<bool>(ref this.forbidItem, "forbidItem");
 
             Scribe_Deep.Look<UnfinishedThing>(ref this.unfinished, "unfinished");
@@ -176,7 +176,6 @@ namespace NR_AutoMachineTool
             {
                 this.supplyPower = -this.MaxPower;
             }
-            DefDatabase<SkillDef>.AllDefs.ToDictionary(d => d, d => this.SkillLevel);
         }
 
         public override void DeSpawn()
@@ -543,7 +542,7 @@ namespace NR_AutoMachineTool
                         var thing = amount.thing;
                         if (i.filter.Allows(thing) && (bill.ingredientFilter.Allows(thing) || i.IsFixedIngredient))
                         {
-                            remain = remain - bill.recipe.IngredientValueGetter.ValuePerUnitOf(thing.def) * thing.stackCount;
+                            remain = remain - bill.recipe.IngredientValueGetter.ValuePerUnitOf(thing.def) * amount.count;
                             int consumption = amount.count;
                             if (remain <= 0.0f)
                             {
@@ -657,19 +656,20 @@ namespace NR_AutoMachineTool
         public override string GetInspectString()
         {
             String msg = base.GetInspectString();
+            msg += "\n";
             switch (this.state)
             {
                 case WorkingState.Working:
-                    msg = "NR_AutoMachineTool.StatWorking".Translate(Mathf.RoundToInt(this.workAmount - this.workLeft), Mathf.RoundToInt(this.workAmount), Mathf.RoundToInt(((this.workAmount - this.workLeft) / this.workAmount) * 100));
+                    msg += "NR_AutoMachineTool.StatWorking".Translate(Mathf.RoundToInt(this.workAmount - this.workLeft), Mathf.RoundToInt(this.workAmount), Mathf.RoundToInt(((this.workAmount - this.workLeft) / this.workAmount) * 100));
                     break;
                 case WorkingState.Ready:
-                    msg = "NR_AutoMachineTool.StatReady".Translate();
+                    msg += "NR_AutoMachineTool.StatReady".Translate();
                     break;
                 case WorkingState.Placing:
-                    msg = "NR_AutoMachineTool.StatPlacing".Translate(this.products.Count());
+                    msg += "NR_AutoMachineTool.StatPlacing".Translate(this.products.Count());
                     break;
                 default:
-                    msg = this.state.ToString();
+                    msg += this.state.ToString();
                     break;
             }
             msg += "\n";

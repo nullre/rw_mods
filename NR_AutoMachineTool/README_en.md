@@ -9,6 +9,8 @@ Thanks to the producers of these mods.
 ---
 ## AutoMachineTool
 
+![AutoMachineTool](/NR_AutoMachineTool/About/image01.png)
+
 ### Usage
 - Research on automatic machine tool.
 - Place the AutoMachineTool facing the work table.
@@ -26,12 +28,16 @@ Thanks to the producers of these mods.
 - If there is no place to place after completion, processing stops waiting for placement. You can prevent finished goods by moving them on a belt conveyor or the like, or by setting the output destination to a stockpiling zone.
 - If you destroy a work table or automatic machine tool during work, material may be lost.
 - I think balance is not good.
+- If MOD is deleted while there is a processing request for the target work table, save data will be damaged.
 
 ### TODO
 - Balancing.
+- Dealing with save.
 
 ---
 ## BeltConveyor
+
+![BeltConveyor](/NR_AutoMachineTool/About/image02.png)
 
 ### Usage
 - Research on belt conveyor.
@@ -56,6 +62,8 @@ Thanks to the producers of these mods.
 ---
 ## Item Puller
 
+![ItemPuller](/NR_AutoMachineTool/About/image03.png)
+
 ### Usage
 - Research on belt conveyor.
 - Place it next to the pulling zone. Pull out from the opposite side of the installed orientation and output it in the installed orientation.
@@ -77,10 +85,58 @@ Thanks to the producers of these mods.
 - Speed ​​change function
 
 ---
+## Planter
+
+![Planter](/NR_AutoMachineTool/About/image05.png)
+
+### Usage
+- Research on Automatic Agriculture.
+- Place the Planter inside or near the agricultural zone.
+- Planter starts planting plants in the agricultural zone within range.
+
+### Function
+- You can select the Planter and change the power supply amount from the power tab. If the power supply is large, the sowing speed and seeding range will rise.
+- As the tier goes up, you can create the Planter with a high skill level.
+
+### Caution
+- Planter will not plant in places that can not be planted by temperature etc.
+- Even if there are plants that are not designated as agriculture zones, they will not reap.
+- The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands.
+- I think balance is not good.
+
+### TODO
+- Add setting function to MOD setting screen.
+
+---
+## Harvester
+
+![Harvester](/NR_AutoMachineTool/About/image06.png)
+
+### 使い方
+- Research on Automatic Agriculture.
+- Place the Harvester inside or near the agricultural zone.
+- Harvester starts harvesting plants in the agricultural zone within range.
+
+### Function
+- You can select the Harvester and change the power supply amount from the power tab. If the power supply is large, the harvesting speed and seeding range will rise.
+- If the output destination can be placed in the stockpiling zone, the output destination is placed somewhere in the stockpiling zone that contains the output destination.
+- Even if the destination can not be placed in the stockpiling zone, it will be placed in the cell specified as the output destination.
+- As the tier goes up, you can create the Harvester with a high skill level.
+
+### Caution
+- If the output destination is a belt conveyor and the item already exists, the item will be placed in placement.
+- If the output destination is not a belt conveyor and the item already exists, it will be placed near the output destination.
+- Harvester will harvest if harvestable, even if there are plants not specified in the agriculture zone.
+- The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands.
+- I think balance is not good.
+
+### TODO
+- Add setting function to MOD setting screen.
+
+---
 ## Overall
 
 ### TODO
-- Make machinery
 - Debug
 - I manage the image. . .
 - I want to improve my English. . .

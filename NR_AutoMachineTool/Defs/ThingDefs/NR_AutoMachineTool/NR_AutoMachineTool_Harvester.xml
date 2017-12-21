@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- base -->
+  <ThingDef Name="Building_NR_AutoMachineTool_Harvester_Base" Parent="BuildingBase" Abstract="True">
+    <defName>Building_NR_AutoMachineTool_Harvester_Base</defName>
+    <thingClass>NR_AutoMachineTool.Building_Harvester</thingClass>
+    <description>
+Place the Harvester inside or near the agricultural zone.
+Harvester starts harvesting plants in the agricultural zone within range.
+    </description>
+    <altitudeLayer>Building</altitudeLayer>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <fillPercent>1</fillPercent>
+
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+
+    <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
+    <pathCost>0</pathCost>
+    <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
+    <rotatable>true</rotatable>
+
+    <placeWorkers>
+      <li>NR_AutoMachineTool.PlaceWorker_Harvester</li>
+    </placeWorkers>
+
+    <category>Building</category>
+    <tickerType>Normal</tickerType>
+
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <coversFloor>true</coversFloor>
+    <blockLight>true</blockLight>
+    <canOverlapZones>false</canOverlapZones>
+    <castEdgeShadows>true</castEdgeShadows>
+    <staticSunShadowHeight>1.0</staticSunShadowHeight>
+
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
+
+    <repairEffect>Repair</repairEffect>
+    <constructEffect>ConstructMetal</constructEffect>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <filthLeaving>BuildingRubble</filthLeaving>
+    <size>(1,1)</size>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <selectable>True</selectable>
+
+    <inspectorTabs>
+      <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
+    </inspectorTabs>
+  </ThingDef>
+
+
+  <!-- tier 1-->
+  <ThingDef ParentName="Building_NR_AutoMachineTool_Harvester_Base">
+    <defName>Building_NR_AutoMachineTool_Harvester_TierOne</defName>
+    <label>Harvester Tier1</label>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/Harvester1</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Steel>100</Steel>
+      <Plasteel>50</Plasteel>
+      <Component>1</Component>
+    </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier1</li>
+    </researchPrerequisites>
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <tier>1</tier>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- tier 2-->
+  <ThingDef ParentName="Building_NR_AutoMachineTool_Harvester_Base">
+    <defName>Building_NR_AutoMachineTool_Harvester_TierTwo</defName>
+    <label>Harvester Tier2</label>
+    <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/Harvester2</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Steel>400</Steel>
+      <Plasteel>250</Plasteel>
+      <Silver>500</Silver>
+      <Component>3</Component>
+    </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier2</li>
+    </researchPrerequisites>
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <tier>2</tier>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- tier 3-->
+  <ThingDef ParentName="Building_NR_AutoMachineTool_Harvester_Base">
+    <defName>Building_NR_AutoMachineTool_Harvester_TierThree</defName>
+    <label>Harvester Tier3</label>
+    <constructionSkillPrerequisite>15</constructionSkillPrerequisite>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/Harvester3</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Steel>800</Steel>
+      <Plasteel>500</Plasteel>
+      <Silver>1000</Silver>
+      <Component>5</Component>
+    </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier3</li>
+    </researchPrerequisites>
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <tier>3</tier>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

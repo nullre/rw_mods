@@ -175,6 +175,13 @@ namespace NR_AutoMachineTool.Utilities
             copy.unpauseWhenYouHave = bill.unpauseWhenYouHave;
             return copy;
         }
+
+        public static List<IntVec3> FacingRect(IntVec3 pos, Rot4 dir, int range)
+        {
+            var rightAngle = dir;
+            rightAngle.Rotate(RotationDirection.Clockwise);
+            return Enumerable.Range(1, range * 2 + 1).SelectMany(a => Enumerable.Range(-range, range * 2 + 1).Select(c => rightAngle.FacingCell.ToVector3() * c).Select(v => v + (a * dir.FacingCell.ToVector3()))).Select(x => pos + x.ToIntVec3()).ToList();
+        }
         #endregion
     }
 }

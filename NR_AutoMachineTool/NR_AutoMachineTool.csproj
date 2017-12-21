@@ -48,14 +48,19 @@
     <Compile Include="Source\Building_ItemPuller.cs" />
     <Compile Include="Source\Building_BeltConveyor.cs" />
     <Compile Include="Source\Building_AutoMachineTool.cs" />
+    <Compile Include="Source\Building_Hervester.cs" />
+    <Compile Include="Source\Building_Planter.cs" />
     <Compile Include="Source\GenRecipe2.cs" />
     <Compile Include="Source\Graphic_Selectable.cs" />
+    <Compile Include="Source\ITab_AgriculturePowerSupply.cs" />
     <Compile Include="Source\ITab_PowerSupply.cs" />
     <Compile Include="Source\ITab_PullerFilter.cs" />
     <Compile Include="Source\ITab_ConveyorFilter.cs" />
     <Compile Include="Source\ModExtension_AutoMachineTool.cs" />
     <Compile Include="Source\Mod_AuctoMachineTool.cs" />
     <Compile Include="Source\ModSettings_AutoMachineTool.cs" />
+    <Compile Include="Source\PlaceWorker_Harvester.cs" />
+    <Compile Include="Source\PlaceWorker_Planter.cs" />
     <Compile Include="Source\PlaceWorker_InputHighlight.cs" />
     <Compile Include="Source\PlaceWorker_OutputHighlight.cs" />
     <Compile Include="Source\PlaceWorker_WallEmbedded.cs" />
@@ -68,10 +73,17 @@
     <Content Include="About\About.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="About\image01.png" />
+    <Content Include="About\image02.png" />
+    <Content Include="About\image03.png" />
+    <Content Include="About\image04.png" />
+    <Content Include="About\image05.png" />
+    <Content Include="About\image06.png" />
     <Content Include="About\preview.png" />
-    <Content Include="Assemblies\NR_AutoMachineTool.dll" />
+    <Content Include="About\PublishedFileId.txt" />
     <Content Include="Defs\DesignationCategoryDef\NR_AutoMachineTool.xml" />
     <Content Include="Defs\ResearchProjectDefs\NR_AutoMachineTool.xml" />
+    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Harvester.xml" />
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Puller.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -81,11 +93,14 @@
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Planter.xml" />
     <Content Include="Languages\English\Keyed\NR_AutoMachineTool.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Languages\Japanese\DefInjected\DesignationCategoryDef\NR_AutoMachineTool.xml" />
     <Content Include="Languages\Japanese\DefInjected\ResearchProjectDefs\NR_AutoMachineTool.xml" />
+    <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Harvester.xml" />
+    <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Planter.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Puller.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Conveyor.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool.xml" />
@@ -105,13 +120,18 @@
     <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor07.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor991_arrow.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor992_arrow.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\Planter1.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\Planter2.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\Planter3.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Puller\Puller0.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Puller\Puller1.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\Forbid.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\OutputDirection.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\Play.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assemblies\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="README_en.md" />
     <None Include="README.md" />

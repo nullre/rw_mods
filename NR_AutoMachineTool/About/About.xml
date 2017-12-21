@@ -4,7 +4,7 @@
   <author>nullre</author>
   <targetVersion>0.18.0</targetVersion>
   <description>
-自動化するための自動工作機とベルトコンベアを追加します。
+自動化するための自動工作機とベルトコンベアと種蒔き機と収穫機を追加します。
 
 使い方
 https://github.com/nullre/rw_mods/blob/master/NR_AutoMachineTool/
@@ -23,10 +23,14 @@ I'm Japanese. I can't understand English, sorry...
 
 ***** machine translation *****
 
-Add automatic machine tool and belt conveyor for automation
+Add automatic machine tool and belt conveyor, planter and harvester for automation
 
 Usage
 https://github.com/nullre/rw_mods/blob/master/NR_AutoMachineTool/
+
+*** English (machine translation) ***
+https://github.com/nullre/rw_mods/blob/master/NR_AutoMachineTool/README_en.md
+
 Because it is under development, specifications may change frequently.
 Also, it may be a buggy.
 
