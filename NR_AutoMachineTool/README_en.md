@@ -37,24 +37,28 @@ Thanks to the producers of these mods.
 ---
 ## BeltConveyor
 
-![BeltConveyor](/NR_AutoMachineTool/About/image02.png)
+![BeltConveyor](/NR_AutoMachineTool/About/image02.png)  
+![Underground conveyor](/NR_AutoMachineTool/About/image07.png)
 
 ### Usage
 - Research on belt conveyor.
 - Place it in the direction you want to carry.
 - Place the item on top. (Item Puller and AutoMachineTool can be used.)
 - The belt conveyors are connected by vertically adjoining the orientation.
+- The underground conveyor connects to the underground conveyor entrance and exit
 
 ### Function
 - If belt conveyors are connected and there are two or more output destinations, it is possible to set the filter for each output destination from the filter tab.
 - If the output destination can be placed in the stockpiling zone, the output destination is placed somewhere in the stockpiling zone that contains the output destination.
 - Even if the destination can not be placed in the stockpiling zone, it will be placed in the cell specified as the output destination.
 - There is a belt conveyor that can be placed in the wall.
+- You can select the belt conveyor and change the power supply amount from the power tab. If the power supply amount is large, the transfer speed increases.
 
 ### Caution
 - If there is no place to place it, the item is blocked.
 - Colonists are not involved with items on the belt conveyor.
 - I think balance is not good.
+- With the belt conveyor selected, you can see the underground conveyor.
 
 ### TODO
 - Speed ​​change function
