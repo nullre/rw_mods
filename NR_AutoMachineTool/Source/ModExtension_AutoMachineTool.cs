@@ -15,5 +15,7 @@ namespace NR_AutoMachineTool
     public class ModExtension_AutoMachineTool : DefModExtension
     {
         public int tier = 1;
+        public bool underground = false;
+        public bool toUnderground = false;
     }
 }

@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_Harvester : Building , IAgricultureMachine
+    public class Building_Harvester : Building , IAgricultureMachine, IBeltConbeyorSender
     {
         public enum HarvestState {
             Ready,
@@ -282,14 +282,15 @@ namespace NR_AutoMachineTool
         {
             return Option(this.product).Fold(false)(target => {
                 var conveyor = OutputCell().GetThingList(this.Map).Where(t => t.def.category == ThingCategory.Building)
-                    .SelectMany(t => Option(t as Building_BeltConveyor))
+                    .SelectMany(t => Option(t as IBeltConbeyorLinkable))
+                    .Where(b => !b.IsUnderground)
                     .FirstOption();
                 if (conveyor.HasValue)
                 {
                     // コンベアがある場合、そっちに流す.
-                    if (conveyor.Value.Acceptable())
+                    if (conveyor.Value.ReceivableNow(false))
                     {
-                        conveyor.Value.TryStartCarry(target);
+                        conveyor.Value.ReceiveThing(target);
                         return true;
                     }
                 }
@@ -333,6 +334,11 @@ namespace NR_AutoMachineTool
             msg += "\n";
             msg += "NR_AutoMachineTool.SkillLevel".Translate(this.SkillLevel.ToString());
             return msg;
+        }
+
+        public void NortifyReceivable()
+        {
+            this.checkNextPlace = true;
         }
     }
 }

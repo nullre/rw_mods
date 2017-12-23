@@ -114,7 +114,7 @@ namespace NR_AutoMachineTool.Utilities
 
         #region for rimworld
 
-//        public static void L(object obj) { Log.Message(obj == null ? "null" : obj.ToString()); }
+        public static void L(object obj) { Log.Message(obj == null ? "null" : obj.ToString()); }
 
         public static bool PlaceItem(Thing t, IntVec3 cell, bool forbid, Map map)
         {
@@ -181,6 +181,13 @@ namespace NR_AutoMachineTool.Utilities
             var rightAngle = dir;
             rightAngle.Rotate(RotationDirection.Clockwise);
             return Enumerable.Range(1, range * 2 + 1).SelectMany(a => Enumerable.Range(-range, range * 2 + 1).Select(c => rightAngle.FacingCell.ToVector3() * c).Select(v => v + (a * dir.FacingCell.ToVector3()))).Select(x => pos + x.ToIntVec3()).ToList();
+        }
+
+        public static Rot4 RotateAsNew(this Rot4 rot, RotationDirection dir)
+        {
+            var n = rot;
+            n.Rotate(dir);
+            return n;
         }
         #endregion
     }

@@ -14,10 +14,14 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_ItemPuller : Building
+    public class Building_ItemPuller : Building, IPowerSupplyMachine, IBeltConbeyorSender
     {
         private ModSetting_AutoMachineTool Setting { get => LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; }
         private float SpeedFactor { get => this.Setting.pullSpeedFactor; }
+        public float SupplyPower { get => this.supplyPower; set => this.supplyPower = (int)value; }
+        public int MinPower { get => this.Setting.minPullerSupplyPower; }
+        public int MaxPower { get => this.Setting.maxPullerSupplyPower; }
+
         public ThingFilter Filter { get => this.filter; }
 
         private static int shift;
@@ -25,12 +29,14 @@ namespace NR_AutoMachineTool
         private ThingFilter filter = new ThingFilter();
         private float amount;
 
+        private float supplyPower = 1000f;
+
         private bool active = false;
 
         [Unsaved]
-        private bool wait;
+        private bool checkNextPlacing;
 
-        public override Graphic Graphic => Option(base.Graphic as Graphic_Selectable).Fold(base.Graphic)(g => g.Get(this.active ? 1 : 0));
+        public override Graphic Graphic => Option(base.Graphic as Graphic_Selectable).Fold(base.Graphic)(g => g.Get("NR_AutoMachineTool/Buildings/Puller/Puller" + (this.active ? "1" : "0")));
 
         public override void ExposeData()
         {
@@ -39,6 +45,7 @@ namespace NR_AutoMachineTool
             Scribe_Deep.Look<ThingFilter>(ref this.filter, "filter");
             Scribe_Values.Look<float>(ref this.amount, "amount", 0);
             Scribe_Values.Look<bool>(ref this.active, "active", false);
+            Scribe_Values.Look<float>(ref this.supplyPower, "supplyPower", 1000f);
 
             if (this.filter == null) this.filter = new ThingFilter();
         }
@@ -74,27 +81,38 @@ namespace NR_AutoMachineTool
             return true;
         }
 
+        private void SetPower()
+        {
+            if (-this.SupplyPower != this.TryGetComp<CompPowerTrader>().PowerOutput)
+            {
+                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.SupplyPower;
+            }
+        }
+
         public override void Tick()
         {
             base.Tick();
+
+            this.SetPower();
 
             if (!this.IsActive())
             {
                 return;
             }
-            this.amount += 0.01f * this.SpeedFactor;
+            this.amount += 0.01f * this.SpeedFactor * this.SupplyPower * 0.001f;
             if(this.amount > 1f)
             {
-                if (Find.TickManager.TicksGame % 30 == shift || !wait)
+                L("full");
+                if (Find.TickManager.TicksGame % 30 == shift || checkNextPlacing)
                 {
                     if (this.PullAndPush())
                     {
                         this.amount = 0;
-                        this.wait = false;
+                        this.checkNextPlacing = true;
                     }
                     else
                     {
-                        this.wait = true;
+                        this.checkNextPlacing = false;
                     }
                 }
             }
@@ -104,14 +122,15 @@ namespace NR_AutoMachineTool
         {
             return TargetThing().Fold(true)(target => {
                 var conveyor = OutputCell().GetThingList(this.Map).Where(t => t.def.category == ThingCategory.Building)
-                    .SelectMany(t => Option(t as Building_BeltConveyor))
+                    .SelectMany(t => Option(t as IBeltConbeyorLinkable))
+                    .Where(b => !b.IsUnderground)
                     .FirstOption();
                 if (conveyor.HasValue)
                 {
                     // コンベアがある場合、そっちに流す.
-                    if (conveyor.Value.Acceptable())
+                    if (conveyor.Value.ReceivableNow(false))
                     {
-                        conveyor.Value.TryStartCarry(target);
+                        conveyor.Value.ReceiveThing(target);
                         return true;
                     }
                 }
@@ -172,6 +191,16 @@ namespace NR_AutoMachineTool
             act.defaultDesc = "NR_AutoMachineTool_Puller.SwitchActiveDesc".Translate();
             act.icon = ContentFinder<Texture2D>.Get("NR_AutoMachineTool/UI/Play", true);
             yield return act;
+        }
+
+        public string PowerSupplyMessage()
+        {
+            return "NR_AutoMachineTool.SupplyPowerText".Translate();
+        }
+
+        public void NortifyReceivable()
+        {
+            this.checkNextPlacing = true;
         }
     }
 }

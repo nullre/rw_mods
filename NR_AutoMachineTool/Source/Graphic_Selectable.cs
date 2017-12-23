@@ -22,10 +22,20 @@ namespace NR_AutoMachineTool
             }
         }
 
-        public Graphic Get(int index)
+        public Graphic Get(string path)
         {
-            return this.subGraphics[index];
+            if (path == null)
+            {
+                return this.subGraphics[0];
+            }
+            if (!pathDic.ContainsKey(path))
+            {
+                pathDic[path] = this.subGraphics.Where(x => x.path == path).First();
+            }
+            return this.pathDic[path];
         }
+
+        private Dictionary<string, Graphic> pathDic = new Dictionary<string, Graphic>();
 
         public override bool ShouldDrawRotated
         {

@@ -17,10 +17,8 @@
       <Flammability>1.0</Flammability>
     </statBases>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
-    <fillPercent>0.15</fillPercent>
 
     <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
-    <pathCost>0</pathCost>
     <rotatable>true</rotatable>
 
     <repairEffect>Repair</repairEffect>
@@ -31,12 +29,7 @@
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <passability>Standable</passability>
     <selectable>True</selectable>
-
-    <graphicData>
-      <texPath>NR_AutoMachineTool/Buildings/BeltConveyor</texPath>
-      <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
-      <drawSize>(1,1)</drawSize>
-    </graphicData>
+    
     <costList>
       <Steel>20</Steel>
     </costList>
@@ -47,16 +40,15 @@
     
     <placeWorkers>
     </placeWorkers>
-    
-    <modExtensions>
-    </modExtensions>
 
     <inspectorTabs>
       <li>NR_AutoMachineTool.ITab_ConveyorFilter</li>
+      <li>NR_AutoMachineTool.ITab_PowerSupply</li>
     </inspectorTabs>
 
     <drawGUIOverlay>true</drawGUIOverlay>
     <placingDraggableDimensions>1</placingDraggableDimensions>
+    
   </ThingDef>
 
   <ThingDef ParentName="Building_NR_AutoMachineTool_BeltConveyor_Base">
@@ -78,6 +70,12 @@ The belt conveyors are connected by vertically adjoining the orientation.
       </li>
       <li Class="CompProperties_Flickable"/>
     </comps>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/BeltConveyor</texPath>
+      <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <pathCost>30</pathCost>
   </ThingDef>
 
   <ThingDef ParentName="Building_NR_AutoMachineTool_BeltConveyor_Base">
@@ -103,11 +101,165 @@ The belt conveyors are connected by vertically adjoining the orientation.
       <li Class="CompProperties_Flickable"/>
     </comps>
     <clearBuildingArea>false</clearBuildingArea>
-    <graphicData>
-      <drawSize>(0.8,0.8)</drawSize>
-    </graphicData>
     <placeWorkers>
       <li>NR_AutoMachineTool.PlaceWorker_WallEmbedded</li>
     </placeWorkers>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/BeltConveyor</texPath>
+      <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
+      <drawSize>(0.8,0.8)</drawSize>
+    </graphicData>
+    <pathCost>0</pathCost>
+  </ThingDef>
+
+
+<!-- underground -->
+  
+  <ThingDef ParentName="Building_NR_AutoMachineTool_BeltConveyor_Base">
+    <defName>Building_NR_AutoMachineTool_BeltConveyor_Underground</defName>
+    <label>Underground BeltConveyor</label>
+    <description>
+Underground BeltConveyor carries items in the basement.
+Underground BeltConveyor can not move items on the ground as it is.
+Connect to the underground conveyor entrance and exit and use.
+    </description>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <building>
+      <isEdifice>false</isEdifice>
+    </building>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>500</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>false</startElectricalFires>
+        <basePowerConsumption>10</basePowerConsumption>
+        <transmitsPower>false</transmitsPower>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <clearBuildingArea>false</clearBuildingArea>
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <underground>true</underground>
+      </li>
+    </modExtensions>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/BeltConveyorUG</texPath>
+      <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <pathCost>0</pathCost>
+    <fillPercent>0.0</fillPercent>
+  </ThingDef>
+
+
+  <ThingDef Name="Building_NR_AutoMachineTool_BeltConveyorUGConnecter_Base" Parent="BuildingBase" Abstract="true">
+    <thingClass>NR_AutoMachineTool.Building_BeltConveyorUGConnecter</thingClass>
+    <category>Building</category>
+    <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
+    <drawerType>RealtimeOnly</drawerType>
+
+    <tickerType>Normal</tickerType>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>100</WorkToBuild>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <fillPercent>0.15</fillPercent>
+
+    <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
+    <rotatable>true</rotatable>
+
+    <repairEffect>Repair</repairEffect>
+    <constructEffect>ConstructMetal</constructEffect>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <filthLeaving>BuildingRubble</filthLeaving>
+    <size>(1,1)</size>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <passability>Standable</passability>
+    <selectable>True</selectable>
+
+    <costList>
+      <Steel>20</Steel>
+    </costList>
+
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_BeltConveyor</li>
+    </researchPrerequisites>
+
+    <drawGUIOverlay>true</drawGUIOverlay>
+
+    <inspectorTabs>
+      <li>NR_AutoMachineTool.ITab_PowerSupply</li>
+    </inspectorTabs>
+    <pathCost>30</pathCost>
+  </ThingDef>
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_BeltConveyorUGConnecter_Base">
+    <defName>Building_NR_AutoMachineTool_BeltConveyor_ToUnderground</defName>
+    <label>Underground conveyor entrance</label>
+    <description>
+Connect the ground belt conveyor and underground conveyor.
+It is the entrance to the underground conveyor.
+    </description>
+    <altitudeLayer>Building</altitudeLayer>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>false</startElectricalFires>
+        <basePowerConsumption>10</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/ConveyorToUnderground</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <toUnderground>true</toUnderground>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_BeltConveyorUGConnecter_Base">
+    <defName>Building_NR_AutoMachineTool_BeltConveyor_ToFloor</defName>
+    <label>Underground conveyor exit</label>
+    <description>
+Connect the ground belt conveyor and underground conveyor.
+It is an exit to the underground conveyor.
+    </description>
+    <altitudeLayer>Building</altitudeLayer>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>false</startElectricalFires>
+        <basePowerConsumption>10</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/ConveyorToFloor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <toUnderground>false</toUnderground>
+      </li>
+    </modExtensions>
   </ThingDef>
 </Defs>

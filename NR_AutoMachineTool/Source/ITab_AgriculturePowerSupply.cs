@@ -41,12 +41,7 @@ namespace NR_AutoMachineTool
 
         private string descriptionForRange;
 
-        private IAgricultureMachine Machine
-        {
-            get {
-                return (IAgricultureMachine)this.SelThing;
-            }
-        }
+        private IAgricultureMachine Machine { get => (IAgricultureMachine)this.SelThing; }
 
         protected override void FillTab()
         {

@@ -6,7 +6,8 @@
 出力先が備蓄ゾーンで完成品が配置不可でも、出力先に指定したセルには配置されます。</NR_AutoMachineTool.SelectOutputDirectionDesc>
   
   <NR_AutoMachineTool.SupplyPowerTab>電力</NR_AutoMachineTool.SupplyPowerTab>
-  <NR_AutoMachineTool.SupplyPowerText>供給する電力を設定します。電力の供給量が大きければ、作成にかかる時間が短くなります。</NR_AutoMachineTool.SupplyPowerText>
+  <NR_AutoMachineTool.SupplyPowerText>供給する電力を設定します。電力の供給量が大きければ、作業にかかる時間が短くなります。</NR_AutoMachineTool.SupplyPowerText>
+  <NR_AutoMachineTool.SupplyPowerConveyorText>供給する電力を設定します。電力の供給量が大きければ、移動にかかる時間が短くなります。全てのコンベアの電力供給量が変化します。</NR_AutoMachineTool.SupplyPowerConveyorText>
 
   <NR_AutoMachineTool.SupplyPowerValueLabel>供給電力量</NR_AutoMachineTool.SupplyPowerValueLabel>
   <NR_AutoMachineTool.ForbidOutputItemLabel>出力アイテムを禁止する</NR_AutoMachineTool.ForbidOutputItemLabel>

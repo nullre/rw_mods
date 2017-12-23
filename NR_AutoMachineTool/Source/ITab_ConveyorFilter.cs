@@ -36,11 +36,6 @@ namespace NR_AutoMachineTool
 
         private Vector2 scrollPosition;
 
-        public override void OnOpen()
-        {
-            base.OnOpen();
-        }
-
         protected override void FillTab()
         {
             if (!this.rotSelectedDic.ContainsKey(this.Conveyor))

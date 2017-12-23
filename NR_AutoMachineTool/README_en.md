@@ -101,7 +101,7 @@ Thanks to the producers of these mods.
 ### Caution
 - Planter will not plant in places that can not be planted by temperature etc.
 - Even if there are plants that are not designated as agriculture zones, they will not reap.
-- The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands.
+- The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands. It can be avoided by canceling all processing requests or by removing them after disassembling the automatic machine tool.
 - I think balance is not good.
 
 ### TODO

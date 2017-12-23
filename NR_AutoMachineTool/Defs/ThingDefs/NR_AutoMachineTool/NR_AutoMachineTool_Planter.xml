@@ -31,7 +31,7 @@ Planter starts planting plants in the agricultural zone within range.
     <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
     <pathCost>0</pathCost>
     <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
-    <rotatable>true</rotatable>
+    <rotatable>false</rotatable>
 
     <placeWorkers>
       <li>NR_AutoMachineTool.PlaceWorker_Planter</li>

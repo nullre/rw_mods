@@ -47,9 +47,10 @@
     
     <modExtensions>
     </modExtensions>
-    
+
     <inspectorTabs>
       <li>NR_AutoMachineTool.ITab_PullerFilter</li>
+      <li>NR_AutoMachineTool.ITab_PowerSupply</li>
     </inspectorTabs>
 
   </ThingDef>

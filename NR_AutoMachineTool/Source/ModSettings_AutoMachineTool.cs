@@ -55,6 +55,14 @@ namespace NR_AutoMachineTool
 
         public float pullSpeedFactor = 1f;
 
+        public int minBeltConveyorSupplyPower = 10;
+
+        public int maxBeltConveyorSupplyPower = 100;
+
+        public int minPullerSupplyPower = 1000;
+
+        public int maxPullerSupplyPower = 10000;
+
         public void RestoreDefault()
         {
             this.setting = CreateDefault();
@@ -104,6 +112,10 @@ namespace NR_AutoMachineTool
             Scribe_Collections.Look<AgricultureTierSetting>(ref this.harvesterSetting, "harvesterSetting");
             Scribe_Values.Look<float>(ref this.carrySpeedFactor, "carrySpeed", 1f);
             Scribe_Values.Look<float>(ref this.pullSpeedFactor, "pullSpeedFactor", 1f);
+            Scribe_Values.Look<int>(ref this.minBeltConveyorSupplyPower, "minBeltConveyorSupplyPower", 10);
+            Scribe_Values.Look<int>(ref this.maxBeltConveyorSupplyPower, "maxBeltConveyorSupplyPower", 100);
+            Scribe_Values.Look<int>(ref this.minPullerSupplyPower, "minPullerSupplyPower", 1000);
+            Scribe_Values.Look<int>(ref this.maxPullerSupplyPower, "maxPullerSupplyPower", 10000);
 
             Option(this.DataExposed).ForEach(e => e(this, new EventArgs()));
 
@@ -115,6 +127,11 @@ namespace NR_AutoMachineTool
             if (planterSetting == null)
             {
                 this.planterSetting = CreatePlanterDefault();
+            }
+
+            if (harvesterSetting == null)
+            {
+                this.harvesterSetting = CreateHarvesterDefault();
             }
         }
 

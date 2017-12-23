@@ -14,4 +14,23 @@
 
   <Building_NR_AutoMachineTool_BeltConveyor.label>ベルトコンベア</Building_NR_AutoMachineTool_BeltConveyor.label>
   <Building_NR_AutoMachineTool_BeltConveyor_Wall.label>ベルトコンベア(壁内)</Building_NR_AutoMachineTool_BeltConveyor_Wall.label>
+
+  <Building_NR_AutoMachineTool_BeltConveyor_Underground.label>地下コンベア</Building_NR_AutoMachineTool_BeltConveyor_Underground.label>
+  <Building_NR_AutoMachineTool_BeltConveyor_Underground.description>
+地下でアイテムを運びます。
+地上にあるアイテムをそのまま移動する事はできません。
+地下コンベア入口や出口に接続し利用します。
+  </Building_NR_AutoMachineTool_BeltConveyor_Underground.description>
+
+  <Building_NR_AutoMachineTool_BeltConveyor_ToUnderground.label>地下コンベア入口</Building_NR_AutoMachineTool_BeltConveyor_ToUnderground.label>
+  <Building_NR_AutoMachineTool_BeltConveyor_ToUnderground.description>
+地上のベルトコンベアと地下のコンベアを接続します。
+地下コンベアへの入口です。
+  </Building_NR_AutoMachineTool_BeltConveyor_ToUnderground.description>
+
+  <Building_NR_AutoMachineTool_BeltConveyor_ToFloor.label>地下コンベア出口</Building_NR_AutoMachineTool_BeltConveyor_ToFloor.label>
+  <Building_NR_AutoMachineTool_BeltConveyor_ToFloor.description>
+地上のベルトコンベアと地下のコンベアを接続します。
+地下コンベアへの出口です。
+  </Building_NR_AutoMachineTool_BeltConveyor_ToFloor.description>
 </LanguageData>

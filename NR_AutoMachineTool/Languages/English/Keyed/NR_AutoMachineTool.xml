@@ -6,7 +6,8 @@
 Even if the output destination is in the stockpiling zone, the finished product can not be placed, but it is placed in the cell specified as the output destination.</NR_AutoMachineTool.SelectOutputDirectionDesc>
 
   <NR_AutoMachineTool.SupplyPowerTab>Power</NR_AutoMachineTool.SupplyPowerTab>
-  <NR_AutoMachineTool.SupplyPowerText>Set the power to be supplied. If the power supply amount is large, it takes less time to create.</NR_AutoMachineTool.SupplyPowerText>
+  <NR_AutoMachineTool.SupplyPowerText>Set the power to be supplied. If the power supply amount is large, it takes less time to work.</NR_AutoMachineTool.SupplyPowerText>
+  <NR_AutoMachineTool.SupplyPowerConveyorText>Set the power to be supplied. If the power supply amount is large, it takes less time to move. The power supply amount of all conveyors changes.</NR_AutoMachineTool.SupplyPowerConveyorText>
   
   <NR_AutoMachineTool.SupplyPowerValueLabel>Supply power</NR_AutoMachineTool.SupplyPowerValueLabel>
   <NR_AutoMachineTool.ForbidOutputItemLabel>Forbid output items</NR_AutoMachineTool.ForbidOutputItemLabel>

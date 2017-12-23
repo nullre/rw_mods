@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_AutoMachineTool : Building
+    public class Building_AutoMachineTool : Building, IPowerSupplyMachine, IBeltConbeyorSender
     {
         private enum WorkingState
         {
@@ -76,7 +76,9 @@ namespace NR_AutoMachineTool
         [Unsaved]
         private Option<Sustainer> workingSound = Nothing<Sustainer>();
         [Unsaved]
-        private bool checkNext = true;
+        private bool checkNextWorking = true;
+        [Unsaved]
+        private bool checkNextPlacing = true;
         [Unsaved]
         private Option<Building_WorkTable> workTable;
 
@@ -343,11 +345,11 @@ namespace NR_AutoMachineTool
             if (this.state == WorkingState.Ready)
             {
                 this.CleanupProgressBar();
-                if (Find.TickManager.TicksGame % 30 == 0 || this.checkNext)
+                if (Find.TickManager.TicksGame % 30 == 0 || this.checkNextWorking)
                 {
                     this.TryStartWorking();
-                    this.checkNext = false;
                 }
+                this.checkNextWorking = false;
             }
             else if (this.state == WorkingState.Working)
             {
@@ -366,16 +368,17 @@ namespace NR_AutoMachineTool
                 {
                     this.workLeft = 0;
                     this.FinishWorking();
-                    this.checkNext = true;
+                    this.checkNextPlacing = false;
                 }
             }
             else if (this.state == WorkingState.Placing)
             {
                 this.CleanupWorkingEffect();
-                if (Find.TickManager.TicksGame % 30 == 0 || this.checkNext)
+                if (Find.TickManager.TicksGame % 30 == 0 || this.checkNextPlacing)
                 {
-                    this.checkNext = this.PlaceProducts();
+                    this.checkNextWorking = this.PlaceProducts();
                 }
+                this.checkNextPlacing = false;
             }
         }
 
@@ -439,13 +442,16 @@ namespace NR_AutoMachineTool
         {
             this.products = this.products.Aggregate(new List<Thing>(), (t, n) =>
             {
-                var conveyor = this.OutputCell().GetThingList(M).Where(b => b.def.category == ThingCategory.Building).SelectMany(b => Option(b as Building_BeltConveyor)).FirstOption();
+                var conveyor = this.OutputCell().GetThingList(M).Where(b => b.def.category == ThingCategory.Building)
+                    .SelectMany(b => Option(b as IBeltConbeyorLinkable))
+                    .Where(b => !b.IsUnderground)
+                    .FirstOption();
                 if (conveyor.HasValue)
                 {
                     // ベルトコンベアがある場合には、そっちに渡す.
-                    if (conveyor.Value.Acceptable())
+                    if (conveyor.Value.ReceivableNow(false))
                     {
-                        conveyor.Value.TryStartCarry(n);
+                        conveyor.Value.ReceiveThing(n);
                         return t;
                     }
                 }
@@ -677,6 +683,16 @@ namespace NR_AutoMachineTool
             msg += "\n";
             msg += "NR_AutoMachineTool.SkillLevel".Translate(this.SkillLevel.ToString());
             return msg;
+        }
+
+        public string PowerSupplyMessage()
+        {
+            return "NR_AutoMachineTool.SupplyPowerText".Translate();
+        }
+
+        public void NortifyReceivable()
+        {
+            this.checkNextPlacing = true;
         }
     }
 }

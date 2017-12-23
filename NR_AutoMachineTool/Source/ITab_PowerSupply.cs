@@ -12,6 +12,14 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
+    interface IPowerSupplyMachine
+    {
+        int MinPower { get; }
+        int MaxPower { get; }
+        float SupplyPower { get; set; }
+        string PowerSupplyMessage();
+    }
+
     class ITab_PowerSupply : ITab
     {
         private static readonly Vector2 WinSize = new Vector2(500f, 250f);
@@ -20,24 +28,19 @@ namespace NR_AutoMachineTool
         {
             this.size = WinSize;
             this.labelKey = "NR_AutoMachineTool.SupplyPowerTab";
-
-            this.description = "NR_AutoMachineTool.SupplyPowerText".Translate();
         }
         
         private string description;
         
-        private Building_AutoMachineTool Machine
+        public IPowerSupplyMachine Machine
         {
-            get => (Building_AutoMachineTool)this.SelThing;
-        }
-        
-        public override void OnOpen()
-        {
-            base.OnOpen();
+            get => (IPowerSupplyMachine)this.SelThing;
         }
 
         protected override void FillTab()
         {
+            this.description = this.Machine.PowerSupplyMessage();
+
             int round = this.Machine.MinPower < 1000 ? 100 : this.Machine.MinPower < 10000 ? 500 : 1000;
             if (this.Machine.MinPower % round != 0 || this.Machine.MaxPower % round != 0)
             {
