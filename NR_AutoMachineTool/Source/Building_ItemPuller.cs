@@ -102,7 +102,6 @@ namespace NR_AutoMachineTool
             this.amount += 0.01f * this.SpeedFactor * this.SupplyPower * 0.001f;
             if(this.amount > 1f)
             {
-                L("full");
                 if (Find.TickManager.TicksGame % 30 == shift || checkNextPlacing)
                 {
                     if (this.PullAndPush())
