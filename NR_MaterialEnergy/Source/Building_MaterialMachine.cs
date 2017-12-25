@@ -55,7 +55,7 @@ namespace NR_MaterialEnergy
                     var count = Mathf.CeilToInt(GetEnergyAmount(this.thing, this.stuff) * prodCount / loss);
                     var label = "NR_MaterialEnergy.RecipeMaterializeLabel".Translate(this.thing.label, this.stuff == null ? "" : "NR_MaterialEnergy.RecipeMaterializeStuff".Translate(this.stuff.label), count, prodCount);
                     var jobName = "NR_MaterialEnergy.RecipeMaterializeJobName".Translate(this.thing.label);
-                    var recipe = CreateMaterializeRecipeDef(defName, label, jobName, workAmount, count, this.thing, 1, this.stuff);
+                    var recipe = CreateMaterializeRecipeDef(defName, label, jobName, workAmount, count, this.thing, this.prodCount, this.stuff);
                     DefDatabase<RecipeDef>.Add(recipe);
                 }
             }

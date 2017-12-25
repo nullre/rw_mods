@@ -57,6 +57,8 @@
     <Content Include="About\About.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="About\image01.png" />
+    <Content Include="About\preview.png" />
     <Content Include="Defs\ResearchProjectDefs\NR_MaterialEnergy.xml" />
     <Content Include="Defs\ThingDefs\NR_MaterialEnergy.xml">
       <SubType>Designer</SubType>
