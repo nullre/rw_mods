@@ -26,9 +26,9 @@ namespace NR_MaterialEnergy
                 this.stuff = stuff;
                 this.prodCount = prodCount;
                 this.workAmount = workAmount;
-                this.defName = "NR_MaterialEnergy.Materialize_" + thing.defName + (stuff == null ? "" : "_" + stuff.defName) + "_" + prodCount;
+                this.defName = GetDefName(thing, stuff, prodCount);
             }
-            private string defName;
+            public string defName;
             private ThingDef thing;
             private ThingDef stuff;
             private int prodCount;
@@ -60,19 +60,9 @@ namespace NR_MaterialEnergy
                 }
             }
 
-            public override bool Equals(object obj)
+            public static string GetDefName(ThingDef thing, ThingDef stuff, int prodCount)
             {
-                var t = obj as MaterializeRecipeDefData;
-                if (t != null)
-                {
-                    return t.defName == this.defName;
-                }
-                return false;
-            }
-
-            public override int GetHashCode()
-            {
-                return this.defName.GetHashCode();
+                return "NR_MaterialEnergy.Materialize_" + thing.defName + (stuff == null ? "" : "_" + stuff.defName) + "_" + prodCount;
             }
         }
 
@@ -87,7 +77,7 @@ namespace NR_MaterialEnergy
 
         private static List<RecipeDef> toEnergyRecipes;
 
-        private HashSet<MaterializeRecipeDefData> materializeRecipeData = new HashSet<MaterializeRecipeDefData>();
+        private List<MaterializeRecipeDefData> materializeRecipeData = new List<MaterializeRecipeDefData>();
 
 
         private static void RegisterToEnergyRecipes()
@@ -120,7 +110,7 @@ namespace NR_MaterialEnergy
             Scribe_Collections.Look<MaterializeRecipeDefData>(ref this.materializeRecipeData, "materializeRecipeData", LookMode.Deep);
             if(this.materializeRecipeData == null)
             {
-                this.materializeRecipeData = new HashSet<MaterializeRecipeDefData>();
+                this.materializeRecipeData = new List<MaterializeRecipeDefData>();
             }
             this.materializeRecipeData.ForEach(d => d.Register(this.Loss));
 
@@ -147,12 +137,16 @@ namespace NR_MaterialEnergy
             {
                 ingredients.ForEach(i =>
                 {
-                    this.materializeRecipeData.Add(new MaterializeRecipeDefData(i.def, i.Stuff, 1, 300));
-                    if (i.def.stackLimit >= 10)
+                    string defName = MaterializeRecipeDefData.GetDefName(i.def, i.Stuff, 1);
+                    if (!this.materializeRecipeData.Any(r => r.defName == defName))
                     {
-                        this.materializeRecipeData.Add(new MaterializeRecipeDefData(i.def, i.Stuff, 10, 1000));
+                        this.materializeRecipeData.Add(new MaterializeRecipeDefData(i.def, i.Stuff, 1, 300));
+                        if (i.def.stackLimit >= 10)
+                        {
+                            this.materializeRecipeData.Add(new MaterializeRecipeDefData(i.def, i.Stuff, 10, 1000));
+                        }
+                        this.materializeRecipeData.ForEach(x => x.Register(this.Loss));
                     }
-                    this.materializeRecipeData.ForEach(x => x.Register(this.Loss));
                 });
             }
         }
