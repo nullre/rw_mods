@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <NR_MaterialEnergy.RecipeToEnergyLabel>Energize material({0})</NR_MaterialEnergy.RecipeToEnergyLabel>
+  <NR_MaterialEnergy.RecipeToEnergyJobName>Energize material({0})</NR_MaterialEnergy.RecipeToEnergyJobName>
+  <NR_MaterialEnergy.RecipeMaterializeLabel>Materialize {1} {0} ({3}) (Energy consumption : {2})</NR_MaterialEnergy.RecipeMaterializeLabel>
+  <NR_MaterialEnergy.RecipeMaterializeStuff>{0}</NR_MaterialEnergy.RecipeMaterializeStuff>
+  <NR_MaterialEnergy.RecipeEnergyDescription>Must have {0} Energy</NR_MaterialEnergy.RecipeEnergyDescription>
+</LanguageData>

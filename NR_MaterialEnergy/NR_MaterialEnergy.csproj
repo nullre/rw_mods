@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{23E975FC-945A-4597-9DBB-4C72E23B5028}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NR_MaterialEnergy</RootNamespace>
+    <AssemblyName>NR_MaterialEnergy</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\IngredientValueGetter_Energy.cs" />
+    <Compile Include="Source\Bill_Production2.cs" />
+    <Compile Include="Source\ITab_MaterializeBills.cs" />
+    <Compile Include="Source\Building_MaterialMachine.cs" />
+    <Compile Include="Source\Utilities\Ops.cs" />
+    <Compile Include="Source\Utilities\Option.cs" />
+    <Compile Include="Source\Utilities\Tuple.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Defs\ResearchProjectDefs\NR_MaterialEnergy.xml" />
+    <Content Include="Defs\ThingDefs\NR_MaterialEnergy.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Defs\WorkGiverDef\NR_MaterialEnergy.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Languages\English\DefInjected\ResearchProjectDefs\NR_MaterialEnergy.xml" />
+    <Content Include="Languages\English\DefInjected\ThingDefs\NR_MaterialEnergy.xml" />
+    <Content Include="Languages\English\DefInjected\WorkGiverDef\NR_MaterialEnergy.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Languages\English\Keyed\NR_AutoMachineTool.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Languages\Japanese\Keyed\NR_AutoMachineTool.xml" />
+    <Content Include="Textures\NR_MaterialEnergy\Building\MaterialMachine.png" />
+    <Content Include="Textures\NR_MaterialEnergy\Items\Energy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assemblies\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README_en.md" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetPath)" "$(ProjectDir)Assemblies"
+rd /s /q "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_MaterialMachine"
+xcopy /Y /I /E "$(ProjectDir)Assemblies" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_MaterialMachine\Assemblies"
+xcopy /Y /I /E "$(ProjectDir)Defs" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_MaterialMachine\Defs"
+xcopy /Y /I /E "$(ProjectDir)About" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_MaterialMachine\About"
+xcopy /Y /I /E "$(ProjectDir)Textures" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_MaterialMachine\Textures"
+xcopy /Y /I /E "$(ProjectDir)Languages" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_MaterialMachine\Languages"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
