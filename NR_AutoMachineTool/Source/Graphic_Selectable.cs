@@ -26,11 +26,13 @@ namespace NR_AutoMachineTool
         {
             if (path == null)
             {
+                Option(this.subGraphics[0].data).ForEach(d => d.drawRotated = true);
                 return this.subGraphics[0];
             }
             if (!pathDic.ContainsKey(path))
             {
                 pathDic[path] = this.subGraphics.Where(x => x.path == path).First();
+                Option(pathDic[path].data).ForEach(d => d.drawRotated = true);
             }
             return this.pathDic[path];
         }
@@ -43,6 +45,13 @@ namespace NR_AutoMachineTool
             {
                 return true;
             }
+        }
+
+        public override void Init(GraphicRequest req)
+        {
+            base.Init(req);
+
+            this.subGraphics.ForEach(g => Option(g.data).ForEach(d => d.drawRotated = true));
         }
     }
 }

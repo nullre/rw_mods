@@ -74,6 +74,7 @@ The belt conveyors are connected by vertically adjoining the orientation.
       <texPath>NR_AutoMachineTool/Buildings/BeltConveyor</texPath>
       <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
       <drawSize>(1,1)</drawSize>
+      <drawRotated>true</drawRotated>
     </graphicData>
     <pathCost>30</pathCost>
   </ThingDef>
@@ -108,6 +109,7 @@ The belt conveyors are connected by vertically adjoining the orientation.
       <texPath>NR_AutoMachineTool/Buildings/BeltConveyor</texPath>
       <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
       <drawSize>(0.8,0.8)</drawSize>
+      <drawRotated>true</drawRotated>
     </graphicData>
     <pathCost>0</pathCost>
   </ThingDef>
@@ -152,6 +154,7 @@ Connect to the underground conveyor entrance and exit and use.
       <texPath>NR_AutoMachineTool/Buildings/BeltConveyorUG</texPath>
       <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
       <drawSize>(1,1)</drawSize>
+      <drawRotated>true</drawRotated>
     </graphicData>
     <pathCost>0</pathCost>
     <fillPercent>0.0</fillPercent>
@@ -225,6 +228,7 @@ It is the entrance to the underground conveyor.
       <texPath>NR_AutoMachineTool/Buildings/ConveyorToUnderground</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
+      <drawRotated>true</drawRotated>
     </graphicData>
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
@@ -255,6 +259,7 @@ It is an exit to the underground conveyor.
       <texPath>NR_AutoMachineTool/Buildings/ConveyorToFloor</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
+      <drawRotated>true</drawRotated>
     </graphicData>
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
