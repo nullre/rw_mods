@@ -246,7 +246,7 @@ namespace NR_AutoMachineTool
         private void TryStartHarvesting()
         {
             FacingRect(this.Position, this.Rotation, this.GetRange())
-                .Where(c => c.GetZone(this.Map) as Zone_Growing != null)
+                .Where(c => c.GetPlantable(this.Map).HasValue)
                 .Where(c => (this.Position + this.Rotation.FacingCell).GetRoom(this.Map) == c.GetRoom(this.Map))
                 .SelectMany(c => c.GetThingList(this.Map))
                 .SelectMany(t => Option(t as Plant))

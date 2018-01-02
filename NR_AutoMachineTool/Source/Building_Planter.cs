@@ -188,6 +188,7 @@ namespace NR_AutoMachineTool
                 if(Find.TickManager.TicksGame % 30 == 10 || this.checkNext)
                 {
                     this.TryStartPlanting();
+                    this.checkNext = false;
                 }
             }
             else
@@ -215,19 +216,20 @@ namespace NR_AutoMachineTool
         private void TryStartPlanting()
         {
             GenRadial.RadialCellsAround(this.Position, this.GetRange(), true)
-                .Select(c => new { Cell = c, Zone = c.GetZone(this.Map) as Zone_Growing })
-                .Where(c => c.Zone != null)
-                .Where(c => c.Zone.GetPlantDefToGrow().CanEverPlantAt(c.Cell, this.Map))
+                .Select(c => new { Cell = c, Plantable = c.GetPlantable(this.Map) })
+                .Where(c => c.Plantable.HasValue)
+                .Select(c => new { Cell = c.Cell, Plantable = c.Plantable.Value })
+                .Where(c => c.Plantable.GetPlantDefToGrow().CanEverPlantAt(c.Cell, this.Map))
                 .Where(c => GenPlant.GrowthSeasonNow(c.Cell, this.Map))
                 .Where(c => GenPlant.SnowAllowsPlanting(c.Cell, this.Map))
-                .Where(c => c.Zone.allowSow)
+                .Where(c => Option(c.Plantable as Zone_Growing).Fold(true)(z => z.allowSow))
                 .Where(c => c.Cell.GetRoom(this.Map) == this.GetRoom())
-                .Where(c => c.Zone.GetPlantDefToGrow().plant.sowMinSkill <= this.SkillLevel)
-                .Where(c => GenPlant.AdjacentSowBlocker(c.Zone.GetPlantDefToGrow(), c.Cell, this.Map) == null)
+                .Where(c => c.Plantable.GetPlantDefToGrow().plant.sowMinSkill <= this.SkillLevel)
+                .Where(c => GenPlant.AdjacentSowBlocker(c.Plantable.GetPlantDefToGrow(), c.Cell, this.Map) == null)
                 .FirstOption()
                 .ForEach(c =>
                 {
-                    this.planting = ThingMaker.MakeThing(c.Zone.GetPlantDefToGrow());
+                    this.planting = ThingMaker.MakeThing(c.Plantable.GetPlantDefToGrow());
                     Option(this.planting as Plant).ForEach(x => x.sown = false);
                     if (GenPlace.TryPlaceThing(this.planting, c.Cell, this.Map, ThingPlaceMode.Direct))
                     {

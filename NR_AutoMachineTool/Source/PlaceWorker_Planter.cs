@@ -22,9 +22,9 @@ namespace NR_AutoMachineTool
                 true)
                 .Where(c => c.GetRoom(Find.VisibleMap) == center.GetRoom(Find.VisibleMap))
                 .Where(c => !c.GetThingList(Find.VisibleMap).Any(t => t.def.passability == Traversability.Impassable))
-                .Select(c => new { Cell = c, Zone = c.GetZone(Find.VisibleMap) as Zone_Growing})
-                .GroupBy(c => c.Zone)
-                .ForEach(g => GenDraw.DrawFieldEdges(g.Select(c => c.Cell).ToList(), g.Key == null ? Color.white : Color.green));
+                .Select(c => new { Cell = c, Plantable = c.GetPlantable(Find.VisibleMap) })
+                .GroupBy(c => c.Plantable.HasValue)
+                .ForEach(g => GenDraw.DrawFieldEdges(g.Select(c => c.Cell).ToList(), g.Key ? Color.green : Color.white));
         }
     }
 }

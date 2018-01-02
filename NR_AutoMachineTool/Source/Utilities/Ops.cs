@@ -88,6 +88,15 @@ namespace NR_AutoMachineTool.Utilities
             foreach (T item in sequence) action(item);
         }
 
+        public static IEnumerable<T> Peek<T>(this IEnumerable<T> sequence, Action<T> action)
+        {
+            foreach (T item in sequence)
+            {
+                action(item);
+                yield return item;
+            }
+        }
+
         public static Option<T> FindOption<T>(this List<T> sequence, Predicate<T> predicate)
         {
             var i = sequence.FindIndex(predicate);
@@ -188,6 +197,13 @@ namespace NR_AutoMachineTool.Utilities
             var n = rot;
             n.Rotate(dir);
             return n;
+        }
+
+        public static Option<IPlantToGrowSettable> GetPlantable(this IntVec3 pos, Map map)
+        {
+            return Option(pos.GetZone(map) as IPlantToGrowSettable)
+                .Fold(() => pos.GetThingList(map).Where(t => t.def.category == ThingCategory.Building).SelectMany(t => Option(t as IPlantToGrowSettable)).FirstOption())
+                (x => Option(x));
         }
         #endregion
     }
