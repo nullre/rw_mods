@@ -17,6 +17,13 @@ namespace NR_AutoMachineTool
     {
         public static IEnumerable<Thing> MakeRecipeProducts(RecipeDef recipeDef, IntVec3 position, Map map, Room room, Func<SkillDef, int> skillLevelGetter, List<Thing> ingredients, Thing dominantIngredient)
         {
+            var result = MakeRecipeProductsInt(recipeDef, position, map, room, skillLevelGetter, ingredients, dominantIngredient);
+            LoadedModManager.GetMod<Mod_AutoMachineTool>().Hopm.ForEach(m => m.Postfix_MakeRecipeProducts(ref result, recipeDef, 1f, ingredients));
+            return result;
+        }
+
+        public static IEnumerable<Thing> MakeRecipeProductsInt(RecipeDef recipeDef, IntVec3 position, Map map, Room room, Func<SkillDef, int> skillLevelGetter, List<Thing> ingredients, Thing dominantIngredient)
+        {
             float efficiency = 1f;
 
             if (recipeDef.products != null)
