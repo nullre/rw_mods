@@ -22,8 +22,8 @@ namespace NR_AutoMachineTool
         }
         private ModSetting_AutoMachineTool Setting { get => LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; }
         private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
-        private int SkillLevel { get => this.Setting.Tier(Extension.tier).skillLevel; }
-        private float SpeedFactor { get => this.Setting.Tier(Extension.tier).speedFactor; }
+        private int SkillLevel { get => this.Setting.HarvesterTier(Extension.tier).skillLevel; }
+        private float SpeedFactor { get => this.Setting.HarvesterTier(Extension.tier).speedFactor; }
 
         public int MinPowerForSpeed { get => this.Setting.HarvesterTier(Extension.tier).minSupplyPowerForSpeed; }
         public int MaxPowerForSpeed { get => this.Setting.HarvesterTier(Extension.tier).maxSupplyPowerForSpeed; }
@@ -89,19 +89,19 @@ namespace NR_AutoMachineTool
         {
             if (this.supplyPowerForSpeed < this.MinPowerForSpeed)
             {
-                this.supplyPowerForSpeed = -this.MinPowerForSpeed;
+                this.supplyPowerForSpeed = this.MinPowerForSpeed;
             }
-            if (-this.supplyPowerForSpeed > this.MaxPowerForSpeed)
+            if (this.supplyPowerForSpeed > this.MaxPowerForSpeed)
             {
-                this.supplyPowerForSpeed = -this.MaxPowerForSpeed;
+                this.supplyPowerForSpeed = this.MaxPowerForSpeed;
             }
             if (this.supplyPowerForRange < this.MinPowerForRange)
             {
-                this.supplyPowerForRange = -this.MinPowerForRange;
+                this.supplyPowerForRange = this.MinPowerForRange;
             }
-            if (-this.supplyPowerForRange > this.MaxPowerForRange)
+            if (this.supplyPowerForRange > this.MaxPowerForRange)
             {
-                this.supplyPowerForRange = -this.MaxPowerForRange;
+                this.supplyPowerForRange = this.MaxPowerForRange;
             }
         }
 

@@ -327,7 +327,6 @@ namespace NR_AutoMachineTool
             this.ChangeGraphic();
             this.FilterSetting();
             Option(this.thing).ForEach(t => this.dest = Destination(t, true));
-            
         }
 
         private void ChangeGraphic()
