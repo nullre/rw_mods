@@ -120,7 +120,6 @@ namespace NR_AutoMachineTool.Utilities
             return new Tuple<T1, T2, T3>(v1, v2, v3);
         }
 
-
         #region for rimworld
 
 //        public static void L(object obj) { Log.Message(obj == null ? "null" : obj.ToString()); }
@@ -204,6 +203,16 @@ namespace NR_AutoMachineTool.Utilities
             return Option(pos.GetZone(map) as IPlantToGrowSettable)
                 .Fold(() => pos.GetThingList(map).Where(t => t.def.category == ThingCategory.Building).SelectMany(t => Option(t as IPlantToGrowSettable)).FirstOption())
                 (x => Option(x));
+        }
+
+        public static Option<Pawn> GetGatherable(this IntVec3 pos, Map map)
+        {
+            return pos.GetThingList(map).Where(t => t.def.category == ThingCategory.Pawn)
+                .SelectMany(t => Option(t as Pawn))
+                .Where(p => p.Faction == Faction.OfPlayer)
+                .Where(p => p.TryGetComp<CompHasGatherableBodyResource>() != null)
+                .Where(p => p.GetComps<CompHasGatherableBodyResource>().Any(c => c.ActiveAndFull))
+                .FirstOption();
         }
         #endregion
     }

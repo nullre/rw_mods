@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_Harvester : Building , IAgricultureMachine, IBeltConbeyorSender
+    public class Building_Harvester : Building , IAgricultureMachine, IBeltConbeyorSender, IProductLimitation
     {
         public enum HarvestState {
             Ready,
@@ -60,6 +60,12 @@ namespace NR_AutoMachineTool
             }
         }
 
+        public int ProductLimitCount { get => this.productLimitCount; set => this.productLimitCount = value; }
+        public bool ProductLimitation { get => this.productLimitation; set => this.productLimitation = value; }
+
+        private int productLimitCount = 100;
+        private bool productLimitation = false;
+
         private float supplyPowerForSpeed;
         private float supplyPowerForRange;
         private HarvestState state;
@@ -74,6 +80,9 @@ namespace NR_AutoMachineTool
         {
             base.ExposeData();
 
+            Scribe_Values.Look<int>(ref this.productLimitCount, "productLimitCount", 100);
+            Scribe_Values.Look<bool>(ref this.productLimitation, "productLimitation", false);
+
             Scribe_Values.Look<float>(ref this.supplyPowerForSpeed, "supplyPowerForSpeed", this.MinPowerForSpeed);
             Scribe_Values.Look<float>(ref this.supplyPowerForRange, "supplyPowerForRange", this.MinPowerForRange);
             Scribe_Values.Look<HarvestState>(ref this.state, "working");
@@ -82,7 +91,7 @@ namespace NR_AutoMachineTool
             Scribe_References.Look<Plant>(ref this.harvesting, "harvesting");
             Scribe_Deep.Look<Thing>(ref this.product, "product");
 
-            LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed += this.ReloadSettings;
+            this.ReloadSettings(null, null);
         }
 
         private void ReloadSettings(object sender, EventArgs e)
@@ -119,10 +128,12 @@ namespace NR_AutoMachineTool
                 this.supplyPowerForRange = this.MinPowerForRange;
                 this.supplyPowerForSpeed = this.MinPowerForSpeed;
             }
+            LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed += this.ReloadSettings;
         }
 
         public override void DeSpawn()
         {
+            LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed -= this.ReloadSettings;
             this.Reset();
             base.DeSpawn();
         }
@@ -253,6 +264,7 @@ namespace NR_AutoMachineTool
                 .Where(p => p.HarvestableNow)
                 .Where(p => p.LifeStage == PlantLifeStage.Mature)
                 .Where(p => !harvestingSet.Contains(p))
+                .Where(p => !this.ProductLimitation || this.Map.resourceCounter.GetCount(p.def.plant.harvestedThingDef) < this.ProductLimitCount)
                 .FirstOption()
                 .ForEach(p =>
                 {

@@ -60,4 +60,11 @@
 
   <NR_AutoMachineTool.SupplyPowerForSpeedText>供給する電力を設定します。電力の供給量が大きければ、作業にかかる時間が短くなります。</NR_AutoMachineTool.SupplyPowerForSpeedText>
   <NR_AutoMachineTool.SupplyPowerForRangeText>供給する電力を設定します。電力の供給量が大きければ、作業できる範囲が広くなります。</NR_AutoMachineTool.SupplyPowerForRangeText>
+  
+  <!-- 共通 -->
+  <NR_AutoMachineTool.ProductLimitation.TabName>制限</NR_AutoMachineTool.ProductLimitation.TabName>
+  <NR_AutoMachineTool.ProductLimitation.Description>生成物の数が設定した値以上になると、処理を停止します。</NR_AutoMachineTool.ProductLimitation.Description>
+  <NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>制限する</NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>
+  <NR_AutoMachineTool.ProductLimitation.ValueLabel>制限数</NR_AutoMachineTool.ProductLimitation.ValueLabel>
+  
 </LanguageData>

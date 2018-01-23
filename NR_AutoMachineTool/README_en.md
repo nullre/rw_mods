@@ -4,6 +4,7 @@
 - It is made with reference to S.A.L.: Auto-crafters 2.0.(http://steamcommunity.com/sharedfiles/filedetails/?id=932193652)
 - It is made with reference to S.A.L.: Extra Crafters.(http://steamcommunity.com/sharedfiles/filedetails/?id=940984361)
 - It is made with reference to Industrial Rollers.(http://steamcommunity.com/sharedfiles/filedetails/?id=940984361)  
+- It is made with reference to Project RimFactory.(https://steamcommunity.com/sharedfiles/filedetails/?id=1206316724)  
 Thanks to the producers of these mods.
 
 ---
@@ -101,6 +102,7 @@ Thanks to the producers of these mods.
 ### Function
 - You can select the Planter and change the power supply amount from the power tab. If the power supply is large, the sowing speed and seeding range will rise.
 - As the tier goes up, you can create the Planter with a high skill level.
+- You can select the Planter and restrict processing by the stock quantity of the product from the Limitation tab.
 
 ### Caution
 - Planter will not plant in places that can not be planted by temperature etc.
@@ -126,11 +128,37 @@ Thanks to the producers of these mods.
 - If the output destination can be placed in the stockpiling zone, the output destination is placed somewhere in the stockpiling zone that contains the output destination.
 - Even if the destination can not be placed in the stockpiling zone, it will be placed in the cell specified as the output destination.
 - As the tier goes up, you can create the Harvester with a high skill level.
+- You can select the Harvester and restrict processing by the stock quantity of the product from the Limitation tab.
 
 ### Caution
 - If the output destination is a belt conveyor and the item already exists, the item will be placed in placement.
 - If the output destination is not a belt conveyor and the item already exists, it will be placed near the output destination.
 - Harvester will harvest if harvestable, even if there are plants not specified in the agriculture zone.
+- The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands.
+- I think balance is not good.
+
+### TODO
+- Add setting function to MOD setting screen.
+
+---
+## AnimalResourceGatherer
+
+![AnimalResourceGatherer](/NR_AutoMachineTool/About/image08.png)
+
+### Usage
+- Research on Automatic animal caretaker.
+- Place the AnimalResourceGatherer near animals passing through or staying.
+- AnimalResourceGatherer starts milking and shearing from animals within range.
+
+### Function
+- You can select the AnimalResourceGatherer and change the power supply amount from the power tab. If the power supply is large, the harvesting speed and seeding range will rise.
+- If the output destination can be placed in the stockpiling zone, the output destination is placed somewhere in the stockpiling zone that contains the output destination.
+- Even if the destination can not be placed in the stockpiling zone, it will be placed in the cell specified as the output destination.
+- You can select the AnimalResourceGatherer and restrict processing by the stock quantity of the product from the Limitation tab.
+
+### Caution
+- If the output destination is a belt conveyor and the item already exists, the item will be placed in placement.
+- If the output destination is not a belt conveyor and the item already exists, it will be placed near the output destination.
 - The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands.
 - I think balance is not good.
 

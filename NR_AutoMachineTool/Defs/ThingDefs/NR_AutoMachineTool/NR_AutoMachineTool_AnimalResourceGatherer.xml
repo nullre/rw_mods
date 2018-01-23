@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- base -->
+  <ThingDef Name="Building_NR_AutoMachineTool_AnimalResourceGatherer_Base" Parent="BuildingBase" Abstract="True">
+    <defName>Building_NR_AutoMachineTool_AnimalResourceGatherer_Base</defName>
+    <thingClass>NR_AutoMachineTool.Building_AnimalResourceGatherer</thingClass>
+    <description>
+Place the AnimalResourceGatherer near animals passing through or staying.
+AnimalResourceGatherer starts milking and shearing from animals within range.
+    </description>
+    <altitudeLayer>Building</altitudeLayer>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <fillPercent>1</fillPercent>
+
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+
+    <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
+    <pathCost>0</pathCost>
+    <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
+    <rotatable>true</rotatable>
+
+    <placeWorkers>
+      <li>NR_AutoMachineTool.PlaceWorker_AnimalResourceGatherer</li>
+    </placeWorkers>
+
+    <category>Building</category>
+    <tickerType>Normal</tickerType>
+
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <coversFloor>true</coversFloor>
+    <blockLight>true</blockLight>
+    <canOverlapZones>false</canOverlapZones>
+    <castEdgeShadows>true</castEdgeShadows>
+    <staticSunShadowHeight>1.0</staticSunShadowHeight>
+
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
+
+    <repairEffect>Repair</repairEffect>
+    <constructEffect>ConstructMetal</constructEffect>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <filthLeaving>BuildingRubble</filthLeaving>
+    <size>(1,1)</size>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <selectable>True</selectable>
+
+    <inspectorTabs>
+      <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
+      <li>NR_AutoMachineTool.ITab_ProductLimitation</li>
+    </inspectorTabs>
+  </ThingDef>
+
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_AnimalResourceGatherer_Base">
+    <defName>Building_NR_AutoMachineTool_AnimalResourceGatherer</defName>
+    <label>AnimalResourceGatherer</label>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AnimalResourceGatherer</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Steel>100</Steel>
+      <Plasteel>50</Plasteel>
+      <Component>1</Component>
+    </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutoAnimalCaretaker</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>

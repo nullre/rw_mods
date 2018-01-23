@@ -107,4 +107,20 @@
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
   </ResearchProjectDef>
+
+  
+  <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_AutoAnimalCaretaker</defName>
+    <label>Automatic animal caretaker.</label>
+    <description>Animal resource gatherer can be created.</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>MultiAnalyzer</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+  </ResearchProjectDef>
 </Defs>

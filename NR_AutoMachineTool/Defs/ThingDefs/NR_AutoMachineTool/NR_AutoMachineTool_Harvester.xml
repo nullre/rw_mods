@@ -63,6 +63,7 @@ Harvester starts harvesting plants in the agricultural zone within range.
 
     <inspectorTabs>
       <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
+      <li>NR_AutoMachineTool.ITab_ProductLimitation</li>
     </inspectorTabs>
   </ThingDef>
 

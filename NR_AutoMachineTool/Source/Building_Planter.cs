@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_Planter : Building, IAgricultureMachine
+    public class Building_Planter : Building, IAgricultureMachine, IProductLimitation
     {
         private ModSetting_AutoMachineTool Setting { get => LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; }
         private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
@@ -52,6 +52,11 @@ namespace NR_AutoMachineTool
                 this.SetPower();
             }
         }
+        public int ProductLimitCount { get => this.productLimitCount; set => this.productLimitCount = value; }
+        public bool ProductLimitation { get => this.productLimitation; set => this.productLimitation = value; }
+
+        private int productLimitCount = 100;
+        private bool productLimitation = false;
 
         private float supplyPowerForSpeed;
         private float supplyPowerForRange;
@@ -66,6 +71,9 @@ namespace NR_AutoMachineTool
         {
             base.ExposeData();
 
+            Scribe_Values.Look<int>(ref this.productLimitCount, "productLimitCount", 100);
+            Scribe_Values.Look<bool>(ref this.productLimitation, "productLimitation", false);
+
             Scribe_Values.Look<float>(ref this.supplyPowerForSpeed, "supplyPowerForSpeed", this.MinPowerForSpeed);
             Scribe_Values.Look<float>(ref this.supplyPowerForRange, "supplyPowerForRange", this.MinPowerForRange);
             Scribe_Values.Look<bool>(ref this.working, "working", false);
@@ -73,7 +81,7 @@ namespace NR_AutoMachineTool
             
             Scribe_References.Look<Thing>(ref this.planting, "planting");
 
-            LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed += this.ReloadSettings;
+            this.ReloadSettings(null, null);
         }
 
         private void ReloadSettings(object sender, EventArgs e)
@@ -110,10 +118,12 @@ namespace NR_AutoMachineTool
                 this.supplyPowerForRange = this.MinPowerForRange;
                 this.supplyPowerForSpeed = this.MinPowerForSpeed;
             }
+            LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed += this.ReloadSettings;
         }
 
         public override void DeSpawn()
         {
+            LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed -= this.ReloadSettings;
             this.Reset();
             base.DeSpawn();
         }
@@ -226,6 +236,7 @@ namespace NR_AutoMachineTool
                 .Where(c => c.Cell.GetRoom(this.Map) == this.GetRoom())
                 .Where(c => c.Plantable.GetPlantDefToGrow().plant.sowMinSkill <= this.SkillLevel)
                 .Where(c => GenPlant.AdjacentSowBlocker(c.Plantable.GetPlantDefToGrow(), c.Cell, this.Map) == null)
+                .Where(c => !this.ProductLimitation || this.Map.resourceCounter.GetCount(c.Plantable.GetPlantDefToGrow().plant.harvestedThingDef) < this.ProductLimitCount)
                 .FirstOption()
                 .ForEach(c =>
                 {

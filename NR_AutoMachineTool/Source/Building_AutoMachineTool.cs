@@ -148,6 +148,8 @@ namespace NR_AutoMachineTool
             Scribe_References.Look<Thing>(ref this.dominant, "dominant");
             Scribe_Collections.Look<Thing>(ref this.ingredients, "ingredients", LookMode.Deep);
             Scribe_Collections.Look<Thing>(ref this.products, "products", LookMode.Deep);
+
+            this.ReloadSettings(null, null);
         }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
@@ -182,16 +184,11 @@ namespace NR_AutoMachineTool
 
         public override void DeSpawn()
         {
+            LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed -= this.ReloadSettings;
+
             Reset(M);
             this.workTable.ForEach(this.AllowWorkTable);
             base.DeSpawn();
-        }
-
-        public override void Destroy(DestroyMode mode)
-        {
-            LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed -= this.ReloadSettings;
-
-            base.Destroy(mode);
         }
 
         private void Reset(Map map)

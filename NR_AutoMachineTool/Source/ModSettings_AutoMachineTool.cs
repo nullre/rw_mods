@@ -53,15 +53,28 @@ namespace NR_AutoMachineTool
 
         public float carrySpeedFactor = 1f;
 
-        public float pullSpeedFactor = 1f;
-
         public int minBeltConveyorSupplyPower = 10;
 
         public int maxBeltConveyorSupplyPower = 100;
 
+
+        public float pullSpeedFactor = 1f;
+
         public int minPullerSupplyPower = 1000;
 
         public int maxPullerSupplyPower = 10000;
+
+
+        public float gathererSpeedFactor = 1f;
+
+        public int minGathererSupplyPowerForSpeed = 500;
+
+        public int maxGathererSupplyPowerForSpeed = 5000;
+
+        public int minGathererSupplyPowerForRange = 0;
+
+        public int maxGathererSupplyPowerForRange = 2000;
+
 
         public void RestoreDefault()
         {
