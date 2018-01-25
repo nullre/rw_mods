@@ -112,7 +112,7 @@
   <ResearchProjectDef>
     <defName>ResearchProject_NR_AutoMachineTool_AutoAnimalCaretaker</defName>
     <label>Automatic animal caretaker.</label>
-    <description>Animal resource gatherer can be created.</description>
+    <description>Animal resource gatherer and Slaughterhouse can be created.</description>
     <baseCost>2000</baseCost>
     <techLevel>Spacer</techLevel>
     <prerequisites>

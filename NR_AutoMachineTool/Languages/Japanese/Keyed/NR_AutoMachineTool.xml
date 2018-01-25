@@ -67,4 +67,21 @@
   <NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>制限する</NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>
   <NR_AutoMachineTool.ProductLimitation.ValueLabel>制限数</NR_AutoMachineTool.ProductLimitation.ValueLabel>
   
+  <!-- Slaughterhouse -->
+  <NR_AutoMachineTool.SlaughterhouseSetting.TabName>設定</NR_AutoMachineTool.SlaughterhouseSetting.TabName>
+  <NR_AutoMachineTool.SlaughterhouseSetting.Description>屠畜対象の設定</NR_AutoMachineTool.SlaughterhouseSetting.Description>
+  <NR_AutoMachineTool.SlaughterhouseSetting.DoSlaughterTip>チェックを入れると屠畜対象にします。</NR_AutoMachineTool.SlaughterhouseSetting.DoSlaughterTip>
+  <NR_AutoMachineTool.SlaughterhouseSetting.BondsTip>チェックを入れると絆持ちも屠畜します。</NR_AutoMachineTool.SlaughterhouseSetting.BondsTip>
+  <NR_AutoMachineTool.SlaughterhouseSetting.PregnancyTip>チェックを入れると妊娠中の家畜も屠畜します。</NR_AutoMachineTool.SlaughterhouseSetting.PregnancyTip>
+  <NR_AutoMachineTool.SlaughterhouseSetting.TrainedTip>チェックを入れると訓練済みの家畜も屠畜します。</NR_AutoMachineTool.SlaughterhouseSetting.TrainedTip>
+
+  <NR_AutoMachineTool.SlaughterhouseSetting.KeepCountTip>屠畜せずに確保する{0}の{1}の数を指定します。</NR_AutoMachineTool.SlaughterhouseSetting.KeepCountTip>
+  <NR_AutoMachineTool.Male>雄</NR_AutoMachineTool.Male>
+  <NR_AutoMachineTool.Female>雌</NR_AutoMachineTool.Female>
+  <NR_AutoMachineTool.Adult>成獣</NR_AutoMachineTool.Adult>
+  <NR_AutoMachineTool.Young>幼獣</NR_AutoMachineTool.Young>
+
+  <NR_AutoMachineTool.RaceName>種族名</NR_AutoMachineTool.RaceName>
+  <NR_AutoMachineTool.Bonds>絆</NR_AutoMachineTool.Bonds>
+
 </LanguageData>

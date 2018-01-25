@@ -2,12 +2,13 @@
 <Defs>
 
   <!-- base -->
-  <ThingDef Name="Building_NR_AutoMachineTool_AnimalResourceGatherer_Base" Parent="BuildingBase" Abstract="True">
-    <defName>Building_NR_AutoMachineTool_AnimalResourceGatherer_Base</defName>
-    <thingClass>NR_AutoMachineTool.Building_AnimalResourceGatherer</thingClass>
+  <ThingDef Name="Building_NR_AutoMachineTool_Slaughterhouse_Base" Parent="BuildingBase" Abstract="True">
+    <defName>Building_NR_AutoMachineTool_Slaughterhouse_Base</defName>
+    <thingClass>NR_AutoMachineTool.Building_Slaughterhouse</thingClass>
     <description>
-Place the AnimalResourceGatherer near animals passing through or staying.
-AnimalResourceGatherer starts milking and shearing from animals within range.
+Place the Slaughterhouse near animals passing through or staying.
+Select the Slaughterhouse and set slaughter from the setting tab.
+Slaughterhouse starts slaughter animals within range.
     </description>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
@@ -63,17 +64,17 @@ AnimalResourceGatherer starts milking and shearing from animals within range.
 
     <inspectorTabs>
       <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
-      <li>NR_AutoMachineTool.ITab_ProductLimitation</li>
+      <li>NR_AutoMachineTool.ITab_Slaughterhouse</li>
     </inspectorTabs>
   </ThingDef>
 
 
-  <ThingDef ParentName="Building_NR_AutoMachineTool_AnimalResourceGatherer_Base">
-    <defName>Building_NR_AutoMachineTool_AnimalResourceGatherer</defName>
-    <label>AnimalResourceGatherer</label>
+  <ThingDef ParentName="Building_NR_AutoMachineTool_Slaughterhouse_Base">
+    <defName>Building_NR_AutoMachineTool_Slaughterhouse</defName>
+    <label>Slaughterhouse</label>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
     <graphicData>
-      <texPath>NR_AutoMachineTool/Buildings/AnimalResourceGatherer</texPath>
+      <texPath>NR_AutoMachineTool/Buildings/Slaughterhouse</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>

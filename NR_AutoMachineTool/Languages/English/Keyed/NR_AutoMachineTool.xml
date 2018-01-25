@@ -61,10 +61,26 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool.SupplyPowerForSpeedText>Set the power to be supplied. If the power supply amount is large, it takes less time to work.</NR_AutoMachineTool.SupplyPowerForSpeedText>
   <NR_AutoMachineTool.SupplyPowerForRangeText>Set the power to be supplied. If the power supply amount is large, the range of work can be widened.</NR_AutoMachineTool.SupplyPowerForRangeText>
 
-  <!-- 共通 -->
+  <!-- common -->
   <NR_AutoMachineTool.ProductLimitation.TabName>Limitation</NR_AutoMachineTool.ProductLimitation.TabName>
   <NR_AutoMachineTool.ProductLimitation.Description>Processing stops when the number of products exceeds the set value.</NR_AutoMachineTool.ProductLimitation.Description>
   <NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>do limit</NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>
   <NR_AutoMachineTool.ProductLimitation.ValueLabel>limit count</NR_AutoMachineTool.ProductLimitation.ValueLabel>
-  
+
+  <!-- Slaughterhouse -->
+  <NR_AutoMachineTool.SlaughterhouseSetting.TabName>Setting</NR_AutoMachineTool.SlaughterhouseSetting.TabName>
+  <NR_AutoMachineTool.SlaughterhouseSetting.Description>Setting for slaughter target</NR_AutoMachineTool.SlaughterhouseSetting.Description>
+  <NR_AutoMachineTool.SlaughterhouseSetting.DoSlaughterTip>slaughter animals if checked.</NR_AutoMachineTool.SlaughterhouseSetting.DoSlaughterTip>
+  <NR_AutoMachineTool.SlaughterhouseSetting.BondsTip>slaughter bonded animals if checked.</NR_AutoMachineTool.SlaughterhouseSetting.BondsTip>
+  <NR_AutoMachineTool.SlaughterhouseSetting.PregnancyTip>slaughter pregnancy animals if checked.</NR_AutoMachineTool.SlaughterhouseSetting.PregnancyTip>
+  <NR_AutoMachineTool.SlaughterhouseSetting.TrainedTip>slaughter trained animals if checked.</NR_AutoMachineTool.SlaughterhouseSetting.TrainedTip>
+
+  <NR_AutoMachineTool.SlaughterhouseSetting.KeepCountTip>Specify the number of {0} {1} to keep without slaughter.</NR_AutoMachineTool.SlaughterhouseSetting.KeepCountTip>
+  <NR_AutoMachineTool.Male>male</NR_AutoMachineTool.Male>
+  <NR_AutoMachineTool.Female>female</NR_AutoMachineTool.Female>
+  <NR_AutoMachineTool.Adult>adult</NR_AutoMachineTool.Adult>
+  <NR_AutoMachineTool.Young>young</NR_AutoMachineTool.Young>
+
+  <NR_AutoMachineTool.RaceName>race name</NR_AutoMachineTool.RaceName>
+  <NR_AutoMachineTool.Bonds>bonds</NR_AutoMachineTool.Bonds>
 </LanguageData>

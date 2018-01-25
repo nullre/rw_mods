@@ -16,7 +16,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_AnimalResourceGatherer : Building , IAgricultureMachine, IBeltConbeyorSender, IProductLimitation
+    public class Building_AnimalResourceGatherer : Building , IAgricultureMachine, IBeltConbeyorSender, IProductLimitation, IRange
     {
         public enum GatherState
         {
@@ -25,7 +25,6 @@ namespace NR_AutoMachineTool
             Placing
         }
         private ModSetting_AutoMachineTool Setting { get => LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; }
-        private ModExtension_AutoMachineTool Extension { get => this.def.GetModExtension<ModExtension_AutoMachineTool>(); }
         
         private float SpeedFactor { get => this.Setting.gathererSpeedFactor; }
 
@@ -120,7 +119,7 @@ namespace NR_AutoMachineTool
         public override void ExposeData()
         {
             base.ExposeData();
-
+            
             Scribe_Values.Look<int>(ref this.productLimitCount, "productLimitCount", 100);
             Scribe_Values.Look<bool>(ref this.productLimitation, "productLimitation", false);
 

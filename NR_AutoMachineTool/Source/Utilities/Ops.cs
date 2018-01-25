@@ -6,6 +6,7 @@ using System.Text;
 using RimWorld;
 using Verse;
 using Verse.Sound;
+using UnityEngine;
 
 namespace NR_AutoMachineTool.Utilities
 {
@@ -108,6 +109,21 @@ namespace NR_AutoMachineTool.Utilities
             {
                 return new Just<T>(sequence[i]);
             }
+        }
+
+        public static Option<V> GetOption<K, V>(this Dictionary<K, V> dict, K key)
+        {
+            V val;
+            if(dict.TryGetValue(key, out val))
+            {
+                return Just(val);
+            }
+            return Nothing<V>();
+        }
+
+        public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer = null)
+        {
+            return new HashSet<T>(source, comparer);
         }
 
         public static Tuple<T1, T2> Tuple<T1, T2>(T1 v1, T2 v2)
@@ -213,6 +229,11 @@ namespace NR_AutoMachineTool.Utilities
                 .Where(p => p.TryGetComp<CompHasGatherableBodyResource>() != null)
                 .Where(p => p.GetComps<CompHasGatherableBodyResource>().Any(c => c.ActiveAndFull))
                 .FirstOption();
+        }
+
+        public static bool IsAdult(this Pawn p)
+        {
+            return p.ageTracker.CurLifeStageIndex >= 2;
         }
         #endregion
     }

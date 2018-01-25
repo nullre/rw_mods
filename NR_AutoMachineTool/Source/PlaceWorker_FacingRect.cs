@@ -13,12 +13,16 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    class PlaceWorker_AnimalResourceGatherer : PlaceWorker
+    public interface IRange
+    {
+        int GetRange();
+    }
+    class PlaceWorker_FacingRect : PlaceWorker
     {
         public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot)
         {
             GenDraw.DrawFieldEdges(FacingRect(center, rot,
-                center.GetThingList(Find.VisibleMap).Where(t => t.def == def).SelectMany(t => Option(t as Building_AnimalResourceGatherer)).FirstOption().Fold(2)(p => p.GetRange()))
+                center.GetThingList(Find.VisibleMap).Where(t => t.def == def).SelectMany(t => Option(t as IRange)).FirstOption().Fold(2)(p => p.GetRange()))
                 .Where(c => (center + rot.FacingCell).GetRoom(Find.VisibleMap) == c.GetRoom(Find.VisibleMap))
                 .ToList(), Color.white);
 

@@ -75,6 +75,15 @@ namespace NR_AutoMachineTool
 
         public int maxGathererSupplyPowerForRange = 2000;
 
+        public float slaughterSpeedFactor = 1f;
+
+        public int minSlaughterSupplyPowerForSpeed = 500;
+
+        public int maxSlaughterSupplyPowerForSpeed = 5000;
+
+        public int minSlaughterSupplyPowerForRange = 0;
+
+        public int maxSlaughterSupplyPowerForRange = 2000;
 
         public void RestoreDefault()
         {

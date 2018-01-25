@@ -166,6 +166,32 @@ Thanks to the producers of these mods.
 - Add setting function to MOD setting screen.
 
 ---
+## Slaughterhouse
+
+![Slaughterhouse](/NR_AutoMachineTool/About/image09.png)
+
+### Usage
+- Research on Automatic animal caretaker.
+- Place the Slaughterhouse near animals passing through or staying.
+- Select the slaughterhouse and set slaughter from the setting tab.
+- Slaughterhouse starts slaughter animals within range.
+
+### Function
+- You can select the Slaughterhouse and change the power supply amount from the power tab. If the power supply is large, the harvesting speed and seeding range will rise.
+- If the output destination can be placed in the stockpiling zone, the output destination is placed somewhere in the stockpiling zone that contains the output destination.
+- Even if the destination can not be placed in the stockpiling zone, it will be placed in the cell specified as the output destination.
+- You can select the slaughter machine and set the number of livestock and the availability of slaughter to leave from the setting tab.
+
+### Caution
+- If the output destination is a belt conveyor and the item already exists, the item will be placed in placement.
+- If the output destination is not a belt conveyor and the item already exists, it will be placed near the output destination.
+- The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands.
+- I think balance is not good.
+
+### TODO
+- Add setting function to MOD setting screen.
+
+---
 ## Overall
 
 ### TODO
