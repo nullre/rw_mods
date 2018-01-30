@@ -113,22 +113,22 @@ namespace NR_AutoMachineTool
         private ModSetting_AutoMachineTool Setting { get { return LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; } }
         private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
 
-        private int SkillLevel { get { return this.Setting.Tier(Extension.tier).skillLevel; } }
-        public int MaxPower { get { return this.Setting.Tier(Extension.tier).maxSupplyPower; } }
-        public int MinPower { get { return this.Setting.Tier(Extension.tier).minSupplyPower; } }
-        private float SpeedFactor { get { return this.Setting.Tier(Extension.tier).speedFactor; } }
+        private int SkillLevel { get { return this.Setting.AutoMachineToolTier(Extension.tier).skillLevel; } }
+        public int MaxPowerForSpeed { get { return this.Setting.AutoMachineToolTier(Extension.tier).maxSupplyPowerForSpeed; } }
+        public int MinPowerForSpeed { get { return this.Setting.AutoMachineToolTier(Extension.tier).minSupplyPowerForSpeed; } }
+        private float SpeedFactor { get { return this.Setting.AutoMachineToolTier(Extension.tier).speedFactor; } }
 
-        public float SupplyPower
+        public float SupplyPowerForSpeed
         {
             get
             {
-                return -this.supplyPower;
+                return this.supplyPower;
             }
 
             set
             {
-                this.supplyPower = -value;
-                this.TryGetComp<CompPowerTrader>().PowerOutput = this.supplyPower;
+                this.supplyPower = value;
+                this.SetPower();
             }
         }
 
@@ -139,7 +139,8 @@ namespace NR_AutoMachineTool
             Scribe_Values.Look<float>(ref this.workLeft, "workLeft");
             Scribe_Values.Look<float>(ref this.workAmount, "workAmount");
             Scribe_Values.Look<int>(ref this.outputIndex, "outputIndex");
-            Scribe_Values.Look<float>(ref this.supplyPower, "supplyPower", this.MinPower);
+            Scribe_Values.Look<float>(ref this.supplyPower, "supplyPower", this.MinPowerForSpeed);
+            this.supplyPower = Mathf.Abs(supplyPower);
             Scribe_Values.Look<bool>(ref this.forbidItem, "forbidItem");
 
             Scribe_Deep.Look<UnfinishedThing>(ref this.unfinished, "unfinished");
@@ -161,7 +162,7 @@ namespace NR_AutoMachineTool
             if (!respawningAfterLoad)
             {
                 this.outputIndex = this.adjacent.ToList().FindIndex(x => x == this.Rotation.FacingCell * -1);
-                this.supplyPower = -this.MinPower;
+                this.SupplyPowerForSpeed = this.MinPowerForSpeed;
             }
             else
             {
@@ -172,13 +173,13 @@ namespace NR_AutoMachineTool
 
         private void ReloadSettings(object sender, EventArgs e)
         {
-            if (-this.supplyPower < this.MinPower)
+            if (this.SupplyPowerForSpeed < this.MinPowerForSpeed)
             {
-                this.supplyPower = -this.MinPower;
+                this.SupplyPowerForSpeed = this.MinPowerForSpeed;
             }
-            if (-this.supplyPower > this.MaxPower)
+            if (this.SupplyPowerForSpeed > this.MaxPowerForSpeed)
             {
-                this.supplyPower = -this.MaxPower;
+                this.SupplyPowerForSpeed = this.MaxPowerForSpeed;
             }
         }
 
@@ -322,14 +323,19 @@ namespace NR_AutoMachineTool
             this.workTable = currentWotkTable;
         }
 
+        private void SetPower()
+        {
+            if (-this.SupplyPowerForSpeed != this.TryGetComp<CompPowerTrader>().PowerOutput)
+            {
+                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.SupplyPowerForSpeed;
+            }
+        }
+
         public override void Tick()
         {
             base.Tick();
 
-            if (this.supplyPower != this.TryGetComp<CompPowerTrader>().PowerOutput)
-            {
-                this.TryGetComp<CompPowerTrader>().PowerOutput = this.supplyPower;
-            }
+            this.SetPower();
 
             this.WorkTableSetting();
 
@@ -357,7 +363,7 @@ namespace NR_AutoMachineTool
 
                 if (this.workTable.Fold(false)(t => t.UsableNow))
                 {
-                    this.workLeft -= (-this.supplyPower / 1000.0f) * this.SpeedFactor;
+                    this.workLeft -= (this.SupplyPowerForSpeed / 1000.0f) * this.SpeedFactor;
                     Option(this.unfinished).ForEach(u => u.workLeft = this.workLeft);
                 }
 
@@ -680,11 +686,6 @@ namespace NR_AutoMachineTool
             msg += "\n";
             msg += "NR_AutoMachineTool.SkillLevel".Translate(this.SkillLevel.ToString());
             return msg;
-        }
-
-        public string PowerSupplyMessage()
-        {
-            return "NR_AutoMachineTool.SupplyPowerText".Translate();
         }
 
         public void NortifyReceivable()

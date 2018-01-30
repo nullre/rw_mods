@@ -111,56 +111,16 @@ namespace NR_AutoMachineTool
         private static readonly Texture2D FemaleIcon = GenderUtility.GetIcon(Gender.Female);
 
         private static Texture2D slaughterIcon;
-        private static Texture2D SlaughterIcon
-        {
-            get
-            {
-                if (slaughterIcon == null)
-                {
-                    slaughterIcon = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Slaughter", true);
-                }
-                return slaughterIcon;
-            }
-        }
+        private static Texture2D SlaughterIcon => slaughterIcon = slaughterIcon ?? ContentFinder<Texture2D>.Get("UI/Icons/Animal/Slaughter", true);
 
         private static Texture2D trainedIcon;
-        private static Texture2D TrainedIcon
-        {
-            get
-            {
-                if (trainedIcon == null)
-                {
-                    trainedIcon = ContentFinder<Texture2D>.Get("UI/Icons/Trainables/Obedience", true);
-                }
-                return trainedIcon;
-            }
-        }
+        private static Texture2D TrainedIcon => trainedIcon = trainedIcon ?? ContentFinder<Texture2D>.Get("UI/Icons/Trainables/Obedience", true);
 
         private static Texture2D youngIcon;
-        private static Texture2D YoungIcon
-        {
-            get
-            {
-                if (youngIcon == null)
-                {
-                    youngIcon = ContentFinder<Texture2D>.Get("UI/Icons/LifeStage/Young", true);
-                }
-                return youngIcon;
-            }
-        }
+        private static Texture2D YoungIcon => youngIcon = youngIcon ?? ContentFinder<Texture2D>.Get("UI/Icons/LifeStage/Young", true);
 
         private static Texture2D adultIcon;
-        private static Texture2D AdultIcon
-        {
-            get
-            {
-                if (adultIcon == null)
-                {
-                    adultIcon = ContentFinder<Texture2D>.Get("UI/Icons/LifeStage/Adult", true);
-                }
-                return adultIcon;
-            }
-        }
+        private static Texture2D AdultIcon => adultIcon = adultIcon ?? ContentFinder<Texture2D>.Get("UI/Icons/LifeStage/Adult", true);
 
         private Func<float, Rect> CutLeftFunc(Rect rect)
         {

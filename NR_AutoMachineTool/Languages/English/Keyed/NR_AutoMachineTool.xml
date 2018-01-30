@@ -7,7 +7,6 @@ Even if the output destination is in the stockpiling zone, the finished product 
 
   <NR_AutoMachineTool.SupplyPowerTab>Power</NR_AutoMachineTool.SupplyPowerTab>
   <NR_AutoMachineTool.SupplyPowerText>Set the power to be supplied. If the power supply amount is large, it takes less time to work.</NR_AutoMachineTool.SupplyPowerText>
-  <NR_AutoMachineTool.SupplyPowerConveyorText>Set the power to be supplied. If the power supply amount is large, it takes less time to move. The power supply amount of all conveyors changes.</NR_AutoMachineTool.SupplyPowerConveyorText>
   
   <NR_AutoMachineTool.SupplyPowerValueLabel>Supply power</NR_AutoMachineTool.SupplyPowerValueLabel>
   <NR_AutoMachineTool.ForbidOutputItemLabel>Forbid output items</NR_AutoMachineTool.ForbidOutputItemLabel>
@@ -31,6 +30,7 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool.SettingName>AutoMachineTool setting</NR_AutoMachineTool.SettingName>
   <NR_AutoMachineTool.SettingTier>Tier [{0}]</NR_AutoMachineTool.SettingTier>
   <NR_AutoMachineTool.SettingSkillLevel>Skill level({0})</NR_AutoMachineTool.SettingSkillLevel>
+  
   <NR_AutoMachineTool.SettingMaxSupplyPower>Settable max supply power({0})</NR_AutoMachineTool.SettingMaxSupplyPower>
   <NR_AutoMachineTool.SettingMinSupplyPower>Settable min supply power({0})</NR_AutoMachineTool.SettingMinSupplyPower>
   <NR_AutoMachineTool.SettingSpeedFactor>Speed factor({0})</NR_AutoMachineTool.SettingSpeedFactor>
@@ -66,6 +66,11 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool.ProductLimitation.Description>Processing stops when the number of products exceeds the set value.</NR_AutoMachineTool.ProductLimitation.Description>
   <NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>do limit</NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>
   <NR_AutoMachineTool.ProductLimitation.ValueLabel>limit count</NR_AutoMachineTool.ProductLimitation.ValueLabel>
+  <NR_AutoMachineTool.Speed>speed</NR_AutoMachineTool.Speed>
+  <NR_AutoMachineTool.Range>range</NR_AutoMachineTool.Range>
+  <NR_AutoMachineTool.AutoMachineTool>AutoMachineTool</NR_AutoMachineTool.AutoMachineTool>
+  <NR_AutoMachineTool.Planter>Planter</NR_AutoMachineTool.Planter>
+  <NR_AutoMachineTool.Harvester>Harvester</NR_AutoMachineTool.Harvester>
 
   <!-- Slaughterhouse -->
   <NR_AutoMachineTool.SlaughterhouseSetting.TabName>Setting</NR_AutoMachineTool.SlaughterhouseSetting.TabName>

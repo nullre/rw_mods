@@ -15,176 +15,185 @@ namespace NR_AutoMachineTool
 {
     public class ModSetting_AutoMachineTool : ModSettings
     {
-        public class TierSetting : IExposable
-        {
-            public int minSupplyPower;
-            public int maxSupplyPower;
-            public int skillLevel;
-            public float speedFactor;
+        public BasicMachineSetting beltConveyorSetting = BeltConveyorDefault();
+        public static readonly Func<BasicMachineSetting> BeltConveyorDefault = () => new BasicMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 10, maxSupplyPowerForSpeed = 100 };
 
-            public void ExposeData()
-            {
-                Scribe_Values.Look<int>(ref this.minSupplyPower, "minSupplyPower");
-                Scribe_Values.Look<int>(ref this.maxSupplyPower, "maxSupplyPower");
-                Scribe_Values.Look<int>(ref this.skillLevel, "skillLevel");
-                Scribe_Values.Look<float>(ref this.speedFactor, "speedFactor");
-            }
+        public BasicMachineSetting pullerSetting = PullerDefault();
+        public static readonly Func<BasicMachineSetting> PullerDefault = () => new BasicMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 10000 };
+
+        public RangeMachineSetting gathererSetting = GathererDefault();
+        public static readonly Func<RangeMachineSetting> GathererDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 20000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000 };
+
+        public RangeMachineSetting slaughterSetting = SlaughterDefault();
+        public static readonly Func<RangeMachineSetting> SlaughterDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 20000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000 };
+
+        private List<SkillMachineSetting> autoMachineToolSetting = CreateAutoMachineToolDefault();
+
+        private static List<SkillMachineSetting> CreateAutoMachineToolDefault()
+        {
+            return new List<SkillMachineSetting> {
+                new SkillMachineSetting() { minSupplyPowerForSpeed = 100, maxSupplyPowerForSpeed = 1000, skillLevel = 5, speedFactor = 1f },
+                new SkillMachineSetting() { minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 5000, skillLevel = 10, speedFactor = 1.5f },
+                new SkillMachineSetting() { minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 100000, skillLevel = 20, speedFactor = 2f }
+            };
         }
 
-        public class AgricultureTierSetting : IExposable
-        {
-            public int minSupplyPowerForRange;
-            public int maxSupplyPowerForRange;
-            public int minSupplyPowerForSpeed;
-            public int maxSupplyPowerForSpeed;
-            public int skillLevel;
-            public float speedFactor;
+        private List<RangeSkillMachineSetting> planterSetting = CreatePlanterDefault();
 
-            public void ExposeData()
-            {
-                Scribe_Values.Look<int>(ref this.minSupplyPowerForRange, "minSupplyPowerForRange");
-                Scribe_Values.Look<int>(ref this.maxSupplyPowerForRange, "maxSupplyPowerForRange");
-                Scribe_Values.Look<int>(ref this.minSupplyPowerForSpeed, "minSupplyPowerForSpeed");
-                Scribe_Values.Look<int>(ref this.maxSupplyPowerForSpeed, "maxSupplyPowerForSpeed");
-                Scribe_Values.Look<int>(ref this.skillLevel, "skillLevel");
-                Scribe_Values.Look<float>(ref this.speedFactor, "speedFactor");
-            }
+        private static List<RangeSkillMachineSetting> CreatePlanterDefault()
+        {
+            return new List<RangeSkillMachineSetting> {
+                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 1000, minSupplyPowerForSpeed = 300, maxSupplyPowerForSpeed = 1000, skillLevel = 5, speedFactor = 1f },
+                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 5000, skillLevel = 10, speedFactor = 1.5f },
+                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 5000, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 10000, skillLevel = 20, speedFactor = 2f }
+            };
         }
 
-        public float carrySpeedFactor = 1f;
+        private List<RangeSkillMachineSetting> harvesterSetting = CreateHarvesterDefault();
 
-        public int minBeltConveyorSupplyPower = 10;
-
-        public int maxBeltConveyorSupplyPower = 100;
-
-
-        public float pullSpeedFactor = 1f;
-
-        public int minPullerSupplyPower = 1000;
-
-        public int maxPullerSupplyPower = 10000;
-
-
-        public float gathererSpeedFactor = 1f;
-
-        public int minGathererSupplyPowerForSpeed = 500;
-
-        public int maxGathererSupplyPowerForSpeed = 5000;
-
-        public int minGathererSupplyPowerForRange = 0;
-
-        public int maxGathererSupplyPowerForRange = 2000;
-
-        public float slaughterSpeedFactor = 1f;
-
-        public int minSlaughterSupplyPowerForSpeed = 500;
-
-        public int maxSlaughterSupplyPowerForSpeed = 5000;
-
-        public int minSlaughterSupplyPowerForRange = 0;
-
-        public int maxSlaughterSupplyPowerForRange = 2000;
+        private static List<RangeSkillMachineSetting> CreateHarvesterDefault()
+        {
+            return new List<RangeSkillMachineSetting> {
+                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 1000, minSupplyPowerForSpeed = 300, maxSupplyPowerForSpeed = 1000, skillLevel = 0, speedFactor = 1f },
+                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 5000, skillLevel = 0, speedFactor = 1.5f },
+                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 5000, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 10000, skillLevel = 0, speedFactor = 2f }
+            };
+        }
 
         public void RestoreDefault()
         {
-            this.setting = CreateDefault();
+            this.autoMachineToolSetting = CreateAutoMachineToolDefault();
             this.planterSetting = CreatePlanterDefault();
-            this.carrySpeedFactor = 1f;
-            this.pullSpeedFactor = 1f;
-        }
+            this.harvesterSetting = CreateHarvesterDefault();
 
-        private List<TierSetting> setting = CreateDefault();
-
-        private static List<TierSetting> CreateDefault()
-        {
-            return new List<TierSetting> {
-                new TierSetting() { minSupplyPower = 100, maxSupplyPower = 1000, skillLevel = 5, speedFactor = 1f },
-                new TierSetting() { minSupplyPower = 500, maxSupplyPower = 5000, skillLevel = 10, speedFactor = 1.5f },
-                new TierSetting() { minSupplyPower = 1000, maxSupplyPower = 100000, skillLevel = 20, speedFactor = 2f }
-            };
-        }
-
-        private List<AgricultureTierSetting> planterSetting = CreatePlanterDefault();
-
-        private static List<AgricultureTierSetting> CreatePlanterDefault()
-        {
-            return new List<AgricultureTierSetting> {
-                new AgricultureTierSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 1000, minSupplyPowerForSpeed = 300, maxSupplyPowerForSpeed = 1000, skillLevel = 5, speedFactor = 1f },
-                new AgricultureTierSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 5000, skillLevel = 10, speedFactor = 1.5f },
-                new AgricultureTierSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 5000, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 10000, skillLevel = 20, speedFactor = 2f }
-            };
-        }
-
-        private List<AgricultureTierSetting> harvesterSetting = CreateHarvesterDefault();
-
-        private static List<AgricultureTierSetting> CreateHarvesterDefault()
-        {
-            return new List<AgricultureTierSetting> {
-                new AgricultureTierSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 1000, minSupplyPowerForSpeed = 300, maxSupplyPowerForSpeed = 1000, skillLevel = 0, speedFactor = 1f },
-                new AgricultureTierSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 5000, skillLevel = 0, speedFactor = 1.5f },
-                new AgricultureTierSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 5000, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 10000, skillLevel = 0, speedFactor = 2f }
-            };
+            this.beltConveyorSetting = BeltConveyorDefault();
+            this.pullerSetting = PullerDefault();
+            this.gathererSetting = GathererDefault();
+            this.slaughterSetting = SlaughterDefault();
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Collections.Look<TierSetting>(ref this.setting, "setting");
-            Scribe_Collections.Look<AgricultureTierSetting>(ref this.planterSetting, "planterSetting");
-            Scribe_Collections.Look<AgricultureTierSetting>(ref this.harvesterSetting, "harvesterSetting");
-            Scribe_Values.Look<float>(ref this.carrySpeedFactor, "carrySpeed", 1f);
-            Scribe_Values.Look<float>(ref this.pullSpeedFactor, "pullSpeedFactor", 1f);
-            Scribe_Values.Look<int>(ref this.minBeltConveyorSupplyPower, "minBeltConveyorSupplyPower", 10);
-            Scribe_Values.Look<int>(ref this.maxBeltConveyorSupplyPower, "maxBeltConveyorSupplyPower", 100);
-            Scribe_Values.Look<int>(ref this.minPullerSupplyPower, "minPullerSupplyPower", 1000);
-            Scribe_Values.Look<int>(ref this.maxPullerSupplyPower, "maxPullerSupplyPower", 10000);
+            Scribe_Collections.Look<SkillMachineSetting>(ref this.autoMachineToolSetting, "autoMachineToolSetting");
+            Scribe_Collections.Look<RangeSkillMachineSetting>(ref this.planterSetting, "planterSetting");
+            Scribe_Collections.Look<RangeSkillMachineSetting>(ref this.harvesterSetting, "harvesterSetting");
+
+            Scribe_Deep.Look<BasicMachineSetting>(ref this.beltConveyorSetting, "beltConveyorSetting");
+            Scribe_Deep.Look<BasicMachineSetting>(ref this.pullerSetting, "pullerSetting");
+            Scribe_Deep.Look<RangeMachineSetting>(ref this.gathererSetting, "gathererSetting");
+            Scribe_Deep.Look<RangeMachineSetting>(ref this.slaughterSetting, "slaughterSetting");
+
+            this.autoMachineToolSetting = this.autoMachineToolSetting ?? CreateAutoMachineToolDefault();
+            this.planterSetting = this.planterSetting ?? CreatePlanterDefault();
+            this.harvesterSetting = this.harvesterSetting ?? CreateHarvesterDefault();
+
+            this.beltConveyorSetting = this.beltConveyorSetting ?? BeltConveyorDefault();
+            this.pullerSetting = this.pullerSetting ?? PullerDefault();
+            this.gathererSetting = this.gathererSetting ?? GathererDefault();
+            this.slaughterSetting = this.slaughterSetting ?? SlaughterDefault();
 
             Option(this.DataExposed).ForEach(e => e(this, new EventArgs()));
-
-            if (setting == null)
-            {
-                this.setting = CreateDefault();
-            }
-
-            if (planterSetting == null)
-            {
-                this.planterSetting = CreatePlanterDefault();
-            }
-
-            if (harvesterSetting == null)
-            {
-                this.harvesterSetting = CreateHarvesterDefault();
-            }
         }
 
-        public TierSetting Tier(int tier)
+        public SkillMachineSetting AutoMachineToolTier(int tier)
         {
-            if (this.setting == null)
-            {
-                this.setting = CreateDefault();
-            }
-            return this.setting[tier - 1];
+            this.autoMachineToolSetting = this.autoMachineToolSetting ?? CreateAutoMachineToolDefault();
+            return this.autoMachineToolSetting[tier - 1];
         }
 
-        public AgricultureTierSetting PlanterTier(int tier)
+        public RangeSkillMachineSetting PlanterTier(int tier)
         {
-            if (this.planterSetting == null)
-            {
-                this.planterSetting = CreatePlanterDefault();
-            }
+            this.planterSetting = this.planterSetting ?? CreatePlanterDefault();
             return this.planterSetting[tier - 1];
         }
 
-        public AgricultureTierSetting HarvesterTier(int tier)
+        public RangeSkillMachineSetting HarvesterTier(int tier)
         {
-            if (this.harvesterSetting == null)
-            {
-                this.harvesterSetting = CreateHarvesterDefault();
-            }
+            this.harvesterSetting = this.harvesterSetting ?? CreateHarvesterDefault();
             return this.planterSetting[tier - 1];
         }
 
         public event EventHandler DataExposed;
 
+        private Vector2 scrollPosition;
+
+        public void DoSetting(Rect inRect)
+        {
+            var viewRect = new Rect(inRect.x, inRect.y, inRect.width - 30f, 3500f);
+            Widgets.BeginScrollView(inRect, ref this.scrollPosition, viewRect);
+            var list = new Listing_Standard();
+            list.Begin(viewRect);
+
+            int index = 0;
+            DrawMachineName("NR_AutoMachineTool.AutoMachineTool".Translate(), list);
+            this.autoMachineToolSetting.ForEach(s => DrawTier(list, s, ++index));
+            list.GapLine();
+
+            index = 0;
+            DrawMachineName("NR_AutoMachineTool.Planter".Translate(), list);
+            this.planterSetting.ForEach(s => DrawTier(list, s, ++index));
+            list.GapLine();
+
+            index = 0;
+            DrawMachineName("NR_AutoMachineTool.Harvester".Translate(), list);
+            this.harvesterSetting.ForEach(s => DrawTier(list, s, ++index));
+            list.GapLine();
+
+            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_BeltConveyor").label, list);
+            DrawSetting(list, this.beltConveyorSetting);
+            list.GapLine();
+
+            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_Puller").label, list);
+            DrawSetting(list, this.pullerSetting);
+            list.GapLine();
+
+            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_AnimalResourceGatherer").label, list);
+            DrawSetting(list, this.gathererSetting);
+            list.GapLine();
+
+            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_Slaughterhouse").label, list);
+            DrawSetting(list, this.slaughterSetting);
+            list.GapLine();
+
+            // Restore
+            if (Widgets.ButtonText(list.GetRect(30f).RightHalf().RightHalf(), "NR_AutoMachineTool.SettingReset".Translate()))
+            {
+                this.RestoreDefault();
+            }
+
+            list.End();
+            Widgets.EndScrollView();
+        }
+
+        private void DrawTier(Listing_Standard list, BasicMachineSetting s, int tier)
+        {
+            var rect = list.GetRect(s.GetHeight() + 42f);
+            var inList = new Listing_Standard();
+            inList.Begin(rect.RightPartPixels(rect.width - 50f));
+            Text.Font = GameFont.Medium;
+            Widgets.Label(inList.GetRect(30f), "Tier " + tier);
+            inList.GapLine();
+            Text.Font = GameFont.Small;
+            s.DrawModSetting(inList);
+            inList.End();
+        }
+
+        private void DrawSetting(Listing_Standard list, BasicMachineSetting s)
+        {
+            var rect = list.GetRect(s.GetHeight());
+            var inList = new Listing_Standard();
+            inList.Begin(rect.RightPartPixels(rect.width - 50f));
+            s.DrawModSetting(inList);
+            inList.End();
+        }
+
+        private void DrawMachineName(string name, Listing_Standard list)
+        {
+            var f = Text.Font;
+            Text.Font = GameFont.Medium;
+            list.Label(name);
+            Text.Font = f;
+        }
     }
 }
