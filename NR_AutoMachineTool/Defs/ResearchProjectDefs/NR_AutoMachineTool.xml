@@ -20,6 +20,8 @@
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
     <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>0</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -36,6 +38,8 @@
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
     <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>1</researchViewX>
+    <researchViewY>0</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -52,25 +56,9 @@
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
     <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>2</researchViewX>
+    <researchViewY>0</researchViewY>
   </ResearchProjectDef>
-
-
-  <ResearchProjectDef>
-    <defName>ResearchProject_NR_AutoMachineTool_BeltConveyor</defName>
-    <label>Belt Converyor</label>
-    <description>BeltConveyor can be created.</description>
-    <baseCost>2000</baseCost>
-    <techLevel>Spacer</techLevel>
-    <prerequisites>
-      <li>MultiAnalyzer</li>
-    </prerequisites>
-    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
-    <requiredResearchFacilities>
-      <li>MultiAnalyzer</li>
-    </requiredResearchFacilities>
-    <tab>NR_AutoMachineTool_ResearchTab</tab>
-  </ResearchProjectDef>
-
 
   <ResearchProjectDef>
     <defName>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier1</defName>
@@ -86,6 +74,8 @@
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
     <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>1</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -102,6 +92,8 @@
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
     <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>1</researchViewX>
+    <researchViewY>1</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -118,9 +110,28 @@
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
     <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>2</researchViewX>
+    <researchViewY>1</researchViewY>
   </ResearchProjectDef>
 
-  
+  <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_BeltConveyor</defName>
+    <label>Belt Converyor</label>
+    <description>BeltConveyor can be created.</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>MultiAnalyzer</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>2</researchViewY>
+  </ResearchProjectDef>
+
   <ResearchProjectDef>
     <defName>ResearchProject_NR_AutoMachineTool_AutoAnimalCaretaker</defName>
     <label>Automatic animal caretaker.</label>
@@ -135,5 +146,7 @@
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
     <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>3</researchViewY>
   </ResearchProjectDef>
 </Defs>

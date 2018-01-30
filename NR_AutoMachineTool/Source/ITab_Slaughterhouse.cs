@@ -77,6 +77,7 @@ namespace NR_AutoMachineTool
         Dictionary<ThingDef, SlaughterSettings> Settings { get; }
     }
 
+    [StaticConstructorOnStartup]
     class ITab_Slaughterhouse : ITab
     {
         private static readonly Vector2 WinSize = new Vector2(800f, 600f);
