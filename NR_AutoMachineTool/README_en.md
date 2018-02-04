@@ -111,7 +111,6 @@ Thanks to the producers of these mods.
 - I think balance is not good.
 
 ### TODO
-- Add setting function to MOD setting screen.
 
 ---
 ## Harvester
@@ -138,7 +137,6 @@ Thanks to the producers of these mods.
 - I think balance is not good.
 
 ### TODO
-- Add setting function to MOD setting screen.
 
 ---
 ## AnimalResourceGatherer
@@ -163,7 +161,6 @@ Thanks to the producers of these mods.
 - I think balance is not good.
 
 ### TODO
-- Add setting function to MOD setting screen.
 
 ---
 ## Slaughterhouse
@@ -189,7 +186,6 @@ Thanks to the producers of these mods.
 - I think balance is not good.
 
 ### TODO
-- Add setting function to MOD setting screen.
 
 ---
 ## Overall

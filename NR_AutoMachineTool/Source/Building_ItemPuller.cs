@@ -14,38 +14,26 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_ItemPuller : Building, IPowerSupplyMachine, IBeltConbeyorSender
+    public class Building_ItemPuller : Building_Base<Thing>
     {
-        private ModSetting_AutoMachineTool Setting { get => LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; }
-        private float SpeedFactor { get => this.Setting.pullSpeedFactor; }
-        public float SupplyPower { get => this.supplyPower; set => this.supplyPower = (int)value; }
-        public int MinPower { get => this.Setting.minPullerSupplyPower; }
-        public int MaxPower { get => this.Setting.maxPullerSupplyPower; }
+        protected override float SpeedFactor { get => this.Setting.pullerSetting.speedFactor; }
+        public override int MinPowerForSpeed { get => this.Setting.pullerSetting.minSupplyPowerForSpeed; }
+        public override int MaxPowerForSpeed { get => this.Setting.pullerSetting.maxSupplyPowerForSpeed; }
 
         public ThingFilter Filter { get => this.filter; }
 
-        private static int shift;
-
         private ThingFilter filter = new ThingFilter();
-        private float amount;
-
-        private float supplyPower = 1000f;
-
         private bool active = false;
-
-        [Unsaved]
-        private bool checkNextPlacing;
-
         public override Graphic Graphic => Option(base.Graphic as Graphic_Selectable).Fold(base.Graphic)(g => g.Get("NR_AutoMachineTool/Buildings/Puller/Puller" + (this.active ? "1" : "0")));
+
+        protected override int? SkillLevel => null;
 
         public override void ExposeData()
         {
             base.ExposeData();
 
             Scribe_Deep.Look<ThingFilter>(ref this.filter, "filter");
-            Scribe_Values.Look<float>(ref this.amount, "amount", 0);
             Scribe_Values.Look<bool>(ref this.active, "active", false);
-            Scribe_Values.Look<float>(ref this.supplyPower, "supplyPower", 1000f);
 
             if (this.filter == null) this.filter = new ThingFilter();
         }
@@ -59,121 +47,20 @@ namespace NR_AutoMachineTool
                 this.filter = new ThingFilter();
                 this.filter.SetAllowAll(null);
             }
-
-            shift += 7;
-            if (shift >= 30)
-            {
-                shift = shift - 30;
-            }
-        }
-
-        private bool IsActive()
-        {
-            if (this.TryGetComp<CompPowerTrader>() == null || !this.TryGetComp<CompPowerTrader>().PowerOn)
-            {
-                return false;
-            }
-            if (this.Destroyed || !this.active)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private void SetPower()
-        {
-            if (-this.SupplyPower != this.TryGetComp<CompPowerTrader>().PowerOutput)
-            {
-                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.SupplyPower;
-            }
-        }
-
-        public override void Tick()
-        {
-            base.Tick();
-
-            this.SetPower();
-
-            if (!this.IsActive())
-            {
-                return;
-            }
-            this.amount += 0.01f * this.SpeedFactor * this.SupplyPower * 0.001f;
-            if(this.amount > 1f)
-            {
-                if (Find.TickManager.TicksGame % 30 == shift || checkNextPlacing)
-                {
-                    if (this.PullAndPush())
-                    {
-                        this.amount = 0;
-                        this.checkNextPlacing = true;
-                    }
-                    else
-                    {
-                        this.checkNextPlacing = false;
-                    }
-                }
-            }
-        }
-
-        private bool PullAndPush()
-        {
-            return TargetThing().Fold(true)(target => {
-                var conveyor = OutputCell().GetThingList(this.Map).Where(t => t.def.category == ThingCategory.Building)
-                    .SelectMany(t => Option(t as IBeltConbeyorLinkable))
-                    .Where(b => !b.IsUnderground)
-                    .FirstOption();
-                if (conveyor.HasValue)
-                {
-                    // コンベアがある場合、そっちに流す.
-                    if (conveyor.Value.ReceivableNow(false))
-                    {
-                        conveyor.Value.ReceiveThing(target);
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (target.Spawned) target.DeSpawn();
-                    // ない場合は適当に流す.
-                    if(!PlaceItem(target, OutputCell(), false, this.Map))
-                    {
-                        GenPlace.TryPlaceThing(target, OutputCell(), this.Map, ThingPlaceMode.Near);
-                    }
-                    return true;
-                }
-                return false;
-            });
         }
 
         private Option<Thing> TargetThing()
         {
-            return this.InputZone()
+            return (this.Position + this.Rotation.Opposite.FacingCell).ZoneCells(this.Map)
                 .SelectMany(c => c.GetThingList(this.Map))
                 .Where(t => t.def.category == ThingCategory.Item)
                 .Where(t => this.filter.Allows(t))
                 .FirstOption();
         }
 
-        public IntVec3 InputCell()
-        {
-            return (this.Position + this.Rotation.Opposite.FacingCell);
-        }
-
-        public List<IntVec3> InputZone()
-        {
-            return this.InputCell().ZoneCells(this.Map);
-        }
-
-        public IntVec3 OutputCell()
+        public override IntVec3 OutputCell()
         {
             return (this.Position + this.Rotation.FacingCell);
-        }
-
-        public List<IntVec3> OutputZone()
-        {
-            return this.OutputCell().ZoneCells(this.Map);
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -192,14 +79,33 @@ namespace NR_AutoMachineTool
             yield return act;
         }
 
-        public string PowerSupplyMessage()
+        protected override bool IsActive()
         {
-            return "NR_AutoMachineTool.SupplyPowerText".Translate();
+            return base.IsActive() && this.active;
         }
 
-        public void NortifyReceivable()
+        protected override float GetTotalWorkAmount(Thing working)
         {
-            this.checkNextPlacing = true;
+            return 100f;
+        }
+
+        protected override bool WorkIntrruption(Thing working)
+        {
+            return !TargetThing().HasValue;
+        }
+
+        protected override bool TryStartWorking(out Thing target)
+        {
+            target = this;
+            return TargetThing().HasValue;
+        }
+
+        protected override bool FinishWorking(Thing working, out List<Thing> products)
+        {
+            var target = new List<Thing>();
+            TargetThing().ForEach(t => target.Append(t));
+            products = target;
+            return true;
         }
     }
 }

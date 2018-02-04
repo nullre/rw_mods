@@ -112,7 +112,6 @@ I'm Japanese. I can't understand English, sorry...
 - バランスは、良くないと思います。
 
 ### TODO
-- MOD設定画面に設定機能を追加する。
 
 ---
 ## 収穫機
@@ -139,7 +138,6 @@ I'm Japanese. I can't understand English, sorry...
 - バランスは、良くないと思います。
 
 ### TODO
-- MOD設定画面に設定機能を追加する。
 
 ---
 ## 動物世話機
@@ -164,7 +162,6 @@ I'm Japanese. I can't understand English, sorry...
 - バランスは、良くないと思います。
 
 ### TODO
-- MOD設定画面に設定機能を追加する。
 
 ---
 ## 屠畜機
@@ -190,7 +187,6 @@ I'm Japanese. I can't understand English, sorry...
 - バランスは、良くないと思います。
 
 ### TODO
-- MOD設定画面に設定機能を追加する。
 
 ---
 ## 全体

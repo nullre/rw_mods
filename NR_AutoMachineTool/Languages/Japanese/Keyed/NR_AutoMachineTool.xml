@@ -7,7 +7,6 @@
   
   <NR_AutoMachineTool.SupplyPowerTab>電力</NR_AutoMachineTool.SupplyPowerTab>
   <NR_AutoMachineTool.SupplyPowerText>供給する電力を設定します。電力の供給量が大きければ、作業にかかる時間が短くなります。</NR_AutoMachineTool.SupplyPowerText>
-  <NR_AutoMachineTool.SupplyPowerConveyorText>供給する電力を設定します。電力の供給量が大きければ、移動にかかる時間が短くなります。全てのコンベアの電力供給量が変化します。</NR_AutoMachineTool.SupplyPowerConveyorText>
 
   <NR_AutoMachineTool.SupplyPowerValueLabel>供給電力量</NR_AutoMachineTool.SupplyPowerValueLabel>
   <NR_AutoMachineTool.ForbidOutputItemLabel>出力アイテムを禁止する</NR_AutoMachineTool.ForbidOutputItemLabel>
@@ -31,6 +30,7 @@
   <NR_AutoMachineTool.SettingName>自動工作機械設定</NR_AutoMachineTool.SettingName>
   <NR_AutoMachineTool.SettingTier>Tier [{0}]</NR_AutoMachineTool.SettingTier>
   <NR_AutoMachineTool.SettingSkillLevel>スキルレベル({0})</NR_AutoMachineTool.SettingSkillLevel>
+  
   <NR_AutoMachineTool.SettingMaxSupplyPower>設定可能最大電力供給量({0})</NR_AutoMachineTool.SettingMaxSupplyPower>
   <NR_AutoMachineTool.SettingMinSupplyPower>設定可能最小電力供給量({0})</NR_AutoMachineTool.SettingMinSupplyPower>
   <NR_AutoMachineTool.SettingSpeedFactor>速度係数({0})</NR_AutoMachineTool.SettingSpeedFactor>
@@ -66,6 +66,11 @@
   <NR_AutoMachineTool.ProductLimitation.Description>生成物の数が設定した値以上になると、処理を停止します。</NR_AutoMachineTool.ProductLimitation.Description>
   <NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>制限する</NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>
   <NR_AutoMachineTool.ProductLimitation.ValueLabel>制限数</NR_AutoMachineTool.ProductLimitation.ValueLabel>
+  <NR_AutoMachineTool.Speed>速度</NR_AutoMachineTool.Speed>
+  <NR_AutoMachineTool.Range>範囲</NR_AutoMachineTool.Range>
+  <NR_AutoMachineTool.AutoMachineTool>自動工作機</NR_AutoMachineTool.AutoMachineTool>
+  <NR_AutoMachineTool.Planter>種蒔き機</NR_AutoMachineTool.Planter>
+  <NR_AutoMachineTool.Harvester>収穫機</NR_AutoMachineTool.Harvester>
   
   <!-- Slaughterhouse -->
   <NR_AutoMachineTool.SlaughterhouseSetting.TabName>設定</NR_AutoMachineTool.SlaughterhouseSetting.TabName>
@@ -83,5 +88,4 @@
 
   <NR_AutoMachineTool.RaceName>種族名</NR_AutoMachineTool.RaceName>
   <NR_AutoMachineTool.Bonds>絆</NR_AutoMachineTool.Bonds>
-
 </LanguageData>

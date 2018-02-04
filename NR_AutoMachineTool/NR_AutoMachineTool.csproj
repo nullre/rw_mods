@@ -46,17 +46,21 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Building_AnimalResourceGatherer.cs" />
+    <Compile Include="Source\Building_BaseLimitation.cs" />
+    <Compile Include="Source\Building_BaseRange.cs" />
+    <Compile Include="Source\Building_Base.cs" />
+    <Compile Include="Source\Building_BeltConveyor.cs" />
+    <Compile Include="Source\Building_BeltConveyorUGConnecter.cs" />
+    <Compile Include="Source\Building_Hervester.cs" />
+    <Compile Include="Source\Building_ItemPuller.cs" />
+    <Compile Include="Source\Building_Planter.cs" />
     <Compile Include="Source\Building_Slaughterhouse.cs" />
     <Compile Include="Source\ITab_Slaughterhouse.cs" />
     <Compile Include="Source\ITab_ProductLimitation.cs" />
+    <Compile Include="Source\MachineSettings.cs" />
     <Compile Include="Source\PlaceWorker_FacingRect.cs" />
     <Compile Include="Source\SpecialThingFilterWorker_Fresh.cs" />
-    <Compile Include="Source\Building_BeltConveyorUGConnecter.cs" />
-    <Compile Include="Source\Building_ItemPuller.cs" />
-    <Compile Include="Source\Building_BeltConveyor.cs" />
     <Compile Include="Source\Building_AutoMachineTool.cs" />
-    <Compile Include="Source\Building_Hervester.cs" />
-    <Compile Include="Source\Building_Planter.cs" />
     <Compile Include="Source\GenRecipe2.cs" />
     <Compile Include="Source\Graphic_Selectable.cs" />
     <Compile Include="Source\IBeltConbeyorSender.cs" />
@@ -127,7 +131,6 @@
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Conveyor.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool.xml" />
     <Content Include="Languages\Japanese\Keyed\NR_AutoMachineTool.xml" />
-    <Content Include="Lib\0Reloader.dll" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\AnimalResourceGatherer.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\AutoMachineTool.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\AutoMachineTool1.png" />
@@ -170,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assemblies\" />
+    <Folder Include="Lib\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README_en.md" />

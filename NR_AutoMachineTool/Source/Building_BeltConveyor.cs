@@ -14,25 +14,19 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    class Building_BeltConveyor : Building, IBeltConbeyorLinkable, IPowerSupplyMachine, IBeltConbeyorSender
+    class Building_BeltConveyor : Building_Base<Thing>, IBeltConbeyorLinkable
     {
+        // 不要だが、データ移行用に残す.
         private enum CarryState
         {
             Ready,
             Carring,
-            Placing,
-            // 不要だが、セーブデータ中にあるかもしれないので、残す.
-            Blocking
+            Placing
         }
 
-        private CarryState state = CarryState.Ready;
-        private float move = 0;
-        private Thing thing = null;
         private Rot4 dest = default(Rot4);
         private Dictionary<Rot4, ThingFilter> filters = new Dictionary<Rot4, ThingFilter>();
         public static float supplyPower = 10f;
-
-        private static int shift;
         private static readonly Dictionary<IntVec3, int> GraphicNumbers = new Dictionary<IntVec3, int>() { { Rot4.West.FacingCell, 1 }, { Rot4.South.FacingCell, 2 }, { Rot4.East.FacingCell, 4 }, { Rot4.North.FacingCell, 0 } };
 
         [Unsaved]
@@ -41,17 +35,26 @@ namespace NR_AutoMachineTool
         private string graphicPath;
         [Unsaved]
         private List<Rot4> outputRot = new List<Rot4>();
-        [Unsaved]
-        private bool checkNextCarry = false;
-        [Unsaved]
-        private bool checkNextPlacing = false;
 
-        private ModSetting_AutoMachineTool Setting { get => LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; }
-        private float SpeedFactor { get => this.Setting.carrySpeedFactor; }
         private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
-        public float SupplyPower { get => supplyPower; set => supplyPower = (int)value; }
-        public int MinPower { get => this.Setting.minBeltConveyorSupplyPower; }
-        public int MaxPower { get => this.Setting.maxBeltConveyorSupplyPower; }
+
+        protected override float SpeedFactor { get => this.Setting.beltConveyorSetting.speedFactor; }
+        public override int MinPowerForSpeed { get => this.Setting.beltConveyorSetting.minSupplyPowerForSpeed; }
+        public override int MaxPowerForSpeed { get => this.Setting.beltConveyorSetting.maxSupplyPowerForSpeed; }
+
+        public override float SupplyPowerForSpeed
+        {
+            get
+            {
+                return supplyPower;
+            }
+
+            set
+            {
+                supplyPower = value;
+                this.SetPower();
+            }
+        }
 
         public Dictionary<Rot4, ThingFilter> Filters { get => this.filters; }
 
@@ -59,15 +62,25 @@ namespace NR_AutoMachineTool
         {
             base.ExposeData();
 
-            Scribe_Values.Look<float>(ref this.move, "move");
             Scribe_Values.Look<float>(ref supplyPower, "supplyPower", 10f);
             Scribe_Values.Look<Rot4>(ref this.dest, "dest");
-            Scribe_Values.Look<CarryState>(ref this.state, "state");
-            Scribe_Deep.Look<Thing>(ref this.thing, "thing");
             Scribe_Collections.Look<Rot4, ThingFilter>(ref this.filters, "filters", LookMode.Value, LookMode.Deep);
             if(this.filters == null)
             {
                 this.filters = new Dictionary<Rot4, ThingFilter>();
+            }
+
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
+            {
+                var stat = CarryState.Ready;
+                Thing thing = null;
+                Scribe_Values.Look<CarryState>(ref stat, "state");
+                Scribe_Deep.Look<Thing>(ref thing, "thing");
+                if(stat != CarryState.Ready && thing != null)
+                {
+                    this.state = WorkingState.Working;
+                    this.working = thing;
+                }
             }
         }
 
@@ -91,16 +104,12 @@ namespace NR_AutoMachineTool
                     this.Link(x);
                 });
             }
-            shift++;
-            if(shift >= 30)
-            {
-                shift = 0;
-            }
         }
 
         public override void DeSpawn()
         {
             var targets = LinkTargetConveyor();
+
             this.Reset();
 
             base.DeSpawn();
@@ -108,17 +117,14 @@ namespace NR_AutoMachineTool
             targets.ForEach(x => x.Unlink(this));
         }
 
-        private void Reset()
+        protected override void Reset()
         {
-            if (this.state != CarryState.Ready)
+            if (this.state != WorkingState.Ready)
             {
-                Option(this.thing).ForEach(t => GenPlace.TryPlaceThing(t, this.Position, this.Map, ThingPlaceMode.Near));
-                this.thing = null;
                 this.ChangeGraphic();
                 this.FilterSetting();
-                this.state = CarryState.Ready;
-                this.move = 0;
             }
+            base.Reset();
         }
 
         public override Graphic Graphic => Option(base.Graphic as Graphic_Selectable).Fold(base.Graphic)(g => g.Get(this.graphicPath));
@@ -133,12 +139,12 @@ namespace NR_AutoMachineTool
                 return;
             }
 
-            if (this.state != CarryState.Ready && Find.CameraDriver.CurrentZoom == CameraZoomRange.Closest)
+            if (this.state != WorkingState.Ready && Find.CameraDriver.CurrentZoom == CameraZoomRange.Closest)
             {
                 var p = CarryPosition();
                 Vector2 result = Find.Camera.WorldToScreenPoint(p + new Vector3(0, 0, -0.4f)) / Prefs.UIScale;
                 result.y = (float)UI.screenHeight - result.y;
-                GenMapUI.DrawThingLabel(result, this.thing.stackCount.ToStringCached(), GenMapUI.DefaultThingLabelColor);
+                GenMapUI.DrawThingLabel(result, this.CarryingThing().stackCount.ToStringCached(), GenMapUI.DefaultThingLabelColor);
             }
         }
         
@@ -151,10 +157,10 @@ namespace NR_AutoMachineTool
             }
             base.Draw();
 
-            if (this.state != CarryState.Ready)
+            if (this.state != WorkingState.Ready)
             {
                 var p = CarryPosition();
-                this.thing.DrawAt(p);
+                this.CarryingThing().DrawAt(p);
             }
 
             var pos = this.Position.ToVector3() + new Vector3(0.5f, this.def.Altitude + 1f, 0.5f);
@@ -167,100 +173,37 @@ namespace NR_AutoMachineTool
                 Graphics.DrawMesh(MeshPool.GridPlane(this.def.graphicData.drawSize), pos, r.AsQuat, mat2, 0));
         }
 
+        private Thing CarryingThing()
+        {
+            if (this.state == WorkingState.Working)
+            {
+                return this.working;
+            }
+            else if (this.state == WorkingState.Placing)
+            {
+                return this.products[0];
+            }
+            return null;
+        }
+
         private Vector3 CarryPosition()
         {
-            return (this.dest.FacingCell.ToVector3() * this.move) + this.Position.ToVector3() + new Vector3(0.5f, 10f, 0.5f);
-        }
-
-        private bool IsActive()
-        {
-            if (this.TryGetComp<CompPowerTrader>() == null || !this.TryGetComp<CompPowerTrader>().PowerOn)
-            {
-                return false;
-            }
-            if (this.Destroyed)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private void SetPower()
-        {
-            if (-this.SupplyPower != this.TryGetComp<CompPowerTrader>().PowerOutput)
-            {
-                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.SupplyPower;
-            }
-        }
-
-        public override void Tick()
-        {
-            base.Tick();
-
-            this.SetPower();
-
-            if (!this.IsActive())
-            {
-                this.Reset();
-                return;
-            }
-            if (this.state == CarryState.Ready && !this.IsUnderground)
-            {
-                if (Find.TickManager.TicksGame % 30 == shift || checkNextCarry)
-                {
-                    this.TryStartCarry();
-                    this.checkNextCarry = false;
-                }
-            }
-            else if (this.state == CarryState.Carring)
-            {
-                this.move += 0.01f * this.SpeedFactor * this.SupplyPower * 0.1f;
-                if (this.move >= 1f)
-                {
-                    this.FinishCarry();
-                    this.checkNextPlacing = true;
-                }
-            }
-            else if (this.state == CarryState.Placing || this.state == CarryState.Blocking)
-            {
-                if (Find.TickManager.TicksGame % 30 == shift || this.checkNextPlacing)
-                {
-                    if (this.PlaceThing())
-                    {
-                        this.checkNextCarry = true;
-                        this.NotifyAroundSender();
-                    }
-                }
-                this.checkNextPlacing = false;
-            }
+            return (this.dest.FacingCell.ToVector3() * (1f - this.workLeft)) + this.Position.ToVector3() + new Vector3(0.5f, 10f, 0.5f);
         }
         
         public override bool CanStackWith(Thing other)
         {
-            return base.CanStackWith(other) && this.state == CarryState.Ready;
-        }
-
-        private void TryStartCarry()
-        {
-            this.Position.GetThingList(this.Map).Where(t => t.def.category == ThingCategory.Item).FirstOption().ForEach(t =>
-            {
-                this.ReceiveThing(t);
-            });
+            return base.CanStackWith(other) && this.state == WorkingState.Ready;
         }
 
         public bool ReceiveThing(Thing t)
         {
             this.dest = Destination(t, true);
-            this.thing = t;
-            this.state = CarryState.Carring;
-            if (this.thing.Spawned) this.thing.DeSpawn();
+            this.working = t;
+            this.state = WorkingState.Working;
+            this.workLeft = 1f;
+            if (this.working.Spawned) this.working.DeSpawn();
             return true;
-        }
-
-        private void FinishCarry()
-        {
-            this.state = CarryState.Placing;
         }
 
         private Rot4 Destination(Thing t, bool doRotate)
@@ -285,34 +228,31 @@ namespace NR_AutoMachineTool
             if (doRotate) this.round++;
             return placable.ElementAt(index);
         }
-        
-        private bool PlaceThing()
+
+        protected override bool PlaceProduct(ref List<Thing> products)
         {
+            var thing = products[0];
             var next = this.LinkTargetConveyor().Where(o => o.Position == this.dest.FacingCell + this.Position).FirstOption();
             if (next.HasValue)
             {
                 // コンベアある場合、そっちに流す.
                 if (next.Value.ReceivableNow(this.IsUnderground))
                 {
-                    next.Value.ReceiveThing(this.thing);
-                    this.move = 0;
-                    this.thing = null;
-                    this.state = CarryState.Ready;
+                    next.Value.ReceiveThing(thing);
+                    NotifyAroundSender();
                     return true;
                 }
             }
             else
             {
-                if (!this.IsUnderground && PlaceItem(this.thing, this.dest.FacingCell + this.Position, false, this.Map))
+                if (!this.IsUnderground && PlaceItem(thing, this.dest.FacingCell + this.Position, false, this.Map))
                 {
-                    this.move = 0;
-                    this.thing = null;
-                    this.state = CarryState.Ready;
+                    NotifyAroundSender();
                     return true;
                 }
             }
-            // 配置失敗.
-            this.move = 0.5f;
+            // 配置失敗. 止める.
+            this.workLeft = 0.5f;
             return false;
         }
 
@@ -326,7 +266,7 @@ namespace NR_AutoMachineTool
         {
             this.ChangeGraphic();
             this.FilterSetting();
-            Option(this.thing).ForEach(t => this.dest = Destination(t, true));
+            Option(this.working).ForEach(t => this.dest = Destination(t, true));
         }
 
         private void ChangeGraphic()
@@ -396,20 +336,10 @@ namespace NR_AutoMachineTool
 
         public bool ReceivableNow(bool underground)
         {
-            return this.state == CarryState.Ready && this.IsActive() && this.IsUnderground == underground;
+            return this.state == WorkingState.Ready && this.IsActive() && this.IsUnderground == underground;
         }
 
         public bool IsUnderground { get => Option(this.Extension).Fold(false)(x => x.underground); }
-
-        public string PowerSupplyMessage()
-        {
-            return "NR_AutoMachineTool.SupplyPowerConveyorText".Translate();
-        }
-
-        public void NortifyReceivable()
-        {
-            this.checkNextPlacing = true;
-        }
 
         private void NotifyAroundSender()
         {
@@ -419,6 +349,44 @@ namespace NR_AutoMachineTool
                 .Where(t => t.def.category == ThingCategory.Building)
                 .SelectMany(t => Option(t as IBeltConbeyorSender))
                 .ForEach(s => s.NortifyReceivable());
+        }
+
+        protected override float GetTotalWorkAmount(Thing working)
+        {
+            return 1f;
+        }
+
+        protected override bool WorkIntrruption(Thing working)
+        {
+            return false;
+        }
+
+        protected override bool TryStartWorking(out Thing target)
+        {
+            if (this.IsUnderground)
+            {
+                target = null;
+                return false;
+            }
+            target = this.Position.GetThingList(this.Map).Where(t => t.def.category == ThingCategory.Item).FirstOption().GetOrDefault(() => null);
+            if (target != null)
+            {
+                this.ReceiveThing(target);
+            }
+            return target != null;
+        }
+
+        protected override bool FinishWorking(Thing working, out List<Thing> products)
+        {
+            products = new List<Thing>().Append(working);
+            return true;
+        }
+
+        protected override int? SkillLevel => null;
+
+        protected override bool WorkingIsDespawned()
+        {
+            return true;
         }
     }
 }

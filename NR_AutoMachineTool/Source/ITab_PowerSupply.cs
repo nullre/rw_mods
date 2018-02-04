@@ -14,10 +14,9 @@ namespace NR_AutoMachineTool
 {
     interface IPowerSupplyMachine
     {
-        int MinPower { get; }
-        int MaxPower { get; }
-        float SupplyPower { get; set; }
-        string PowerSupplyMessage();
+        int MinPowerForSpeed { get; }
+        int MaxPowerForSpeed { get; }
+        float SupplyPowerForSpeed { get; set; }
     }
 
     class ITab_PowerSupply : ITab
@@ -28,6 +27,8 @@ namespace NR_AutoMachineTool
         {
             this.size = WinSize;
             this.labelKey = "NR_AutoMachineTool.SupplyPowerTab";
+
+            this.description = "NR_AutoMachineTool.SupplyPowerForSpeedText".Translate();
         }
         
         private string description;
@@ -39,15 +40,13 @@ namespace NR_AutoMachineTool
 
         protected override void FillTab()
         {
-            this.description = this.Machine.PowerSupplyMessage();
-
-            int round = this.Machine.MinPower < 1000 ? 100 : this.Machine.MinPower < 10000 ? 500 : 1000;
-            if (this.Machine.MinPower % round != 0 || this.Machine.MaxPower % round != 0)
+            int round = this.Machine.MinPowerForSpeed < 1000 ? 100 : this.Machine.MinPowerForSpeed < 10000 ? 500 : 1000;
+            if (this.Machine.MinPowerForSpeed % round != 0 || this.Machine.MaxPowerForSpeed % round != 0)
             {
                 round = 1;
             }
 
-            string valueLabel = "NR_AutoMachineTool.SupplyPowerValueLabel".Translate() + " (" + this.Machine.MinPower + " to " + this.Machine.MaxPower + ") ";
+            string valueLabel = "NR_AutoMachineTool.SupplyPowerValueLabel".Translate() + " (" + this.Machine.MinPowerForSpeed + " to " + this.Machine.MaxPowerForSpeed + ") ";
 
             Listing_Standard list = new Listing_Standard();
             Rect inRect = new Rect(0f, 0f, WinSize.x, WinSize.y).ContractedBy(10f);
@@ -60,19 +59,19 @@ namespace NR_AutoMachineTool
             list.Gap();
 
             rect = list.GetRect(50f);
-            this.Machine.SupplyPower = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPower, (float)this.Machine.MinPower, (float)this.Machine.MaxPower, true, valueLabel, this.Machine.MinPower.ToString(), this.Machine.MaxPower.ToString(), round);
+            this.Machine.SupplyPowerForSpeed = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPowerForSpeed, (float)this.Machine.MinPowerForSpeed, (float)this.Machine.MaxPowerForSpeed, true, valueLabel, this.Machine.MinPowerForSpeed.ToString(), this.Machine.MaxPowerForSpeed.ToString(), round);
             list.Gap();
 
             rect = list.GetRect(30f);
-            string buf = this.Machine.SupplyPower.ToString();
-            int power = (int)this.Machine.SupplyPower;
+            string buf = this.Machine.SupplyPowerForSpeed.ToString();
+            int power = (int)this.Machine.SupplyPowerForSpeed;
             Widgets.Label(rect.LeftHalf(), valueLabel);
-            Widgets.TextFieldNumeric<int>(rect.RightHalf(), ref power, ref buf, this.Machine.MinPower, this.Machine.MaxPower);
+            Widgets.TextFieldNumeric<int>(rect.RightHalf(), ref power, ref buf, this.Machine.MinPowerForSpeed, this.Machine.MaxPowerForSpeed);
             list.Gap();
 
             list.End();
 
-            this.Machine.SupplyPower = power;
+            this.Machine.SupplyPowerForSpeed = power;
         }
     }
 }

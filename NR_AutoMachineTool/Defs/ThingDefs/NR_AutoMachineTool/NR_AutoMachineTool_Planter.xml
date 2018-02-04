@@ -26,6 +26,7 @@ Planter starts planting plants in the agricultural zone within range.
         <shortCircuitInRain>false</shortCircuitInRain>
       </li>
       <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Flickable"/>
     </comps>
 
     <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
@@ -132,5 +133,4 @@ Planter starts planting plants in the agricultural zone within range.
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>
