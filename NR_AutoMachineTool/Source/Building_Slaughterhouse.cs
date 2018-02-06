@@ -98,7 +98,7 @@ namespace NR_AutoMachineTool
             var targets = ShouldSlaughterPawns();
             target = tmp.Where(p => targets.Contains(p))
                 .FirstOption()
-                .GetOrDefault(() => null);
+                .GetOrDefault(null);
             if (target != null)
             {
                 PawnUtility.ForceWait(target, 15000, null, true);

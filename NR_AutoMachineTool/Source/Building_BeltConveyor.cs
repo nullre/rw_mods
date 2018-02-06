@@ -368,7 +368,7 @@ namespace NR_AutoMachineTool
                 target = null;
                 return false;
             }
-            target = this.Position.GetThingList(this.Map).Where(t => t.def.category == ThingCategory.Item).FirstOption().GetOrDefault(() => null);
+            target = this.Position.GetThingList(this.Map).Where(t => t.def.category == ThingCategory.Item).FirstOption().GetOrDefault(null);
             if (target != null)
             {
                 this.ReceiveThing(target);

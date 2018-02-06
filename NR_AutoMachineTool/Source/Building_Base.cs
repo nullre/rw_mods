@@ -173,7 +173,7 @@ namespace NR_AutoMachineTool
         {
             if (this.working.Spawned)
             {
-                this.progressBar = Option(this.progressBar).GetOrDefault(EffecterDefOf.ProgressBar.Spawn);
+                this.progressBar = Option(this.progressBar).GetOrDefaultF(EffecterDefOf.ProgressBar.Spawn);
                 this.progressBar.EffectTick(this.working, TargetInfo.Invalid);
                 Option(((SubEffecter_ProgressBar)progressBar.children[0]).mote).ForEach(m => m.progress = (GetTotalWorkAmount(this.working) - this.workLeft) / GetTotalWorkAmount(this.working));
             }
@@ -224,7 +224,7 @@ namespace NR_AutoMachineTool
                 {
                     this.Reset();
                 }
-                if (this.workLeft <= 0f)
+                else if (this.workLeft <= 0f)
                 {
                     if(this.FinishWorking(this.working, out this.products))
                     {

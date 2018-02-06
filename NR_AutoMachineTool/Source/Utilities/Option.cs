@@ -64,7 +64,7 @@ namespace NR_AutoMachineTool.Utilities
             return this.hasValue ? this.value : defaultValue;
         }
 
-        public T GetOrDefault(Func<T> creator)
+        public T GetOrDefaultF(Func<T> creator)
         {
             return this.hasValue ? this.value : creator();
         }

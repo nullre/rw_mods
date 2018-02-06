@@ -68,7 +68,7 @@ namespace NR_AutoMachineTool
                         return Nothing<Thing>();
                     }
                     return Option(planting);
-                }).GetOrDefault(() => null);
+                }).GetOrDefault(null);
             return target != null;
         }
 

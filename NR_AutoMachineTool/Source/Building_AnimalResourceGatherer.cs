@@ -79,7 +79,7 @@ namespace NR_AutoMachineTool
             Scribe_Values.Look<string>(ref this.compName, "compName", null);
             if (this.compName != null && this.working != null)
             {
-                this.comp = this.working.GetComps<CompHasGatherableBodyResource>().Where(c => c.GetType().FullName == this.compName).FirstOption().GetOrDefault(() => null);
+                this.comp = this.working.GetComps<CompHasGatherableBodyResource>().Where(c => c.GetType().FullName == this.compName).FirstOption().GetOrDefault(null);
             }
         }
 
@@ -114,7 +114,7 @@ namespace NR_AutoMachineTool
                 .Where(a => a.Comp.ActiveAndFull)
                 .Where(a => !this.ProductLimitation || this.Map.resourceCounter.GetCount(resourceDefGetter(a.Comp)) < this.ProductLimitCount)
                 .FirstOption()
-                .GetOrDefault(() => null);
+                .GetOrDefault(null);
             target = null;
             if (animal != null)
             {

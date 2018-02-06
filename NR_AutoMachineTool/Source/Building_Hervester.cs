@@ -46,7 +46,7 @@ namespace NR_AutoMachineTool
                 .Where(p => !InWorking(p))
                 .Where(p => !this.ProductLimitation || this.Map.resourceCounter.GetCount(p.def.plant.harvestedThingDef) < this.ProductLimitCount)
                 .FirstOption()
-                .GetOrDefault(() => null);
+                .GetOrDefault(null);
             target = plant;
             return target != null;
         }

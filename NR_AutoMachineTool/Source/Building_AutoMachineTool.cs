@@ -230,7 +230,7 @@ namespace NR_AutoMachineTool
 
         private void UpdateProgressBar()
         {
-            this.progressBar = Option(this.progressBar).GetOrDefault(EffecterDefOf.ProgressBar.Spawn);
+            this.progressBar = Option(this.progressBar).GetOrDefaultF(EffecterDefOf.ProgressBar.Spawn);
             this.workTable.ForEach(wt => this.progressBar.EffectTick(wt, TargetInfo.Invalid));
             Option(((SubEffecter_ProgressBar)progressBar.children[0]).mote).ForEach(m => m.progress = (this.workAmount - this.workLeft) / this.workAmount);
         }
