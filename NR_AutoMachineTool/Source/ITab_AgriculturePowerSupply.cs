@@ -22,6 +22,9 @@ namespace NR_AutoMachineTool
 
         float SupplyPowerForSpeed { get; set; }
         float SupplyPowerForRange { get; set; }
+
+        bool Glowable { get; }
+        bool Glow { get; set; }
     }
 
     class ITab_AgriculturePowerSupply : ITab
@@ -58,9 +61,10 @@ namespace NR_AutoMachineTool
 
             list.Begin(inRect);
             list.Gap();
+            var rect = new Rect();
 
             // for speed
-            var rect = list.GetRect(50f);
+            rect = list.GetRect(50f);
             Widgets.Label(rect, descriptionForSpeed);
             list.Gap();
 
@@ -84,6 +88,15 @@ namespace NR_AutoMachineTool
             
             rect = list.GetRect(50f);
             this.Machine.SupplyPowerForRange = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPowerForRange, (float)minPowerRange, (float)maxPowerRange, true, valueLabelForRange, minPowerRange.ToString(), maxPowerRange.ToString(), 500);
+            list.Gap();
+            
+            if (this.Machine.Glowable)
+            {
+                rect = list.GetRect(30f);
+                bool glow = this.Machine.Glow;
+                Widgets.CheckboxLabeled(rect, "NR_AutoMachineTool.SupplyPowerSunLampText".Translate(), ref glow);
+                this.Machine.Glow = glow;
+            }
             list.Gap();
 
             list.End();

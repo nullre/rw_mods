@@ -25,7 +25,7 @@ namespace NR_AutoMachineTool
         protected ModSetting_AutoMachineTool Setting { get => LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; }
 
         protected abstract float SpeedFactor { get; }
-        protected abstract int? SkillLevel { get; }
+        protected virtual int? SkillLevel { get => null; }
 
         public abstract int MinPowerForSpeed { get; }
         public abstract int MaxPowerForSpeed { get; }
@@ -34,11 +34,7 @@ namespace NR_AutoMachineTool
 
         public virtual float SupplyPowerForSpeed
         {
-            get
-            {
-                return this.supplyPowerForSpeed;
-            }
-
+            get => this.supplyPowerForSpeed;
             set
             {
                 this.supplyPowerForSpeed = value;
@@ -50,7 +46,7 @@ namespace NR_AutoMachineTool
         protected WorkingState state;
         protected float workLeft;
         protected T working;
-        protected List<Thing> products;
+        protected List<Thing> products = new List<Thing>();
 
         [Unsaved]
         private Effecter progressBar;
@@ -118,6 +114,7 @@ namespace NR_AutoMachineTool
             if (!respawningAfterLoad)
             {
                 this.SupplyPowerForSpeed = this.MinPowerForSpeed;
+                this.products = new List<Thing>();
             }
             LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed += this.ReloadSettings;
         }
@@ -174,9 +171,14 @@ namespace NR_AutoMachineTool
             if (this.working.Spawned)
             {
                 this.progressBar = Option(this.progressBar).GetOrDefaultF(EffecterDefOf.ProgressBar.Spawn);
-                this.progressBar.EffectTick(this.working, TargetInfo.Invalid);
+                this.progressBar.EffectTick(ProgressBarTarget(), TargetInfo.Invalid);
                 Option(((SubEffecter_ProgressBar)progressBar.children[0]).mote).ForEach(m => m.progress = (GetTotalWorkAmount(this.working) - this.workLeft) / GetTotalWorkAmount(this.working));
             }
+        }
+
+        protected virtual TargetInfo ProgressBarTarget()
+        {
+            return this.working;
         }
 
         protected virtual void SetPower()

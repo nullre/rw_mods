@@ -27,6 +27,11 @@ Planter starts planting plants in the agricultural zone within range.
       </li>
       <li Class="CompProperties_Breakdownable"/>
       <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Glower">
+        <overlightRadius>0</overlightRadius>
+        <glowRadius>0</glowRadius>
+        <glowColor>(370,370,370,0)</glowColor>
+      </li>
     </comps>
 
     <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
@@ -55,7 +60,6 @@ Planter starts planting plants in the agricultural zone within range.
       <li>NR_AutoMachineTool.ITab_ProductLimitation</li>
     </inspectorTabs>
   </ThingDef>
-
 
   <!-- tier 1-->
   <ThingDef ParentName="Building_NR_AutoMachineTool_Planter_Base">

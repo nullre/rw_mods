@@ -53,6 +53,7 @@ Even if the output destination is in the stockpiling zone, the finished product 
 
   <NR_AutoMachineTool_Puller.SwitchActiveLabel>Switch operating status</NR_AutoMachineTool_Puller.SwitchActiveLabel>
   <NR_AutoMachineTool_Puller.SwitchActiveDesc>Switch the operating status.</NR_AutoMachineTool_Puller.SwitchActiveDesc>
+  <NR_AutoMachineTool_Puller.FilterCopyFrom>Select copy from</NR_AutoMachineTool_Puller.FilterCopyFrom>
 
   <!-- Planter & Harvester -->
   <NR_AutoMachineTool.SupplyPowerForSpeedValueLabel>Supply power(for speed)</NR_AutoMachineTool.SupplyPowerForSpeedValueLabel>
@@ -61,9 +62,11 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool.SupplyPowerForSpeedText>Set the power to be supplied. If the power supply amount is large, it takes less time to work.</NR_AutoMachineTool.SupplyPowerForSpeedText>
   <NR_AutoMachineTool.SupplyPowerForRangeText>Set the power to be supplied. If the power supply amount is large, the range of work can be widened.</NR_AutoMachineTool.SupplyPowerForRangeText>
 
+  <NR_AutoMachineTool.SupplyPowerSunLampText>Sun Lamp(power:2000)</NR_AutoMachineTool.SupplyPowerSunLampText>
+
   <!-- common -->
   <NR_AutoMachineTool.ProductLimitation.TabName>Limitation</NR_AutoMachineTool.ProductLimitation.TabName>
-  <NR_AutoMachineTool.ProductLimitation.Description>Processing stops when the number of products exceeds the set value.</NR_AutoMachineTool.ProductLimitation.Description>
+  <NR_AutoMachineTool.ProductLimitation.Description>Processing stops when the number of products and items to be pull exceeds the set value. You can specify the zone number of stock.In case of zone designation, check if it can be placed in that zone.</NR_AutoMachineTool.ProductLimitation.Description>
   <NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>do limit</NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>
   <NR_AutoMachineTool.ProductLimitation.ValueLabel>limit count</NR_AutoMachineTool.ProductLimitation.ValueLabel>
   <NR_AutoMachineTool.Speed>speed</NR_AutoMachineTool.Speed>
@@ -71,6 +74,8 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool.AutoMachineTool>AutoMachineTool</NR_AutoMachineTool.AutoMachineTool>
   <NR_AutoMachineTool.Planter>Planter</NR_AutoMachineTool.Planter>
   <NR_AutoMachineTool.Harvester>Harvester</NR_AutoMachineTool.Harvester>
+  <NR_AutoMachineTool.EntierMap>Entier map</NR_AutoMachineTool.EntierMap>
+  <NR_AutoMachineTool.CountZone>Stock count zone</NR_AutoMachineTool.CountZone>
 
   <!-- Slaughterhouse -->
   <NR_AutoMachineTool.SlaughterhouseSetting.TabName>Setting</NR_AutoMachineTool.SlaughterhouseSetting.TabName>

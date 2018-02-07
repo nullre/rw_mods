@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_Planter : Building_BaseLimitation<Thing>
+    public class Building_Planter : Building_BaseRange<Thing>
     {
         private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
         protected override int? SkillLevel { get => this.Setting.PlanterTier(Extension.tier).skillLevel; }
@@ -33,6 +33,8 @@ namespace NR_AutoMachineTool
             }
             base.Reset();
         }
+
+        public override bool Glowable => true;
 
         protected override float GetTotalWorkAmount(Thing working)
         {
@@ -57,7 +59,7 @@ namespace NR_AutoMachineTool
                 .Where(c => c.Cell.GetRoom(this.Map) == this.GetRoom())
                 .Where(c => c.Plantable.GetPlantDefToGrow().plant.sowMinSkill <= this.SkillLevel)
                 .Where(c => GenPlant.AdjacentSowBlocker(c.Plantable.GetPlantDefToGrow(), c.Cell, this.Map) == null)
-                .Where(c => !this.ProductLimitation || this.Map.resourceCounter.GetCount(c.Plantable.GetPlantDefToGrow().plant.harvestedThingDef) < this.ProductLimitCount)
+                .Where(c => !IsLimit(c.Plantable.GetPlantDefToGrow().plant.harvestedThingDef))
                 .FirstOption()
                 .SelectMany(c =>
                 {

@@ -16,11 +16,12 @@ namespace NR_AutoMachineTool
     {
         int ProductLimitCount { get; set; }
         bool ProductLimitation { get; set; }
+        Option<SlotGroup> TargetSlotGroup { get; set; }
     }
 
     class ITab_ProductLimitation : ITab
     {
-        private static readonly Vector2 WinSize = new Vector2(250f, 180f);
+        private static readonly Vector2 WinSize = new Vector2(400f, 220f);
 
         public ITab_ProductLimitation()
         {
@@ -32,6 +33,16 @@ namespace NR_AutoMachineTool
         {
             get => (IProductLimitation)this.SelThing;
         }
+
+        public override void OnOpen()
+        {
+            base.OnOpen();
+
+            this.groups = Find.VisibleMap.slotGroupManager.AllGroups.ToList();
+            this.Machine.TargetSlotGroup = this.Machine.TargetSlotGroup.Where(s => this.groups.Contains(s));
+        }
+
+        private List<SlotGroup> groups;
 
         protected override void FillTab()
         {
@@ -53,12 +64,24 @@ namespace NR_AutoMachineTool
             bool limitation = this.Machine.ProductLimitation;
             Widgets.CheckboxLabeled(rect, checkBoxLabel, ref limitation);
             this.Machine.ProductLimitation = limitation;
+            list.Gap();
 
             rect = list.GetRect(30f);
             string buf = this.Machine.ProductLimitCount.ToString();
             int limit = this.Machine.ProductLimitCount;
             Widgets.Label(rect.LeftHalf(), label);
             Widgets.TextFieldNumeric<int>(rect.RightHalf(), ref limit, ref buf, 1, 1000000);
+            list.Gap();
+
+            rect = list.GetRect(30f);
+            Widgets.Label(rect.LeftHalf(), "NR_AutoMachineTool.CountZone".Translate());
+            if(Widgets.ButtonText(rect.RightHalf(), this.Machine.TargetSlotGroup.Fold("NR_AutoMachineTool.EntierMap".Translate())(s => s.parent.SlotYielderLabel())))
+            {
+                Find.WindowStack.Add(new FloatMenu(groups
+                    .Select(g => new FloatMenuOption(g.parent.SlotYielderLabel(), () => this.Machine.TargetSlotGroup = Option(g)))
+                    .ToList()
+                    .Ins(0, new FloatMenuOption("NR_AutoMachineTool.EntierMap".Translate(), () => this.Machine.TargetSlotGroup = Nothing<SlotGroup>()))));
+            }
             list.Gap();
 
             list.End();

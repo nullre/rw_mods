@@ -13,21 +13,37 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public abstract class Building_BaseRange<T> : Building_Base<T>, IRange, IAgricultureMachine where T : Thing
+    public abstract class Building_BaseRange<T> : Building_BaseLimitation<T>, IRange, IAgricultureMachine where T : Thing
     {
         public abstract int MinPowerForRange { get; }
         public abstract int MaxPowerForRange { get; }
 
-        public float SupplyPowerForRange
-        {
-            get
-            {
-                return this.supplyPowerForRange;
-            }
+        public virtual bool Glowable { get => false; }
 
+        private bool glow = false;
+        public virtual bool Glow
+        {
+            get => this.glow;
             set
             {
-                this.supplyPowerForRange = value;
+                if (this.glow != value)
+                {
+                    this.glow = value;
+                    this.ChangeGlow();
+                }
+            }
+        }
+
+        public float SupplyPowerForRange
+        {
+            get => this.supplyPowerForRange;
+            set
+            {
+                if(this.supplyPowerForRange != value)
+                {
+                    this.supplyPowerForRange = value;
+                    this.ChangeGlow();
+                }
                 this.SetPower();
             }
         }
@@ -38,6 +54,7 @@ namespace NR_AutoMachineTool
         {
             base.ExposeData();
             Scribe_Values.Look<float>(ref this.supplyPowerForRange, "supplyPowerForRange", this.MinPowerForRange);
+            Scribe_Values.Look<bool>(ref this.glow, "glow", false);
         }
 
         public virtual int GetRange()
@@ -70,14 +87,38 @@ namespace NR_AutoMachineTool
             {
                 this.supplyPowerForRange = this.MinPowerForRange;
             }
+            Option(this.TryGetComp<CompGlower>()).ForEach(g =>
+            {
+                CompProperties_Glower newProp = new CompProperties_Glower();
+                newProp.compClass = g.Props.compClass;
+                newProp.glowColor = g.Props.glowColor;
+                newProp.glowRadius = g.Props.glowRadius;
+                newProp.overlightRadius = g.Props.overlightRadius;
+                g.props = newProp;
+            });
+            this.ChangeGlow();
         }
 
         protected override void SetPower()
         {
-            if (-this.supplyPowerForRange - this.SupplyPowerForSpeed != this.TryGetComp<CompPowerTrader>().PowerOutput)
+            if (-this.supplyPowerForRange - this.SupplyPowerForSpeed - (this.Glowable && this.Glow ? 2000 : 0) != this.TryGetComp<CompPowerTrader>().PowerOutput)
             {
-                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.supplyPowerForRange - this.SupplyPowerForSpeed;
+                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.supplyPowerForRange - this.SupplyPowerForSpeed - (this.Glowable && this.Glow ? 2000 : 0);
             }
+        }
+
+        private void ChangeGlow()
+        {
+            Option(this.TryGetComp<CompGlower>()).ForEach(glower =>
+            {
+                var tmp = this.TryGetComp<CompPowerTrader>().PowerOn;
+                glower.Props.glowRadius = this.Glow ? (this.GetRange() + 2f) * 2f : 0;
+                glower.Props.overlightRadius = this.Glow ? (this.GetRange() + 2.1f) : 0;
+                this.TryGetComp<CompPowerTrader>().PowerOn = !tmp;
+                glower.UpdateLit(this.Map);
+                this.TryGetComp<CompPowerTrader>().PowerOn = tmp;
+                glower.UpdateLit(this.Map);
+            });
         }
     }
 }

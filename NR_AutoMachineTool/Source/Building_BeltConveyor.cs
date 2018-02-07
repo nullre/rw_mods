@@ -382,8 +382,6 @@ namespace NR_AutoMachineTool
             return true;
         }
 
-        protected override int? SkillLevel => null;
-
         protected override bool WorkingIsDespawned()
         {
             return true;

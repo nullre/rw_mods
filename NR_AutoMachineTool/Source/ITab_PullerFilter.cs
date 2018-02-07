@@ -31,6 +31,15 @@ namespace NR_AutoMachineTool
             get => (Building_ItemPuller)this.SelThing;
         }
 
+        public override void OnOpen()
+        {
+            base.OnOpen();
+
+            this.groups = this.Puller.Map.slotGroupManager.AllGroups.ToList();
+        }
+
+        private List<SlotGroup> groups;
+
         public override bool IsVisible => Puller.Filter != null;
         
         private Vector2 scrollPosition;
@@ -47,10 +56,18 @@ namespace NR_AutoMachineTool
             Widgets.Label(rect, this.description);
             list.Gap();
 
+            rect = list.GetRect(30f);
+            if (Widgets.ButtonText(rect, "NR_AutoMachineTool_Puller.FilterCopyFrom".Translate()))
+            {
+                Find.WindowStack.Add(new FloatMenu(groups.Select(g => new FloatMenuOption(g.parent.SlotYielderLabel(), () => this.Puller.Filter.CopyAllowancesFrom(g.Settings.filter))).ToList()));
+            }
+            list.Gap();
+
             list.End();
             var height = list.CurHeight;
 
             ThingFilterUI.DoThingFilterConfigWindow(inRect.BottomPartPixels(inRect.height - height), ref this.scrollPosition, this.Puller.Filter);
+
         }
     }
 }

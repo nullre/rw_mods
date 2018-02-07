@@ -14,19 +14,19 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_ItemPuller : Building_Base<Thing>
+    public class Building_ItemPuller : Building_BaseLimitation<Thing>
     {
         protected override float SpeedFactor { get => this.Setting.pullerSetting.speedFactor; }
         public override int MinPowerForSpeed { get => this.Setting.pullerSetting.minSupplyPowerForSpeed; }
         public override int MaxPowerForSpeed { get => this.Setting.pullerSetting.maxSupplyPowerForSpeed; }
+
+        protected virtual int PullCount { get => Mathf.RoundToInt(this.SupplyPowerForSpeed / 100f); }
 
         public ThingFilter Filter { get => this.filter; }
 
         private ThingFilter filter = new ThingFilter();
         private bool active = false;
         public override Graphic Graphic => Option(base.Graphic as Graphic_Selectable).Fold(base.Graphic)(g => g.Get("NR_AutoMachineTool/Buildings/Puller/Puller" + (this.active ? "1" : "0")));
-
-        protected override int? SkillLevel => null;
 
         public override void ExposeData()
         {
@@ -49,12 +49,18 @@ namespace NR_AutoMachineTool
             }
         }
 
+        protected override TargetInfo ProgressBarTarget()
+        {
+            return this;
+        }
+
         private Option<Thing> TargetThing()
         {
-            return (this.Position + this.Rotation.Opposite.FacingCell).ZoneCells(this.Map)
+            return (this.Position + this.Rotation.Opposite.FacingCell).SlotGroupCells(this.Map)
                 .SelectMany(c => c.GetThingList(this.Map))
                 .Where(t => t.def.category == ThingCategory.Item)
                 .Where(t => this.filter.Allows(t))
+                .Where(t => !this.IsLimit(t))
                 .FirstOption();
         }
 
@@ -86,24 +92,24 @@ namespace NR_AutoMachineTool
 
         protected override float GetTotalWorkAmount(Thing working)
         {
-            return 100f;
+            return Math.Min(working.stackCount, PullCount) * 10f;
         }
 
         protected override bool WorkIntrruption(Thing working)
         {
-            return !TargetThing().HasValue;
+            return !working.Spawned || working.Destroyed;
         }
 
         protected override bool TryStartWorking(out Thing target)
         {
-            target = this;
-            return TargetThing().HasValue;
+            target = TargetThing().GetOrDefault(null);
+            return target != null;
         }
 
         protected override bool FinishWorking(Thing working, out List<Thing> products)
         {
             var target = new List<Thing>();
-            TargetThing().ForEach(t => target.Append(t));
+            target.Append(working.SplitOff(Math.Min(working.stackCount, this.PullCount)));
             products = target;
             return true;
         }

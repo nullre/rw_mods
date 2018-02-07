@@ -24,8 +24,6 @@ namespace NR_AutoMachineTool
 
         public Dictionary<ThingDef, SlaughterSettings> Settings { get => this.slaughterSettings; }
 
-        protected override int? SkillLevel => null;
-
         private Dictionary<ThingDef, SlaughterSettings> slaughterSettings = new Dictionary<ThingDef, SlaughterSettings>();
 
         public override void ExposeData()

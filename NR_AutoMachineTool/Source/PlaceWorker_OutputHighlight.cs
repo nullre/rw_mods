@@ -18,7 +18,7 @@ namespace NR_AutoMachineTool
         {
             var pos = (center + rot.FacingCell);
             GenDraw.DrawFieldEdges(new List<IntVec3>().Append(pos), Color.blue);
-            GenDraw.DrawFieldEdges(pos.ZoneCells(Find.VisibleMap), Color.green);
+            GenDraw.DrawFieldEdges(pos.SlotGroupCells(Find.VisibleMap), Color.green);
         }
     }
 }

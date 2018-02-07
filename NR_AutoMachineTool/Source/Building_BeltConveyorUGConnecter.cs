@@ -204,8 +204,6 @@ namespace NR_AutoMachineTool
 
         public bool ToUnderground { get => this.Extension.toUnderground; }
 
-        protected override int? SkillLevel => null;
-
         protected override bool WorkingIsDespawned()
         {
             return true;

@@ -4,7 +4,7 @@
   <SpecialThingFilterDef>
     <defName>SpecialThingFilter_NR_AutoMachineTool_AllowFresh</defName>
     <label>allow fresh</label>
-    <description>Allow organic things which have fresh.</description>
+    <description>Allow rottable organic things which have fresh.</description>
     <parentCategory>Root</parentCategory>
     <allowedByDefault>true</allowedByDefault>
     <saveKey>allowFresh</saveKey>

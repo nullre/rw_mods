@@ -51,6 +51,7 @@
     <inspectorTabs>
       <li>NR_AutoMachineTool.ITab_PullerFilter</li>
       <li>NR_AutoMachineTool.ITab_PowerSupply</li>
+      <li>NR_AutoMachineTool.ITab_ProductLimitation</li>
     </inspectorTabs>
 
   </ThingDef>

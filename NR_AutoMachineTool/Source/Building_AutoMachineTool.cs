@@ -371,7 +371,7 @@ namespace NR_AutoMachineTool
                 {
                     this.workLeft = 0;
                     this.FinishWorking();
-                    this.checkNextPlacing = false;
+                    this.checkNextPlacing = true;
                 }
             }
             else if (this.state == WorkingState.Placing)
@@ -480,7 +480,7 @@ namespace NR_AutoMachineTool
 
         public List<IntVec3> OutputZone()
         {
-            return this.OutputCell().ZoneCells(M);
+            return this.OutputCell().SlotGroupCells(M);
         }
 
         public IntVec3 OutputCell()

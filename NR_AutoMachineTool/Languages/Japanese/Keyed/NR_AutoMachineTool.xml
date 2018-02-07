@@ -53,6 +53,7 @@
 
   <NR_AutoMachineTool_Puller.SwitchActiveLabel>稼働状態切替</NR_AutoMachineTool_Puller.SwitchActiveLabel>
   <NR_AutoMachineTool_Puller.SwitchActiveDesc>稼働状態を切り替えます。</NR_AutoMachineTool_Puller.SwitchActiveDesc>
+  <NR_AutoMachineTool_Puller.FilterCopyFrom>コピー元選択</NR_AutoMachineTool_Puller.FilterCopyFrom>
 
   <!-- Planter & Harvester -->
   <NR_AutoMachineTool.SupplyPowerForSpeedValueLabel>供給電力量(速度用)</NR_AutoMachineTool.SupplyPowerForSpeedValueLabel>
@@ -60,10 +61,12 @@
 
   <NR_AutoMachineTool.SupplyPowerForSpeedText>供給する電力を設定します。電力の供給量が大きければ、作業にかかる時間が短くなります。</NR_AutoMachineTool.SupplyPowerForSpeedText>
   <NR_AutoMachineTool.SupplyPowerForRangeText>供給する電力を設定します。電力の供給量が大きければ、作業できる範囲が広くなります。</NR_AutoMachineTool.SupplyPowerForRangeText>
+
+  <NR_AutoMachineTool.SupplyPowerSunLampText>太陽灯(電力:2000)</NR_AutoMachineTool.SupplyPowerSunLampText>
   
   <!-- 共通 -->
   <NR_AutoMachineTool.ProductLimitation.TabName>制限</NR_AutoMachineTool.ProductLimitation.TabName>
-  <NR_AutoMachineTool.ProductLimitation.Description>生成物の数が設定した値以上になると、処理を停止します。</NR_AutoMachineTool.ProductLimitation.Description>
+  <NR_AutoMachineTool.ProductLimitation.Description>生成物や引き出すアイテムの在庫数が設定した値以上になると、処理を停止します。在庫数はゾーンを指定する事ができます。ゾーン指定の場合には、そのゾーンに配置可能かチェックします。</NR_AutoMachineTool.ProductLimitation.Description>
   <NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>制限する</NR_AutoMachineTool.ProductLimitation.CheckBoxLabel>
   <NR_AutoMachineTool.ProductLimitation.ValueLabel>制限数</NR_AutoMachineTool.ProductLimitation.ValueLabel>
   <NR_AutoMachineTool.Speed>速度</NR_AutoMachineTool.Speed>
@@ -71,6 +74,8 @@
   <NR_AutoMachineTool.AutoMachineTool>自動工作機</NR_AutoMachineTool.AutoMachineTool>
   <NR_AutoMachineTool.Planter>種蒔き機</NR_AutoMachineTool.Planter>
   <NR_AutoMachineTool.Harvester>収穫機</NR_AutoMachineTool.Harvester>
+  <NR_AutoMachineTool.EntierMap>マップ全体</NR_AutoMachineTool.EntierMap>
+  <NR_AutoMachineTool.CountZone>在庫数確認ゾーン</NR_AutoMachineTool.CountZone>
   
   <!-- Slaughterhouse -->
   <NR_AutoMachineTool.SlaughterhouseSetting.TabName>設定</NR_AutoMachineTool.SlaughterhouseSetting.TabName>

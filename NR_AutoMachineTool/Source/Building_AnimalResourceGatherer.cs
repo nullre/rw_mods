@@ -16,7 +16,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_AnimalResourceGatherer : Building_BaseLimitation<Pawn> , IAgricultureMachine, IBeltConbeyorSender, IProductLimitation, IRange
+    public class Building_AnimalResourceGatherer : Building_BaseRange<Pawn>
     {
         private static Func<CompHasGatherableBodyResource, ThingDef> resourceDefGetter;
         private static Func<CompHasGatherableBodyResource, int> resourceAmountGetter;
@@ -56,8 +56,6 @@ namespace NR_AutoMachineTool
         public override int MaxPowerForSpeed { get => this.Setting.gathererSetting.maxSupplyPowerForSpeed; }
         public override int MinPowerForRange { get => this.Setting.gathererSetting.minSupplyPowerForRange; }
         public override int MaxPowerForRange { get => this.Setting.gathererSetting.maxSupplyPowerForRange; }
-
-        protected override int? SkillLevel => null;
 
         protected override void Reset()
         {
@@ -112,7 +110,7 @@ namespace NR_AutoMachineTool
                 .SelectMany(c => c.GetGatherable(this.Map))
                 .SelectMany(a => a.GetComps<CompHasGatherableBodyResource>().Select(c => new { Animal = a, Comp = c }))
                 .Where(a => a.Comp.ActiveAndFull)
-                .Where(a => !this.ProductLimitation || this.Map.resourceCounter.GetCount(resourceDefGetter(a.Comp)) < this.ProductLimitCount)
+                .Where(a => !IsLimit(resourceDefGetter(a.Comp)))
                 .FirstOption()
                 .GetOrDefault(null);
             target = null;

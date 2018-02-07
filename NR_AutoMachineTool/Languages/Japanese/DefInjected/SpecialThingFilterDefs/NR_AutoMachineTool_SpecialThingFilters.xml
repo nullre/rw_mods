@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <SpecialThingFilter_NR_AutoMachineTool_AllowFresh.label>新鮮な死体を許可</SpecialThingFilter_NR_AutoMachineTool_AllowFresh.label>
-  <SpecialThingFilter_NR_AutoMachineTool_AllowFresh.description>新鮮な有機体も許可します。</SpecialThingFilter_NR_AutoMachineTool_AllowFresh.description>
+  <SpecialThingFilter_NR_AutoMachineTool_AllowFresh.label>新鮮な有機物(死体等)を許可</SpecialThingFilter_NR_AutoMachineTool_AllowFresh.label>
+  <SpecialThingFilter_NR_AutoMachineTool_AllowFresh.description>新鮮な腐敗する有機体も許可します。</SpecialThingFilter_NR_AutoMachineTool_AllowFresh.description>
 </LanguageData>

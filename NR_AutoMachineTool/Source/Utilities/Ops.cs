@@ -57,6 +57,12 @@ namespace NR_AutoMachineTool.Utilities
             return lhs;
         }
 
+        public static List<T> Ins<T>(this List<T> lhs, int index, T rhs)
+        {
+            lhs.Insert(index, rhs);
+            return lhs;
+        }
+
         public static Option<T> ElementAtOption<T>(this List<T> list, int index)
         {
             if(index >= list.Count)
@@ -155,7 +161,7 @@ namespace NR_AutoMachineTool.Utilities
                 effect(t);
                 return true;
             }
-            var cells = cell.ZoneCells(map);
+            var cells = cell.SlotGroupCells(map);
             cells.SelectMany(c => c.GetThingList(map)).Where(i => i.def == t.def).ForEach(i => i.TryAbsorbStack(t, true));
             if (t.stackCount == 0)
             {
@@ -175,9 +181,9 @@ namespace NR_AutoMachineTool.Utilities
             return false;
         }
 
-        public static List<IntVec3> ZoneCells(this IntVec3 c, Map map)
+        public static List<IntVec3> SlotGroupCells(this IntVec3 c, Map map)
         {
-            return Option(c.GetZone(map) as RimWorld.Zone_Stockpile).Select(z => z.cells).GetOrDefault(new List<IntVec3>().Append(c));
+            return Option(map.slotGroupManager.SlotGroupAt(c)).Select(g => g.CellsList).GetOrDefault(new List<IntVec3>().Append(c));
         }
 
         public static Bill_Production CopyTo(this Bill_Production bill, Bill_Production copy)

@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_Harvester : Building_BaseLimitation<Plant>
+    public class Building_Harvester : Building_BaseRange<Plant>
     {
         private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
         protected override int? SkillLevel { get => this.Setting.HarvesterTier(Extension.tier).skillLevel; }
@@ -44,7 +44,7 @@ namespace NR_AutoMachineTool
                 .Where(p => p.HarvestableNow)
                 .Where(p => p.LifeStage == PlantLifeStage.Mature)
                 .Where(p => !InWorking(p))
-                .Where(p => !this.ProductLimitation || this.Map.resourceCounter.GetCount(p.def.plant.harvestedThingDef) < this.ProductLimitCount)
+                .Where(p => !IsLimit(p.def.plant.harvestedThingDef))
                 .FirstOption()
                 .GetOrDefault(null);
             target = plant;

@@ -173,7 +173,7 @@ Connect to the underground conveyor entrance and exit and use.
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
       <WorkToBuild>100</WorkToBuild>
-      <Flammability>1.0</Flammability>
+      <Flammability>0</Flammability>
     </statBases>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <fillPercent>0.15</fillPercent>
