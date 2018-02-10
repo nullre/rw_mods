@@ -27,7 +27,7 @@ namespace NR_AutoMachineTool
 
         protected override bool WorkIntrruption(Fire working)
         {
-            if (working.fireSize <= 0)
+            if (working.fireSize <= 0 && working.Spawned)
             {
                 working.Destroy();
             }
@@ -49,7 +49,10 @@ namespace NR_AutoMachineTool
             if (working.fireSize <= 0)
             {
                 working.fireSize = 0;
-                working.Destroy();
+                if (working.Spawned)
+                {
+                    working.Destroy();
+                }
             }
         }
     }
