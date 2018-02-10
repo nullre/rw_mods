@@ -13,6 +13,7 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool.ForbidOutputItemDesc>Machine tools forbid items that are output as finished goods, so that colonists are not involved.</NR_AutoMachineTool.ForbidOutputItemDesc>
 
   <NR_AutoMachineTool.StatWorking>working. [{0} / {1} ({2} %)]</NR_AutoMachineTool.StatWorking>
+  <NR_AutoMachineTool.StatWorkingNotParam>working.</NR_AutoMachineTool.StatWorkingNotParam>
   <NR_AutoMachineTool.StatReady>ready.</NR_AutoMachineTool.StatReady>
   <NR_AutoMachineTool.StatPlacing>placing. [pending placement {0}]</NR_AutoMachineTool.StatPlacing>
   <NR_AutoMachineTool.SkillLevel>skill level : {0}</NR_AutoMachineTool.SkillLevel>
@@ -93,4 +94,7 @@ Even if the output destination is in the stockpiling zone, the finished product 
 
   <NR_AutoMachineTool.RaceName>race name</NR_AutoMachineTool.RaceName>
   <NR_AutoMachineTool.Bonds>bonds</NR_AutoMachineTool.Bonds>
+
+  <!-- AutomationNet -->
+  <NR_AutoMachineTool.AutomationNet.MustOnPipe>It must be installed on the Automation Net pipe.</NR_AutoMachineTool.AutomationNet.MustOnPipe>
 </LanguageData>

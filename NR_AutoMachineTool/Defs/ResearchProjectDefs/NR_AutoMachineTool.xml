@@ -149,4 +149,40 @@
     <researchViewX>0</researchViewX>
     <researchViewY>3</researchViewY>
   </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_AutomationNet</defName>
+    <label>Automation Net (experimental)</label>
+    <description>Automation Net can be created.</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>MultiAnalyzer</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>4</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_AutomationNetPipeComponent</defName>
+    <label>Automation Net Pipe Component (experimental)</label>
+    <description>Automation Net pipe component can be created.</description>
+    <baseCost>3000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutomationNet</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>1</researchViewX>
+    <researchViewY>4</researchViewY>
+  </ResearchProjectDef>
 </Defs>

@@ -63,6 +63,18 @@ namespace NR_AutoMachineTool.Utilities
             return lhs;
         }
 
+        public static List<T> Head<T>(this List<T> lhs, T rhs)
+        {
+            lhs.Insert(0, rhs);
+            return lhs;
+        }
+
+        public static List<T> Del<T>(this List<T> lhs, T rhs)
+        {
+            lhs.Remove(rhs);
+            return lhs;
+        }
+
         public static Option<T> ElementAtOption<T>(this List<T> list, int index)
         {
             if(index >= list.Count)

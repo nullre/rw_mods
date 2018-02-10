@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>Building_NR_AutoMachineTool_AutomationNetPipe</defName>
+    <label>Automation Net Pipe</label>
+    <description>
+Build an Automation Net with pipes.
+Be able to expand the function by installing the component.
+    </description>
+    <thingClass>NR_AutoMachineTool.Building_AutomationPipe</thingClass>
+    <category>Building</category>
+    <designationCategory>NR_AutoMachineTool_AutomationNet_DesignationCategory</designationCategory>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AutomationNet/Pipe</texPath>
+      <graphicClass>NR_AutoMachineTool.Graphic_LinkedAutomationNet</graphicClass>
+    </graphicData>
+    <blueprintGraphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AutomationNet/PipeAtlas</texPath>
+      <graphicClass>NR_AutoMachineTool.Graphic_LinkedAutomationNet</graphicClass>
+    </blueprintGraphicData>
+    <uiIconPath>NR_AutoMachineTool/Buildings/AutomationNet/PipeIcon</uiIconPath>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+    </building>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <passability>Standable</passability>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <MaxHitPoints>1000</MaxHitPoints>
+      <WorkToBuild>50</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <placingDraggableDimensions>1</placingDraggableDimensions>
+    <costList>
+      <Steel>10</Steel>
+    </costList>
+    <comps>
+      <li Class="NR_AutoMachineTool.CompProperties_Automation">
+        <compClass>NR_AutoMachineTool.CompAutomationEnergyTransmitter</compClass>
+      </li>
+    </comps>
+    <placeWorkers>
+    </placeWorkers>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <constructEffect>ConstructMetal</constructEffect>
+    <clearBuildingArea>false</clearBuildingArea>
+    <designationHotKey>Misc1</designationHotKey>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutomationNet</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef Name="Building_NR_AutoMachineTool_AutomationNetGenerator_Base" Parent="BuildingBase" Abstract="True">
+    <defName>Building_NR_AutoMachineTool_AutomationNetGenerator_Base</defName>
+    <thingClass>NR_AutoMachineTool.Building_EnergyGenerator</thingClass>
+    <description>
+Automation Net Energy Generator.
+Install adjacent to the pipe.
+Energy is supplied to the pipe.
+    </description>
+    <altitudeLayer>Building</altitudeLayer>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <fillPercent>1</fillPercent>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>5000</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="NR_AutoMachineTool.CompProperties_Automation">
+        <compClass>NR_AutoMachineTool.CompAutomationEnergySupplier</compClass>
+        <energyAmount>5000</energyAmount>
+      </li>
+    </comps>
+
+    <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
+    <pathCost>0</pathCost>
+    <designationCategory>NR_AutoMachineTool_AutomationNet_DesignationCategory</designationCategory>
+    <rotatable>true</rotatable>
+
+    <placeWorkers>
+    </placeWorkers>
+
+    <category>Building</category>
+    <tickerType>Normal</tickerType>
+
+    <passability>Impassable</passability>
+    <repairEffect>Repair</repairEffect>
+    <constructEffect>ConstructMetal</constructEffect>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <size>(1,1)</size>
+    <selectable>True</selectable>
+
+    <inspectorTabs>
+    </inspectorTabs>
+  </ThingDef>
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetGenerator_Base">
+    <defName>Building_NR_AutoMachineTool_AutomationNetGenerator</defName>
+    <label>Automation Net Energy Generator</label>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AutomationNet/AutomationNetGenerator</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Steel>1000</Steel>
+      <Plasteel>100</Plasteel>
+      <Component>10</Component>
+    </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutomationNet</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef Name="Building_NR_AutoMachineTool_AutomationNetComponent_Base" ParentName="BuildingBase" Abstract="True">
+    <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Base</defName>
+    <category>Building</category>
+    <designationCategory>NR_AutoMachineTool_AutomationNet_DesignationCategory</designationCategory>
+    <tickerType>Normal</tickerType>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+    </building>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <passability>Standable</passability>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <MaxHitPoints>1000</MaxHitPoints>
+      <WorkToBuild>50</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <placingDraggableDimensions>1</placingDraggableDimensions>
+    <comps>
+      <li Class="NR_AutoMachineTool.CompProperties_Automation">
+        <compClass>NR_AutoMachineTool.CompAutomationEnergyConsumer</compClass>
+        <destructWithPipe>true</destructWithPipe>
+      </li>
+    </comps>
+    <placeWorkers>
+    </placeWorkers>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <constructEffect>ConstructMetal</constructEffect>
+    <clearBuildingArea>false</clearBuildingArea>
+    <designationHotKey>Misc1</designationHotKey>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutomationNetPipeComponent</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetComponent_Base">
+    <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Repair</defName>
+    <label>Repair pipe component</label>
+    <description>
+Repair pipe component.
+Repair where this component is located.
+Pipe component must install on the pipe.
+    </description>
+    <thingClass>NR_AutoMachineTool.Building_RepairComponent</thingClass>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AutomationNet/RepairComponent</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Plasteel>10</Plasteel>
+      <Component>1</Component>
+    </costList>
+  </ThingDef>
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetComponent_Base">
+    <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish</defName>
+    <label>Extinguish pipe component</label>
+    <description>
+Extinguish pipe component.
+Extinguish where this component is located.
+Pipe component must install on the pipe.
+    </description>
+    <thingClass>NR_AutoMachineTool.Building_ExtinguishComponent</thingClass>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AutomationNet/ExtinguishComponent</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Plasteel>10</Plasteel>
+      <Component>1</Component>
+    </costList>
+  </ThingDef>
+  
+</Defs>

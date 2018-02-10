@@ -20,7 +20,7 @@ namespace NR_AutoMachineTool
         public override int MinPowerForSpeed { get => this.Setting.pullerSetting.minSupplyPowerForSpeed; }
         public override int MaxPowerForSpeed { get => this.Setting.pullerSetting.maxSupplyPowerForSpeed; }
 
-        protected virtual int PullCount { get => Mathf.RoundToInt(this.SupplyPowerForSpeed / 100f); }
+        protected virtual int PullCount { get => Math.Max(Mathf.RoundToInt(this.SupplyPowerForSpeed / 100f), 1); }
 
         public ThingFilter Filter { get => this.filter; }
 
