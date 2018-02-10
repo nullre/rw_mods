@@ -154,6 +154,7 @@ Energy is supplied to the pipe.
       </li>
     </comps>
     <placeWorkers>
+      <li>NR_AutoMachineTool.PlaceWorker_AutomationNetComponent</li>
     </placeWorkers>
     <rotatable>false</rotatable>
     <selectable>true</selectable>
