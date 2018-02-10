@@ -173,7 +173,7 @@ Energy is supplied to the pipe.
     <label>Repair pipe component</label>
     <description>
 Repair pipe component.
-Repair where this component is located.
+Use energy to repair where this component is located.
 Pipe component must install on the pipe.
     </description>
     <thingClass>NR_AutoMachineTool.Building_RepairComponent</thingClass>
@@ -193,7 +193,7 @@ Pipe component must install on the pipe.
     <label>Extinguish pipe component</label>
     <description>
 Extinguish pipe component.
-Extinguish where this component is located.
+Use energy to extinguish where this component is located.
 Pipe component must install on the pipe.
     </description>
     <thingClass>NR_AutoMachineTool.Building_ExtinguishComponent</thingClass>

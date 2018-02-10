@@ -16,14 +16,14 @@
   <Building_NR_AutoMachineTool_AutomationNetComponent_Repair.label>修理パイプコンポーネント</Building_NR_AutoMachineTool_AutomationNetComponent_Repair.label>
   <Building_NR_AutoMachineTool_AutomationNetComponent_Repair.description>
 修理パイプコンポーネント。
-このコンポーネントが配置されている箇所を修理します。
+エネルギーを利用して、このコンポーネントが配置されている箇所を修理します。
 パイプコンポーネントはパイプ上に配置してください。
   </Building_NR_AutoMachineTool_AutomationNetComponent_Repair.description>
 
   <Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.label>消火パイプコンポーネント</Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.label>
   <Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.description>
 消火パイプコンポーネント。
-このコンポーネントが配置されている箇所を消火します。
+エネルギーを利用して、このコンポーネントが配置されている箇所を消火します。
 パイプコンポーネントはパイプ上に配置してください。
   </Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.description>
 
