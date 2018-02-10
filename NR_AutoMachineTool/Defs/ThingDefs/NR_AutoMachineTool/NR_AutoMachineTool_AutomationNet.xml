@@ -75,14 +75,14 @@ Energy is supplied to the pipe.
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <basePowerConsumption>5000</basePowerConsumption>
+        <basePowerConsumption>1000</basePowerConsumption>
         <shortCircuitInRain>false</shortCircuitInRain>
       </li>
       <li Class="CompProperties_Breakdownable"/>
       <li Class="CompProperties_Flickable"/>
       <li Class="NR_AutoMachineTool.CompProperties_Automation">
         <compClass>NR_AutoMachineTool.CompAutomationEnergySupplier</compClass>
-        <energyAmount>5000</energyAmount>
+        <energyAmount>1000</energyAmount>
       </li>
     </comps>
 
