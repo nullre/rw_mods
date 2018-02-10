@@ -80,7 +80,7 @@ namespace NR_AutoMachineTool
                 Find.WindowStack.Add(new FloatMenu(groups
                     .Select(g => new FloatMenuOption(g.parent.SlotYielderLabel(), () => this.Machine.TargetSlotGroup = Option(g)))
                     .ToList()
-                    .Ins(0, new FloatMenuOption("NR_AutoMachineTool.EntierMap".Translate(), () => this.Machine.TargetSlotGroup = Nothing<SlotGroup>()))));
+                    .Head(new FloatMenuOption("NR_AutoMachineTool.EntierMap".Translate(), () => this.Machine.TargetSlotGroup = Nothing<SlotGroup>()))));
             }
             list.Gap();
 

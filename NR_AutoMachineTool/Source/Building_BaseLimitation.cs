@@ -66,10 +66,7 @@ namespace NR_AutoMachineTool
             }
             this.targetSlotGroup = this.targetSlotGroup.Where(s => this.Map.slotGroupManager.AllGroups.Any(a => a == s));
             return this.targetSlotGroup.Fold(() => this.Map.resourceCounter.GetCount(thing.def) >= this.ProductLimitCount)
-                (s =>
-                {
-                    return s.HeldThings.Where(t => t.def == thing.def).Select(t => t.stackCount).Sum() >= this.ProductLimitCount || !s.CellsList.Any(c => c.IsValidStorageFor(this.Map, thing));
-                });
+                (s => s.HeldThings.Where(t => t.def == thing.def).Select(t => t.stackCount).Sum() >= this.ProductLimitCount || !s.CellsList.Any(c => c.IsValidStorageFor(this.Map, thing)));
         }
     }
 }

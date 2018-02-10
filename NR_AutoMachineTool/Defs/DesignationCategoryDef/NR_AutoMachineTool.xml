@@ -6,4 +6,11 @@
     <description>Auto machine</description>
     <order>100</order>
   </DesignationCategoryDef>
+
+  <DesignationCategoryDef>
+    <defName>NR_AutoMachineTool_AutomationNet_DesignationCategory</defName>
+    <label>Automation Net (experimental)</label>
+    <description>Automation Net (experimental)</description>
+    <order>101</order>
+  </DesignationCategoryDef>
 </Defs>

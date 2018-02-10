@@ -2,4 +2,7 @@
 <LanguageData>
   <NR_AutoMachineTool_DesignationCategory.label>自動工作</NR_AutoMachineTool_DesignationCategory.label>
   <NR_AutoMachineTool_DesignationCategory.description>自動工作</NR_AutoMachineTool_DesignationCategory.description>
+
+  <NR_AutoMachineTool_AutomationNet_DesignationCategory.label>自動化ネット(experimental)</NR_AutoMachineTool_AutomationNet_DesignationCategory.label>
+  <NR_AutoMachineTool_AutomationNet_DesignationCategory.description>自動化ネット(experimental)</NR_AutoMachineTool_AutomationNet_DesignationCategory.description>
 </LanguageData>
