@@ -35,7 +35,7 @@ namespace NR_AutoMachineTool
 
         protected override float WorkAmountPerTick()
         {
-            return this.trader.suppliedEnergy * 0.001f;
+            return this.consumer.suppliedEnergy * 0.001f;
         }
 
         protected override bool WorkIntrruption(Building working)
@@ -44,7 +44,7 @@ namespace NR_AutoMachineTool
             {
                 working.HitPoints = working.MaxHitPoints;
             }
-            return base.WorkIntrruption(working) || working.HitPoints >= working.MaxHitPoints;
+            return !working.Spawned || working.HitPoints >= working.MaxHitPoints;
         }
 
         protected override Building TargetThing()

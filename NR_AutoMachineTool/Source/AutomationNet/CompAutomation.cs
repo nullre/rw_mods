@@ -42,5 +42,20 @@ namespace NR_AutoMachineTool
         {
             AutomationNetOverlayMats.LinkedOverlayGraphic.Print(layer, this.parent);
         }
+
+        public bool DestructWithPipe
+        {
+            get => this.Props.destructWithPipe;
+        }
+
+        public float UsableEnergyNow
+        {
+            get => Option(this.connectedNet).Select(n => n.UsableEnergy).GetOrDefault(0f);
+        }
+
+        public bool CanUseEnergy
+        {
+            get => Option(this.connectedNet).Select(n => n.IsSuppliedEnergy).GetOrDefault(false);
+        }
     }
 }

@@ -47,6 +47,9 @@ namespace NR_AutoMachineTool
         [Unsaved]
         private Effecter progressBar;
 
+        [Unsaved]
+        private bool placeFirstAbsorb = true;
+
         protected virtual bool WorkingIsDespawned()
         {
             return false;
@@ -249,7 +252,7 @@ namespace NR_AutoMachineTool
                 {
                     // ない場合は適当に流す.
                     if (target.Spawned) target.DeSpawn();
-                    if (!PlaceItem(target, OutputCell(), false, this.Map))
+                    if (!PlaceItem(target, OutputCell(), false, this.Map, this.placeFirstAbsorb))
                     {
                         GenPlace.TryPlaceThing(target, OutputCell(), this.Map, ThingPlaceMode.Near);
                     }

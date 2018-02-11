@@ -27,4 +27,20 @@
 パイプコンポーネントはパイプ上に配置してください。
   </Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.description>
 
+  <Building_NR_AutoMachineTool_AutomationNetComponent_Storage.label>ストレージパイプコンポーネント</Building_NR_AutoMachineTool_AutomationNetComponent_Storage.label>
+  <Building_NR_AutoMachineTool_AutomationNetComponent_Storage.description>
+ストレージパイプコンポーネント。
+備蓄ゾーンやロッカーに面して設置すると、ネットワークに備蓄ゾーンが認識されます。
+パイプコンポーネントはパイプ上に配置してください。
+  </Building_NR_AutoMachineTool_AutomationNetComponent_Storage.description>
+
+  <Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher.label>アイテム引き出しパイプコンポーネント</Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher.label>
+  <Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher.description>
+アイテム引き出しパイプコンポーネント。
+備蓄ゾーンやロッカーに面して設置すると、ネットワークに認識されている備蓄ゾーンから面した備蓄ゾーンへアイテムを引き出します。
+エネルギーを利用します。
+パイプコンポーネントはパイプ上に配置してください。
+  </Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher.description>
+
+
 </LanguageData>

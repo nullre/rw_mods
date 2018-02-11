@@ -24,6 +24,11 @@ namespace NR_AutoMachineTool
             Placing
         }
 
+        public Building_BeltConveyor()
+        {
+            base.setInitialMinPower = false;
+        }
+
         private Rot4 dest = default(Rot4);
         private Dictionary<Rot4, ThingFilter> filters = new Dictionary<Rot4, ThingFilter>();
         public static float supplyPower = 10f;

@@ -15,19 +15,19 @@ namespace NR_AutoMachineTool
 {
     public abstract class Building_BaseComponent<T> : Building_BaseAutomation<T> where T : Thing
     {
-        protected CompAutomationEnergyConsumer trader;
+        protected CompAutomationEnergyConsumer consumer;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
 
-            this.trader = this.TryGetComp<CompAutomationEnergyConsumer>();
+            this.consumer = this.TryGetComp<CompAutomationEnergyConsumer>();
             this.showProgressBar = false;
         }
 
         protected override bool IsActive()
         {
-            return base.IsActive();
+            return base.IsActive() && this.consumer.CanUseEnergy;
         }
 
         protected override bool TryStartWorking(out T target)
@@ -36,33 +36,18 @@ namespace NR_AutoMachineTool
 
             if (reuslt)
             {
-                this.trader.RequestEnergy();
+                this.consumer.RequestEnergy();
             }
             return reuslt;
         }
 
         protected abstract T TargetThing();
 
-        private bool NeedExtinguish(T b)
-        {
-            return b.GetAttachment(ThingDefOf.Fire) != null;
-        }
-
-        private bool NeedRepair(T b)
-        {
-            return b.HitPoints < b.MaxHitPoints;
-        }
-
         protected override bool FinishWorking(T working, out List<Thing> products)
         {
             products = new List<Thing>();
-            this.trader.ReleaseEnergy();
+            this.consumer.ReleaseEnergy();
             return true;
-        }
-
-        protected override bool WorkIntrruption(T working)
-        {
-            return !working.Spawned;
         }
 
         public override void Tick()
@@ -79,10 +64,15 @@ namespace NR_AutoMachineTool
         {
             if(after == WorkingState.Ready)
             {
-                this.trader.ReleaseEnergy();
+                this.consumer.ReleaseEnergy();
             }
         }
 
         protected abstract void WorkingTick(T working, float workAmount);
+
+        public override IntVec3 OutputCell()
+        {
+            return (this.Position + this.Rotation.FacingCell);
+        }
     }
 }

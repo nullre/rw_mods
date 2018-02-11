@@ -147,12 +147,6 @@ Energy is supplied to the pipe.
       <Flammability>0.5</Flammability>
     </statBases>
     <placingDraggableDimensions>1</placingDraggableDimensions>
-    <comps>
-      <li Class="NR_AutoMachineTool.CompProperties_Automation">
-        <compClass>NR_AutoMachineTool.CompAutomationEnergyConsumer</compClass>
-        <destructWithPipe>true</destructWithPipe>
-      </li>
-    </comps>
     <placeWorkers>
       <li>NR_AutoMachineTool.PlaceWorker_AutomationNetComponent</li>
     </placeWorkers>
@@ -164,12 +158,18 @@ Energy is supplied to the pipe.
     <constructEffect>ConstructMetal</constructEffect>
     <clearBuildingArea>false</clearBuildingArea>
     <designationHotKey>Misc1</designationHotKey>
-    <researchPrerequisites>
-      <li>ResearchProject_NR_AutoMachineTool_AutomationNetPipeComponent</li>
-    </researchPrerequisites>
   </ThingDef>
 
-  <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetComponent_Base">
+  <ThingDef Name="Building_NR_AutoMachineTool_AutomationNetConsumer_Base" ParentName="Building_NR_AutoMachineTool_AutomationNetComponent_Base" Abstract="True">
+    <comps>
+      <li Class="NR_AutoMachineTool.CompProperties_Automation">
+        <compClass>NR_AutoMachineTool.CompAutomationEnergyConsumer</compClass>
+        <destructWithPipe>true</destructWithPipe>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetConsumer_Base">
     <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Repair</defName>
     <label>Repair pipe component</label>
     <description>
@@ -187,9 +187,12 @@ Pipe component must install on the pipe.
       <Plasteel>10</Plasteel>
       <Component>1</Component>
     </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutomationNetRepairComponent</li>
+    </researchPrerequisites>
   </ThingDef>
 
-  <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetComponent_Base">
+  <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetConsumer_Base">
     <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish</defName>
     <label>Extinguish pipe component</label>
     <description>
@@ -207,6 +210,76 @@ Pipe component must install on the pipe.
       <Plasteel>10</Plasteel>
       <Component>1</Component>
     </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutomationNetRepairComponent</li>
+    </researchPrerequisites>
   </ThingDef>
-  
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetComponent_Base">
+    <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Storage</defName>
+    <label>Storage pipe component</label>
+    <description>
+Storage pipe component.
+The facing stockpile zone is recognized in the network.
+Pipe component must install on the pipe.
+    </description>
+    <rotatable>true</rotatable>
+    <thingClass>NR_AutoMachineTool.Building_StorageComponent</thingClass>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AutomationNet/StorageComponent</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Plasteel>100</Plasteel>
+      <Component>3</Component>
+    </costList>
+    <comps>
+      <li Class="NR_AutoMachineTool.CompProperties_Automation">
+        <compClass>NR_AutoMachineTool.CompAutomationStorage</compClass>
+        <destructWithPipe>true</destructWithPipe>
+      </li>
+    </comps>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutomationNetItemTransfer</li>
+    </researchPrerequisites>
+    <placeWorkers>
+      <li>NR_AutoMachineTool.PlaceWorker_HilightFacingSlotGroup</li>
+      <li>NR_AutoMachineTool.PlaceWorker_MustFacingSlotGroup</li>
+    </placeWorkers>
+    <placingDraggableDimensions>0</placingDraggableDimensions>
+  </ThingDef>
+
+  <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetConsumer_Base">
+    <defName>Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher</defName>
+    <label>ItemPusher pipe component</label>
+    <description>
+Storage pipe component.
+Extract items from the stockpiling zone recognized by the network and output it.
+Use energy.
+Pipe component must install on the pipe.
+    </description>
+    <rotatable>true</rotatable>
+    <thingClass>NR_AutoMachineTool.Building_ItemPusherComponent</thingClass>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/AutomationNet/ItemPusherComponent</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <costList>
+      <Plasteel>100</Plasteel>
+      <Component>3</Component>
+    </costList>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutomationNetItemTransfer</li>
+    </researchPrerequisites>
+    <placeWorkers>
+      <li>NR_AutoMachineTool.PlaceWorker_HilightFacingSlotGroup</li>
+      <li>NR_AutoMachineTool.PlaceWorker_MustFacingSlotGroup</li>
+    </placeWorkers>
+    <inspectorTabs>
+      <li>NR_AutoMachineTool.ITab_ThingFilter</li>
+    </inspectorTabs>
+    <placingDraggableDimensions>0</placingDraggableDimensions>
+  </ThingDef>
 </Defs>

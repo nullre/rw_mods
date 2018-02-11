@@ -158,7 +158,7 @@ namespace NR_AutoMachineTool.Utilities
 
 //        public static void L(object obj) { Log.Message(obj == null ? "null" : obj.ToString()); }
 
-        public static bool PlaceItem(Thing t, IntVec3 cell, bool forbid, Map map)
+        public static bool PlaceItem(Thing t, IntVec3 cell, bool forbid, Map map, bool firstAbsorbStack = false)
         {
             Action<Thing> effect = (item) =>
             {
@@ -166,6 +166,22 @@ namespace NR_AutoMachineTool.Utilities
                 MoteMaker.ThrowDustPuff(item.Position, map, 0.5f);
             };
 
+            Func<bool> absorb = () =>
+            {
+                cell.SlotGroupCells(map).SelectMany(c => c.GetThingList(map)).Where(i => i.def == t.def).ForEach(i => i.TryAbsorbStack(t, true));
+                if (t.stackCount == 0)
+                {
+                    effect(t);
+                    return true;
+                }
+                return false;
+            };
+
+            if (firstAbsorbStack)
+            {
+                if (absorb())
+                    return true;
+            }
             if (cell.GetThingList(map).Where(ti => ti.def.category == ThingCategory.Item).Count() == 0)
             {
                 GenPlace.TryPlaceThing(t, cell, map, ThingPlaceMode.Near);
@@ -173,14 +189,12 @@ namespace NR_AutoMachineTool.Utilities
                 effect(t);
                 return true;
             }
-            var cells = cell.SlotGroupCells(map);
-            cells.SelectMany(c => c.GetThingList(map)).Where(i => i.def == t.def).ForEach(i => i.TryAbsorbStack(t, true));
-            if (t.stackCount == 0)
+            if (!firstAbsorbStack)
             {
-                effect(t);
-                return true;
+                if (absorb())
+                    return true;
             }
-            var o = cells.Where(c => c.IsValidStorageFor(map, t))
+            var o = cell.SlotGroupCells(map).Where(c => c.IsValidStorageFor(map, t))
                 .Where(c => c.GetThingList(map).Where(b => b.def.category == ThingCategory.Building).All(b => !(b is Building_BeltConveyor)))
                 .FirstOption();
             if (o.HasValue)

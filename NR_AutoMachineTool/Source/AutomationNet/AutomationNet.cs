@@ -20,6 +20,9 @@ namespace NR_AutoMachineTool
         public List<CompAutomation> nodes;
         private List<CompAutomationEnergyConsumer> consumers;
         private List<CompAutomationEnergySupplier> suppliers;
+        private List<CompAutomationStorage> storages;
+
+        private float suppliedEnergy;
 
         public AutomationNet(IEnumerable<CompAutomation> nodes)
         {
@@ -27,20 +30,23 @@ namespace NR_AutoMachineTool
             this.nodes.ForEach(n => n.connectedNet = this);
             this.consumers = this.nodes.SelectMany(n => Option(n as CompAutomationEnergyConsumer)).ToList();
             this.suppliers = this.nodes.SelectMany(n => Option(n as CompAutomationEnergySupplier)).ToList();
-        }
+            this.storages = this.nodes.SelectMany(n => Option(n as CompAutomationStorage)).ToList();
 
-        public float CurrentSuppliedEnergy()
-        {
-            return this.suppliers.Select(t => t.SupplyEnergyPerTick).Sum();
+            this.UpdateSuppliedEnergy();
         }
-
+        
         private void DistributeEnergy()
         {
             var requesting = this.consumers.Where(c => c.requesting).ToList();
             if (requesting.Count > 0)
             {
-                requesting.ForEach(c => c.suppliedEnergy = this.CurrentSuppliedEnergy() / requesting.Count);
+                requesting.ForEach(c => c.suppliedEnergy = this.suppliedEnergy / requesting.Count);
             }
+        }
+
+        private void UpdateSuppliedEnergy()
+        {
+            this.suppliedEnergy = this.suppliers.Select(t => t.SupplyEnergyPerTick).Sum();
         }
 
         private HashSet<CompAutomationEnergyConsumer> requesting = new HashSet<CompAutomationEnergyConsumer>();
@@ -49,8 +55,18 @@ namespace NR_AutoMachineTool
         {
             if (Find.TickManager.TicksGame % 30 == 0)
             {
+                this.UpdateSuppliedEnergy();
                 this.DistributeEnergy();
             }
         }
+
+        public IEnumerable<Thing> StorageItems()
+        {
+            return this.storages.SelectMany(s => s.StorageItems);
+        }
+
+        public float UsableEnergy { get => this.suppliedEnergy / (this.consumers.Where(c => c.requesting).Count() + 1); }
+
+        public bool IsSuppliedEnergy { get => this.suppliedEnergy > 0f; }
     }
 }

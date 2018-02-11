@@ -22,7 +22,7 @@ namespace NR_AutoMachineTool
 
         protected override float WorkAmountPerTick()
         {
-            return this.trader.suppliedEnergy * 0.000001f;
+            return this.consumer.suppliedEnergy * 0.000001f;
         }
 
         protected override bool WorkIntrruption(Fire working)
@@ -31,16 +31,15 @@ namespace NR_AutoMachineTool
             {
                 working.Destroy();
             }
-            return base.WorkIntrruption(working) || !working.Spawned || working.fireSize <= 0;
+            return !working.Spawned || working.fireSize <= 0;
         }
 
         protected override Fire TargetThing()
         {
-            var target = this.Position.GetThingList(this.Map)
+            return this.Position.GetThingList(this.Map)
                 .SelectMany(t => Option(t as Fire))
                 .FirstOption()
                 .GetOrDefault(null);
-            return target;
         }
 
         protected override void WorkingTick(Fire working, float workAmount)

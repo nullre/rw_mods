@@ -77,6 +77,7 @@
   <NR_AutoMachineTool.Harvester>収穫機</NR_AutoMachineTool.Harvester>
   <NR_AutoMachineTool.EntierMap>マップ全体</NR_AutoMachineTool.EntierMap>
   <NR_AutoMachineTool.CountZone>在庫数確認ゾーン</NR_AutoMachineTool.CountZone>
+  <NR_AutoMachineTool.Count>個数</NR_AutoMachineTool.Count>
   
   <!-- Slaughterhouse -->
   <NR_AutoMachineTool.SlaughterhouseSetting.TabName>設定</NR_AutoMachineTool.SlaughterhouseSetting.TabName>
@@ -97,4 +98,5 @@
 
   <!-- AutomationNet -->
   <NR_AutoMachineTool.AutomationNet.MustOnPipe>オートメーションネットパイプの上に設置しなければなりません。</NR_AutoMachineTool.AutomationNet.MustOnPipe>
+  <NR_AutoMachineTool.AutomationNet.MustFacingSlotGroup>備蓄ゾーンやロッカー等に面していなければなりません。</NR_AutoMachineTool.AutomationNet.MustFacingSlotGroup>
 </LanguageData>

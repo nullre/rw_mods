@@ -164,14 +164,14 @@
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
     <tab>NR_AutoMachineTool_ResearchTab</tab>
-    <researchViewX>0</researchViewX>
-    <researchViewY>4</researchViewY>
+    <researchViewX>1</researchViewX>
+    <researchViewY>2</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
     <defName>ResearchProject_NR_AutoMachineTool_AutomationNetPipeComponent</defName>
     <label>Automation Net Pipe Component (experimental)</label>
-    <description>Automation Net pipe component can be created.</description>
+    <description>Automation Net Components can be research.</description>
     <baseCost>3000</baseCost>
     <techLevel>Spacer</techLevel>
     <prerequisites>
@@ -182,7 +182,43 @@
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
     <tab>NR_AutoMachineTool_ResearchTab</tab>
-    <researchViewX>1</researchViewX>
-    <researchViewY>4</researchViewY>
+    <researchViewX>2</researchViewX>
+    <researchViewY>2</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_AutomationNetRepairComponent</defName>
+    <label>Repair Component (experimental)</label>
+    <description>Automation Net repair/extinguish pipe component can be created.</description>
+    <baseCost>4000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutomationNetPipeComponent</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>3</researchViewX>
+    <researchViewY>2</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_AutomationNetItemTransfer</defName>
+    <label>Item Transfer Component (experimental)</label>
+    <description>Automation Net storage/item pusher component can be created.</description>
+    <baseCost>10000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutomationNetPipeComponent</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>3</researchViewX>
+    <researchViewY>3</researchViewY>
   </ResearchProjectDef>
 </Defs>

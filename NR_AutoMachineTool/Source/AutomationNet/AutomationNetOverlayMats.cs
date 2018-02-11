@@ -24,6 +24,10 @@ namespace NR_AutoMachineTool
 
         public static readonly Graphic CompExtinguishOverlayGraphic;
 
+        public static readonly Graphic CompStorageOverlayGraphic;
+
+        public static readonly Graphic CompItemPusherOverlayGraphic;
+
         static AutomationNetOverlayMats()
         {
             OverlayShader = ShaderDatabase.MetaOverlay;
@@ -36,6 +40,12 @@ namespace NR_AutoMachineTool
 
             CompExtinguishOverlayGraphic = GraphicDatabase.Get<Graphic_Single>("NR_AutoMachineTool/Buildings/AutomationNet/Special/CompExtinguishOverlay", OverlayShader);
             CompExtinguishOverlayGraphic.MatSingle.renderQueue = 3500;
+
+            CompStorageOverlayGraphic = GraphicDatabase.Get<Graphic_Single>("NR_AutoMachineTool/Buildings/AutomationNet/Special/CompStorageOverlay", OverlayShader);
+            CompStorageOverlayGraphic.MatSingle.renderQueue = 3500;
+
+            CompItemPusherOverlayGraphic = GraphicDatabase.Get<Graphic_Single>("NR_AutoMachineTool/Buildings/AutomationNet/Special/CompItemPusherOverlay", OverlayShader);
+            CompItemPusherOverlayGraphic.MatSingle.renderQueue = 3500;
         }
 
         public static Graphic GetOverlayGraphic(Building building)
@@ -47,6 +57,14 @@ namespace NR_AutoMachineTool
             else if (building as Building_ExtinguishComponent != null)
             {
                 return CompExtinguishOverlayGraphic;
+            }
+            else if (building as Building_ItemPusherComponent != null)
+            {
+                return CompItemPusherOverlayGraphic;
+            }
+            else if (building as Building_StorageComponent != null)
+            {
+                return CompStorageOverlayGraphic;
             }
             throw new NotImplementedException();
         }

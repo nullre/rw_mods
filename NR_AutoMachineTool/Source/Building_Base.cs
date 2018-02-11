@@ -50,6 +50,8 @@ namespace NR_AutoMachineTool
 
         [Unsaved]
         private Effecter progressBar;
+        [Unsaved]
+        protected bool setInitialMinPower = true;
 
         protected virtual bool WorkingIsDespawned()
         {
@@ -113,8 +115,9 @@ namespace NR_AutoMachineTool
 
             if (!respawningAfterLoad)
             {
-                this.SupplyPowerForSpeed = this.MinPowerForSpeed;
                 this.products = new List<Thing>();
+                if (setInitialMinPower)
+                    this.SupplyPowerForSpeed = this.MinPowerForSpeed;
             }
             LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed += this.ReloadSettings;
         }

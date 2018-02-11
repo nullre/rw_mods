@@ -20,7 +20,7 @@ namespace NR_AutoMachineTool
             this.Position
                 .GetThingList(this.Map)
                 .SelectMany(t => Option(t as Building))
-                .SelectMany(b => Option(b.TryGetComp<CompAutomationEnergyConsumer>()))
+                .SelectMany(b => Option(b.TryGetComp<CompAutomation>()))
                 .Where(c => c.DestructWithPipe)
                 .ForEach(c => c.parent.Destroy(mode));
 
