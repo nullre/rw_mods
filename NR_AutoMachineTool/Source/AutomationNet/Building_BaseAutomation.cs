@@ -240,9 +240,8 @@ namespace NR_AutoMachineTool
                 if (conveyor.HasValue)
                 {
                     // コンベアがある場合、そっちに流す.
-                    if (conveyor.Value.ReceivableNow(false))
+                    if (conveyor.Value.ReceiveThing(false, target))
                     {
-                        conveyor.Value.ReceiveThing(target);
                         return total;
                     }
                 }

@@ -106,13 +106,23 @@ namespace NR_AutoMachineTool
             return base.CanStackWith(other) && this.state == WorkingState.Ready;
         }
 
-        public bool ReceiveThing(Thing t)
+        public bool ReceiveThing(bool underground, Thing t)
         {
-            this.working = t;
-            this.state = WorkingState.Working;
-            this.workLeft = 1f;
-            if (this.working.Spawned) this.working.DeSpawn();
-            return true;
+            if (!this.ReceivableNow(underground, t))
+                return false;
+            if (this.state == WorkingState.Ready)
+            {
+                this.working = t;
+                this.state = WorkingState.Working;
+                this.workLeft = 1f;
+                if (this.working.Spawned) this.working.DeSpawn();
+                return true;
+            }
+            else
+            {
+                var target = this.state == WorkingState.Working ? this.working : this.products[0];
+                return target.TryAbsorbStack(t, true);
+            }
         }
 
         protected override bool PlaceProduct(ref List<Thing> products)
@@ -122,9 +132,8 @@ namespace NR_AutoMachineTool
             if (next.HasValue)
             {
                 // コンベアある場合、そっちに流す.
-                if (next.Value.ReceivableNow(this.ToUnderground))
+                if (next.Value.ReceiveThing(this.ToUnderground, thing))
                 {
-                    next.Value.ReceiveThing(thing);
                     return true;
                 }
             }
@@ -173,9 +182,25 @@ namespace NR_AutoMachineTool
                 (this.Position + this.Rotation.Opposite.FacingCell == linkable.Position && this.ToUnderground == !underground);
         }
 
-        public bool ReceivableNow(bool underground)
+        public bool ReceivableNow(bool underground, Thing thing)
         {
-            return this.state == WorkingState.Ready && this.IsActive() && !this.ToUnderground == underground;
+            if (!this.IsActive() || this.IsUnderground != underground)
+            {
+                return false;
+            }
+            Func<Thing, bool> check = (t) => t.CanStackWith(thing) && t.stackCount < t.def.stackLimit;
+            switch (this.state)
+            {
+                case WorkingState.Ready:
+                    return true;
+                case WorkingState.Working:
+                    // return check(this.working);
+                    return false;
+                case WorkingState.Placing:
+                    return check(this.products[0]);
+                default:
+                    return false;
+            }
         }
 
         protected override float GetTotalWorkAmount(Thing working)

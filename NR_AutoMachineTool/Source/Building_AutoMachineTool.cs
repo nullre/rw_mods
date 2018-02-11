@@ -452,9 +452,8 @@ namespace NR_AutoMachineTool
                 if (conveyor.HasValue)
                 {
                     // ベルトコンベアがある場合には、そっちに渡す.
-                    if (conveyor.Value.ReceivableNow(false))
+                    if (conveyor.Value.ReceiveThing(false, n))
                     {
-                        conveyor.Value.ReceiveThing(n);
                         return t;
                     }
                 }

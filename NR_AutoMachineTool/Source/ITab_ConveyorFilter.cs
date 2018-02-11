@@ -36,6 +36,15 @@ namespace NR_AutoMachineTool
 
         private Vector2 scrollPosition;
 
+        public override void OnOpen()
+        {
+            base.OnOpen();
+
+            this.groups = this.Conveyor.Map.slotGroupManager.AllGroups.ToList();
+        }
+
+        private List<SlotGroup> groups;
+
         protected override void FillTab()
         {
             if (!this.rotSelectedDic.ContainsKey(this.Conveyor))
@@ -87,6 +96,15 @@ namespace NR_AutoMachineTool
                     Text.Font = tmp;
                 }
             });
+            list.Gap();
+
+            rect = list.GetRect(30f);
+            if (Widgets.ButtonText(rect, "NR_AutoMachineTool_Puller.FilterCopyFrom".Translate()))
+            {
+                Find.WindowStack.Add(new FloatMenu(groups.Select(g => new FloatMenuOption(g.parent.SlotYielderLabel(),
+                    () => this.Conveyor.Filters[dic.Where(kv => kv.Value).First().Key].CopyAllowancesFrom(g.Settings.filter)
+                    )).ToList()));
+            }
             list.Gap();
 
             list.End();

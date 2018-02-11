@@ -196,14 +196,29 @@ namespace NR_AutoMachineTool
             return base.CanStackWith(other) && this.state == WorkingState.Ready;
         }
 
-        public bool ReceiveThing(Thing t)
+        public bool ReceiveThing(bool underground, Thing t)
         {
-            this.dest = Destination(t, true);
-            this.working = t;
-            this.state = WorkingState.Working;
-            this.workLeft = 1f;
-            if (this.working.Spawned) this.working.DeSpawn();
-            return true;
+            return ReceiveThing(underground, t, Destination(t, true));
+        }
+
+        private bool ReceiveThing(bool underground, Thing t, Rot4 rot)
+        {
+            if (!this.ReceivableNow(underground, t))
+                return false;
+            if (this.state == WorkingState.Ready)
+            {
+                this.dest = rot;
+                this.working = t;
+                this.state = WorkingState.Working;
+                this.workLeft = 1f;
+                if (this.working.Spawned) this.working.DeSpawn();
+                return true;
+            }
+            else
+            {
+                var target = this.state == WorkingState.Working ? this.working : this.products[0];
+                return target.TryAbsorbStack(t, true);
+            }
         }
 
         private Rot4 Destination(Thing t, bool doRotate)
@@ -211,7 +226,7 @@ namespace NR_AutoMachineTool
             var allowed = this.filters
                 .Where(f => f.Value.Allows(t.def)).Select(f => f.Key)
                 .ToList();
-            var placable = allowed.Where(r => this.OutputBeltConveyor().Where(l => l.Position == this.Position + r.FacingCell).FirstOption().Select(b => b.ReceivableNow(this.IsUnderground)).GetOrDefault(true))
+            var placable = allowed.Where(r => this.OutputBeltConveyor().Where(l => l.Position == this.Position + r.FacingCell).FirstOption().Select(b => b.ReceivableNow(this.IsUnderground, t)).GetOrDefault(true))
                 .ToList();
 
             if (placable.Count == 0)
@@ -229,6 +244,22 @@ namespace NR_AutoMachineTool
             return placable.ElementAt(index);
         }
 
+        private bool SendableConveyor(Thing t, out Rot4 dir)
+        {
+            dir = default(Rot4);
+            var result = this.filters
+                .Where(f => f.Value.Allows(t.def))
+                .Select(f => f.Key)
+                .SelectMany(r => this.OutputBeltConveyor().Where(l => l.Position == this.Position + r.FacingCell).Select(b => new { Dir = r, Conveyor = b }))
+                .Where(b => b.Conveyor.ReceivableNow(this.IsUnderground, t))
+                .FirstOption();
+            if (result.HasValue)
+            {
+                dir = result.Value.Dir;
+            }
+            return result.HasValue;
+        }
+
         protected override bool PlaceProduct(ref List<Thing> products)
         {
             var thing = products[0];
@@ -236,9 +267,8 @@ namespace NR_AutoMachineTool
             if (next.HasValue)
             {
                 // コンベアある場合、そっちに流す.
-                if (next.Value.ReceivableNow(this.IsUnderground))
+                if (next.Value.ReceiveThing(this.IsUnderground, thing))
                 {
-                    next.Value.ReceiveThing(thing);
                     NotifyAroundSender();
                     return true;
                 }
@@ -251,7 +281,16 @@ namespace NR_AutoMachineTool
                     return true;
                 }
             }
-            // 配置失敗. 止める.
+
+            var dir = default(Rot4);
+            if (this.SendableConveyor(thing, out dir))
+            {
+                // 他に流す方向があれば、やり直し.
+                this.Reset();
+                this.ReceiveThing(this.IsUnderground, thing, dir);
+                return false;
+            }
+            // 配置失敗.
             this.workLeft = 0.5f;
             return false;
         }
@@ -334,9 +373,24 @@ namespace NR_AutoMachineTool
             return rot != this.Rotation && this.IsUnderground == underground;
         }
 
-        public bool ReceivableNow(bool underground)
+        public bool ReceivableNow(bool underground, Thing thing)
         {
-            return this.state == WorkingState.Ready && this.IsActive() && this.IsUnderground == underground;
+            if(!this.IsActive() || this.IsUnderground != underground)
+            {
+                return false;
+            }
+            Func<Thing, bool> check = (t) => t.CanStackWith(thing) && t.stackCount < t.def.stackLimit;
+            switch (this.state) {
+                case WorkingState.Ready:
+                    return true;
+                case WorkingState.Working:
+                    // return check(this.working);
+                    return false;
+                case WorkingState.Placing:
+                    return check(this.products[0]);
+                default:
+                    return false;
+            }
         }
 
         public bool IsUnderground { get => Option(this.Extension).Fold(false)(x => x.underground); }
@@ -371,7 +425,7 @@ namespace NR_AutoMachineTool
             target = this.Position.GetThingList(this.Map).Where(t => t.def.category == ThingCategory.Item).FirstOption().GetOrDefault(null);
             if (target != null)
             {
-                this.ReceiveThing(target);
+                this.ReceiveThing(this.IsUnderground, target);
             }
             return target != null;
         }
