@@ -184,7 +184,7 @@ namespace NR_AutoMachineTool
 
         public bool ReceivableNow(bool underground, Thing thing)
         {
-            if (!this.IsActive() || this.IsUnderground != underground)
+            if (!this.IsActive() || this.ToUnderground == underground)
             {
                 return false;
             }
