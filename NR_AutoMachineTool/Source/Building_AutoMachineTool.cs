@@ -156,6 +156,7 @@ namespace NR_AutoMachineTool
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
+            this.powerComp = this.TryGetComp<CompPowerTrader>();
             this.workTable = Nothing<Building_WorkTable>();
             this.WorkTableSetting();
 
@@ -170,6 +171,8 @@ namespace NR_AutoMachineTool
             }
             LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed += this.ReloadSettings;
         }
+
+        private CompPowerTrader powerComp = null;
 
         private void ReloadSettings(object sender, EventArgs e)
         {
@@ -255,7 +258,7 @@ namespace NR_AutoMachineTool
 
         private bool IsActive()
         {
-            if (this.TryGetComp<CompPowerTrader>() == null || !this.TryGetComp<CompPowerTrader>().PowerOn)
+            if (this.powerComp == null || !this.powerComp.PowerOn)
             {
                 return false;
             }
@@ -325,11 +328,13 @@ namespace NR_AutoMachineTool
 
         private void SetPower()
         {
-            if (-this.SupplyPowerForSpeed != this.TryGetComp<CompPowerTrader>().PowerOutput)
+            if (-this.SupplyPowerForSpeed != this.powerComp.PowerOutput)
             {
-                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.SupplyPowerForSpeed;
+                this.powerComp.PowerOutput = -this.SupplyPowerForSpeed;
             }
         }
+
+        private int tickGap = Math.Abs(Rand.Int % 30);
 
         public override void Tick()
         {
@@ -348,7 +353,7 @@ namespace NR_AutoMachineTool
             if (this.state == WorkingState.Ready)
             {
                 this.CleanupProgressBar();
-                if (Find.TickManager.TicksGame % 30 == 0 || this.checkNextWorking)
+                if (Find.TickManager.TicksGame % 30 == tickGap || this.checkNextWorking)
                 {
                     this.TryStartWorking();
                 }
@@ -377,7 +382,7 @@ namespace NR_AutoMachineTool
             else if (this.state == WorkingState.Placing)
             {
                 this.CleanupWorkingEffect();
-                if (Find.TickManager.TicksGame % 30 == 0 || this.checkNextPlacing)
+                if (Find.TickManager.TicksGame % 30 == tickGap || this.checkNextPlacing)
                 {
                     this.checkNextWorking = this.PlaceProducts();
                 }

@@ -89,7 +89,7 @@ Energy is supplied to the pipe.
     <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
     <pathCost>0</pathCost>
     <designationCategory>NR_AutoMachineTool_AutomationNet_DesignationCategory</designationCategory>
-    <rotatable>true</rotatable>
+    <rotatable>false</rotatable>
 
     <placeWorkers>
     </placeWorkers>

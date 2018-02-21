@@ -42,11 +42,15 @@ namespace NR_AutoMachineTool
             }
         }
 
+        protected readonly static List<Thing> emptyThingList = Enumerable.Empty<Thing>().ToList();
+
         private float supplyPowerForSpeed;
         protected WorkingState state;
         protected float workLeft;
         protected T working;
         protected List<Thing> products = new List<Thing>();
+
+        private int tickGap = Math.Abs(Rand.Int % 30);
 
         [Unsaved]
         private Effecter progressBar;
@@ -106,12 +110,15 @@ namespace NR_AutoMachineTool
 
         protected virtual void SettingValues()
         {
-            this.TryGetComp<CompPowerTrader>().PowerOutput = this.SupplyPowerForSpeed;
+            this.powerComp.PowerOutput = this.SupplyPowerForSpeed;
         }
+
+        private CompPowerTrader powerComp;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
+            this.powerComp = this.TryGetComp<CompPowerTrader>();
 
             if (!respawningAfterLoad)
             {
@@ -131,7 +138,7 @@ namespace NR_AutoMachineTool
 
         protected virtual bool IsActive()
         {
-            if (this.TryGetComp<CompPowerTrader>() == null || !this.TryGetComp<CompPowerTrader>().PowerOn)
+            if (this.powerComp == null || !this.powerComp.PowerOn)
             {
                 return false;
             }
@@ -186,9 +193,9 @@ namespace NR_AutoMachineTool
 
         protected virtual void SetPower()
         {
-            if(this.SupplyPowerForSpeed != this.TryGetComp<CompPowerTrader>().PowerOutput)
+            if(this.SupplyPowerForSpeed != this.powerComp.PowerOutput)
             {
-                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.SupplyPowerForSpeed;
+                this.powerComp.PowerOutput = -this.SupplyPowerForSpeed;
             }
         }
 
@@ -201,17 +208,17 @@ namespace NR_AutoMachineTool
         {
             base.Tick();
 
-            this.SetPower();
-
             if (!this.IsActive())
             {
                 this.Reset();
                 return;
             }
 
+            this.SetPower();
+
             if (this.state == WorkingState.Ready)
             {
-                if (Find.TickManager.TicksGame % 30 == 20 || this.checkNextReady)
+                if (Find.TickManager.TicksGame % 30 == this.tickGap || this.checkNextReady)
                 {
                     if (this.TryStartWorking(out this.working))
                     {
@@ -247,7 +254,7 @@ namespace NR_AutoMachineTool
             }
             else if (this.state == WorkingState.Placing)
             {
-                if (Find.TickManager.TicksGame % 30 == 20 || checkNextPlace)
+                if (Find.TickManager.TicksGame % 30 == this.tickGap || checkNextPlace)
                 {
                     if (this.PlaceProduct(ref this.products))
                     {

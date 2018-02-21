@@ -158,6 +158,8 @@ namespace NR_AutoMachineTool
             return 0.1f;
         }
 
+        private int tickGap = Math.Abs(Rand.Int % 30);
+
         public override void Tick()
         {
             base.Tick();
@@ -170,7 +172,7 @@ namespace NR_AutoMachineTool
 
             if (this.State == WorkingState.Ready)
             {
-                if (Find.TickManager.TicksGame % 30 == 20 || this.checkNextReady)
+                if (Find.TickManager.TicksGame % 30 == tickGap || this.checkNextReady)
                 {
                     if (this.TryStartWorking(out this.working))
                     {
@@ -206,7 +208,7 @@ namespace NR_AutoMachineTool
             }
             else if (this.State == WorkingState.Placing)
             {
-                if (Find.TickManager.TicksGame % 30 == 20 || checkNextPlace)
+                if (Find.TickManager.TicksGame % 30 == tickGap || checkNextPlace)
                 {
                     if (this.PlaceProduct(ref this.products))
                     {
