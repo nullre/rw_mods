@@ -3,6 +3,9 @@
   <NR_MaterialEnergy.RecipeToEnergyLabel>物質をエネルギー化する({0})</NR_MaterialEnergy.RecipeToEnergyLabel>
   <NR_MaterialEnergy.RecipeToEnergyJobName>物質をエネルギー化する({0})</NR_MaterialEnergy.RecipeToEnergyJobName>
   <NR_MaterialEnergy.RecipeMaterializeLabel>{1} {0} を{3}個 実体化する (エネルギー使用量 : {2})</NR_MaterialEnergy.RecipeMaterializeLabel>
+  <NR_MaterialEnergy.RecipeMaterializeJobName>{0} を実体化する</NR_MaterialEnergy.RecipeMaterializeJobName>
   <NR_MaterialEnergy.RecipeMaterializeStuff>{0}製</NR_MaterialEnergy.RecipeMaterializeStuff>
   <NR_MaterialEnergy.RecipeEnergyDescription>{0}のエネルギーとなる物質が必要</NR_MaterialEnergy.RecipeEnergyDescription>
+  <NR_MaterialEnergy.RecipeScanMaterialLabel>スキャンする</NR_MaterialEnergy.RecipeScanMaterialLabel>
+  <NR_MaterialEnergy.RecipeToEnergyJobName>スキャンする</NR_MaterialEnergy.RecipeToEnergyJobName>
 </LanguageData>

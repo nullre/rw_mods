@@ -13,6 +13,12 @@ using static NR_MaterialEnergy.Utilities.Ops;
 
 namespace NR_MaterialEnergy
 {
+    [StaticConstructorOnStartup]
+    public static class Resources
+    {
+        public static readonly Texture2D DeleteX = ContentFinder<Texture2D>.Get("UI/Buttons/Delete", true);
+    }
+
     public class ITab_MaterializeBills : ITab
     {
         private float viewHeight = 1000f;
@@ -63,7 +69,18 @@ namespace NR_MaterialEnergy
                             {
                                 PlayerKnowledgeDatabase.KnowledgeDemonstrated(recipe.conceptLearned, KnowledgeAmount.Total);
                             }
-                        }, MenuOptionPriority.Default, null, null, 29f, (Rect rect2) => Widgets.InfoCardButton(rect2.x + 5f, rect2.y + (rect2.height - 24f) / 2f, recipe), null));
+                        }, MenuOptionPriority.Default, null, null, 58f, (rect2) =>
+                        {
+                            if (recipe.defName.StartsWith(Building_MaterialMahcine.MaterializeRecipeDefData.MaterializeRecipeDefPrefix))
+                            {
+                                if (Widgets.ButtonImage(new Rect(rect2.x + 34f, rect2.y + (rect2.height - 24f), 24f, 24f), Resources.DeleteX))
+                                {
+                                    this.Machine.RemoveMaterializeRecipe(recipe);
+                                    return true;
+                                }
+                            }
+                            return Widgets.InfoCardButton(rect2.x + 5f, rect2.y + (rect2.height - 24f) / 2f, recipe);
+                        }, null));
                     }
                 }
                 if (!list.Any<FloatMenuOption>())

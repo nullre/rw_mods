@@ -72,10 +72,10 @@
     <Content Include="Languages\English\DefInjected\WorkGiverDef\NR_MaterialEnergy.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Languages\English\Keyed\NR_AutoMachineTool.xml">
+    <Content Include="Languages\English\Keyed\NR_MaterialEnergy.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Languages\Japanese\Keyed\NR_AutoMachineTool.xml" />
+    <Content Include="Languages\Japanese\Keyed\NR_MaterialEnergy.xml" />
     <Content Include="Textures\NR_MaterialEnergy\Building\MaterialMachine.png" />
     <Content Include="Textures\NR_MaterialEnergy\Items\Energy.png" />
   </ItemGroup>

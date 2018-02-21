@@ -15,7 +15,7 @@ namespace NR_MaterialEnergy
 {
     public class Building_MaterialMahcine : Building_WorkTable
     {
-        private class MaterializeRecipeDefData : IExposable
+        public class MaterializeRecipeDefData : IExposable
         {
             public MaterializeRecipeDefData() {
             }
@@ -62,12 +62,16 @@ namespace NR_MaterialEnergy
 
             public static string GetDefName(ThingDef thing, ThingDef stuff, int prodCount)
             {
-                return "NR_MaterialEnergy.Materialize_" + thing.defName + (stuff == null ? "" : "_" + stuff.defName) + "_" + prodCount;
+                return MaterializeRecipeDefPrefix + thing.defName + (stuff == null ? "" : "_" + stuff.defName) + "_" + prodCount;
             }
+
+            public const string MaterializeRecipeDefPrefix = "NR_MaterialEnergy.Materialize_";
         }
 
         private const string ToEnergy10DefName = "NR_MaterialEnergy.ToEnergy10";
         private const string ToEnergy100DefName = "NR_MaterialEnergy.ToEnergy100";
+
+        private const string ScanMaterialDefName = "NR_MaterialEnergy.ScanMaterial";
 
         private float Loss { get => 0.3f; }
 
@@ -76,6 +80,8 @@ namespace NR_MaterialEnergy
         private static ThingDef energyThingDef;
 
         private static List<RecipeDef> toEnergyRecipes;
+
+        private static RecipeDef scanMaterialRecipe;
 
         private List<MaterializeRecipeDefData> materializeRecipeData = new List<MaterializeRecipeDefData>();
 
@@ -102,6 +108,18 @@ namespace NR_MaterialEnergy
                 });
                 DefDatabase<RecipeDef>.Add(toEnergyRecipes);
             }
+            if (scanMaterialRecipe == null)
+            {
+                var toEnergyDefs = new HashSet<ThingDef>(DefDatabase<ThingDef>.AllDefs.Where(t => t.category == ThingCategory.Item).Where(t => GetEnergyAmount(t) > 0.1f));
+                scanMaterialRecipe = CreateScanMaterialRecipeDef(ScanMaterialDefName, "NR_MaterialEnergy.RecipeScanMaterialLabel".Translate(), "NR_MaterialEnergy.RecipeScanMaterialJobName".Translate(), 5000, toEnergyDefs);
+                DefDatabase<RecipeDef>.Add(scanMaterialRecipe);
+            }
+        }
+
+        public void RemoveMaterializeRecipe(RecipeDef def)
+        {
+            this.billStack.Bills.RemoveAll(b => b.recipe.defName == def.defName);
+            this.materializeRecipeData.RemoveAll(r => r.defName == def.defName);
         }
 
         public override void ExposeData()
@@ -128,12 +146,12 @@ namespace NR_MaterialEnergy
 
         public List<RecipeDef> GetRecipes()
         {
-            return new List<RecipeDef>().Append(toEnergyRecipes).Append(this.materializeRecipeData.Select(x => x.GetRecipe()).ToList());
+            return new List<RecipeDef>().Append(scanMaterialRecipe).Append(toEnergyRecipes).Append(this.materializeRecipeData.Select(x => x.GetRecipe()).ToList());
         }
 
         public void OnComplete(Bill_Production2 bill, List<Thing> ingredients)
         {
-            if (ToEnergyDefNames.Contains(bill.recipe.defName))
+            if (ScanMaterialDefName == bill.recipe.defName)
             {
                 ingredients.ForEach(i =>
                 {
@@ -163,6 +181,32 @@ namespace NR_MaterialEnergy
 
             r.workSkill = SkillDefOf.Crafting;
             r.workSkillLearnFactor = 0;
+
+            return r;
+        }
+
+        private static RecipeDef CreateScanMaterialRecipeDef(string defName, string label, string jobString, float workAmount, HashSet<ThingDef> toEnergyDefs)
+        {
+            var r = CreateRecipeDef(defName, label, jobString, workAmount);
+
+            var c = new IngredientCount();
+            r.ingredients.Add(c);
+            c.SetBaseCount(1);
+            c.filter = new ThingFilter();
+            toEnergyDefs.ForEach(d =>
+            {
+                if (d.defName != "NR_MaterialEnergy_Energy")
+                {
+                    r.fixedIngredientFilter.SetAllow(d, true);
+                    c.filter.SetAllow(d, true);
+                }
+            });
+            c.filter.RecalculateDisplayRootCategory();
+            r.defaultIngredientFilter = new ThingFilter();
+            r.defaultIngredientFilter.SetDisallowAll(null);
+            r.fixedIngredientFilter.RecalculateDisplayRootCategory();
+            r.ResolveReferences();
+            r.allowMixingIngredients = true;
 
             return r;
         }
