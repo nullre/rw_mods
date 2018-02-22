@@ -52,7 +52,7 @@ The AutoMachineTool executes a requested craft that can be created with the mate
     <selectable>True</selectable>
 
     <inspectorTabs>
-      <li>NR_AutoMachineTool.ITab_PowerSupply</li>
+      <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
     </inspectorTabs>
   </ThingDef>
 

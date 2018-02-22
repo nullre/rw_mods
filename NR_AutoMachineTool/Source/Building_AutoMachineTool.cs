@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_AutoMachineTool : Building, IPowerSupplyMachine, IBeltConbeyorSender
+    public class Building_AutoMachineTool : Building, IBeltConbeyorSender, IRange, IAgricultureMachine
     {
         private enum WorkingState
         {
@@ -66,7 +66,8 @@ namespace NR_AutoMachineTool
         private List<Thing> products;
         private UnfinishedThing unfinished;
         private int outputIndex = 0;
-        private float supplyPower = 0;
+        private float supplyPowerForSpeed = 0;
+        private float supplyPowerForRange = 0;
         private bool forbidItem = false;
 
         [Unsaved]
@@ -117,20 +118,32 @@ namespace NR_AutoMachineTool
         public int MaxPowerForSpeed { get { return this.Setting.AutoMachineToolTier(Extension.tier).maxSupplyPowerForSpeed; } }
         public int MinPowerForSpeed { get { return this.Setting.AutoMachineToolTier(Extension.tier).minSupplyPowerForSpeed; } }
         private float SpeedFactor { get { return this.Setting.AutoMachineToolTier(Extension.tier).speedFactor; } }
-
         public float SupplyPowerForSpeed
         {
             get
             {
-                return this.supplyPower;
+                return this.supplyPowerForSpeed;
             }
 
             set
             {
-                this.supplyPower = value;
+                this.supplyPowerForSpeed = value;
                 this.SetPower();
             }
         }
+        public int MinPowerForRange => this.Setting.AutoMachineToolTier(Extension.tier).minSupplyPowerForRange;
+        public int MaxPowerForRange => this.Setting.AutoMachineToolTier(Extension.tier).maxSupplyPowerForRange;
+        public float SupplyPowerForRange
+        {
+            get => this.supplyPowerForRange;
+            set
+            {
+                this.supplyPowerForRange = value;
+                this.SetPower();
+            }
+        }
+        public bool Glowable => false;
+        public bool Glow { get => false; set => Noop(); }
 
         public override void ExposeData()
         {
@@ -139,8 +152,9 @@ namespace NR_AutoMachineTool
             Scribe_Values.Look<float>(ref this.workLeft, "workLeft");
             Scribe_Values.Look<float>(ref this.workAmount, "workAmount");
             Scribe_Values.Look<int>(ref this.outputIndex, "outputIndex");
-            Scribe_Values.Look<float>(ref this.supplyPower, "supplyPower", this.MinPowerForSpeed);
-            this.supplyPower = Mathf.Abs(supplyPower);
+            Scribe_Values.Look<float>(ref this.supplyPowerForSpeed, "supplyPower", this.MinPowerForSpeed);
+            Scribe_Values.Look<float>(ref this.supplyPowerForRange, "supplyPowerForRange", this.MinPowerForSpeed);
+            this.supplyPowerForSpeed = Mathf.Abs(supplyPowerForSpeed);
             Scribe_Values.Look<bool>(ref this.forbidItem, "forbidItem");
 
             Scribe_Deep.Look<UnfinishedThing>(ref this.unfinished, "unfinished");
@@ -332,6 +346,11 @@ namespace NR_AutoMachineTool
             {
                 this.powerComp.PowerOutput = -this.SupplyPowerForSpeed;
             }
+
+            if (-this.supplyPowerForRange - this.SupplyPowerForSpeed - (this.Glowable && this.Glow ? 2000 : 0) != this.TryGetComp<CompPowerTrader>().PowerOutput)
+            {
+                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.supplyPowerForRange - this.SupplyPowerForSpeed - (this.Glowable && this.Glow ? 2000 : 0);
+            }
         }
 
         private int tickGap = Math.Abs(Rand.Int % 30);
@@ -405,6 +424,10 @@ namespace NR_AutoMachineTool
 
         private void TryStartWorking()
         {
+            if(!this.workTable.Where(t => t.UsableNow && t.billStack.AnyShouldDoNow).HasValue)
+            {
+                return;
+            }
             var consumable = Consumable();
             WorkableBill(consumable).ForEach(tuple =>
             {
@@ -497,9 +520,15 @@ namespace NR_AutoMachineTool
             return Option(OutputCell().GetZone(M) as RimWorld.Zone_Stockpile).Select(z => z.cells).GetOrDefault(new List<IntVec3>().Append(OutputCell()));
         }
 
+        public IEnumerable<IntVec3> IngredientScanCell()
+        {
+            // this.CellsAdjacent8WayAndInside()
+            return GenAdj.CellsOccupiedBy(this.Position, this.Rotation, this.def.Size + new IntVec2(this.GetRange() * 2, this.GetRange() * 2));
+        }
+
         private List<Thing> Consumable()
         {
-            return this.CellsAdjacent8WayAndInside()
+            return this.IngredientScanCell()
                 .SelectMany(c => c.GetThingList(M))
                 .Where(c => c.def.category == ThingCategory.Item)
                 .ToList();
@@ -695,6 +724,11 @@ namespace NR_AutoMachineTool
         public void NortifyReceivable()
         {
             this.checkNextPlacing = true;
+        }
+
+        public int GetRange()
+        {
+            return Mathf.RoundToInt(this.supplyPowerForRange / 500) + 1;
         }
     }
 }

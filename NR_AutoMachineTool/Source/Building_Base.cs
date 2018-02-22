@@ -113,7 +113,7 @@ namespace NR_AutoMachineTool
             this.powerComp.PowerOutput = this.SupplyPowerForSpeed;
         }
 
-        private CompPowerTrader powerComp;
+        protected CompPowerTrader powerComp;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {

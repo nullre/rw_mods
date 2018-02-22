@@ -103,7 +103,7 @@ namespace NR_AutoMachineTool
         {
             if (-this.supplyPowerForRange - this.SupplyPowerForSpeed - (this.Glowable && this.Glow ? 2000 : 0) != this.TryGetComp<CompPowerTrader>().PowerOutput)
             {
-                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.supplyPowerForRange - this.SupplyPowerForSpeed - (this.Glowable && this.Glow ? 2000 : 0);
+                this.powerComp.PowerOutput = -this.supplyPowerForRange - this.SupplyPowerForSpeed - (this.Glowable && this.Glow ? 2000 : 0);
             }
         }
 

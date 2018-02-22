@@ -207,6 +207,10 @@ namespace NR_AutoMachineTool.Utilities
             return false;
         }
 
+        public static void Noop()
+        {
+        }
+
         public static List<IntVec3> SlotGroupCells(this IntVec3 c, Map map)
         {
             return Option(map.slotGroupManager.SlotGroupAt(c)).Select(g => g.CellsList).GetOrDefault(new List<IntVec3>().Append(c));

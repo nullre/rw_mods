@@ -53,10 +53,16 @@ namespace NR_AutoMachineTool
         protected override bool FinishWorking(Plant working, out List<Thing> products)
         {
             products = new List<Thing>();
-            if (working.Blight == null)
-                products = this.CreateThings(working.def.plant.harvestedThingDef, working.YieldNow());
             working.def.plant.soundHarvestFinish.PlayOneShot(this);
-            working.PlantCollected();
+            if (working.Blight == null)
+            {
+                products = this.CreateThings(working.def.plant.harvestedThingDef, working.YieldNow());
+                working.PlantCollected();
+            }
+            else
+            {
+                working.Destroy();
+            }
             return true;
         }
     }
