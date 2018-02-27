@@ -131,11 +131,13 @@ namespace NR_AutoMachineTool
                 {
                     var maxChance = prefix == "Animal" ? 0f : GetValue(prefix + "AutopsyOrganMaxChance");
                     var age = prefix == "Animal" ? 0 : (int)GetValue(prefix + "AutopsyCorpseAge") * 2500;
+                    var frozen = prefix == "Animal" ? 0f : GetValue(prefix + "AutopsyFrozenDecay");
                     var recipeSettings = Activator.CreateInstance(recipeInfoType,
                         maxChance,
                         age,
                         GetValue(prefix + "AutopsyBionicMaxChance"),
-                        GetValue(prefix + "AutopsyMaxNumberOfOrgans"));
+                        GetValue(prefix + "AutopsyMaxNumberOfOrgans"),
+                        frozen);
                     skillChance *= (float)GetValue(prefix + "AutopsyMedicalSkillScaling");
 
                     List<Thing> result = __result as List<Thing> ?? __result.ToList();
