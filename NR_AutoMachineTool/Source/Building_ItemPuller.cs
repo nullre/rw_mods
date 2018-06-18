@@ -81,7 +81,7 @@ namespace NR_AutoMachineTool
             act.toggleAction = () => this.active = !this.active;
             act.defaultLabel = "NR_AutoMachineTool_Puller.SwitchActiveLabel".Translate();
             act.defaultDesc = "NR_AutoMachineTool_Puller.SwitchActiveDesc".Translate();
-            act.icon = ContentFinder<Texture2D>.Get("NR_AutoMachineTool/UI/Play", true);
+            act.icon = RS.PlayIcon;
             yield return act;
         }
 

@@ -5,10 +5,8 @@
   <ThingDef Name="Building_NR_AutoMachineTool_Harvester_Base" Parent="BuildingBase" Abstract="True">
     <defName>Building_NR_AutoMachineTool_Harvester_Base</defName>
     <thingClass>NR_AutoMachineTool.Building_Harvester</thingClass>
-    <description>
-Place the Harvester inside or near the agricultural zone.
-Harvester starts harvesting plants in the agricultural zone within range.
-    </description>
+    <description>Place the Harvester inside or near the agricultural zone.
+Harvester starts harvesting plants in the agricultural zone within range.</description>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
@@ -55,8 +53,6 @@ Harvester starts harvesting plants in the agricultural zone within range.
 
     <repairEffect>Repair</repairEffect>
     <constructEffect>ConstructMetal</constructEffect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <filthLeaving>BuildingRubble</filthLeaving>
     <size>(1,1)</size>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <selectable>True</selectable>
@@ -81,7 +77,7 @@ Harvester starts harvesting plants in the agricultural zone within range.
     <costList>
       <Steel>100</Steel>
       <Plasteel>50</Plasteel>
-      <Component>1</Component>
+      <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier1</li>
@@ -107,7 +103,7 @@ Harvester starts harvesting plants in the agricultural zone within range.
       <Steel>400</Steel>
       <Plasteel>250</Plasteel>
       <Silver>500</Silver>
-      <Component>3</Component>
+      <ComponentSpacer>3</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier2</li>
@@ -133,7 +129,7 @@ Harvester starts harvesting plants in the agricultural zone within range.
       <Steel>800</Steel>
       <Plasteel>500</Plasteel>
       <Silver>1000</Silver>
-      <Component>5</Component>
+      <ComponentSpacer>5</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier3</li>

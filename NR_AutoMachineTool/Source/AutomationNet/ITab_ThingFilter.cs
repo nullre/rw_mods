@@ -42,7 +42,7 @@ namespace NR_AutoMachineTool
         {
             base.OnOpen();
 
-            this.groups = this.Machine.Map.slotGroupManager.AllGroups.ToList();
+            this.groups = this.Machine.Map.haulDestinationManager.AllGroups.ToList();
         }
 
         private List<SlotGroup> groups;

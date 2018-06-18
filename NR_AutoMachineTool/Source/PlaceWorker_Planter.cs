@@ -15,14 +15,14 @@ namespace NR_AutoMachineTool
 {
     class PlaceWorker_Planter : PlaceWorker
     {
-        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot)
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
         {
             GenRadial.RadialCellsAround(center,
-                center.GetThingList(Find.VisibleMap).Where(t => t.def == def).SelectMany(t => Option(t as Building_Planter)).FirstOption().Fold(3)(p => p.GetRange()),
+                center.GetThingList(Find.CurrentMap).Where(t => t.def == def).SelectMany(t => Option(t as Building_Planter)).FirstOption().Fold(3)(p => p.GetRange()),
                 true)
-                .Where(c => c.GetRoom(Find.VisibleMap) == center.GetRoom(Find.VisibleMap))
-                .Where(c => !c.GetThingList(Find.VisibleMap).Any(t => t.def.passability == Traversability.Impassable))
-                .Select(c => new { Cell = c, Plantable = c.GetPlantable(Find.VisibleMap) })
+                .Where(c => c.GetRoom(Find.CurrentMap) == center.GetRoom(Find.CurrentMap))
+                .Where(c => !c.GetThingList(Find.CurrentMap).Any(t => t.def.passability == Traversability.Impassable))
+                .Select(c => new { Cell = c, Plantable = c.GetPlantable(Find.CurrentMap) })
                 .GroupBy(c => c.Plantable.HasValue)
                 .ForEach(g => GenDraw.DrawFieldEdges(g.Select(c => c.Cell).ToList(), g.Key ? Color.green : Color.white));
         }

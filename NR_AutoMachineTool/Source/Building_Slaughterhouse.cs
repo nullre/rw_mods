@@ -35,7 +35,7 @@ namespace NR_AutoMachineTool
 
         protected override void Reset()
         {
-            if (this.working != null && this.working.jobs.curJob.def == JobDefOf.WaitMaintainPosture)
+            if (this.working != null && this.working.jobs.curJob.def == JobDefOf.Wait_MaintainPosture)
             {
                 this.working.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
             }
@@ -53,7 +53,7 @@ namespace NR_AutoMachineTool
                     bool result = true;
                     if (result && !s.hasBonds) result = p.relations.GetFirstDirectRelationPawn(PawnRelationDefOf.Bond) == null;
                     if (result && !s.pregnancy) result = p.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Pregnant, true) == null;
-                    if (result && !s.trained) result = !p.training.IsCompleted(TrainableDefOf.Obedience);
+                    if (result && !s.trained) result = !p.training.HasLearned(TrainableDefOf.Obedience);
                     return result;
                 };
                 Func<IEnumerable<Pawn>, bool, IOrderedEnumerable<Pawn>> orderBy = (e, adult) =>
@@ -106,7 +106,7 @@ namespace NR_AutoMachineTool
 
         protected override bool FinishWorking(Pawn working, out List<Thing> products)
         {
-            if (working.jobs.curJob.def == JobDefOf.WaitMaintainPosture)
+            if (working.jobs.curJob.def == JobDefOf.Wait_MaintainPosture)
             {
                 working.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
             }

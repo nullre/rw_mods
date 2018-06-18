@@ -17,18 +17,19 @@ namespace NR_AutoMachineTool
     {
         int GetRange();
     }
+
     class PlaceWorker_FacingRect : PlaceWorker
     {
-        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot)
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
         {
             GenDraw.DrawFieldEdges(FacingRect(center, rot,
-                center.GetThingList(Find.VisibleMap).Where(t => t.def == def).SelectMany(t => Option(t as IRange)).FirstOption().Fold(2)(p => p.GetRange()))
-                .Where(c => (center + rot.FacingCell).GetRoom(Find.VisibleMap) == c.GetRoom(Find.VisibleMap))
+                center.GetThingList(Find.CurrentMap).Where(t => t.def == def).SelectMany(t => Option(t as IRange)).FirstOption().Fold(2)(p => p.GetRange()))
+                .Where(c => (center + rot.FacingCell).GetRoom(Find.CurrentMap) == c.GetRoom(Find.CurrentMap))
                 .ToList(), Color.white);
 
             var pos = (center + rot.Opposite.FacingCell);
             GenDraw.DrawFieldEdges(new List<IntVec3>().Append(pos), Color.blue);
-            GenDraw.DrawFieldEdges(pos.SlotGroupCells(Find.VisibleMap), Color.gray);
+            GenDraw.DrawFieldEdges(pos.SlotGroupCells(Find.CurrentMap), Color.gray);
         }
     }
 }

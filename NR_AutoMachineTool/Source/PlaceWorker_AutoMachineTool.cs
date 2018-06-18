@@ -14,9 +14,9 @@ namespace NR_AutoMachineTool
 {
     public class PlaceWorker_AutoMachineTool : PlaceWorker
     {
-        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot)
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
         {
-            center.GetThingList(Find.VisibleMap)
+            center.GetThingList(Find.CurrentMap)
                 .Where(t => t.def == def)
                 .FirstOption()
                 .Select(b => b as Building_AutoMachineTool)

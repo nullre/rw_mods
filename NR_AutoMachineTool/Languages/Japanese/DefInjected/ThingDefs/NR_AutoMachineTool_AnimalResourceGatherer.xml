@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <Building_NR_AutoMachineTool_AnimalResourceGatherer.description>
-動物が通過したり、滞在する付近に設置します。
-動物世話機が範囲内の動物から、搾乳や毛刈りを行います。
-  </Building_NR_AutoMachineTool_AnimalResourceGatherer.description>
+  <Building_NR_AutoMachineTool_AnimalResourceGatherer.description>動物が通過したり、滞在する付近に設置します。
+動物世話機が範囲内の動物から、搾乳や毛刈りを行います。</Building_NR_AutoMachineTool_AnimalResourceGatherer.description>
   <Building_NR_AutoMachineTool_AnimalResourceGatherer.label>動物世話機</Building_NR_AutoMachineTool_AnimalResourceGatherer.label>
 </LanguageData>

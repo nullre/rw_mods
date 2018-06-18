@@ -200,7 +200,7 @@ namespace NR_AutoMachineTool
             }
         }
 
-        public override void DeSpawn()
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
             LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed -= this.ReloadSettings;
 
@@ -385,7 +385,7 @@ namespace NR_AutoMachineTool
 
                 this.workTable.ForEach(w => w.UsedThisTick());
 
-                if (this.workTable.Fold(false)(t => t.UsableNow))
+                if (this.workTable.Fold(false)(t => t.CurrentlyUsableForBills()))
                 {
                     this.workLeft -= (this.SupplyPowerForSpeed / 1000.0f) * this.SpeedFactor;
                     Option(this.unfinished).ForEach(u => u.workLeft = this.workLeft);
@@ -424,7 +424,7 @@ namespace NR_AutoMachineTool
 
         private void TryStartWorking()
         {
-            if(!this.workTable.Where(t => t.UsableNow && t.billStack.AnyShouldDoNow).HasValue)
+            if(!this.workTable.Where(t => t.CurrentlyUsableForBills() && t.billStack.AnyShouldDoNow).HasValue)
             {
                 return;
             }
@@ -537,7 +537,7 @@ namespace NR_AutoMachineTool
         private Option<Tuple<Bill, List<ThingAmount>>> WorkableBill(List<Thing> consumable)
         {
             return this.workTable
-                .Where(t => t.UsableNow)
+                .Where(t => t.CurrentlyUsableForBills())
                 .SelectMany(wt => wt.billStack.Bills
                     .Where(b => b.ShouldDoNow())
                     .Where(b => b.recipe.AvailableNow)
@@ -654,7 +654,7 @@ namespace NR_AutoMachineTool
             {
                 return ingredients[0];
             }
-            if (this.bill.recipe.products.Any((ThingCountClass x) => x.thingDef.MadeFromStuff))
+            if (this.bill.recipe.products.Any(x => x.thingDef.MadeFromStuff))
             {
                 return ingredients.Where(x => x.def.IsStuff).RandomElementByWeight((Thing x) => (float)x.stackCount);
             }
@@ -680,10 +680,10 @@ namespace NR_AutoMachineTool
                     this.outputIndex++;
                 }
             };
-            direction.activateSound = SoundDefOf.DesignateAreaAdd;
+            direction.activateSound = SoundDefOf.Designate_AreaAdd;
             direction.defaultLabel = "NR_AutoMachineTool.SelectOutputDirectionLabel".Translate();
             direction.defaultDesc = "NR_AutoMachineTool.SelectOutputDirectionDesc".Translate();
-            direction.icon = ContentFinder<Texture2D>.Get("NR_AutoMachineTool/UI/OutputDirection", true);
+            direction.icon = RS.OutputDirectionIcon;
             yield return direction;
 
             var forb = new Command_Toggle();
@@ -691,7 +691,7 @@ namespace NR_AutoMachineTool
             forb.toggleAction = () => this.forbidItem = !this.forbidItem;
             forb.defaultLabel = "NR_AutoMachineTool.ForbidOutputItemLabel".Translate();
             forb.defaultDesc = "NR_AutoMachineTool.ForbidOutputItemDesc".Translate();
-            forb.icon = ContentFinder<Texture2D>.Get("NR_AutoMachineTool/UI/Forbid", true);
+            forb.icon = RS.ForbidIcon;
             yield return forb;
         }
 
@@ -729,6 +729,19 @@ namespace NR_AutoMachineTool
         public int GetRange()
         {
             return Mathf.RoundToInt(this.supplyPowerForRange / 500) + 1;
+        }
+
+        private class ThingAmount
+        {
+            public ThingAmount(Thing thing, int count)
+            {
+                this.thing = thing;
+                this.count = count;
+            }
+
+            public Thing thing;
+
+            public int count;
         }
     }
 }

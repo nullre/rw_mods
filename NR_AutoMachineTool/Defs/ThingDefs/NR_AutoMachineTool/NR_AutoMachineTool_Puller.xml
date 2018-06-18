@@ -24,8 +24,6 @@
 
     <repairEffect>Repair</repairEffect>
     <constructEffect>ConstructMetal</constructEffect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <filthLeaving>BuildingRubble</filthLeaving>
     <size>(1,1)</size>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <passability>Standable</passability>
@@ -38,7 +36,7 @@
     </graphicData>
     <costList>
       <Steel>100</Steel>
-      <Component>2</Component>
+      <ComponentSpacer>2</ComponentSpacer>
     </costList>
     
     <researchPrerequisites>
@@ -60,15 +58,12 @@
     <defName>Building_NR_AutoMachineTool_Puller</defName>
     <label>Item Puller</label>
     <passability>Impassable</passability>
-    <description>
-Place it next to the pulling zone. Pull out from the opposite side of the installed orientation and output it in the installed orientation.
-Since the drawing machine is in a non-operating state in the post-installation state, it selects the drawing machine and put it in the operating state from the button.
-    </description>
+    <description>Place it next to the pulling zone. Pull out from the opposite side of the installed orientation and output it in the installed orientation.
+Since the drawing machine is in a non-operating state in the post-installation state, it selects the drawing machine and put it in the operating state from the button.</description>
     <altitudeLayer>Building</altitudeLayer>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>1000</basePowerConsumption>
         <shortCircuitInRain>false</shortCircuitInRain>
       </li>
@@ -84,10 +79,8 @@ Since the drawing machine is in a non-operating state in the post-installation s
   <ThingDef ParentName="Building_NR_AutoMachineTool_Puller_Base">
     <defName>Building_NR_AutoMachineTool_Puller_Wall</defName>
     <label>Wall embedding Item Puller</label>
-    <description>
-Place it next to the pulling zone. Pull out from the opposite side of the installed orientation and output it in the installed orientation.(In the wall)
-Since the drawing machine is in a non-operating state in the post-installation state, it selects the drawing machine and put it in the operating state from the button.
-    </description>
+    <description>Place it next to the pulling zone. Pull out from the opposite side of the installed orientation and output it in the installed orientation.(In the wall)
+Since the drawing machine is in a non-operating state in the post-installation state, it selects the drawing machine and put it in the operating state from the button.</description>
     <altitudeLayer>BuildingOnTop</altitudeLayer>
     <building>
       <isEdifice>false</isEdifice>
@@ -95,7 +88,6 @@ Since the drawing machine is in a non-operating state in the post-installation s
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>1000</basePowerConsumption>
         <transmitsPower>false</transmitsPower>
       </li>

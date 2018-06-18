@@ -19,7 +19,7 @@ namespace NR_AutoMachineTool
         public static readonly Func<BasicMachineSetting> BeltConveyorDefault = () => new BasicMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 10, maxSupplyPowerForSpeed = 100 };
 
         public BasicMachineSetting pullerSetting = PullerDefault();
-        public static readonly Func<BasicMachineSetting> PullerDefault = () => new BasicMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 10000 };
+        public static readonly Func<BasicMachineSetting> PullerDefault = () => new BasicMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 250, maxSupplyPowerForSpeed = 10000 };
 
         public RangeMachineSetting gathererSetting = GathererDefault();
         public static readonly Func<RangeMachineSetting> GathererDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 20000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000 };

@@ -17,7 +17,7 @@ namespace NR_AutoMachineTool
     {
         public IEnumerable<Thing> StorageItems
         {
-            get => Option(this.parent.Map.slotGroupManager.SlotGroupAt(this.parent.Position + this.parent.Rotation.FacingCell))
+            get => Option(this.parent.Map.haulDestinationManager.SlotGroupAt(this.parent.Position + this.parent.Rotation.FacingCell))
                 .Select(g => g.HeldThings)
                 .GetOrDefault(Enumerable.Empty<Thing>());
         }

@@ -41,5 +41,13 @@ namespace NR_AutoMachineTool
 
             return c.InBounds(parent.Map) && (parentCheck && cellCheck);
         }
+
+        public override Graphic GetColoredVersion(Shader newShader, Color newColor, Color newColorTwo)
+        {
+            Graphic_LinkedAutomationNet g = new Graphic_LinkedAutomationNet();
+            g.subGraphic = this.subGraphic.GetColoredVersion(newShader, newColor, newColorTwo);
+            g.data = this.data;
+            return g;
+        }
     }
 }

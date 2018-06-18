@@ -14,10 +14,10 @@ namespace NR_AutoMachineTool
 {
     public class PlaceWorker_HilightFacingSlotGroup : PlaceWorker
     {
-        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot)
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
         {
             var pos = (center + rot.FacingCell);
-            GenDraw.DrawFieldEdges(pos.SlotGroupCells(Find.VisibleMap), Color.green);
+            GenDraw.DrawFieldEdges(pos.SlotGroupCells(Find.CurrentMap), Color.green);
         }
     }
 }

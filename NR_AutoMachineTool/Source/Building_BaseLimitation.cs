@@ -43,7 +43,7 @@ namespace NR_AutoMachineTool
 
         public override void PostMapInit()
         {
-            this.targetSlotGroup = this.Map.slotGroupManager.AllGroups.Where(g => g.parent.SlotYielderLabel() == this.slotGroupParentLabel).Where(g => Option(slotGroupParent).Fold(true)(p => p == g.parent)).FirstOption();
+            this.targetSlotGroup = this.Map.haulDestinationManager.AllGroups.Where(g => g.parent.SlotYielderLabel() == this.slotGroupParentLabel).Where(g => Option(slotGroupParent).Fold(true)(p => p == g.parent)).FirstOption();
             base.PostMapInit();
         }
 
@@ -53,7 +53,7 @@ namespace NR_AutoMachineTool
             {
                 return false;
             }
-            this.targetSlotGroup = this.targetSlotGroup.Where(s => this.Map.slotGroupManager.AllGroups.Any(a => a == s));
+            this.targetSlotGroup = this.targetSlotGroup.Where(s => this.Map.haulDestinationManager.AllGroups.Any(a => a == s));
             return this.targetSlotGroup.Fold(() => this.Map.resourceCounter.GetCount(def) >= this.ProductLimitCount)
                 (s => s.HeldThings.Where(t => t.def == def).Select(t => t.stackCount).Sum() >= this.ProductLimitCount || !s.Settings.filter.Allows(def) || !s.CellsList.Any(c => c.GetFirstItem(this.Map) == null || c.GetFirstItem(this.Map).def == def));
         }
@@ -64,7 +64,7 @@ namespace NR_AutoMachineTool
             {
                 return false;
             }
-            this.targetSlotGroup = this.targetSlotGroup.Where(s => this.Map.slotGroupManager.AllGroups.Any(a => a == s));
+            this.targetSlotGroup = this.targetSlotGroup.Where(s => this.Map.haulDestinationManager.AllGroups.Any(a => a == s));
             return this.targetSlotGroup.Fold(() => this.Map.resourceCounter.GetCount(thing.def) >= this.ProductLimitCount)
                 (s => s.HeldThings.Where(t => t.def == thing.def).Select(t => t.stackCount).Sum() >= this.ProductLimitCount || !s.CellsList.Any(c => c.IsValidStorageFor(this.Map, thing)));
         }

@@ -1,46 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <Building_NR_AutoMachineTool_AutomationNetPipe.label>自動化ネットパイプ</Building_NR_AutoMachineTool_AutomationNetPipe.label>
-  <Building_NR_AutoMachineTool_AutomationNetPipe.description>
-パイプで自動化ネットを構築します。
-コンポーネントを設置する事で機能を拡張する事ができます。
-  </Building_NR_AutoMachineTool_AutomationNetPipe.description>
+  <Building_NR_AutoMachineTool_AutomationNetPipe.description>パイプで自動化ネットを構築します。
+コンポーネントを設置する事で機能を拡張する事ができます。</Building_NR_AutoMachineTool_AutomationNetPipe.description>
 
   <Building_NR_AutoMachineTool_AutomationNetGenerator.label>自動化ネットエネルギー生成機</Building_NR_AutoMachineTool_AutomationNetGenerator.label>
-  <Building_NR_AutoMachineTool_AutomationNetGenerator.description>
-自動化ネットエネルギー生成機。
+  <Building_NR_AutoMachineTool_AutomationNetGenerator.description>自動化ネットエネルギー生成機。
 パイプに隣接して設置してください。
-パイプにエネルギーを供給します。
-  </Building_NR_AutoMachineTool_AutomationNetGenerator.description>
+パイプにエネルギーを供給します。</Building_NR_AutoMachineTool_AutomationNetGenerator.description>
 
   <Building_NR_AutoMachineTool_AutomationNetComponent_Repair.label>修理パイプコンポーネント</Building_NR_AutoMachineTool_AutomationNetComponent_Repair.label>
-  <Building_NR_AutoMachineTool_AutomationNetComponent_Repair.description>
-修理パイプコンポーネント。
+  <Building_NR_AutoMachineTool_AutomationNetComponent_Repair.description>修理パイプコンポーネント。
 エネルギーを利用して、このコンポーネントが配置されている箇所を修理します。
-パイプコンポーネントはパイプ上に配置してください。
-  </Building_NR_AutoMachineTool_AutomationNetComponent_Repair.description>
+パイプコンポーネントはパイプ上に配置してください。</Building_NR_AutoMachineTool_AutomationNetComponent_Repair.description>
 
   <Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.label>消火パイプコンポーネント</Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.label>
-  <Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.description>
-消火パイプコンポーネント。
+  <Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.description>消火パイプコンポーネント。
 エネルギーを利用して、このコンポーネントが配置されている箇所を消火します。
-パイプコンポーネントはパイプ上に配置してください。
-  </Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.description>
+パイプコンポーネントはパイプ上に配置してください。</Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish.description>
 
   <Building_NR_AutoMachineTool_AutomationNetComponent_Storage.label>ストレージパイプコンポーネント</Building_NR_AutoMachineTool_AutomationNetComponent_Storage.label>
-  <Building_NR_AutoMachineTool_AutomationNetComponent_Storage.description>
-ストレージパイプコンポーネント。
+  <Building_NR_AutoMachineTool_AutomationNetComponent_Storage.description>ストレージパイプコンポーネント。
 備蓄ゾーンやロッカーに面して設置すると、ネットワークに備蓄ゾーンが認識されます。
-パイプコンポーネントはパイプ上に配置してください。
-  </Building_NR_AutoMachineTool_AutomationNetComponent_Storage.description>
+パイプコンポーネントはパイプ上に配置してください。</Building_NR_AutoMachineTool_AutomationNetComponent_Storage.description>
 
   <Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher.label>アイテム引き出しパイプコンポーネント</Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher.label>
-  <Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher.description>
-アイテム引き出しパイプコンポーネント。
+  <Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher.description>アイテム引き出しパイプコンポーネント。
 備蓄ゾーンやロッカーに面して設置すると、ネットワークに認識されている備蓄ゾーンから面した備蓄ゾーンへアイテムを引き出します。
 エネルギーを利用します。
-パイプコンポーネントはパイプ上に配置してください。
-  </Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher.description>
+パイプコンポーネントはパイプ上に配置してください。</Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher.description>
 
 
 </LanguageData>

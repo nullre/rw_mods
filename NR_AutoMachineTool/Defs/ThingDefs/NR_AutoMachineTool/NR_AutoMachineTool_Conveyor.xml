@@ -23,8 +23,6 @@
 
     <repairEffect>Repair</repairEffect>
     <constructEffect>ConstructMetal</constructEffect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <filthLeaving>BuildingRubble</filthLeaving>
     <size>(1,1)</size>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <passability>Standable</passability>
@@ -54,16 +52,13 @@
   <ThingDef ParentName="Building_NR_AutoMachineTool_BeltConveyor_Base">
     <defName>Building_NR_AutoMachineTool_BeltConveyor</defName>
     <label>BeltConveyor</label>
-    <description>
-Place it in the direction you want to carry.
+    <description>Place it in the direction you want to carry.
 Place the item on top. (Item Puller and AutoMachineTool can be used.)
-The belt conveyors are connected by vertically adjoining the orientation.
-    </description>
+The belt conveyors are connected by vertically adjoining the orientation.</description>
     <altitudeLayer>Building</altitudeLayer>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>10</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
         <shortCircuitInRain>false</shortCircuitInRain>
@@ -82,11 +77,9 @@ The belt conveyors are connected by vertically adjoining the orientation.
   <ThingDef ParentName="Building_NR_AutoMachineTool_BeltConveyor_Base">
     <defName>Building_NR_AutoMachineTool_BeltConveyor_Wall</defName>
     <label>Wall embedding BeltConveyor</label>
-    <description>
-Place it in the direction you want to carry.(In the wall)
+    <description>Place it in the direction you want to carry.(In the wall)
 Place the item on top. (Item Puller and AutoMachineTool can be used.)
-The belt conveyors are connected by vertically adjoining the orientation.
-    </description>
+The belt conveyors are connected by vertically adjoining the orientation.</description>
     <altitudeLayer>BuildingOnTop</altitudeLayer>
     <building>
       <isEdifice>false</isEdifice>
@@ -94,7 +87,6 @@ The belt conveyors are connected by vertically adjoining the orientation.
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>10</basePowerConsumption>
         <transmitsPower>false</transmitsPower>
         <shortCircuitInRain>false</shortCircuitInRain>
@@ -120,11 +112,9 @@ The belt conveyors are connected by vertically adjoining the orientation.
   <ThingDef ParentName="Building_NR_AutoMachineTool_BeltConveyor_Base">
     <defName>Building_NR_AutoMachineTool_BeltConveyor_Underground</defName>
     <label>Underground BeltConveyor</label>
-    <description>
-Underground BeltConveyor carries items in the basement.
+    <description>Underground BeltConveyor carries items in the basement.
 Underground BeltConveyor can not move items on the ground as it is.
-Connect to the underground conveyor entrance and exit and use.
-    </description>
+Connect to the underground conveyor entrance and exit and use.</description>
     <altitudeLayer>FloorEmplacement</altitudeLayer>
     <building>
       <isEdifice>false</isEdifice>
@@ -137,7 +127,6 @@ Connect to the underground conveyor entrance and exit and use.
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>10</basePowerConsumption>
         <transmitsPower>false</transmitsPower>
         <shortCircuitInRain>false</shortCircuitInRain>
@@ -183,8 +172,6 @@ Connect to the underground conveyor entrance and exit and use.
 
     <repairEffect>Repair</repairEffect>
     <constructEffect>ConstructMetal</constructEffect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <filthLeaving>BuildingRubble</filthLeaving>
     <size>(1,1)</size>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <passability>Standable</passability>
@@ -209,15 +196,12 @@ Connect to the underground conveyor entrance and exit and use.
   <ThingDef ParentName="Building_NR_AutoMachineTool_BeltConveyorUGConnecter_Base">
     <defName>Building_NR_AutoMachineTool_BeltConveyor_ToUnderground</defName>
     <label>Underground conveyor entrance</label>
-    <description>
-Connect the ground belt conveyor and underground conveyor.
-It is the entrance to the underground conveyor.
-    </description>
+    <description>Connect the ground belt conveyor and underground conveyor.
+It is the entrance to the underground conveyor.</description>
     <altitudeLayer>Building</altitudeLayer>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>10</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
         <shortCircuitInRain>false</shortCircuitInRain>
@@ -240,15 +224,12 @@ It is the entrance to the underground conveyor.
   <ThingDef ParentName="Building_NR_AutoMachineTool_BeltConveyorUGConnecter_Base">
     <defName>Building_NR_AutoMachineTool_BeltConveyor_ToFloor</defName>
     <label>Underground conveyor exit</label>
-    <description>
-Connect the ground belt conveyor and underground conveyor.
-It is an exit to the underground conveyor.
-    </description>
+    <description>Connect the ground belt conveyor and underground conveyor.
+It is an exit to the underground conveyor.</description>
     <altitudeLayer>Building</altitudeLayer>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>10</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
         <shortCircuitInRain>false</shortCircuitInRain>

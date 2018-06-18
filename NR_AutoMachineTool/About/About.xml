@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <name>NR_AutoMachineTool</name>
   <author>nullre</author>
-  <targetVersion>0.18.0</targetVersion>
+  <targetVersion>1.0.0</targetVersion>
   <description>
 自動化するための自動工作機とベルトコンベアと種蒔き機と収穫機を追加します。
 

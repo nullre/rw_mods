@@ -213,7 +213,7 @@ namespace NR_AutoMachineTool.Utilities
 
         public static List<IntVec3> SlotGroupCells(this IntVec3 c, Map map)
         {
-            return Option(map.slotGroupManager.SlotGroupAt(c)).Select(g => g.CellsList).GetOrDefault(new List<IntVec3>().Append(c));
+            return Option(map.haulDestinationManager.SlotGroupAt(c)).Select(g => g.CellsList).GetOrDefault(new List<IntVec3>().Append(c));
         }
 
         public static Bill_Production CopyTo(this Bill_Production bill, Bill_Production copy)
@@ -221,18 +221,26 @@ namespace NR_AutoMachineTool.Utilities
             copy.allowedSkillRange = bill.allowedSkillRange;
             copy.billStack = bill.billStack;
             copy.deleted = bill.deleted;
+            copy.hpRange = bill.hpRange;
+            copy.includeEquipped = bill.includeEquipped;
+            copy.includeFromZone = bill.includeFromZone;
+            copy.includeTainted = bill.includeTainted;
             copy.ingredientFilter = bill.ingredientFilter;
             copy.ingredientSearchRadius = bill.ingredientSearchRadius;
             copy.lastIngredientSearchFailTicks = bill.lastIngredientSearchFailTicks;
+            copy.limitToAllowedStuff = bill.limitToAllowedStuff;
             copy.paused = bill.paused;
             copy.pauseWhenSatisfied = bill.pauseWhenSatisfied;
+            copy.pawnRestriction = bill.pawnRestriction;
+            copy.qualityRange = bill.qualityRange;
             copy.recipe = bill.recipe;
             copy.repeatCount = bill.repeatCount;
             copy.repeatMode = bill.repeatMode;
-            copy.storeMode = bill.storeMode;
+            copy.SetStoreMode(bill.GetStoreMode());
             copy.suspended = bill.suspended;
             copy.targetCount = bill.targetCount;
             copy.unpauseWhenYouHave = bill.unpauseWhenYouHave;
+
             return copy;
         }
 
@@ -263,7 +271,6 @@ namespace NR_AutoMachineTool.Utilities
                 .SelectMany(t => Option(t as Pawn))
                 .Where(p => p.Faction == Faction.OfPlayer)
                 .Where(p => p.TryGetComp<CompHasGatherableBodyResource>() != null)
-                .Where(p => p.GetComps<CompHasGatherableBodyResource>().Any(c => c.ActiveAndFull))
                 .FirstOption();
         }
 

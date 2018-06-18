@@ -1,14 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <Building_NR_AutoMachineTool_Puller.description>
-引き出し元のゾーンに隣接させます。設置された向きの逆側から引き出し、設置された向きに出力します。
-引き出し機は、設置後の状態では非稼働状態のため、引き出し機を選択し、ボタンより稼働状態にします。
-  </Building_NR_AutoMachineTool_Puller.description>
+  <Building_NR_AutoMachineTool_Puller.description>引き出し元のゾーンに隣接させます。設置された向きの逆側から引き出し、設置された向きに出力します。
+引き出し機は、設置後の状態では非稼働状態のため、引き出し機を選択し、ボタンより稼働状態にします。</Building_NR_AutoMachineTool_Puller.description>
 
-  <Building_NR_AutoMachineTool_Puller_Wall.description>
-引き出し元のゾーンに隣接させます。設置された向きの逆側から引き出し、設置された向きに出力します。(壁内)
-引き出し機は、設置後の状態では非稼働状態のため、引き出し機を選択し、ボタンより稼働状態にします。
-  </Building_NR_AutoMachineTool_Puller_Wall.description>
+  <Building_NR_AutoMachineTool_Puller_Wall.description>引き出し元のゾーンに隣接させます。設置された向きの逆側から引き出し、設置された向きに出力します。(壁内)
+引き出し機は、設置後の状態では非稼働状態のため、引き出し機を選択し、ボタンより稼働状態にします。</Building_NR_AutoMachineTool_Puller_Wall.description>
 
   <Building_NR_AutoMachineTool_Puller.label>アイテム引き出し機</Building_NR_AutoMachineTool_Puller.label>
   <Building_NR_AutoMachineTool_Puller_Wall.label>アイテム引き出し機(壁内)</Building_NR_AutoMachineTool_Puller_Wall.label>

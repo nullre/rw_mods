@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Defs>
+  <!--
   <SpecialThingFilterDef>
     <defName>SpecialThingFilter_NR_AutoMachineTool_AllowFresh</defName>
     <label>allow fresh</label>
@@ -10,4 +11,5 @@
     <saveKey>allowFresh</saveKey>
     <workerClass>NR_AutoMachineTool.SpecialThingFilterWorker_Fresh</workerClass>
   </SpecialThingFilterDef>
+  -->
 </Defs>

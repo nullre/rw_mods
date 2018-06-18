@@ -5,10 +5,8 @@
   <ThingDef Name="Building_NR_AutoMachineTool_Planter_Base" Parent="BuildingBase" Abstract="True">
     <defName>Building_NR_AutoMachineTool_Planter_Base</defName>
     <thingClass>NR_AutoMachineTool.Building_Planter</thingClass>
-    <description>
-Place the Planter inside or near the agricultural zone.
-Planter starts planting plants in the agricultural zone within range.
-    </description>
+    <description>Place the Planter inside or near the agricultural zone.
+Planter starts planting plants in the agricultural zone within range.</description>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
@@ -48,8 +46,6 @@ Planter starts planting plants in the agricultural zone within range.
 
     <repairEffect>Repair</repairEffect>
     <constructEffect>ConstructMetal</constructEffect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <filthLeaving>BuildingRubble</filthLeaving>
     <size>(1,1)</size>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <passability>Standable</passability>
@@ -74,7 +70,7 @@ Planter starts planting plants in the agricultural zone within range.
     <costList>
       <Steel>100</Steel>
       <Plasteel>50</Plasteel>
-      <Component>1</Component>
+      <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier1</li>
@@ -100,7 +96,7 @@ Planter starts planting plants in the agricultural zone within range.
       <Steel>400</Steel>
       <Plasteel>250</Plasteel>
       <Silver>500</Silver>
-      <Component>3</Component>
+      <ComponentSpacer>3</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier2</li>
@@ -126,7 +122,7 @@ Planter starts planting plants in the agricultural zone within range.
       <Steel>800</Steel>
       <Plasteel>500</Plasteel>
       <Silver>1000</Silver>
-      <Component>5</Component>
+      <ComponentSpacer>5</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutoAgriculture_Tier3</li>

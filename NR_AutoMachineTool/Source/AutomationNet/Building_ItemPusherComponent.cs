@@ -51,7 +51,7 @@ namespace NR_AutoMachineTool
             base.SpawnSetup(map, respawningAfterLoad);
             if (!respawningAfterLoad)
             {
-                Option(this.Map.slotGroupManager.SlotGroupAt(this.Position + this.Rotation.FacingCell))
+                Option(this.Map.haulDestinationManager.SlotGroupAt(this.Position + this.Rotation.FacingCell))
                     .ForEach(g => this.filter.CopyAllowancesFrom(g.Settings.filter));
             }
         }
@@ -59,7 +59,7 @@ namespace NR_AutoMachineTool
         protected override Thing TargetThing()
         {
             var storage = this.consumer.connectedNet.StorageItems().Where(t => this.filter.Allows(t)).ToList();
-            return Option(this.Map.slotGroupManager.SlotGroupAt(this.Position + this.Rotation.FacingCell))
+            return Option(this.Map.haulDestinationManager.SlotGroupAt(this.Position + this.Rotation.FacingCell))
                 .SelectMany(g =>
                 {
                     var stored = g.HeldThings.Where(t => this.filter.Allows(t))

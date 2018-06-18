@@ -1,19 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <Building_NR_AutoMachineTool_Harvester_TierOne.description>
-農業ゾーンの内部か付近に設置します。
-収穫機が範囲内の農業ゾーンから、植物を収穫します。
-  </Building_NR_AutoMachineTool_Harvester_TierOne.description>
+  <Building_NR_AutoMachineTool_Harvester_TierOne.description>農業ゾーンの内部か付近に設置します。
+収穫機が範囲内の農業ゾーンから、植物を収穫します。</Building_NR_AutoMachineTool_Harvester_TierOne.description>
 
-  <Building_NR_AutoMachineTool_Harvester_TierTwo.description>
-農業ゾーンの内部か付近に設置します。
-収穫機が範囲内の農業ゾーンから、植物を収穫します
-  </Building_NR_AutoMachineTool_Harvester_TierTwo.description>
+  <Building_NR_AutoMachineTool_Harvester_TierTwo.description>農業ゾーンの内部か付近に設置します。
+収穫機が範囲内の農業ゾーンから、植物を収穫します</Building_NR_AutoMachineTool_Harvester_TierTwo.description>
 
-  <Building_NR_AutoMachineTool_Harvester_TierThree.description>
-農業ゾーンの内部か付近に設置します。
-収穫機が範囲内の農業ゾーンから、植物を収穫します。
-  </Building_NR_AutoMachineTool_Harvester_TierThree.description>
+  <Building_NR_AutoMachineTool_Harvester_TierThree.description>農業ゾーンの内部か付近に設置します。
+収穫機が範囲内の農業ゾーンから、植物を収穫します。</Building_NR_AutoMachineTool_Harvester_TierThree.description>
 
   <Building_NR_AutoMachineTool_Harvester_TierOne.label>収穫機 Tier1</Building_NR_AutoMachineTool_Harvester_TierOne.label>
   <Building_NR_AutoMachineTool_Harvester_TierTwo.label>収穫機 Tier2</Building_NR_AutoMachineTool_Harvester_TierTwo.label>

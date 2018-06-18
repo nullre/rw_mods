@@ -19,6 +19,7 @@ namespace NR_AutoMachineTool
     public class Building_AnimalResourceGatherer : Building_BaseRange<Pawn>
     {
         private static Func<CompHasGatherableBodyResource, ThingDef> resourceDefGetter;
+        private static Func<CompHasGatherableBodyResource, bool> activeGetter;
         private static Func<CompHasGatherableBodyResource, int> resourceAmountGetter;
         private static Action<CompHasGatherableBodyResource, float> fullnessSetter;
 
@@ -26,6 +27,7 @@ namespace NR_AutoMachineTool
         {
             var compType = typeof(CompHasGatherableBodyResource);
             resourceDefGetter = GenerateGetterDelegate<CompHasGatherableBodyResource, ThingDef>(compType.GetProperty("ResourceDef", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true));
+            activeGetter = GenerateGetterDelegate<CompHasGatherableBodyResource, bool>(compType.GetProperty("Active", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true));
             resourceAmountGetter = GenerateGetterDelegate<CompHasGatherableBodyResource, int>(compType.GetProperty("ResourceAmount", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true));
             fullnessSetter = GenerateSetFieldDelegate<CompHasGatherableBodyResource, float>(compType.GetField("fullness", BindingFlags.NonPublic | BindingFlags.Instance));
         }
@@ -59,7 +61,7 @@ namespace NR_AutoMachineTool
 
         protected override void Reset()
         {
-            if (this.working != null && this.working.jobs.curJob.def == JobDefOf.WaitMaintainPosture)
+            if (this.working != null && this.working.jobs.curJob.def == JobDefOf.Wait_MaintainPosture)
             {
                 this.working.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
             }
@@ -100,7 +102,7 @@ namespace NR_AutoMachineTool
 
         protected override bool WorkIntrruption(Pawn working)
         {
-            return !this.comp.ActiveAndFull;
+            return !activeGetter(this.comp) || this.comp.Fullness < 0.5f;
         }
 
         protected override bool TryStartWorking(out Pawn target)
@@ -109,7 +111,7 @@ namespace NR_AutoMachineTool
                 .Where(c => (this.Position + this.Rotation.FacingCell).GetRoom(this.Map) == c.GetRoom(this.Map))
                 .SelectMany(c => c.GetGatherable(this.Map))
                 .SelectMany(a => a.GetComps<CompHasGatherableBodyResource>().Select(c => new { Animal = a, Comp = c }))
-                .Where(a => a.Comp.ActiveAndFull)
+                .Where(a => activeGetter(a.Comp) && a.Comp.Fullness >= 0.5f)
                 .Where(a => !IsLimit(resourceDefGetter(a.Comp)))
                 .FirstOption()
                 .GetOrDefault(null);
@@ -130,7 +132,7 @@ namespace NR_AutoMachineTool
             
             products = CreateThings(def, amount);
 
-            if (this.working.jobs.curJob.def == JobDefOf.WaitMaintainPosture)
+            if (this.working.jobs.curJob.def == JobDefOf.Wait_MaintainPosture)
             {
                 this.working.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
             }

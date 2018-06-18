@@ -14,11 +14,11 @@ namespace NR_AutoMachineTool
 {
     public class PlaceWorker_InputHighlight : PlaceWorker
     {
-        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot)
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
         {
             var pos = (center + rot.Opposite.FacingCell);
             GenDraw.DrawFieldEdges(new List<IntVec3>().Append(pos), Color.magenta);
-            GenDraw.DrawFieldEdges(pos.SlotGroupCells(Find.VisibleMap), Color.red);
+            GenDraw.DrawFieldEdges(pos.SlotGroupCells(Find.CurrentMap), Color.red);
         }
     }
 }

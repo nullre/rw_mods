@@ -77,8 +77,7 @@ namespace NR_AutoMachineTool
         Dictionary<ThingDef, SlaughterSettings> Settings { get; }
     }
 
-    [StaticConstructorOnStartup]
-    class ITab_Slaughterhouse : ITab
+    internal class ITab_Slaughterhouse : ITab
     {
         private static readonly Vector2 WinSize = new Vector2(800f, 600f);
 
@@ -87,7 +86,7 @@ namespace NR_AutoMachineTool
             this.size = WinSize;
             this.labelKey = "NR_AutoMachineTool.SlaughterhouseSetting.TabName";
         }
-        
+
         private string description;
         
         public ISlaughterhouse Machine
@@ -98,7 +97,7 @@ namespace NR_AutoMachineTool
         public override void OnOpen()
         {
             base.OnOpen();
-            this.defs = Find.VisibleMap.mapPawns.SpawnedPawnsInFaction(Faction.OfPlayer).Where(p => p.RaceProps.Animal && p.RaceProps.IsFlesh && p.SpawnedOrAnyParentSpawned).Select(p => p.def).Distinct().ToList();
+            this.defs = Find.CurrentMap.mapPawns.SpawnedPawnsInFaction(Faction.OfPlayer).Where(p => p.RaceProps.Animal && p.RaceProps.IsFlesh && p.SpawnedOrAnyParentSpawned).Select(p => p.def).Distinct().ToList();
         }
 
         private List<ThingDef> defs;
@@ -106,22 +105,6 @@ namespace NR_AutoMachineTool
         private Vector2 scrollPosition;
 
         private static readonly float[] ColumnWidth = new float[] { 0.2f, 0.05f, 0.05f, 0.05f, 0.05f, 0.15f, 0.15f, 0.15f, 0.15f };
-
-        private static readonly Texture2D PregnantIcon = Resources.Load<Texture2D>("Textures/UI/Icons/Pregnant");
-        private static readonly Texture2D MaleIcon = GenderUtility.GetIcon(Gender.Male);
-        private static readonly Texture2D FemaleIcon = GenderUtility.GetIcon(Gender.Female);
-
-        private static Texture2D slaughterIcon;
-        private static Texture2D SlaughterIcon => slaughterIcon = slaughterIcon ?? ContentFinder<Texture2D>.Get("UI/Icons/Animal/Slaughter", true);
-
-        private static Texture2D trainedIcon;
-        private static Texture2D TrainedIcon => trainedIcon = trainedIcon ?? ContentFinder<Texture2D>.Get("UI/Icons/Trainables/Obedience", true);
-
-        private static Texture2D youngIcon;
-        private static Texture2D YoungIcon => youngIcon = youngIcon ?? ContentFinder<Texture2D>.Get("UI/Icons/LifeStage/Young", true);
-
-        private static Texture2D adultIcon;
-        private static Texture2D AdultIcon => adultIcon = adultIcon ?? ContentFinder<Texture2D>.Get("UI/Icons/LifeStage/Adult", true);
 
         private Func<float, Rect> CutLeftFunc(Rect rect)
         {
@@ -166,39 +149,39 @@ namespace NR_AutoMachineTool
             Widgets.Label(col, "NR_AutoMachineTool.RaceName".Translate());
 
             col = cutLeftHeader(ColumnWidth[colIndex++]);
-            GUI.DrawTexture(col.LeftPartPixels(24f), SlaughterIcon);
+            GUI.DrawTexture(col.LeftPartPixels(24f), RS.SlaughterIcon);
             TooltipHandler.TipRegion(col, slaughterTip);
 
             col = cutLeftHeader(ColumnWidth[colIndex++]);
-            Widgets.Label(col, "NR_AutoMachineTool.Bonds".Translate());
+            GUI.DrawTexture(col.LeftPartPixels(24f), RS.BondIcon);
             TooltipHandler.TipRegion(col, hasBondsTip);
 
             col = cutLeftHeader(ColumnWidth[colIndex++]);
-            GUI.DrawTexture(col.LeftPartPixels(24f), PregnantIcon);
+            GUI.DrawTexture(col.LeftPartPixels(24f), RS.PregnantIcon);
             TooltipHandler.TipRegion(col, pregnancyTip);
 
             col = cutLeftHeader(ColumnWidth[colIndex++]);
-            GUI.DrawTexture(col.LeftPartPixels(24f), TrainedIcon);
+            GUI.DrawTexture(col.LeftPartPixels(24f), RS.TrainedIcon);
             TooltipHandler.TipRegion(col, trainedTip);
 
             col = cutLeftHeader(ColumnWidth[colIndex++]);
-            GUI.DrawTexture(col.LeftPartPixels(24f), MaleIcon);
-            GUI.DrawTexture(col.LeftPartPixels(48f).RightPartPixels(24f), YoungIcon);
+            GUI.DrawTexture(col.LeftPartPixels(24f), RS.MaleIcon);
+            GUI.DrawTexture(col.LeftPartPixels(48f).RightPartPixels(24f), RS.YoungIcon);
             TooltipHandler.TipRegion(col, keepMaleChildCountTip);
 
             col = cutLeftHeader(ColumnWidth[colIndex++]);
-            GUI.DrawTexture(col.LeftPartPixels(24f), FemaleIcon);
-            GUI.DrawTexture(col.LeftPartPixels(48f).RightPartPixels(24f), YoungIcon);
+            GUI.DrawTexture(col.LeftPartPixels(24f), RS.FemaleIcon);
+            GUI.DrawTexture(col.LeftPartPixels(48f).RightPartPixels(24f), RS.YoungIcon);
             TooltipHandler.TipRegion(col, keepFemaleChildCountTip);
 
             col = cutLeftHeader(ColumnWidth[colIndex++]);
-            GUI.DrawTexture(col.LeftPartPixels(24f), MaleIcon);
-            GUI.DrawTexture(col.LeftPartPixels(48f).RightPartPixels(24f), AdultIcon);
+            GUI.DrawTexture(col.LeftPartPixels(24f), RS.MaleIcon);
+            GUI.DrawTexture(col.LeftPartPixels(48f).RightPartPixels(24f), RS.AdultIcon);
             TooltipHandler.TipRegion(col, keepMaleAdultCountTip);
 
             col = cutLeftHeader(ColumnWidth[colIndex++]);
-            GUI.DrawTexture(col.LeftPartPixels(24f), FemaleIcon);
-            GUI.DrawTexture(col.LeftPartPixels(48f).RightPartPixels(24f), AdultIcon);
+            GUI.DrawTexture(col.LeftPartPixels(24f), RS.FemaleIcon);
+            GUI.DrawTexture(col.LeftPartPixels(48f).RightPartPixels(24f), RS.AdultIcon);
             TooltipHandler.TipRegion(col, keepFemaleAdultCountTip);
 
             var scrollOutRect = outList.GetRect(outRect.height - outList.CurHeight);

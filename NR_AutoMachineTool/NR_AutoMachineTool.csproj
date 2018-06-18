@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -40,7 +40,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +85,7 @@
     <Compile Include="Source\AutomationNet\AutomationNetGrid.cs" />
     <Compile Include="Source\AutomationNet\AutomationNetManager.cs" />
     <Compile Include="Source\AutomationNet\AutomationNet.cs" />
+    <Compile Include="Source\RS.cs" />
     <Compile Include="Source\SpecialThingFilterWorker_Fresh.cs" />
     <Compile Include="Source\Building_AutoMachineTool.cs" />
     <Compile Include="Source\GenRecipe2.cs" />
@@ -122,7 +123,6 @@
     <Content Include="About\image08.png" />
     <Content Include="About\image09.png" />
     <Content Include="About\preview.png" />
-    <Content Include="About\PublishedFileId.txt" />
     <Content Include="Defs\DesignationCategoryDef\NR_AutoMachineTool.xml" />
     <Content Include="Defs\Misc\NR_AutoMachineTool_SpecialThingFilters.xml">
       <SubType>Designer</SubType>
@@ -152,7 +152,9 @@
     <Content Include="Languages\Japanese\DefInjected\ResearchProjectDefs\NR_AutoMachineTool.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_AutomationNet.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Slauterhouse.xml" />
-    <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_AnimalResourceGatherer.xml" />
+    <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_AnimalResourceGatherer.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Harvester.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Planter.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Puller.xml" />

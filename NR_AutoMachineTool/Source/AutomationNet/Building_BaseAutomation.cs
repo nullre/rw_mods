@@ -96,7 +96,7 @@ namespace NR_AutoMachineTool
             }
         }
 
-        public override void DeSpawn()
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
             this.Reset();
             base.DeSpawn();

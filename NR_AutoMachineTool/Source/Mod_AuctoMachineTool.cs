@@ -87,8 +87,7 @@ namespace NR_AutoMachineTool
                 }
                 catch (Exception e)
                 {
-                    Log.Error("HOPMのメタデータ取得エラー.");
-                    Log.Notify_Exception(e);
+                    Log.Error("HOPMのメタデータ取得エラー. " + e.ToString());
                     return Nothing<HopmMod>();
                 }
             }

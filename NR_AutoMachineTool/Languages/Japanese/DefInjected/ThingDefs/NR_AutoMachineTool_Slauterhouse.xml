@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <Building_NR_AutoMachineTool_Slaughterhouse.description>
-動物が通過したり、滞在する付近に設置します。
+  <Building_NR_AutoMachineTool_Slaughterhouse.description>動物が通過したり、滞在する付近に設置します。
 屠畜機を選択し、設定タブから屠畜の設定を行います。
-屠畜機が範囲内の動物の屠畜を行います。
-  </Building_NR_AutoMachineTool_Slaughterhouse.description>
+屠畜機が範囲内の動物の屠畜を行います。</Building_NR_AutoMachineTool_Slaughterhouse.description>
   <Building_NR_AutoMachineTool_Slaughterhouse.label>屠畜機</Building_NR_AutoMachineTool_Slaughterhouse.label>
 </LanguageData>

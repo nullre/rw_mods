@@ -21,7 +21,7 @@ namespace NR_AutoMachineTool
 
     class ITab_ProductLimitation : ITab
     {
-        private static readonly Vector2 WinSize = new Vector2(400f, 220f);
+        private static readonly Vector2 WinSize = new Vector2(400f, 240f);
 
         public ITab_ProductLimitation()
         {
@@ -38,7 +38,7 @@ namespace NR_AutoMachineTool
         {
             base.OnOpen();
 
-            this.groups = Find.VisibleMap.slotGroupManager.AllGroups.ToList();
+            this.groups = Find.CurrentMap.haulDestinationManager.AllGroups.ToList();
             this.Machine.TargetSlotGroup = this.Machine.TargetSlotGroup.Where(s => this.groups.Contains(s));
         }
 
@@ -56,7 +56,7 @@ namespace NR_AutoMachineTool
             list.Begin(inRect);
             list.Gap();
 
-            var rect = list.GetRect(50f);
+            var rect = list.GetRect(70f);
             Widgets.Label(rect, description);
             list.Gap();
 

@@ -5,11 +5,9 @@
   <ThingDef Name="Building_NR_AutoMachineTool_Base" Parent="BuildingBase" Abstract="True">
     <defName>Building_NR_AutoMachineTool_Base</defName>
     <thingClass>NR_AutoMachineTool.Building_AutoMachineTool</thingClass>
-    <description>
-Place the AutoMachineTool facing the work table.
+    <description>Place the AutoMachineTool facing the work table.
 Set the output destination of the finished product.
-The AutoMachineTool executes a requested craft that can be created with the material in the surrounding eight squares from the work table creation request.
-    </description>
+The AutoMachineTool executes a requested craft that can be created with the material in the surrounding eight squares from the work table creation request.</description>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
@@ -44,8 +42,6 @@ The AutoMachineTool executes a requested craft that can be created with the mate
 
     <repairEffect>Repair</repairEffect>
     <constructEffect>ConstructMetal</constructEffect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <filthLeaving>BuildingRubble</filthLeaving>
     <size>(1,1)</size>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <passability>Standable</passability>
@@ -70,7 +66,7 @@ The AutoMachineTool executes a requested craft that can be created with the mate
     <costList>
       <Steel>200</Steel>
       <Plasteel>100</Plasteel>
-      <Component>2</Component>
+      <ComponentSpacer>2</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_Tier1</li>
@@ -96,7 +92,7 @@ The AutoMachineTool executes a requested craft that can be created with the mate
       <Steel>800</Steel>
       <Plasteel>500</Plasteel>
       <Silver>2000</Silver>
-      <Component>5</Component>
+      <ComponentSpacer>5</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_Tier2</li>
@@ -122,7 +118,7 @@ The AutoMachineTool executes a requested craft that can be created with the mate
       <Steel>4000</Steel>
       <Plasteel>2000</Plasteel>
       <Gold>2000</Gold>
-      <Component>15</Component>
+      <ComponentSpacer>15</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_Tier3</li>

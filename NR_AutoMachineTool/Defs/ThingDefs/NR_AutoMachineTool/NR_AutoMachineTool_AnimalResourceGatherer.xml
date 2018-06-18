@@ -5,10 +5,8 @@
   <ThingDef Name="Building_NR_AutoMachineTool_AnimalResourceGatherer_Base" Parent="BuildingBase" Abstract="True">
     <defName>Building_NR_AutoMachineTool_AnimalResourceGatherer_Base</defName>
     <thingClass>NR_AutoMachineTool.Building_AnimalResourceGatherer</thingClass>
-    <description>
-Place the AnimalResourceGatherer near animals passing through or staying.
-AnimalResourceGatherer starts milking and shearing from animals within range.
-    </description>
+    <description>Place the AnimalResourceGatherer near animals passing through or staying.
+AnimalResourceGatherer starts milking and shearing from animals within range.</description>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
@@ -55,8 +53,6 @@ AnimalResourceGatherer starts milking and shearing from animals within range.
 
     <repairEffect>Repair</repairEffect>
     <constructEffect>ConstructMetal</constructEffect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <filthLeaving>BuildingRubble</filthLeaving>
     <size>(1,1)</size>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <selectable>True</selectable>
@@ -80,7 +76,7 @@ AnimalResourceGatherer starts milking and shearing from animals within range.
     <costList>
       <Steel>100</Steel>
       <Plasteel>50</Plasteel>
-      <Component>1</Component>
+      <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutoAnimalCaretaker</li>

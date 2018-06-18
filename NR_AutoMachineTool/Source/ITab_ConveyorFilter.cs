@@ -40,7 +40,7 @@ namespace NR_AutoMachineTool
         {
             base.OnOpen();
 
-            this.groups = this.Conveyor.Map.slotGroupManager.AllGroups.ToList();
+            this.groups = this.Conveyor.Map.haulDestinationManager.AllGroups.ToList();
         }
 
         private List<SlotGroup> groups;

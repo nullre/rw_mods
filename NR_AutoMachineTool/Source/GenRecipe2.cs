@@ -30,7 +30,7 @@ namespace NR_AutoMachineTool
             {
                 for (int i = 0; i < recipeDef.products.Count; i++)
                 {
-                    ThingCountClass prod = recipeDef.products[i];
+                    ThingDefCountClass prod = recipeDef.products[i];
                     ThingDef stuffDef;
                     if (prod.thingDef.MadeFromStuff)
                     {
@@ -123,10 +123,10 @@ namespace NR_AutoMachineTool
             {
                 if (recipeDef.workSkill == null)
                 {
-                    Log.Error(recipeDef + " needs workSkill because it creates a product with a quality.");
+                    Log.Error(recipeDef + " needs workSkill because it creates a product with a quality.", false);
                 }
                 int level = skillLevelGetter(recipeDef.workSkill);
-                QualityCategory qualityCategory = QualityUtility.RandomCreationQuality(level);
+                QualityCategory qualityCategory = QualityUtility.GenerateQualityCreatedByPawn(level, false);
                 compQuality.SetQuality(qualityCategory, ArtGenerationContext.Colony);
             }
             CompArt compArt = product.TryGetComp<CompArt>();

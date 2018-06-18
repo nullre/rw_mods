@@ -3,10 +3,8 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Building_NR_AutoMachineTool_AutomationNetPipe</defName>
     <label>Automation Net Pipe</label>
-    <description>
-Build an Automation Net with pipes.
-Be able to expand the function by installing the component.
-    </description>
+    <description>Build an Automation Net with pipes.
+Be able to expand the function by installing the component.</description>
     <thingClass>NR_AutoMachineTool.Building_AutomationPipe</thingClass>
     <category>Building</category>
     <designationCategory>NR_AutoMachineTool_AutomationNet_DesignationCategory</designationCategory>
@@ -14,15 +12,15 @@ Be able to expand the function by installing the component.
       <texPath>NR_AutoMachineTool/Buildings/AutomationNet/Pipe</texPath>
       <graphicClass>NR_AutoMachineTool.Graphic_LinkedAutomationNet</graphicClass>
     </graphicData>
-    <blueprintGraphicData>
-      <texPath>NR_AutoMachineTool/Buildings/AutomationNet/PipeAtlas</texPath>
-      <graphicClass>NR_AutoMachineTool.Graphic_LinkedAutomationNet</graphicClass>
-    </blueprintGraphicData>
     <uiIconPath>NR_AutoMachineTool/Buildings/AutomationNet/PipeIcon</uiIconPath>
     <building>
       <ai_chillDestination>false</ai_chillDestination>
       <isInert>true</isInert>
       <isEdifice>false</isEdifice>
+      <blueprintGraphicData>
+        <texPath>NR_AutoMachineTool/Buildings/AutomationNet/PipeAtlas</texPath>
+        <graphicClass>NR_AutoMachineTool.Graphic_LinkedAutomationNet</graphicClass>
+      </blueprintGraphicData>
     </building>
     <altitudeLayer>FloorEmplacement</altitudeLayer>
     <passability>Standable</passability>
@@ -46,7 +44,7 @@ Be able to expand the function by installing the component.
     <rotatable>false</rotatable>
     <selectable>true</selectable>
     <neverMultiSelect>true</neverMultiSelect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <constructEffect>ConstructMetal</constructEffect>
     <clearBuildingArea>false</clearBuildingArea>
@@ -59,11 +57,9 @@ Be able to expand the function by installing the component.
   <ThingDef Name="Building_NR_AutoMachineTool_AutomationNetGenerator_Base" Parent="BuildingBase" Abstract="True">
     <defName>Building_NR_AutoMachineTool_AutomationNetGenerator_Base</defName>
     <thingClass>NR_AutoMachineTool.Building_EnergyGenerator</thingClass>
-    <description>
-Automation Net Energy Generator.
+    <description>Automation Net Energy Generator.
 Install adjacent to the pipe.
-Energy is supplied to the pipe.
-    </description>
+Energy is supplied to the pipe.</description>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
@@ -100,7 +96,7 @@ Energy is supplied to the pipe.
     <passability>Impassable</passability>
     <repairEffect>Repair</repairEffect>
     <constructEffect>ConstructMetal</constructEffect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
     <size>(1,1)</size>
     <selectable>True</selectable>
 
@@ -120,7 +116,7 @@ Energy is supplied to the pipe.
     <costList>
       <Steel>1000</Steel>
       <Plasteel>100</Plasteel>
-      <Component>10</Component>
+      <ComponentSpacer>10</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutomationNet</li>
@@ -153,7 +149,7 @@ Energy is supplied to the pipe.
     <rotatable>false</rotatable>
     <selectable>true</selectable>
     <neverMultiSelect>true</neverMultiSelect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <constructEffect>ConstructMetal</constructEffect>
     <clearBuildingArea>false</clearBuildingArea>
@@ -168,15 +164,13 @@ Energy is supplied to the pipe.
       </li>
     </comps>
   </ThingDef>
-
+<!--
   <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetConsumer_Base">
     <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Repair</defName>
     <label>Repair pipe component</label>
-    <description>
-Repair pipe component.
+    <description>Repair pipe component.
 Use energy to repair where this component is located.
-Pipe component must install on the pipe.
-    </description>
+Pipe component must install on the pipe.</description>
     <thingClass>NR_AutoMachineTool.Building_RepairComponent</thingClass>
     <graphicData>
       <texPath>NR_AutoMachineTool/Buildings/AutomationNet/RepairComponent</texPath>
@@ -185,7 +179,7 @@ Pipe component must install on the pipe.
     </graphicData>
     <costList>
       <Plasteel>10</Plasteel>
-      <Component>1</Component>
+      <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutomationNetRepairComponent</li>
@@ -195,11 +189,9 @@ Pipe component must install on the pipe.
   <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetConsumer_Base">
     <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Extinguish</defName>
     <label>Extinguish pipe component</label>
-    <description>
-Extinguish pipe component.
+    <description>Extinguish pipe component.
 Use energy to extinguish where this component is located.
-Pipe component must install on the pipe.
-    </description>
+Pipe component must install on the pipe.</description>
     <thingClass>NR_AutoMachineTool.Building_ExtinguishComponent</thingClass>
     <graphicData>
       <texPath>NR_AutoMachineTool/Buildings/AutomationNet/ExtinguishComponent</texPath>
@@ -208,21 +200,19 @@ Pipe component must install on the pipe.
     </graphicData>
     <costList>
       <Plasteel>10</Plasteel>
-      <Component>1</Component>
+      <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutomationNetRepairComponent</li>
     </researchPrerequisites>
   </ThingDef>
-
+-->
   <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetComponent_Base">
     <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Storage</defName>
     <label>Storage pipe component</label>
-    <description>
-Storage pipe component.
+    <description>Storage pipe component.
 The facing stockpile zone is recognized in the network.
-Pipe component must install on the pipe.
-    </description>
+Pipe component must install on the pipe.</description>
     <rotatable>true</rotatable>
     <thingClass>NR_AutoMachineTool.Building_StorageComponent</thingClass>
     <graphicData>
@@ -232,7 +222,7 @@ Pipe component must install on the pipe.
     </graphicData>
     <costList>
       <Plasteel>100</Plasteel>
-      <Component>3</Component>
+      <ComponentSpacer>3</ComponentSpacer>
     </costList>
     <comps>
       <li Class="NR_AutoMachineTool.CompProperties_Automation">
@@ -253,12 +243,10 @@ Pipe component must install on the pipe.
   <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetConsumer_Base">
     <defName>Building_NR_AutoMachineTool_AutomationNetComponent_ItemPusher</defName>
     <label>ItemPusher pipe component</label>
-    <description>
-Storage pipe component.
+    <description>Storage pipe component.
 Extract items from the stockpiling zone recognized by the network and output it.
 Use energy.
-Pipe component must install on the pipe.
-    </description>
+Pipe component must install on the pipe.</description>
     <rotatable>true</rotatable>
     <thingClass>NR_AutoMachineTool.Building_ItemPusherComponent</thingClass>
     <graphicData>
@@ -268,7 +256,7 @@ Pipe component must install on the pipe.
     </graphicData>
     <costList>
       <Plasteel>100</Plasteel>
-      <Component>3</Component>
+      <ComponentSpacer>3</ComponentSpacer>
     </costList>
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_AutomationNetItemTransfer</li>

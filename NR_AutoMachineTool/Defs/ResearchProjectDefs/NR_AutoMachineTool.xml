@@ -185,7 +185,7 @@
     <researchViewX>2</researchViewX>
     <researchViewY>2</researchViewY>
   </ResearchProjectDef>
-
+<!--
   <ResearchProjectDef>
     <defName>ResearchProject_NR_AutoMachineTool_AutomationNetRepairComponent</defName>
     <label>Repair Component (experimental)</label>
@@ -203,7 +203,7 @@
     <researchViewX>3</researchViewX>
     <researchViewY>2</researchViewY>
   </ResearchProjectDef>
-
+-->
   <ResearchProjectDef>
     <defName>ResearchProject_NR_AutoMachineTool_AutomationNetItemTransfer</defName>
     <label>Item Transfer Component (experimental)</label>

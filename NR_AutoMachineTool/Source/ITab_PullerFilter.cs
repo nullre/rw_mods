@@ -35,7 +35,7 @@ namespace NR_AutoMachineTool
         {
             base.OnOpen();
 
-            this.groups = this.Puller.Map.slotGroupManager.AllGroups.ToList();
+            this.groups = this.Puller.Map.haulDestinationManager.AllGroups.ToList();
         }
 
         private List<SlotGroup> groups;

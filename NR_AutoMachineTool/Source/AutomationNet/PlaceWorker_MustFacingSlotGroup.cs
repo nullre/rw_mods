@@ -16,7 +16,7 @@ namespace NR_AutoMachineTool
     {
         public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null)
         {
-            if (map.slotGroupManager.SlotGroupAt((loc + rot.FacingCell)) != null)
+            if (map.haulDestinationManager.SlotGroupAt((loc + rot.FacingCell)) != null)
             {
                 return AcceptanceReport.WasAccepted;
             }
