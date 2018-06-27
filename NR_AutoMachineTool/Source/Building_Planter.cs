@@ -52,13 +52,15 @@ namespace NR_AutoMachineTool
                 .Select(c => new { Cell = c, Plantable = c.GetPlantable(this.Map) })
                 .Where(c => c.Plantable.HasValue)
                 .Select(c => new { Cell = c.Cell, Plantable = c.Plantable.Value })
-                .Where(c => c.Plantable.GetPlantDefToGrow().CanEverPlantAt(c.Cell, this.Map))
-                .Where(c => GenPlant.GrowthSeasonNow(c.Cell, this.Map))
-                .Where(c => GenPlant.SnowAllowsPlanting(c.Cell, this.Map))
-                .Where(c => Option(c.Plantable as Zone_Growing).Fold(true)(z => z.allowSow))
-                .Where(c => c.Cell.GetRoom(this.Map) == this.GetRoom())
-                .Where(c => c.Plantable.GetPlantDefToGrow().plant.sowMinSkill <= this.SkillLevel)
-                .Where(c => GenPlant.AdjacentSowBlocker(c.Plantable.GetPlantDefToGrow(), c.Cell, this.Map) == null)
+//                .Where(c => c.Plantable.GetPlantDefToGrow().CanEverPlantAt(c.Cell, this.Map))
+//                .Where(c => GenPlant.GrowthSeasonNow(c.Cell, this.Map))
+//                .Where(c => GenPlant.SnowAllowsPlanting(c.Cell, this.Map))
+//                .Where(c => Option(c.Plantable as Zone_Growing).Fold(true)(z => z.allowSow))
+//                .Where(c => c.Cell.GetRoom(this.Map) == this.GetRoom())
+//                .Where(c => c.Plantable.GetPlantDefToGrow().plant.sowMinSkill <= this.SkillLevel)
+//                .Where(c => GenPlant.AdjacentSowBlocker(c.Plantable.GetPlantDefToGrow(), c.Cell, this.Map) == null)
+//                .Where(c => !c.Plantable.GetPlantDefToGrow().plant.interferesWithRoof || (c.Plantable.GetPlantDefToGrow().plant.interferesWithRoof && !c.Cell.Roofed(this.Map)))
+                .Where(c => CanSow(c.Cell, c.Plantable))
                 .Where(c => !IsLimit(c.Plantable.GetPlantDefToGrow().plant.harvestedThingDef))
                 .FirstOption()
                 .SelectMany(c =>
@@ -79,6 +81,19 @@ namespace NR_AutoMachineTool
             Option(working as Plant).ForEach(x => x.sown = true);
             products = new List<Thing>();
             return true;
+        }
+
+        private bool CanSow(IntVec3 cell, IPlantToGrowSettable grower)
+        {
+            return
+                grower.GetPlantDefToGrow().CanEverPlantAt(cell, this.Map) &&
+                GenPlant.GrowthSeasonNow(cell, this.Map) &&
+                GenPlant.SnowAllowsPlanting(cell, this.Map) &&
+                Option(grower as Zone_Growing).Fold(true)(z => z.allowSow) &&
+                cell.GetRoom(this.Map) == this.GetRoom() &&
+                grower.GetPlantDefToGrow().plant.sowMinSkill <= this.SkillLevel &&
+                GenPlant.AdjacentSowBlocker(grower.GetPlantDefToGrow(), cell, this.Map) == null &&
+                (!grower.GetPlantDefToGrow().plant.interferesWithRoof || (grower.GetPlantDefToGrow().plant.interferesWithRoof && !cell.Roofed(this.Map)));
         }
     }
 }

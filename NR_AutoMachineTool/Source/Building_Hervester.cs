@@ -31,7 +31,7 @@ namespace NR_AutoMachineTool
 
         protected override bool WorkIntrruption(Plant working)
         {
-            return !working.Spawned || (working.Blight == null && !working.HarvestableNow);
+            return !working.Spawned || (!working.Blighted && !working.HarvestableNow);
         }
 
         protected override bool TryStartWorking(out Plant target)
@@ -42,8 +42,8 @@ namespace NR_AutoMachineTool
                 .SelectMany(c => c.GetThingList(this.Map))
                 .SelectMany(t => Option(t as Plant))
                 .Where(p => !InWorking(p))
-                .Where(p => (p.HarvestableNow && p.LifeStage == PlantLifeStage.Mature) || p.Blight != null)
-                .Where(p => !IsLimit(p.def.plant.harvestedThingDef) || p.Blight != null)
+                .Where(p => (p.HarvestableNow && p.LifeStage == PlantLifeStage.Mature) || p.Blighted)
+                .Where(p => !IsLimit(p.def.plant.harvestedThingDef) || p.Blighted)
                 .FirstOption()
                 .GetOrDefault(null);
             target = plant;
@@ -54,7 +54,7 @@ namespace NR_AutoMachineTool
         {
             products = new List<Thing>();
             working.def.plant.soundHarvestFinish.PlayOneShot(this);
-            if (working.Blight == null)
+            if (!working.Blighted)
             {
                 products = this.CreateThings(working.def.plant.harvestedThingDef, working.YieldNow());
                 working.PlantCollected();

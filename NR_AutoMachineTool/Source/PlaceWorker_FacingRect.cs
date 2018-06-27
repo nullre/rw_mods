@@ -23,7 +23,7 @@ namespace NR_AutoMachineTool
         public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
         {
             GenDraw.DrawFieldEdges(FacingRect(center, rot,
-                center.GetThingList(Find.CurrentMap).Where(t => t.def == def).SelectMany(t => Option(t as IRange)).FirstOption().Fold(2)(p => p.GetRange()))
+                center.GetThingList(Find.CurrentMap).Where(t => t.def == def).SelectMany(t => Option(t as IRange)).FirstOption().Fold(3)(p => p.GetRange()))
                 .Where(c => (center + rot.FacingCell).GetRoom(Find.CurrentMap) == c.GetRoom(Find.CurrentMap))
                 .ToList(), Color.white);
 

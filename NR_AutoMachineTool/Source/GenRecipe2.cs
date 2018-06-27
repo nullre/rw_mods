@@ -91,24 +91,9 @@ namespace NR_AutoMachineTool
                         }
                         else
                         {
-                            Corpse corpse = ing as Corpse;
-                            if (corpse != null)
+                            foreach (var prod in ing.ButcherProducts(null, efficiency))
                             {
-                                foreach(var prod in corpse.InnerPawn.ButcherProducts(null, efficiency))
-                                {
-                                    yield return GenRecipe2.PostProcessProduct(prod, recipeDef, skillLevelGetter);
-                                }
-                                if (corpse.InnerPawn.RaceProps.BloodDef != null)
-                                {
-                                    FilthMaker.MakeFilth(position, map, corpse.InnerPawn.RaceProps.BloodDef, corpse.InnerPawn.LabelIndefinite(), 1);
-                                }
-                            }
-                            else
-                            {
-                                foreach (var prod in ing.ButcherProducts(null, efficiency))
-                                {
-                                    yield return GenRecipe2.PostProcessProduct(prod, recipeDef, skillLevelGetter);
-                                }
+                                yield return GenRecipe2.PostProcessProduct(prod, recipeDef, skillLevelGetter);
                             }
                         }
                     }

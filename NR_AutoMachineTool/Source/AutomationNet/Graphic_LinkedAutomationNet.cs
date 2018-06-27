@@ -49,5 +49,12 @@ namespace NR_AutoMachineTool
             g.data = this.data;
             return g;
         }
+
+        public override void DrawWorker(Vector3 loc, Rot4 rot, ThingDef thingDef, Thing thing, float extraRotation)
+        {
+            Material material = this.MatAt(rot, thing);
+            GraphicDatabase.Get<Graphic_Single>(thingDef.uiIconPath, ShaderTypeDefOf.EdgeDetect.Shader, thingDef.graphicData.drawSize, material.color, material.GetColorTwo())
+                .DrawWorker(loc, rot, thingDef, thing, extraRotation);
+        }
     }
 }
