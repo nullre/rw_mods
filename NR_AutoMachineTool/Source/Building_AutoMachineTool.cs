@@ -455,7 +455,7 @@ namespace NR_AutoMachineTool
 
         private void FinishWorking()
         {
-            this.products = GenRecipe2.MakeRecipeProducts(this.bill.recipe, P, M, P.GetRoom(M), this.GetSkillLevel, this.ingredients, this.dominant).ToList();
+            this.products = GenRecipe2.MakeRecipeProducts(this.bill.recipe, P, M, P.GetRoom(M), this.GetSkillLevel, this.ingredients, this.dominant, this.workTable.GetOrDefault(null)).ToList();
             this.ingredients.ForEach(i => bill.recipe.Worker.ConsumeIngredient(i, bill.recipe, M));
             Option(this.unfinished).ForEach(u => u.Destroy(DestroyMode.Vanish));
             this.bill.Notify_IterationCompleted(null, this.ingredients);

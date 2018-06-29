@@ -6,6 +6,7 @@
     <category>Building</category>
     <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
     <drawerType>RealtimeOnly</drawerType>
+    <!-- <drawerType>MapMeshAndRealTime</drawerType> -->
     
     <thingClass>NR_AutoMachineTool.Building_BeltConveyor</thingClass>
     <tickerType>Normal</tickerType>

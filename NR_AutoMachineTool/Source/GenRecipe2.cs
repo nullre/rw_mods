@@ -15,17 +15,24 @@ namespace NR_AutoMachineTool
 {
     static class GenRecipe2
     {
-        public static IEnumerable<Thing> MakeRecipeProducts(RecipeDef recipeDef, IntVec3 position, Map map, Room room, Func<SkillDef, int> skillLevelGetter, List<Thing> ingredients, Thing dominantIngredient)
+        public static IEnumerable<Thing> MakeRecipeProducts(RecipeDef recipeDef, IntVec3 position, Map map, Room room, Func<SkillDef, int> skillLevelGetter, List<Thing> ingredients, Thing dominantIngredient, IBillGiver billGiver)
         {
-            var result = MakeRecipeProductsInt(recipeDef, position, map, room, skillLevelGetter, ingredients, dominantIngredient);
+            var result = MakeRecipeProductsInt(recipeDef, position, map, room, skillLevelGetter, ingredients, dominantIngredient, billGiver);
             LoadedModManager.GetMod<Mod_AutoMachineTool>().Hopm.ForEach(m => m.Postfix_MakeRecipeProducts(ref result, recipeDef, 1f, ingredients));
             return result;
         }
 
-        public static IEnumerable<Thing> MakeRecipeProductsInt(RecipeDef recipeDef, IntVec3 position, Map map, Room room, Func<SkillDef, int> skillLevelGetter, List<Thing> ingredients, Thing dominantIngredient)
+        public static IEnumerable<Thing> MakeRecipeProductsInt(RecipeDef recipeDef, IntVec3 position, Map map, Room room, Func<SkillDef, int> skillLevelGetter, List<Thing> ingredients, Thing dominantIngredient, IBillGiver billGiver)
         {
             float efficiency = 1f;
-
+            if (recipeDef.workTableEfficiencyStat != null)
+            {
+                Building_WorkTable building_WorkTable = billGiver as Building_WorkTable;
+                if (building_WorkTable != null)
+                {
+                    efficiency *= building_WorkTable.GetStatValue(recipeDef.workTableEfficiencyStat, true);
+                }
+            }
             if (recipeDef.products != null)
             {
                 for (int i = 0; i < recipeDef.products.Count; i++)
@@ -57,15 +64,18 @@ namespace NR_AutoMachineTool
                     CompFoodPoisonable foodPoisonable = product.TryGetComp<CompFoodPoisonable>();
                     if (foodPoisonable != null)
                     {
-                        float num = 0.003f;
-                        // Room room = worker.GetRoom(RegionType.Set_Passable);
-                        if (room != null)
+                        float chance = (room == null) ? RoomStatDefOf.FoodPoisonChance.roomlessScore : room.GetStat(RoomStatDefOf.FoodPoisonChance);
+                        if (Rand.Chance(chance))
                         {
-                            num *= room.GetStat(RoomStatDefOf.FoodPoisonChanceFactor);
+                            foodPoisonable.SetPoisoned(FoodPoisonCause.FilthyKitchen);
                         }
-                        if (Rand.Value < num)
+                        else
                         {
-                            foodPoisonable.PoisonPercent = 1f;
+                            float statValue = 0.000f;
+                            if (Rand.Chance(statValue))
+                            {
+                                foodPoisonable.SetPoisoned(FoodPoisonCause.IncompetentCook);
+                            }
                         }
                     }
                     yield return GenRecipe2.PostProcessProduct(product, recipeDef, skillLevelGetter);
