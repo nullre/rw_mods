@@ -71,7 +71,7 @@ namespace NR_AutoMachineTool
                         }
                         else
                         {
-                            float statValue = 0.000f;
+                            float statValue = 0.003f;
                             if (Rand.Chance(statValue))
                             {
                                 foodPoisonable.SetPoisoned(FoodPoisonCause.IncompetentCook);
