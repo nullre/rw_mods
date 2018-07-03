@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_AutoMachineTool : Building, IBeltConbeyorSender, IRange, IAgricultureMachine
+    public class Building_AutoMachineTool : Building, IBeltConbeyorSender, IRange, IAgricultureMachine, IRecipeProductWorker
     {
         private enum WorkingState
         {
@@ -83,7 +83,7 @@ namespace NR_AutoMachineTool
         [Unsaved]
         private Option<Building_WorkTable> workTable;
 
-        private int GetSkillLevel(SkillDef def)
+        public int GetSkillLevel(SkillDef def)
         {
             return this.SkillLevel;
         }
@@ -455,7 +455,7 @@ namespace NR_AutoMachineTool
 
         private void FinishWorking()
         {
-            this.products = GenRecipe2.MakeRecipeProducts(this.bill.recipe, P, M, P.GetRoom(M), this.GetSkillLevel, this.ingredients, this.dominant, this.workTable.GetOrDefault(null)).ToList();
+            this.products = GenRecipe2.MakeRecipeProducts(this.bill.recipe, this, this.ingredients, this.dominant, this.workTable.GetOrDefault(null)).ToList();
             this.ingredients.ForEach(i => bill.recipe.Worker.ConsumeIngredient(i, bill.recipe, M));
             Option(this.unfinished).ForEach(u => u.Destroy(DestroyMode.Vanish));
             this.bill.Notify_IterationCompleted(null, this.ingredients);
@@ -488,7 +488,6 @@ namespace NR_AutoMachineTool
                 else
                 {
                     // ない場合には、適当に出す.
-                    var cells = OutputZone(OutputCell());
                     if (PlaceItem(n, OutputCell(), this.forbidItem, M))
                     {
                         return t;
@@ -513,11 +512,6 @@ namespace NR_AutoMachineTool
         public IntVec3 OutputCell()
         {
             return this.Position + this.adjacent[this.outputIndex];
-        }
-
-        public List<IntVec3> OutputZone(IntVec3 outputCell)
-        {
-            return Option(OutputCell().GetZone(M) as RimWorld.Zone_Stockpile).Select(z => z.cells).GetOrDefault(new List<IntVec3>().Append(OutputCell()));
         }
 
         public IEnumerable<IntVec3> IngredientScanCell()
@@ -729,6 +723,11 @@ namespace NR_AutoMachineTool
         public int GetRange()
         {
             return Mathf.RoundToInt(this.supplyPowerForRange / 500) + 1;
+        }
+
+        public Room GetRoom(RegionType type)
+        {
+            return RegionAndRoomQuery.GetRoom(this, type);
         }
 
         private class ThingAmount

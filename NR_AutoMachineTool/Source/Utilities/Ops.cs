@@ -184,7 +184,7 @@ namespace NR_AutoMachineTool.Utilities
             }
             if (cell.GetThingList(map).Where(ti => ti.def.category == ThingCategory.Item).Count() == 0)
             {
-                GenPlace.TryPlaceThing(t, cell, map, ThingPlaceMode.Near);
+                GenPlace.TryPlaceThing(t, cell, map, ThingPlaceMode.Direct);
                 if (forbid) t.SetForbidden(forbid);
                 effect(t);
                 return true;

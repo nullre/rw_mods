@@ -13,18 +13,42 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
+    public interface IRecipeProductWorker
+    {
+        Map Map { get; }
+        IntVec3 Position { get; }
+        Room GetRoom(RegionType type);
+        int GetSkillLevel(SkillDef def);
+    }
+
+    public static class IRecipeProductWorkerExtension
+    {
+        public static float GetStatValue(this IRecipeProductWorker maker, StatDef stat, bool applyPostProcess = true)
+        {
+            return 1.0f;
+        }
+    }
+
     static class GenRecipe2
     {
-        public static IEnumerable<Thing> MakeRecipeProducts(RecipeDef recipeDef, IntVec3 position, Map map, Room room, Func<SkillDef, int> skillLevelGetter, List<Thing> ingredients, Thing dominantIngredient, IBillGiver billGiver)
+        public static IEnumerable<Thing> MakeRecipeProducts(RecipeDef recipeDef, IRecipeProductWorker worker, List<Thing> ingredients, Thing dominantIngredient, IBillGiver billGiver)
         {
-            var result = MakeRecipeProductsInt(recipeDef, position, map, room, skillLevelGetter, ingredients, dominantIngredient, billGiver);
+            var result = MakeRecipeProductsInt(recipeDef, worker, ingredients, dominantIngredient, billGiver);
             LoadedModManager.GetMod<Mod_AutoMachineTool>().Hopm.ForEach(m => m.Postfix_MakeRecipeProducts(ref result, recipeDef, 1f, ingredients));
             return result;
         }
 
-        public static IEnumerable<Thing> MakeRecipeProductsInt(RecipeDef recipeDef, IntVec3 position, Map map, Room room, Func<SkillDef, int> skillLevelGetter, List<Thing> ingredients, Thing dominantIngredient, IBillGiver billGiver)
+        public static IEnumerable<Thing> MakeRecipeProductsInt(RecipeDef recipeDef, IRecipeProductWorker worker, List<Thing> ingredients, Thing dominantIngredient, IBillGiver billGiver)
         {
-            float efficiency = 1f;
+            float efficiency;
+            if (recipeDef.efficiencyStat == null)
+            {
+                efficiency = 1f;
+            }
+            else
+            {
+                efficiency = worker.GetStatValue(recipeDef.efficiencyStat, true);
+            }
             if (recipeDef.workTableEfficiencyStat != null)
             {
                 Building_WorkTable building_WorkTable = billGiver as Building_WorkTable;
@@ -64,6 +88,7 @@ namespace NR_AutoMachineTool
                     CompFoodPoisonable foodPoisonable = product.TryGetComp<CompFoodPoisonable>();
                     if (foodPoisonable != null)
                     {
+                        Room room = worker.GetRoom(RegionType.Set_Passable);
                         float chance = (room == null) ? RoomStatDefOf.FoodPoisonChance.roomlessScore : room.GetStat(RoomStatDefOf.FoodPoisonChance);
                         if (Rand.Chance(chance))
                         {
@@ -71,14 +96,14 @@ namespace NR_AutoMachineTool
                         }
                         else
                         {
-                            float statValue = 0.003f;
+                            float statValue = worker.GetStatValue(StatDefOf.FoodPoisonChance, true);
                             if (Rand.Chance(statValue))
                             {
                                 foodPoisonable.SetPoisoned(FoodPoisonCause.IncompetentCook);
                             }
                         }
                     }
-                    yield return GenRecipe2.PostProcessProduct(product, recipeDef, skillLevelGetter);
+                    yield return GenRecipe2.PostProcessProduct(product, recipeDef, worker);
                 }
             }
             if (recipeDef.specialProducts != null)
@@ -95,15 +120,15 @@ namespace NR_AutoMachineTool
                             {
                                 foreach (Thing product2 in ing.SmeltProducts(efficiency))
                                 {
-                                    yield return GenRecipe2.PostProcessProduct(product2, recipeDef, skillLevelGetter);
+                                    yield return GenRecipe2.PostProcessProduct(product2, recipeDef, worker);
                                 }
                             }
                         }
                         else
                         {
-                            foreach (var prod in ing.ButcherProducts(null, efficiency))
+                            foreach (Thing product3 in ButcherProducts(ing, efficiency, worker))
                             {
-                                yield return GenRecipe2.PostProcessProduct(prod, recipeDef, skillLevelGetter);
+                                yield return GenRecipe2.PostProcessProduct(product3, recipeDef, worker);
                             }
                         }
                     }
@@ -111,7 +136,7 @@ namespace NR_AutoMachineTool
             }
         }
 
-        private static Thing PostProcessProduct(Thing product, RecipeDef recipeDef, Func<SkillDef, int> skillLevelGetter)
+        private static Thing PostProcessProduct(Thing product, RecipeDef recipeDef, IRecipeProductWorker worker)
         {
             CompQuality compQuality = product.TryGetComp<CompQuality>();
             if (compQuality != null)
@@ -120,7 +145,7 @@ namespace NR_AutoMachineTool
                 {
                     Log.Error(recipeDef + " needs workSkill because it creates a product with a quality.", false);
                 }
-                int level = skillLevelGetter(recipeDef.workSkill);
+                int level = worker.GetSkillLevel(recipeDef.workSkill);
                 QualityCategory qualityCategory = QualityUtility.GenerateQualityCreatedByPawn(level, false);
                 compQuality.SetQuality(qualityCategory, ArtGenerationContext.Colony);
             }
@@ -142,6 +167,31 @@ namespace NR_AutoMachineTool
                 product = product.MakeMinified();
             }
             return product;
+        }
+
+        private static IEnumerable<Thing> ButcherProducts(Thing thing, float efficiency, IRecipeProductWorker worker)
+        {
+            var corpse = thing as Corpse;
+            if (corpse != null)
+            {
+                return ButcherProducts(corpse, efficiency, worker);
+            }
+            else
+            {
+                return thing.ButcherProducts(null, efficiency);
+            }
+        }
+
+        public static IEnumerable<Thing> ButcherProducts(Corpse corpse, float efficiency, IRecipeProductWorker worker)
+        {
+            foreach (Thing t in corpse.InnerPawn.ButcherProducts(null, efficiency))
+            {
+                yield return t;
+            }
+            if (corpse.InnerPawn.RaceProps.BloodDef != null)
+            {
+                FilthMaker.MakeFilth(worker.Position, worker.Map, corpse.InnerPawn.RaceProps.BloodDef, corpse.InnerPawn.LabelIndefinite(), 1);
+            }
         }
     }
 }
