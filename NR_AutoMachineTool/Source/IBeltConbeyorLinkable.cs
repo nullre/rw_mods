@@ -9,7 +9,6 @@ namespace NR_AutoMachineTool
 {
     interface IBeltConbeyorLinkable
     {
-        bool CanLink(IBeltConbeyorLinkable linkable, bool underground);
         void Link(IBeltConbeyorLinkable linkable);
         void Unlink(IBeltConbeyorLinkable linkable);
         Rot4 Rotation { get; }
@@ -17,5 +16,6 @@ namespace NR_AutoMachineTool
         bool ReceivableNow(bool underground, Thing thing);
         bool ReceiveThing(bool underground, Thing thing);
         bool IsUnderground { get; }
+        IEnumerable<Rot4> OutputRots { get; }
     }
 }

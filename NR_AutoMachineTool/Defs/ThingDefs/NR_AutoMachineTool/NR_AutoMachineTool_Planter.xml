@@ -42,7 +42,7 @@ Planter starts planting plants in the agricultural zone within range.</descripti
     </placeWorkers>
 
     <category>Building</category>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
 
     <repairEffect>Repair</repairEffect>
     <constructEffect>ConstructMetal</constructEffect>

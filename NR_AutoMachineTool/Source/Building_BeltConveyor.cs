@@ -16,14 +16,6 @@ namespace NR_AutoMachineTool
 {
     class Building_BeltConveyor : Building_Base<Thing>, IBeltConbeyorLinkable
     {
-        // 不要だが、データ移行用に残す.
-        private enum CarryState
-        {
-            Ready,
-            Carring,
-            Placing
-        }
-
         public Building_BeltConveyor()
         {
             base.setInitialMinPower = false;
@@ -32,14 +24,13 @@ namespace NR_AutoMachineTool
         private Rot4 dest = default(Rot4);
         private Dictionary<Rot4, ThingFilter> filters = new Dictionary<Rot4, ThingFilter>();
         public static float supplyPower = 10f;
-        private static readonly Dictionary<IntVec3, int> GraphicNumbers = new Dictionary<IntVec3, int>() { { Rot4.West.FacingCell, 1 }, { Rot4.South.FacingCell, 2 }, { Rot4.East.FacingCell, 4 }, { Rot4.North.FacingCell, 0 } };
 
         [Unsaved]
         private int round = 0;
         [Unsaved]
-        private string graphicPath;
-        [Unsaved]
         private List<Rot4> outputRot = new List<Rot4>();
+
+        public IEnumerable<Rot4> OutputRots => this.outputRot;
 
         private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
 
@@ -74,26 +65,12 @@ namespace NR_AutoMachineTool
             {
                 this.filters = new Dictionary<Rot4, ThingFilter>();
             }
-
-            if (Scribe.mode == LoadSaveMode.LoadingVars)
-            {
-                var stat = CarryState.Ready;
-                Thing thing = null;
-                Scribe_Values.Look<CarryState>(ref stat, "state");
-                Scribe_Deep.Look<Thing>(ref thing, "thing");
-                if(stat != CarryState.Ready && thing != null)
-                {
-                    this.state = WorkingState.Working;
-                    this.working = thing;
-                }
-            }
         }
 
         public override void PostMapInit()
         {
             base.PostMapInit();
-
-            this.ChangeGraphic();
+            
             this.FilterSetting();
         }
 
@@ -124,27 +101,24 @@ namespace NR_AutoMachineTool
 
         protected override void Reset()
         {
-            if (this.state != WorkingState.Ready)
+            if (this.State != WorkingState.Ready)
             {
-                this.ChangeGraphic();
                 this.FilterSetting();
             }
             base.Reset();
         }
-
-        public override Graphic Graphic => Option(base.Graphic as Graphic_Selectable).Fold(base.Graphic)(g => g.Get(this.graphicPath));
         
         public override void DrawGUIOverlay()
         {
             base.DrawGUIOverlay();
 
-            if (this.IsUnderground && !Find.Selector.SelectedObjects.Any(x => Option(x as IBeltConbeyorLinkable).HasValue))
+            if (this.IsUnderground && !OverlayDrawHandler_UGConveyor.ShouldDraw)
             {
                 // 地下コンベアの場合には表示しない.
                 return;
             }
 
-            if (this.state != WorkingState.Ready && Find.CameraDriver.CurrentZoom == CameraZoomRange.Closest)
+            if (this.State != WorkingState.Ready && Find.CameraDriver.CurrentZoom == CameraZoomRange.Closest)
             {
                 var p = CarryPosition();
                 Vector2 result = Find.Camera.WorldToScreenPoint(p + new Vector3(0, 0, -0.4f)) / Prefs.UIScale;
@@ -152,39 +126,29 @@ namespace NR_AutoMachineTool
                 GenMapUI.DrawThingLabel(result, this.CarryingThing().stackCount.ToStringCached(), GenMapUI.DefaultThingLabelColor);
             }
         }
-        
+
         public override void Draw()
         {
-            if (this.IsUnderground && !Find.Selector.SelectedObjects.Any(x => Option(x as IBeltConbeyorLinkable).HasValue))
+            if (this.IsUnderground && !OverlayDrawHandler_UGConveyor.ShouldDraw)
             {
                 // 地下コンベアの場合には表示しない.
                 return;
             }
             base.Draw();
-
-            if (this.state != WorkingState.Ready)
+            if (this.State != WorkingState.Ready)
             {
                 var p = CarryPosition();
                 this.CarryingThing().DrawAt(p);
             }
-
-            var pos = this.Position.ToVector3() + new Vector3(0.5f, this.def.Altitude + 1f, 0.5f);
-
-            var mat1 = MaterialPool.MatFrom("NR_AutoMachineTool/Buildings/BeltConveyor/BeltConveyor991_arrow");
-            var mat2 = MaterialPool.MatFrom("NR_AutoMachineTool/Buildings/BeltConveyor/BeltConveyor992_arrow");
-
-            Graphics.DrawMesh(MeshPool.GridPlane(this.def.graphicData.drawSize), pos, this.Rotation.AsQuat, mat1, 0);
-            this.outputRot.Where(x => x != this.Rotation).ForEach(r =>
-                Graphics.DrawMesh(MeshPool.GridPlane(this.def.graphicData.drawSize), pos, r.AsQuat, mat2, 0));
         }
 
         private Thing CarryingThing()
         {
-            if (this.state == WorkingState.Working)
+            if (this.State == WorkingState.Working)
             {
                 return this.working;
             }
-            else if (this.state == WorkingState.Placing)
+            else if (this.State == WorkingState.Placing)
             {
                 return this.products[0];
             }
@@ -198,7 +162,7 @@ namespace NR_AutoMachineTool
         
         public override bool CanStackWith(Thing other)
         {
-            return base.CanStackWith(other) && this.state == WorkingState.Ready;
+            return base.CanStackWith(other) && this.State == WorkingState.Ready;
         }
 
         public bool ReceiveThing(bool underground, Thing t)
@@ -210,18 +174,18 @@ namespace NR_AutoMachineTool
         {
             if (!this.ReceivableNow(underground, t))
                 return false;
-            if (this.state == WorkingState.Ready)
+            if (this.State == WorkingState.Ready)
             {
                 this.dest = rot;
                 this.working = t;
-                this.state = WorkingState.Working;
                 this.workLeft = 1f;
                 if (this.working.Spawned) this.working.DeSpawn();
+                this.State = WorkingState.Working;
                 return true;
             }
             else
             {
-                var target = this.state == WorkingState.Working ? this.working : this.products[0];
+                var target = this.State == WorkingState.Working ? this.working : this.products[0];
                 return target.TryAbsorbStack(t, true);
             }
         }
@@ -302,26 +266,13 @@ namespace NR_AutoMachineTool
 
         public void Link(IBeltConbeyorLinkable link)
         {
-            this.ChangeGraphic();
             this.FilterSetting();
         }
 
         public void Unlink(IBeltConbeyorLinkable unlink)
         {
-            this.ChangeGraphic();
             this.FilterSetting();
             Option(this.working).ForEach(t => this.dest = Destination(t, true));
-        }
-
-        private void ChangeGraphic()
-        {
-            var result = this.LinkTargetConveyor().Aggregate(0, (t, n) =>
-            {
-                t += GraphicNumbers[(n.Position - this.Position).RotatedBy(new Rot4(4 - this.Rotation.AsByte))];
-                return t;
-            });
-            if (result == 0) result = 2;
-            this.graphicPath = "NR_AutoMachineTool/Buildings/BeltConveyor" + (this.IsUnderground ? "UG" : "") + "/BeltConveyor0" + result;
         }
 
         private void FilterSetting()
@@ -349,8 +300,9 @@ namespace NR_AutoMachineTool
             return Enumerable.Range(0, 4).Select(i => this.Position + new Rot4(i).FacingCell)
                 .SelectMany(t => t.GetThingList(this.Map))
                 .Where(t => t.def.category == ThingCategory.Building)
+                .Where(t => CanLink(this, t, this.def, t.def))
                 .SelectMany(t => Option(t as IBeltConbeyorLinkable))
-                .Where(t => t.CanLink(this, this.IsUnderground)).ToList();
+                .ToList();
         }
 
         private List<IBeltConbeyorLinkable> OutputBeltConveyor()
@@ -361,16 +313,6 @@ namespace NR_AutoMachineTool
                     (x.Rotation.Opposite.FacingCell + x.Position == this.Position && links.Any(l => l.Position + l.Rotation.FacingCell == this.Position))
                 )
                 .ToList();
-        }
-
-        public bool CanLink(IBeltConbeyorLinkable linkable, bool underground)
-        {
-            return
-                underground == this.IsUnderground && (
-                this.Position + this.Rotation.FacingCell == linkable.Position ||
-                this.Position + this.Rotation.Opposite.FacingCell == linkable.Position ||
-                linkable.Position + linkable.Rotation.FacingCell == this.Position ||
-                linkable.Position + linkable.Rotation.Opposite.FacingCell == this.Position);
         }
 
         public bool Acceptable(Rot4 rot, bool underground)
@@ -385,7 +327,7 @@ namespace NR_AutoMachineTool
                 return false;
             }
             Func<Thing, bool> check = (t) => t.CanStackWith(thing) && t.stackCount < t.def.stackLimit;
-            switch (this.state) {
+            switch (this.State) {
                 case WorkingState.Ready:
                     return true;
                 case WorkingState.Working:
@@ -444,6 +386,55 @@ namespace NR_AutoMachineTool
         protected override bool WorkingIsDespawned()
         {
             return true;
+        }
+
+        public static bool IsBeltConveyorDef(ThingDef def)
+        {
+            return typeof(Building_BeltConveyor).IsAssignableFrom(def.thingClass);
+        }
+
+        public static bool IsUndergroundDef(ThingDef def)
+        {
+            return Option(def.GetModExtension<ModExtension_AutoMachineTool>()).Fold(false)(x => x.underground);
+        }
+
+
+        public static bool CanLink(Thing @this, Thing other, ThingDef thisDef, ThingDef otherDef)
+        {
+            var t = @this;
+            if (Building_BeltConveyor.IsBeltConveyorDef(thisDef))
+            {
+                var ug = Building_BeltConveyor.IsUndergroundDef(thisDef);
+                if (Building_BeltConveyor.IsBeltConveyorDef(otherDef))
+                {
+                    return ug == Building_BeltConveyor.IsUndergroundDef(otherDef) && (
+                        t.Position + t.Rotation.FacingCell == other.Position ||
+                        t.Position + t.Rotation.Opposite.FacingCell == other.Position ||
+                        other.Position + other.Rotation.FacingCell == t.Position ||
+                        other.Position + other.Rotation.Opposite.FacingCell == t.Position);
+                }
+                else if (Building_BeltConveyorUGConnecter.IsConveyorUGConnecterDef(otherDef))
+                {
+                    return t.Position + t.Rotation.FacingCell == other.Position ||
+                        (other.Position + other.Rotation.FacingCell == t.Position && ug == Building_BeltConveyorUGConnecter.ToUndergroundDef(otherDef)) ||
+                        (other.Position + other.Rotation.Opposite.FacingCell == t.Position && ug != Building_BeltConveyorUGConnecter.ToUndergroundDef(otherDef));
+                }
+            }
+            else if (Building_BeltConveyorUGConnecter.IsConveyorUGConnecterDef(thisDef))
+            {
+                var toUg = Building_BeltConveyorUGConnecter.ToUndergroundDef(thisDef);
+                if (Building_BeltConveyor.IsBeltConveyorDef(otherDef))
+                {
+                    return (t.Position + t.Rotation.FacingCell == other.Position && toUg == Building_BeltConveyor.IsUndergroundDef(otherDef)) ||
+                        (t.Position + t.Rotation.Opposite.FacingCell == other.Position && toUg != Building_BeltConveyor.IsUndergroundDef(otherDef));
+                }
+                else if (Building_BeltConveyorUGConnecter.IsConveyorUGConnecterDef(otherDef))
+                {
+                    return (t.Position + t.Rotation.FacingCell == other.Position && toUg != Building_BeltConveyorUGConnecter.ToUndergroundDef(otherDef)) ||
+                        (t.Position + t.Rotation.Opposite.FacingCell == other.Position && toUg != Building_BeltConveyorUGConnecter.ToUndergroundDef(otherDef));
+                }
+            }
+            return false;
         }
     }
 }

@@ -12,17 +12,10 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Graphic_LinkedAutomationNet : Graphic_Linked
+    public class Graphic_LinkedAutomationNet : Graphic_Link2<Graphic_LinkedAutomationNet>
     {
         public Graphic_LinkedAutomationNet() : base()
         {
-        }
-
-        public override void Init(GraphicRequest req)
-        {
-            this.subGraphic = new Graphic_Single();
-            this.subGraphic.Init(req);
-            this.path = req.path;
         }
 
         public override bool ShouldLinkWith(IntVec3 c, Thing parent)
@@ -40,21 +33,6 @@ namespace NR_AutoMachineTool
                     .Any(d => d.GetCompProperties<CompProperties_Automation>() != null);
 
             return c.InBounds(parent.Map) && (parentCheck && cellCheck);
-        }
-
-        public override Graphic GetColoredVersion(Shader newShader, Color newColor, Color newColorTwo)
-        {
-            Graphic_LinkedAutomationNet g = new Graphic_LinkedAutomationNet();
-            g.subGraphic = this.subGraphic.GetColoredVersion(newShader, newColor, newColorTwo);
-            g.data = this.data;
-            return g;
-        }
-
-        public override void DrawWorker(Vector3 loc, Rot4 rot, ThingDef thingDef, Thing thing, float extraRotation)
-        {
-            Material material = this.MatAt(rot, thing);
-            GraphicDatabase.Get<Graphic_Single>(thingDef.uiIconPath, ShaderTypeDefOf.EdgeDetect.Shader, thingDef.graphicData.drawSize, material.color, material.GetColorTwo())
-                .DrawWorker(loc, rot, thingDef, thing, extraRotation);
         }
     }
 }

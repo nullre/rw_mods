@@ -5,11 +5,10 @@
     <defName>Building_NR_AutoMachineTool_BeltConveyor_Base</defName>
     <category>Building</category>
     <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
-    <drawerType>RealtimeOnly</drawerType>
-    <!-- <drawerType>MapMeshAndRealTime</drawerType> -->
+    <drawerType>MapMeshAndRealTime</drawerType>
     
     <thingClass>NR_AutoMachineTool.Building_BeltConveyor</thingClass>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
     
     <statBases>
@@ -66,12 +65,21 @@ The belt conveyors are connected by vertically adjoining the orientation.</descr
       </li>
       <li Class="CompProperties_Flickable"/>
     </comps>
+    <uiIconPath>NR_AutoMachineTool/Buildings/BeltConveyorIcon</uiIconPath>
     <graphicData>
       <texPath>NR_AutoMachineTool/Buildings/BeltConveyor</texPath>
-      <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
-      <drawSize>(1,1)</drawSize>
+      <graphicClass>NR_AutoMachineTool.Graphic_LinkedConveyor</graphicClass>
       <drawRotated>true</drawRotated>
+      <drawSize>(1, 1)</drawSize>
     </graphicData>
+    <building>
+      <blueprintGraphicData>
+        <texPath>NR_AutoMachineTool/Buildings/BeltConveyor</texPath>
+        <graphicClass>NR_AutoMachineTool.Graphic_LinkedConveyor</graphicClass>
+        <drawRotated>true</drawRotated>
+        <drawSize>(1, 1)</drawSize>
+      </blueprintGraphicData>
+    </building>
     <pathCost>30</pathCost>
   </ThingDef>
 
@@ -82,9 +90,6 @@ The belt conveyors are connected by vertically adjoining the orientation.</descr
 Place the item on top. (Item Puller and AutoMachineTool can be used.)
 The belt conveyors are connected by vertically adjoining the orientation.</description>
     <altitudeLayer>BuildingOnTop</altitudeLayer>
-    <building>
-      <isEdifice>false</isEdifice>
-    </building>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
@@ -98,12 +103,22 @@ The belt conveyors are connected by vertically adjoining the orientation.</descr
     <placeWorkers>
       <li>NR_AutoMachineTool.PlaceWorker_WallEmbedded</li>
     </placeWorkers>
+    <uiIconPath>NR_AutoMachineTool/Buildings/BeltConveyorIcon</uiIconPath>
     <graphicData>
       <texPath>NR_AutoMachineTool/Buildings/BeltConveyor</texPath>
-      <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
-      <drawSize>(0.8,0.8)</drawSize>
+      <graphicClass>NR_AutoMachineTool.Graphic_LinkedConveyor</graphicClass>
       <drawRotated>true</drawRotated>
+      <drawSize>(0.8,0.8)</drawSize>
     </graphicData>
+    <building>
+      <isEdifice>false</isEdifice>
+      <blueprintGraphicData>
+        <texPath>NR_AutoMachineTool/Buildings/BeltConveyor</texPath>
+        <graphicClass>NR_AutoMachineTool.Graphic_LinkedConveyor</graphicClass>
+        <drawRotated>true</drawRotated>
+        <drawSize>(0.8,0.8)</drawSize>
+      </blueprintGraphicData>
+    </building>
     <pathCost>0</pathCost>
   </ThingDef>
 
@@ -117,9 +132,6 @@ The belt conveyors are connected by vertically adjoining the orientation.</descr
 Underground BeltConveyor can not move items on the ground as it is.
 Connect to the underground conveyor entrance and exit and use.</description>
     <altitudeLayer>FloorEmplacement</altitudeLayer>
-    <building>
-      <isEdifice>false</isEdifice>
-    </building>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
       <WorkToBuild>500</WorkToBuild>
@@ -140,12 +152,20 @@ Connect to the underground conveyor entrance and exit and use.</description>
         <underground>true</underground>
       </li>
     </modExtensions>
+    <uiIconPath>NR_AutoMachineTool/Buildings/BeltConveyorUGIcon</uiIconPath>
     <graphicData>
       <texPath>NR_AutoMachineTool/Buildings/BeltConveyorUG</texPath>
-      <graphicClass>NR_AutoMachineTool.Graphic_Selectable</graphicClass>
-      <drawSize>(1,1)</drawSize>
+      <graphicClass>NR_AutoMachineTool.Graphic_LinkedConveyor</graphicClass>
       <drawRotated>true</drawRotated>
     </graphicData>
+    <building>
+      <isEdifice>false</isEdifice>
+      <blueprintGraphicData>
+        <texPath>NR_AutoMachineTool/Buildings/BeltConveyorUG</texPath>
+        <graphicClass>NR_AutoMachineTool.Graphic_LinkedConveyor</graphicClass>
+        <drawRotated>true</drawRotated>
+      </blueprintGraphicData>
+    </building>
     <pathCost>0</pathCost>
     <fillPercent>0.0</fillPercent>
   </ThingDef>

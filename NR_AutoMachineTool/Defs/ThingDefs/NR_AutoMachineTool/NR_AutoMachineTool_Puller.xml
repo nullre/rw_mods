@@ -7,7 +7,7 @@
     <drawerType>RealtimeOnly</drawerType>
     
     <thingClass>NR_AutoMachineTool.Building_ItemPuller</thingClass>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
     <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
 
     <statBases>

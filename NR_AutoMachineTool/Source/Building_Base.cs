@@ -37,18 +37,56 @@ namespace NR_AutoMachineTool
             get => this.supplyPowerForSpeed;
             set
             {
-                this.supplyPowerForSpeed = value;
-                this.SetPower();
+                if (this.supplyPowerForSpeed != value)
+                {
+                    this.supplyPowerForSpeed = value;
+                    this.SetPower();
+                }
             }
         }
 
         protected readonly static List<Thing> emptyThingList = Enumerable.Empty<Thing>().ToList();
 
         private float supplyPowerForSpeed;
-        protected WorkingState state;
+        private WorkingState state;
         protected float workLeft;
         protected T working;
         protected List<Thing> products = new List<Thing>();
+
+        protected WorkingState State
+        {
+            get
+            {
+                return this.state;
+            }
+            set
+            {
+                if(this.state != value)
+                {
+                    this.state = value;
+                    this.ClearActions();
+                    if (this.state == WorkingState.Ready)
+                    {
+                        MapManager.NextAction(Ready);
+                    }
+                    else if (this.state == WorkingState.Working)
+                    {
+                        MapManager.EachTickAction(Working);
+                    }
+                    else if (this.state == WorkingState.Placing)
+                    {
+                        MapManager.NextAction(Placing);
+                    }
+                }
+            }
+        }
+
+        protected void ClearActions()
+        {
+            this.MapManager.RemoveAfterAction(this.Ready);
+            this.MapManager.RemoveAfterAction(this.Placing);
+            this.MapManager.EachTickAction(this.Working);
+        }
 
         private int tickGap = Math.Abs(Rand.Int % 30);
 
@@ -118,6 +156,7 @@ namespace NR_AutoMachineTool
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
+            this.mapManager = map.GetComponent<MapTickManager>();
             this.powerComp = this.TryGetComp<CompPowerTrader>();
 
             if (!respawningAfterLoad)
@@ -127,10 +166,27 @@ namespace NR_AutoMachineTool
                     this.SupplyPowerForSpeed = this.MinPowerForSpeed;
             }
             LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed += this.ReloadSettings;
+
+            if (this.state == WorkingState.Ready)
+            {
+                MapManager.AfterAction(Rand.Range(0, 30), Ready);
+            }
+            else if (this.state == WorkingState.Working)
+            {
+                MapManager.EachTickAction(Working);
+            }
+            else if (this.state == WorkingState.Placing)
+            {
+                MapManager.NextAction(Placing);
+            }
         }
+
+        private MapTickManager mapManager;
+        protected MapTickManager MapManager => this.mapManager;
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
+            this.ClearActions();
             LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed -= this.ReloadSettings;
             this.Reset();
             base.DeSpawn();
@@ -204,76 +260,100 @@ namespace NR_AutoMachineTool
             return 0.1f;
         }
 
-        public override void Tick()
+        protected virtual void Ready()
         {
-            base.Tick();
-
+            if (this.state != WorkingState.Ready || !this.Spawned)
+            {
+                return;
+            }
             if (!this.IsActive())
             {
                 this.Reset();
+                MapManager.AfterAction(30, Ready);
                 return;
             }
 
-            this.SetPower();
-
-            if (this.state == WorkingState.Ready)
+            if (this.TryStartWorking(out this.working))
             {
-                if (Find.TickManager.TicksGame % 30 == this.tickGap || this.checkNextReady)
-                {
-                    if (this.TryStartWorking(out this.working))
-                    {
-                        this.state = WorkingState.Working;
-                        this.workLeft = GetTotalWorkAmount(this.working);
-                    }
-                    this.checkNextReady = false;
-                }
+                this.state = WorkingState.Working;
+                this.workLeft = GetTotalWorkAmount(this.working);
+                MapManager.EachTickAction(Working);
             }
-            else if (this.state == WorkingState.Working)
+            else
             {
-                this.workLeft -= 0.01f * this.SpeedFactor * this.SupplyPowerForSpeed * this.Factor2();
-                this.UpdateProgressBar();
-                if (this.WorkIntrruption(this.working))
+                MapManager.AfterAction(30, Ready);
+            }
+        }
+
+        protected virtual bool Working()
+        {
+            if (this.state != WorkingState.Working || !this.Spawned)
+            {
+                return true;
+            }
+            if (!this.IsActive())
+            {
+                this.Reset();
+                MapManager.AfterAction(30, Ready);
+                return true;
+            }
+
+            this.workLeft -= 0.01f * this.SpeedFactor * this.SupplyPowerForSpeed * this.Factor2();
+            this.UpdateProgressBar();
+            bool finish = false;
+            if (this.WorkIntrruption(this.working))
+            {
+                this.Reset();
+                MapManager.NextAction(this.Ready);
+                finish = true;
+            }
+            else if (this.workLeft <= 0f)
+            {
+                if (this.FinishWorking(this.working, out this.products))
+                {
+                    this.state = WorkingState.Placing;
+                    this.CleanupProgressBar();
+                    this.working = null;
+                    this.workLeft = 0;
+                    MapManager.NextAction(this.Placing);
+                }
+                else
                 {
                     this.Reset();
+                    MapManager.NextAction(this.Ready);
                 }
-                else if (this.workLeft <= 0f)
-                {
-                    if(this.FinishWorking(this.working, out this.products))
-                    {
-                        this.state = WorkingState.Placing;
-                        this.CleanupProgressBar();
-                        this.checkNextPlace = true;
-                        this.working = null;
-                        this.workLeft = 0;
-                    }
-                    else
-                    {
-                        this.Reset();
-                    }
-                }
+                finish = true;
             }
-            else if (this.state == WorkingState.Placing)
+
+            return finish;
+        }
+
+        protected virtual void Placing()
+        {
+            if(this.state != WorkingState.Placing || !this.Spawned)
             {
-                if (Find.TickManager.TicksGame % 30 == this.tickGap || checkNextPlace)
-                {
-                    if (this.PlaceProduct(ref this.products))
-                    {
-                        this.state = WorkingState.Ready;
-                        this.Reset();
-                        this.checkNextReady = true;
-                    }
-                    this.checkNextPlace = false;
-                }
+                return;
+            }
+            if (!this.IsActive())
+            {
+                this.Reset();
+                MapManager.AfterAction(30, Ready);
+                return;
+            }
+
+            if (this.PlaceProduct(ref this.products))
+            {
+                this.state = WorkingState.Ready;
+                this.Reset();
+                MapManager.NextAction(Ready);
+            }
+            else
+            {
+                MapManager.AfterAction(30, this.Placing);
             }
         }
 
         protected abstract bool WorkIntrruption(T working);
-
-        [Unsaved]
-        private bool checkNextReady = false;
-
-        [Unsaved]
-        private bool checkNextPlace = false;
 
         protected abstract bool TryStartWorking(out T target);
 
@@ -343,7 +423,7 @@ namespace NR_AutoMachineTool
 
         public void NortifyReceivable()
         {
-            this.checkNextPlace = true;
+            this.Placing();
         }
 
         protected List<Thing> CreateThings(ThingDef def, int count)

@@ -38,7 +38,7 @@ Slaughterhouse starts slaughter animals within range.</description>
     </placeWorkers>
 
     <category>Building</category>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
 
     <passability>Impassable</passability>
     <blockWind>true</blockWind>

@@ -37,7 +37,7 @@ Harvester starts harvesting plants in the agricultural zone within range.</descr
     </placeWorkers>
 
     <category>Building</category>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
 
     <passability>Impassable</passability>
     <blockWind>true</blockWind>
