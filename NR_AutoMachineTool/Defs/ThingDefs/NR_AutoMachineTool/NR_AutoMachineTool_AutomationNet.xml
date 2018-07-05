@@ -91,7 +91,7 @@ Energy is supplied to the pipe.</description>
     </placeWorkers>
 
     <category>Building</category>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
 
     <passability>Impassable</passability>
     <repairEffect>Repair</repairEffect>
@@ -127,7 +127,7 @@ Energy is supplied to the pipe.</description>
     <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Base</defName>
     <category>Building</category>
     <designationCategory>NR_AutoMachineTool_AutomationNet_DesignationCategory</designationCategory>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
     <building>
       <ai_chillDestination>false</ai_chillDestination>
