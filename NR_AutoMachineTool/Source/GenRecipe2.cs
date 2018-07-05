@@ -25,6 +25,10 @@ namespace NR_AutoMachineTool
     {
         public static float GetStatValue(this IRecipeProductWorker maker, StatDef stat, bool applyPostProcess = true)
         {
+            if(stat == StatDefOf.FoodPoisonChance)
+            {
+                return 0.003f;
+            }
             return 1.0f;
         }
     }

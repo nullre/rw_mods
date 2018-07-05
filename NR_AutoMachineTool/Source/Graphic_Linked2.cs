@@ -57,7 +57,7 @@ namespace NR_AutoMachineTool
             }
         }
 
-        private Material[] subMats = new Material[16];
+        protected Material[] subMats = new Material[16];
 
         protected Material LinkedDrawMatFrom(Thing parent, IntVec3 cell)
         {
@@ -73,6 +73,11 @@ namespace NR_AutoMachineTool
                 num2 *= 2;
             }
             LinkDirections linkSet = (LinkDirections)num;
+            return LinkedMaterial(parent, linkSet);
+        }
+
+        public virtual Material LinkedMaterial(Thing parent, LinkDirections linkSet)
+        {
             return this.subMats[(int)linkSet];
         }
 

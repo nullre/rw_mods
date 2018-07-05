@@ -64,7 +64,7 @@ namespace NR_AutoMachineTool
             if (thing is Blueprint)
             {
                 base.Print(layer, thing);
-                Printer_Plane.PrintPlane(layer, thing.TrueCenter(), this.drawSize, this.arrow00, thing.Rotation.AsAngle);
+                Printer_Plane.PrintPlane(layer, thing.TrueCenter() + new Vector3(0, 0.1f, 0), this.drawSize, this.arrow00, thing.Rotation.AsAngle);
             }
             else
             {
@@ -82,6 +82,15 @@ namespace NR_AutoMachineTool
                         .ForEach(r => Printer_Plane.PrintPlane(layer, thing.TrueCenter(), this.drawSize, this.arrow01, r.AsAngle));
                 }
             }
+        }
+
+        public override Material LinkedMaterial(Thing parent, LinkDirections linkSet)
+        {
+            if(linkSet == LinkDirections.None && (parent.Rotation == Rot4.West || parent.Rotation == Rot4.East))
+            {
+                return this.subMats[(int)LinkDirections.Left];
+            }
+            return this.subMats[(int)linkSet];
         }
     }
 }
