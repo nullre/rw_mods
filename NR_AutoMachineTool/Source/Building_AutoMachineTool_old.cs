@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Building_AutoMachineTool : Building_BaseRange<Building_AutoMachineTool>, IRecipeProductWorker
+    public class _Building_AutoMachineTool : Building, IBeltConbeyorSender, IRange, IAgricultureMachine, IRecipeProductWorker
     {
         public class Bill_ProductionPawnForbidded : Bill_Production
         {
@@ -47,29 +47,38 @@ namespace NR_AutoMachineTool
             }
         }
 
-        public Building_AutoMachineTool()
-        {
-            this.forcePlace = false;
-        }
-
         private Map M { get { return this.Map; } }
         private IntVec3 P { get { return this.Position; } }
 
+        private WorkingState state = WorkingState.Ready;
+        private float workLeft = 0;
+        private float workAmount = 0;
         private Bill bill;
         private List<Thing> ingredients;
         private Thing dominant;
+        private List<Thing> products;
         private UnfinishedThing unfinished;
         private int outputIndex = 0;
+        private float supplyPowerForSpeed = 0;
+        private float supplyPowerForRange = 0;
         private bool forbidItem = false;
 
         [Unsaved]
+        private Effecter progressBar;
+        [Unsaved]
+        private Option<Effecter> workingEffect = Nothing<Effecter>();
+        [Unsaved]
         private Option<Sustainer> workingSound = Nothing<Sustainer>();
+        [Unsaved]
+        private bool checkNextWorking = true;
+        [Unsaved]
+        private bool checkNextPlacing = true;
         [Unsaved]
         private Option<Building_WorkTable> workTable;
 
         public int GetSkillLevel(SkillDef def)
         {
-            return this.SkillLevel ?? 0;
+            return this.SkillLevel;
         }
 
         private IntVec3[] adjacent =
@@ -95,22 +104,50 @@ namespace NR_AutoMachineTool
             "NW"
         };
 
+        private ModSetting_AutoMachineTool Setting { get { return LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; } }
         private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
 
-        protected override int? SkillLevel { get { return this.Setting.AutoMachineToolTier(Extension.tier).skillLevel; } }
-        public override int MaxPowerForSpeed { get { return this.Setting.AutoMachineToolTier(Extension.tier).maxSupplyPowerForSpeed; } }
-        public override int MinPowerForSpeed { get { return this.Setting.AutoMachineToolTier(Extension.tier).minSupplyPowerForSpeed; } }
-        protected override float SpeedFactor { get { return this.Setting.AutoMachineToolTier(Extension.tier).speedFactor; } }
+        private int SkillLevel { get { return this.Setting.AutoMachineToolTier(Extension.tier).skillLevel; } }
+        public int MaxPowerForSpeed { get { return this.Setting.AutoMachineToolTier(Extension.tier).maxSupplyPowerForSpeed; } }
+        public int MinPowerForSpeed { get { return this.Setting.AutoMachineToolTier(Extension.tier).minSupplyPowerForSpeed; } }
+        private float SpeedFactor { get { return this.Setting.AutoMachineToolTier(Extension.tier).speedFactor; } }
+        public float SupplyPowerForSpeed
+        {
+            get
+            {
+                return this.supplyPowerForSpeed;
+            }
 
-        public override int MinPowerForRange => this.Setting.AutoMachineToolTier(Extension.tier).minSupplyPowerForRange;
-        public override int MaxPowerForRange => this.Setting.AutoMachineToolTier(Extension.tier).maxSupplyPowerForRange;
-
-        public override bool Glowable => false;
+            set
+            {
+                this.supplyPowerForSpeed = value;
+                this.SetPower();
+            }
+        }
+        public int MinPowerForRange => this.Setting.AutoMachineToolTier(Extension.tier).minSupplyPowerForRange;
+        public int MaxPowerForRange => this.Setting.AutoMachineToolTier(Extension.tier).maxSupplyPowerForRange;
+        public float SupplyPowerForRange
+        {
+            get => this.supplyPowerForRange;
+            set
+            {
+                this.supplyPowerForRange = value;
+                this.SetPower();
+            }
+        }
+        public bool Glowable => false;
+        public bool Glow { get => false; set => Noop(); }
 
         public override void ExposeData()
         {
             base.ExposeData();
+            Scribe_Values.Look<WorkingState>(ref this.state, "state");
+            Scribe_Values.Look<float>(ref this.workLeft, "workLeft");
+            Scribe_Values.Look<float>(ref this.workAmount, "workAmount");
             Scribe_Values.Look<int>(ref this.outputIndex, "outputIndex");
+            Scribe_Values.Look<float>(ref this.supplyPowerForSpeed, "supplyPower", this.MinPowerForSpeed);
+            Scribe_Values.Look<float>(ref this.supplyPowerForRange, "supplyPowerForRange", this.MinPowerForSpeed);
+            this.supplyPowerForSpeed = Mathf.Abs(supplyPowerForSpeed);
             Scribe_Values.Look<bool>(ref this.forbidItem, "forbidItem");
 
             Scribe_Deep.Look<UnfinishedThing>(ref this.unfinished, "unfinished");
@@ -118,56 +155,126 @@ namespace NR_AutoMachineTool
             Scribe_References.Look<Bill>(ref this.bill, "bill");
             Scribe_References.Look<Thing>(ref this.dominant, "dominant");
             Scribe_Collections.Look<Thing>(ref this.ingredients, "ingredients", LookMode.Deep);
+            Scribe_Collections.Look<Thing>(ref this.products, "products", LookMode.Deep);
+
+            this.ReloadSettings(null, null);
         }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
+            this.powerComp = this.TryGetComp<CompPowerTrader>();
             this.workTable = Nothing<Building_WorkTable>();
             this.WorkTableSetting();
+
+            if (!respawningAfterLoad)
+            {
+                this.outputIndex = this.adjacent.ToList().FindIndex(x => x == this.Rotation.FacingCell * -1);
+                this.SupplyPowerForSpeed = this.MinPowerForSpeed;
+            }
+            else
+            {
+                this.ReloadSettings(this, new EventArgs());
+            }
+            LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed += this.ReloadSettings;
+        }
+
+        private CompPowerTrader powerComp = null;
+
+        private void ReloadSettings(object sender, EventArgs e)
+        {
+            if (this.SupplyPowerForSpeed < this.MinPowerForSpeed)
+            {
+                this.SupplyPowerForSpeed = this.MinPowerForSpeed;
+            }
+            if (this.SupplyPowerForSpeed > this.MaxPowerForSpeed)
+            {
+                this.SupplyPowerForSpeed = this.MaxPowerForSpeed;
+            }
         }
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
+            LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed -= this.ReloadSettings;
+
+            Reset(M);
             this.workTable.ForEach(this.AllowWorkTable);
             base.DeSpawn();
         }
 
-        protected override void Reset()
+        private void Reset(Map map)
         {
-            if (this.State == WorkingState.Working)
+            this.CleanupProgressBar();
+            this.CleanupWorkingEffect();
+            if (this.state == WorkingState.Working)
             {
                 if (this.unfinished == null)
                 {
-                    this.ingredients.ForEach(t => GenPlace.TryPlaceThing(t, P, this.M, ThingPlaceMode.Near));
+                    this.ingredients.ForEach(t => GenPlace.TryPlaceThing(t, P, map, ThingPlaceMode.Near));
                 }
                 else
                 {
-                    GenPlace.TryPlaceThing(this.unfinished, P, this.M, ThingPlaceMode.Near);
+                    GenPlace.TryPlaceThing(this.unfinished, P, map, ThingPlaceMode.Near);
                     this.unfinished.Destroy(DestroyMode.Cancel);
                 }
+            }
+            else if (this.state == WorkingState.Placing)
+            {
+                this.products.ForEach(t => GenPlace.TryPlaceThing(t, P, map, ThingPlaceMode.Near));
             }
             this.bill = null;
             this.dominant = null;
             this.unfinished = null;
+            this.state = WorkingState.Ready;
+            this.workLeft = 0.0f;
+            this.workAmount = 0.0f;
             this.ingredients = null;
-            base.Reset();
+            this.products = null;
         }
 
-        protected override void CleanupWorkingEffect()
+        private void CleanupProgressBar()
         {
-            base.CleanupWorkingEffect();
+            Option(this.progressBar).ForEach(e => e.Cleanup());
+            this.progressBar = null;
+        }
+
+        private void UpdateProgressBar()
+        {
+            this.progressBar = Option(this.progressBar).GetOrDefaultF(EffecterDefOf.ProgressBar.Spawn);
+            this.workTable.ForEach(wt => this.progressBar.EffectTick(wt, TargetInfo.Invalid));
+            Option(((SubEffecter_ProgressBar)progressBar.children[0]).mote).ForEach(m => m.progress = (this.workAmount - this.workLeft) / this.workAmount);
+        }
+
+        private void CleanupWorkingEffect()
+        {
+            this.workingEffect.ForEach(e => e.Cleanup());
+            this.workingEffect = Nothing<Effecter>();
 
             this.workingSound.ForEach(s => s.End());
             this.workingSound = Nothing<Sustainer>();
         }
 
-        protected override void CreateWorkingEffect()
+        private void UpdateWorkingEffect()
         {
-            base.CreateWorkingEffect();
-            
+            this.workingEffect = this.workingEffect.Fold(() => Option(this.bill.recipe.effectWorking).Select(e => e.Spawn()))(e => Option(e))
+                .Peek(e => this.workTable.ForEach(w => e.EffectTick(new TargetInfo(this), new TargetInfo(w))));
+
             this.workingSound = this.workingSound.Fold(() => this.workTable.SelectMany(t => Option(this.bill.recipe.soundWorking).Select(s => s.TrySpawnSustainer(t))))(s => Option(s))
                 .Peek(s => s.Maintain());
+        }
+
+        private bool IsActive()
+        {
+            if (this.powerComp == null || !this.powerComp.PowerOn)
+            {
+                return false;
+            }
+            if (this.Destroyed)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private int billCount = 0;
@@ -214,26 +321,85 @@ namespace NR_AutoMachineTool
             return false;
         }
 
-        protected override TargetInfo ProgressBarTarget()
-        {
-            return this.workTable.GetOrDefault(null);
-        }
-
         private void WorkTableSetting()
         {
             var currentWotkTable = this.GetTargetWorkTable();
             if(this.workTable.HasValue && !currentWotkTable.HasValue)
             {
                 this.AllowWorkTable(this.workTable.Value);
+                this.Reset(M);
             }
             currentWotkTable.ForEach(w => this.ForbidWorkTable(w, !this.workTable.HasValue));
             this.workTable = currentWotkTable;
         }
 
-        protected override void Ready()
+        private void SetPower()
         {
-            base.Ready();
+            if (-this.SupplyPowerForSpeed != this.powerComp.PowerOutput)
+            {
+                this.powerComp.PowerOutput = -this.SupplyPowerForSpeed;
+            }
+
+            if (-this.supplyPowerForRange - this.SupplyPowerForSpeed - (this.Glowable && this.Glow ? 2000 : 0) != this.TryGetComp<CompPowerTrader>().PowerOutput)
+            {
+                this.TryGetComp<CompPowerTrader>().PowerOutput = -this.supplyPowerForRange - this.SupplyPowerForSpeed - (this.Glowable && this.Glow ? 2000 : 0);
+            }
+        }
+
+        private int tickGap = Math.Abs(Rand.Int % 30);
+
+        public override void Tick()
+        {
+            base.Tick();
+
+            this.SetPower();
+
             this.WorkTableSetting();
+
+            if (!this.IsActive())
+            {
+                this.CleanupWorkingEffect();
+                return;
+            }
+
+            if (this.state == WorkingState.Ready)
+            {
+                this.CleanupProgressBar();
+                if (Find.TickManager.TicksGame % 30 == tickGap || this.checkNextWorking)
+                {
+                    this.TryStartWorking();
+                }
+                this.checkNextWorking = false;
+            }
+            else if (this.state == WorkingState.Working)
+            {
+                this.UpdateProgressBar();
+                this.UpdateWorkingEffect();
+
+                this.workTable.ForEach(w => w.UsedThisTick());
+
+                if (this.workTable.Fold(false)(t => t.CurrentlyUsableForBills()))
+                {
+                    this.workLeft -= (this.SupplyPowerForSpeed / 1000.0f) * this.SpeedFactor;
+                    Option(this.unfinished).ForEach(u => u.workLeft = this.workLeft);
+                }
+
+                if (this.workLeft <= 0)
+                {
+                    this.workLeft = 0;
+                    this.FinishWorking();
+                    this.checkNextPlacing = true;
+                }
+            }
+            else if (this.state == WorkingState.Placing)
+            {
+                this.CleanupWorkingEffect();
+                if (Find.TickManager.TicksGame % 30 == tickGap || this.checkNextPlacing)
+                {
+                    this.checkNextWorking = this.PlaceProducts();
+                }
+                this.checkNextPlacing = false;
+            }
         }
 
         private IntVec3 FacingCell()
@@ -246,24 +412,25 @@ namespace NR_AutoMachineTool
             return this.FacingCell().GetThingList(M)
                 .Where(t => t.def.category == ThingCategory.Building)
                 .SelectMany(t => Option(t as Building_WorkTable))
-                .Where(t => t.InteractionCell == this.Position)
                 .FirstOption();
         }
 
-        protected override bool TryStartWorking(out Building_AutoMachineTool target)
+        private void TryStartWorking()
         {
-            target = this;
-            if (!this.workTable.Where(t => t.CurrentlyUsableForBills() && t.billStack.AnyShouldDoNow).HasValue)
+            if(!this.workTable.Where(t => t.CurrentlyUsableForBills() && t.billStack.AnyShouldDoNow).HasValue)
             {
-                return false;
+                return;
             }
             var consumable = Consumable();
-            return WorkableBill(consumable).Select(tuple =>
+            WorkableBill(consumable).ForEach(tuple =>
             {
                 this.bill = tuple.Value1;
                 tuple.Value2.Select(v => v.thing).SelectMany(t => Option(t as Corpse)).ForEach(c => c.Strip());
                 this.ingredients = tuple.Value2.Select(t => t.thing.SplitOff(t.count)).ToList();
                 this.dominant = this.DominantIngredient(this.ingredients);
+                this.state = WorkingState.Working;
+                this.workAmount = this.bill.recipe.WorkAmountTotal(this.bill.recipe.UsesUnfinishedThing ? this.dominant.def : null);
+                this.workLeft = this.workAmount;
                 if (this.bill.recipe.UsesUnfinishedThing)
                 {
                     ThingDef stuff = (!this.bill.recipe.unfinishedThingDef.MadeFromStuff) ? null : this.dominant.def;
@@ -276,27 +443,58 @@ namespace NR_AutoMachineTool
                         compColorable.Color = this.dominant.DrawColor;
                     }
                 }
-                return true;
-            }).GetOrDefault(false);
+            });
         }
 
-        protected override float GetTotalWorkAmount(Building_AutoMachineTool working)
+        private void FinishWorking()
         {
-            return this.bill.recipe.WorkAmountTotal(this.bill.recipe.UsesUnfinishedThing ? this.dominant.def : null);
-        }
-
-        protected override bool FinishWorking(Building_AutoMachineTool working, out List<Thing> products)
-        {
-            products = GenRecipe2.MakeRecipeProducts(this.bill.recipe, this, this.ingredients, this.dominant, this.workTable.GetOrDefault(null)).ToList();
+            this.products = GenRecipe2.MakeRecipeProducts(this.bill.recipe, this, this.ingredients, this.dominant, this.workTable.GetOrDefault(null)).ToList();
             this.ingredients.ForEach(i => bill.recipe.Worker.ConsumeIngredient(i, bill.recipe, M));
             Option(this.unfinished).ForEach(u => u.Destroy(DestroyMode.Vanish));
             this.bill.Notify_IterationCompleted(null, this.ingredients);
 
+            this.state = WorkingState.Placing;
             this.bill = null;
             this.dominant = null;
             this.unfinished = null;
+            this.workLeft = 0.0f;
+            this.workAmount = 0.0f;
             this.ingredients = null;
-            return true;
+        }
+
+        private bool PlaceProducts()
+        {
+            this.products = this.products.Aggregate(new List<Thing>(), (t, n) =>
+            {
+                var conveyor = this.OutputCell().GetThingList(M).Where(b => b.def.category == ThingCategory.Building)
+                    .SelectMany(b => Option(b as IBeltConbeyorLinkable))
+                    .Where(b => !b.IsUnderground)
+                    .FirstOption();
+                if (conveyor.HasValue)
+                {
+                    // ベルトコンベアがある場合には、そっちに渡す.
+                    if (conveyor.Value.ReceiveThing(false, n))
+                    {
+                        return t;
+                    }
+                }
+                else
+                {
+                    // ない場合には、適当に出す.
+                    if (PlaceItem(n, OutputCell(), this.forbidItem, M))
+                    {
+                        return t;
+                    }
+                }
+                return t.Append(n);
+            });
+            bool result = this.products.Count == 0;
+            if (result)
+            {
+                this.state = WorkingState.Ready;
+                this.Reset(M);
+            }
+            return result;
         }
 
         public List<IntVec3> OutputZone()
@@ -304,7 +502,7 @@ namespace NR_AutoMachineTool
             return this.OutputCell().SlotGroupCells(M);
         }
 
-        public override IntVec3 OutputCell()
+        public IntVec3 OutputCell()
         {
             return this.Position + this.adjacent[this.outputIndex];
         }
@@ -488,36 +686,41 @@ namespace NR_AutoMachineTool
         {
             String msg = base.GetInspectString();
             msg += "\n";
+            switch (this.state)
+            {
+                case WorkingState.Working:
+                    msg += "NR_AutoMachineTool.StatWorking".Translate(Mathf.RoundToInt(this.workAmount - this.workLeft), Mathf.RoundToInt(this.workAmount), Mathf.RoundToInt(((this.workAmount - this.workLeft) / this.workAmount) * 100));
+                    break;
+                case WorkingState.Ready:
+                    msg += "NR_AutoMachineTool.StatReady".Translate();
+                    break;
+                case WorkingState.Placing:
+                    msg += "NR_AutoMachineTool.StatPlacing".Translate(this.products.Count());
+                    break;
+                default:
+                    msg += this.state.ToString();
+                    break;
+            }
+            msg += "\n";
             msg += "NR_AutoMachineTool.OutputDirection".Translate(("NR_AutoMachineTool.OutputDirection" + this.adjacentName[this.outputIndex]).Translate());
+            msg += "\n";
+            msg += "NR_AutoMachineTool.SkillLevel".Translate(this.SkillLevel.ToString());
             return msg;
         }
 
-        public override int GetRange()
+        public void NortifyReceivable()
         {
-            return Mathf.RoundToInt(this.SupplyPowerForRange / 500) + 1;
+            this.checkNextPlacing = true;
+        }
+
+        public int GetRange()
+        {
+            return Mathf.RoundToInt(this.supplyPowerForRange / 500) + 1;
         }
 
         public Room GetRoom(RegionType type)
         {
             return RegionAndRoomQuery.GetRoom(this, type);
-        }
-
-        protected override bool WorkIntrruption(Building_AutoMachineTool working)
-        {
-            if (!this.workTable.HasValue)
-            {
-                return true;
-            }
-            var currentTable = GetTargetWorkTable();
-            if (!currentTable.HasValue)
-            {
-                return true;
-            }
-            if(currentTable.Value != this.workTable.Value)
-            {
-                return true;
-            }
-            return !this.workTable.Value.CurrentlyUsableForBills();
         }
 
         private class ThingAmount

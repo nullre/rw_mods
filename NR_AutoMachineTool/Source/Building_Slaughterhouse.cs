@@ -35,9 +35,9 @@ namespace NR_AutoMachineTool
 
         protected override void Reset()
         {
-            if (this.working != null && this.working.jobs.curJob.def == JobDefOf.Wait_MaintainPosture)
+            if (this.Working != null && this.Working.jobs.curJob.def == JobDefOf.Wait_MaintainPosture)
             {
-                this.working.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
+                this.Working.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
             }
             base.Reset();
         }

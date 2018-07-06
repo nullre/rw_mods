@@ -41,7 +41,7 @@ namespace NR_AutoMachineTool
         {
             if(this.State == WorkingState.Working)
             {
-                Option(this.working).ForEach(t => GenPlace.TryPlaceThing(t, this.OutputCell(), this.Map, ThingPlaceMode.Near));
+                Option(this.Working).ForEach(t => GenPlace.TryPlaceThing(t, this.OutputCell(), this.Map, ThingPlaceMode.Near));
             }
             base.Reset();
         }
@@ -89,14 +89,7 @@ namespace NR_AutoMachineTool
                 .GetOrDefault(null);
         }
 
-        protected override float WorkAmountPerTick()
-        {
-            return this.consumer.suppliedEnergy * 0.01f;
-        }
-
-        protected override void WorkingTick(Thing working, float workAmount)
-        {
-        }
+        protected override float WorkAmountPerTick => this.consumer.suppliedEnergy * 0.01f;
 
         protected override bool FinishWorking(Thing working, out List<Thing> products)
         {

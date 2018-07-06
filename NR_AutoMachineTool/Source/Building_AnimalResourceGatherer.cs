@@ -61,9 +61,9 @@ namespace NR_AutoMachineTool
 
         protected override void Reset()
         {
-            if (this.working != null && this.working.jobs.curJob.def == JobDefOf.Wait_MaintainPosture)
+            if (this.Working != null && this.Working.jobs.curJob.def == JobDefOf.Wait_MaintainPosture)
             {
-                this.working.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
+                this.Working.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
             }
             base.Reset();
         }
@@ -77,9 +77,9 @@ namespace NR_AutoMachineTool
                 this.compName = this.comp.GetType().FullName;
             }
             Scribe_Values.Look<string>(ref this.compName, "compName", null);
-            if (this.compName != null && this.working != null)
+            if (this.compName != null && this.Working != null)
             {
-                this.comp = this.working.GetComps<CompHasGatherableBodyResource>().Where(c => c.GetType().FullName == this.compName).FirstOption().GetOrDefault(null);
+                this.comp = this.Working.GetComps<CompHasGatherableBodyResource>().Where(c => c.GetType().FullName == this.compName).FirstOption().GetOrDefault(null);
             }
         }
 
@@ -132,9 +132,9 @@ namespace NR_AutoMachineTool
             
             products = CreateThings(def, amount);
 
-            if (this.working.jobs.curJob.def == JobDefOf.Wait_MaintainPosture)
+            if (this.Working.jobs.curJob.def == JobDefOf.Wait_MaintainPosture)
             {
-                this.working.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
+                this.Working.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
             }
             fullnessSetter(this.comp, 0f);
             this.comp = null;

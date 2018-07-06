@@ -33,10 +33,7 @@ namespace NR_AutoMachineTool
             return float.PositiveInfinity;
         }
 
-        protected override float WorkAmountPerTick()
-        {
-            return this.consumer.suppliedEnergy * 0.001f;
-        }
+        protected override float WorkAmountPerTick => this.consumer.suppliedEnergy * 0.001f;
 
         protected override bool WorkIntrruption(Building working)
         {

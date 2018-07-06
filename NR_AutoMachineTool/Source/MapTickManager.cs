@@ -45,8 +45,18 @@ namespace NR_AutoMachineTool
 
             this.addTickActionsDict.Clear();
 
-            this.eachTickActions.RemoveAll(f => f());
-            this.tickActionsDict.GetOption(Find.TickManager.TicksGame).ForEach(l => l.ForEach(a => a()));
+            this.eachTickActions.RemoveAll(f =>
+            {
+                if (!this.removeEachTickActions.Contains(f))
+                    return f();
+                return true;
+            });
+
+            this.tickActionsDict.GetOption(Find.TickManager.TicksGame).ForEach(l => l.ForEach(a =>
+            {
+                if (!this.removeTickActions.Contains(a))
+                    a();
+            }));
             this.tickActionsDict.Remove(Find.TickManager.TicksGame);
         }
 
@@ -82,6 +92,8 @@ namespace NR_AutoMachineTool
 
         public void AfterAction(int ticks, Action act)
         {
+            if (ticks < 1)
+                ticks = 1;
             List<Action> list = null;
             if (!this.addTickActionsDict.TryGetValue(Find.TickManager.TicksGame + ticks, out list))
             {

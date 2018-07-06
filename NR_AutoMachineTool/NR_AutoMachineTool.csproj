@@ -61,9 +61,12 @@
     <Compile Include="Source\Building_AnimalResourceGatherer.cs" />
     <Compile Include="Source\AutomationNet\Building_BaseAutomation.cs" />
     <Compile Include="Source\AutomationNet\Building_EnergyGenerator.cs" />
+    <Compile Include="Source\Building_AutoMachineTool.cs" />
+    <Compile Include="Source\Building_BaseMachine.cs" />
+    <Compile Include="Source\Building_Base.cs" />
     <Compile Include="Source\Building_BaseLimitation.cs" />
     <Compile Include="Source\Building_BaseRange.cs" />
-    <Compile Include="Source\Building_Base.cs" />
+    <Compile Include="Source\Building_Base_old.cs" />
     <Compile Include="Source\Building_BeltConveyor.cs" />
     <Compile Include="Source\Building_BeltConveyorUGConnecter.cs" />
     <Compile Include="Source\AutomationNet\Building_AutomationPipe.cs" />
@@ -83,6 +86,7 @@
     <Compile Include="Source\ITab_ProductLimitation.cs" />
     <Compile Include="Source\MachineSettings.cs" />
     <Compile Include="Source\MapTickManager.cs" />
+    <Compile Include="Source\MoteProgressBar2.cs" />
     <Compile Include="Source\PlaceWorker_FacingRect.cs" />
     <Compile Include="Source\AutomationNet\CompAutomation.cs" />
     <Compile Include="Source\AutomationNet\AutomationNetMaker.cs" />
@@ -92,7 +96,7 @@
     <Compile Include="Source\RS.cs" />
     <Compile Include="Source\SectionLayer_UGConveyor.cs" />
     <Compile Include="Source\SpecialThingFilterWorker_Fresh.cs" />
-    <Compile Include="Source\Building_AutoMachineTool.cs" />
+    <Compile Include="Source\Building_AutoMachineTool_old.cs" />
     <Compile Include="Source\GenRecipe2.cs" />
     <Compile Include="Source\IBeltConbeyorSender.cs" />
     <Compile Include="Source\IBeltConbeyorLinkable.cs" />
@@ -128,6 +132,9 @@
     <Content Include="About\image09.png" />
     <Content Include="About\preview.png" />
     <Content Include="Defs\DesignationCategoryDef\NR_AutoMachineTool.xml" />
+    <Content Include="Defs\Effects\NR_AutoMachineTool_Effects.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Defs\Misc\NR_AutoMachineTool_SpecialThingFilters.xml">
       <SubType>Designer</SubType>
     </Content>

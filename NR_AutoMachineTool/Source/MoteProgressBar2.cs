@@ -13,11 +13,17 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public abstract class Building_BaseAutomation<T> : Building_Base<T> where T : Thing
+    public class MoteProgressBar2 : MoteProgressBar
     {
-        public Building_BaseAutomation()
+        public override void Draw()
         {
-            this.placeFirstAbsorb = true;
+            if (progressGetter != null)
+            {
+                this.progress = Mathf.Clamp01(this.progressGetter());
+            }
+            base.Draw();
         }
+
+        public Func<float> progressGetter;
     }
 }

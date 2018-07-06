@@ -74,11 +74,6 @@ namespace NR_AutoMachineTool
             }
         }
 
-        protected override void SettingValues()
-        {
-            this.TryGetComp<CompPowerTrader>().PowerOutput = this.SupplyPowerForSpeed + this.supplyPowerForRange;
-        }
-
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);

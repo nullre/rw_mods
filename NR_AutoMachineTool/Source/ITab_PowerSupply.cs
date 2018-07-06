@@ -59,7 +59,8 @@ namespace NR_AutoMachineTool
             list.Gap();
 
             rect = list.GetRect(50f);
-            this.Machine.SupplyPowerForSpeed = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPowerForSpeed, (float)this.Machine.MinPowerForSpeed, (float)this.Machine.MaxPowerForSpeed, true, valueLabel, this.Machine.MinPowerForSpeed.ToString(), this.Machine.MaxPowerForSpeed.ToString(), round);
+            var val = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPowerForSpeed, (float)this.Machine.MinPowerForSpeed, (float)this.Machine.MaxPowerForSpeed, true, valueLabel, this.Machine.MinPowerForSpeed.ToString(), this.Machine.MaxPowerForSpeed.ToString(), round);
+            this.Machine.SupplyPowerForSpeed = val;
             list.Gap();
 
             rect = list.GetRect(30f);
@@ -70,7 +71,6 @@ namespace NR_AutoMachineTool
             list.Gap();
 
             list.End();
-
             this.Machine.SupplyPowerForSpeed = power;
         }
     }

@@ -69,7 +69,8 @@ namespace NR_AutoMachineTool
             list.Gap();
 
             rect = list.GetRect(50f);
-            this.Machine.SupplyPowerForSpeed = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPowerForSpeed, (float)minPowerSpeed, (float)maxPowerSpeed, true, valueLabelForSpeed, minPowerSpeed.ToString(), maxPowerSpeed.ToString(), 100);
+            var speed = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPowerForSpeed, (float)minPowerSpeed, (float)maxPowerSpeed, true, valueLabelForSpeed, minPowerSpeed.ToString(), maxPowerSpeed.ToString(), 100);
+            this.Machine.SupplyPowerForSpeed = speed;
             list.Gap();
 
             rect = list.GetRect(30f);
@@ -78,18 +79,18 @@ namespace NR_AutoMachineTool
             Widgets.Label(rect.LeftHalf(), valueLabelForSpeed);
             Widgets.TextFieldNumeric<int>(rect.RightHalf(), ref power, ref buf, this.Machine.SupplyPowerForSpeed, this.Machine.SupplyPowerForSpeed);
             list.Gap();
-
             this.Machine.SupplyPowerForSpeed = power;
 
             // for range
             rect = list.GetRect(50f);
             Widgets.Label(rect, descriptionForRange);
             list.Gap();
-            
+
             rect = list.GetRect(50f);
-            this.Machine.SupplyPowerForRange = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPowerForRange, (float)minPowerRange, (float)maxPowerRange, true, valueLabelForRange, minPowerRange.ToString(), maxPowerRange.ToString(), 500);
+            var range = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPowerForRange, (float)minPowerRange, (float)maxPowerRange, true, valueLabelForRange, minPowerRange.ToString(), maxPowerRange.ToString(), 500);
+            this.Machine.SupplyPowerForRange = range;
             list.Gap();
-            
+
             if (this.Machine.Glowable)
             {
                 rect = list.GetRect(30f);

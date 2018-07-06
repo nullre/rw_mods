@@ -14,7 +14,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    class Building_BeltConveyorUGConnecter : Building_Base<Thing>, IBeltConbeyorLinkable
+    class Building_BeltConveyorUGConnecter : Building_BaseMachine<Thing>, IBeltConbeyorLinkable
     {
         protected override float SpeedFactor { get => this.Setting.beltConveyorSetting.speedFactor; }
         private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
@@ -53,7 +53,7 @@ namespace NR_AutoMachineTool
             if (this.State != WorkingState.Ready && Find.CameraDriver.CurrentZoom == CameraZoomRange.Closest)
             {
                 var p = CarryPosition();
-                if (!this.ToUnderground || this.workLeft > 0.7f)
+                if (!this.ToUnderground || this.WorkLeft > 0.7f)
                 {
                     Vector2 result = Find.Camera.WorldToScreenPoint(p + new Vector3(0, 0, -0.4f)) / Prefs.UIScale;
                     result.y = (float)UI.screenHeight - result.y;
@@ -69,7 +69,7 @@ namespace NR_AutoMachineTool
             if (this.State != WorkingState.Ready)
             {
                 var p = CarryPosition();
-                if (!this.ToUnderground || this.workLeft > 0.7f)
+                if (!this.ToUnderground || this.WorkLeft > 0.7f)
                 {
                     this.CarryingThing().DrawAt(p);
                 }
@@ -80,7 +80,7 @@ namespace NR_AutoMachineTool
         {
             if (this.State == WorkingState.Working)
             {
-                return this.working;
+                return this.Working;
             }
             else if (this.State == WorkingState.Placing)
             {
@@ -91,7 +91,8 @@ namespace NR_AutoMachineTool
 
         private Vector3 CarryPosition()
         {
-            return (this.Rotation.FacingCell.ToVector3() * (1f - this.workLeft)) + this.Position.ToVector3() + new Vector3(0.5f, 10f, 0.5f);
+            var workLeft = this.stuck ? 0.8f : this.WorkLeft;
+            return (this.Rotation.FacingCell.ToVector3() * (1f - workLeft)) + this.Position.ToVector3() + new Vector3(0.5f, 10f, 0.5f);
         }
 
         public override bool CanStackWith(Thing other)
@@ -105,15 +106,13 @@ namespace NR_AutoMachineTool
                 return false;
             if (this.State == WorkingState.Ready)
             {
-                this.working = t;
-                this.State = WorkingState.Working;
-                this.workLeft = 1f;
-                if (this.working.Spawned) this.working.DeSpawn();
+                if (t.Spawned) t.DeSpawn();
+                this.ForceStartWork(t);
                 return true;
             }
             else
             {
-                var target = this.State == WorkingState.Working ? this.working : this.products[0];
+                var target = this.State == WorkingState.Working ? this.Working : this.products[0];
                 return target.TryAbsorbStack(t, true);
             }
         }
@@ -127,6 +126,7 @@ namespace NR_AutoMachineTool
                 // コンベアある場合、そっちに流す.
                 if (next.Value.ReceiveThing(this.ToUnderground, thing))
                 {
+                    this.stuck = false;
                     return true;
                 }
             }
@@ -134,13 +134,17 @@ namespace NR_AutoMachineTool
             {
                 if (!this.ToUnderground && PlaceItem(thing, this.Rotation.FacingCell + this.Position, false, this.Map))
                 {
+                    this.stuck = false;
                     return true;
                 }
             }
             // 配置失敗.
-            this.workLeft = 0.8f;
+            this.stuck = true;
             return false;
         }
+
+        [Unsaved]
+        private bool stuck = false;
 
         public void Link(IBeltConbeyorLinkable link)
         {

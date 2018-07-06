@@ -14,7 +14,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    class Building_BeltConveyor : Building_Base<Thing>, IBeltConbeyorLinkable
+    class Building_BeltConveyor : Building_BaseMachine<Thing>, IBeltConbeyorLinkable
     {
         public Building_BeltConveyor()
         {
@@ -146,7 +146,7 @@ namespace NR_AutoMachineTool
         {
             if (this.State == WorkingState.Working)
             {
-                return this.working;
+                return this.Working;
             }
             else if (this.State == WorkingState.Placing)
             {
@@ -157,7 +157,8 @@ namespace NR_AutoMachineTool
 
         private Vector3 CarryPosition()
         {
-            return (this.dest.FacingCell.ToVector3() * (1f - this.workLeft)) + this.Position.ToVector3() + new Vector3(0.5f, 10f, 0.5f);
+            var workLeft = this.stuck ? 0.8f : this.WorkLeft;
+            return (this.dest.FacingCell.ToVector3() * (1f - this.WorkLeft)) + this.Position.ToVector3() + new Vector3(0.5f, 10f, 0.5f);
         }
         
         public override bool CanStackWith(Thing other)
@@ -176,16 +177,14 @@ namespace NR_AutoMachineTool
                 return false;
             if (this.State == WorkingState.Ready)
             {
+                if (t.Spawned) t.DeSpawn();
                 this.dest = rot;
-                this.working = t;
-                this.workLeft = 1f;
-                if (this.working.Spawned) this.working.DeSpawn();
-                this.State = WorkingState.Working;
+                this.ForceStartWork(t);
                 return true;
             }
             else
             {
-                var target = this.State == WorkingState.Working ? this.working : this.products[0];
+                var target = this.State == WorkingState.Working ? this.Working : this.products[0];
                 return target.TryAbsorbStack(t, true);
             }
         }
@@ -239,6 +238,7 @@ namespace NR_AutoMachineTool
                 if (next.Value.ReceiveThing(this.IsUnderground, thing))
                 {
                     NotifyAroundSender();
+                    this.stuck = false;
                     return true;
                 }
             }
@@ -247,6 +247,7 @@ namespace NR_AutoMachineTool
                 if (!this.IsUnderground && PlaceItem(thing, this.dest.FacingCell + this.Position, false, this.Map))
                 {
                     NotifyAroundSender();
+                    this.stuck = false;
                     return true;
                 }
             }
@@ -260,9 +261,12 @@ namespace NR_AutoMachineTool
                 return false;
             }
             // 配置失敗.
-            this.workLeft = 0.5f;
+            this.stuck = true;
             return false;
         }
+
+        [Unsaved]
+        private bool stuck = false;
 
         public void Link(IBeltConbeyorLinkable link)
         {
@@ -272,7 +276,7 @@ namespace NR_AutoMachineTool
         public void Unlink(IBeltConbeyorLinkable unlink)
         {
             this.FilterSetting();
-            Option(this.working).ForEach(t => this.dest = Destination(t, true));
+            Option(this.Working).ForEach(t => this.dest = Destination(t, true));
         }
 
         private void FilterSetting()
@@ -331,8 +335,7 @@ namespace NR_AutoMachineTool
                 case WorkingState.Ready:
                     return true;
                 case WorkingState.Working:
-                    // return check(this.working);
-                    return false;
+                    return check(this.Working);
                 case WorkingState.Placing:
                     return check(this.products[0]);
                 default:

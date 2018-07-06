@@ -20,10 +20,7 @@ namespace NR_AutoMachineTool
             return float.PositiveInfinity;
         }
 
-        protected override float WorkAmountPerTick()
-        {
-            return this.consumer.suppliedEnergy * 0.000001f;
-        }
+        protected override float WorkAmountPerTick => this.consumer.suppliedEnergy * 0.000001f;
 
         protected override bool WorkIntrruption(Fire working)
         {
@@ -44,7 +41,7 @@ namespace NR_AutoMachineTool
 
         protected override void WorkingTick(Fire working, float workAmount)
         {
-            working.fireSize -= this.WorkAmountPerTick();
+            working.fireSize -= this.WorkAmountPerTick;
             if (working.fireSize <= 0)
             {
                 working.fireSize = 0;

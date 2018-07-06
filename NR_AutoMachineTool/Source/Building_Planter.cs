@@ -26,10 +26,10 @@ namespace NR_AutoMachineTool
 
         protected override void Reset()
         {
-            if (this.working != null)
+            if (this.Working != null)
             {
-                if (this.working.Spawned)
-                    this.working.Destroy();
+                if (this.Working.Spawned)
+                    this.Working.Destroy();
             }
             base.Reset();
         }
@@ -87,12 +87,12 @@ namespace NR_AutoMachineTool
         {
             return
                 grower.GetPlantDefToGrow().CanEverPlantAt(cell, this.Map) &&
-                GenPlant.GrowthSeasonNow(cell, this.Map) &&
-                GenPlant.SnowAllowsPlanting(cell, this.Map) &&
+                PlantUtility.GrowthSeasonNow(cell, this.Map) &&
+                PlantUtility.SnowAllowsPlanting(cell, this.Map) &&
                 Option(grower as Zone_Growing).Fold(true)(z => z.allowSow) &&
                 cell.GetRoom(this.Map) == this.GetRoom() &&
                 grower.GetPlantDefToGrow().plant.sowMinSkill <= this.SkillLevel &&
-                GenPlant.AdjacentSowBlocker(grower.GetPlantDefToGrow(), cell, this.Map) == null &&
+                PlantUtility.AdjacentSowBlocker(grower.GetPlantDefToGrow(), cell, this.Map) == null &&
                 (!grower.GetPlantDefToGrow().plant.interferesWithRoof || (grower.GetPlantDefToGrow().plant.interferesWithRoof && !cell.Roofed(this.Map)));
         }
     }

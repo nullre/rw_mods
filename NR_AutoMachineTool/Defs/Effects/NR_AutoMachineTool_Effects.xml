@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <EffecterDef>
+    <defName>NR_AutoMachineTool_ProgressBar</defName>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_ProgressBar</subEffecterClass>
+        <moteDef>NR_AutoMachineTool_Mote_ProgressBar</moteDef>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>NR_AutoMachineTool_Mote_ProgressBar</defName>
+    <graphicData>
+      <texPath>Things/Mote/Transparent</texPath>
+    </graphicData>
+    <thingClass>NR_AutoMachineTool.MoteProgressBar2</thingClass>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <mote>
+      <solidTime>240</solidTime>
+    </mote>
+  </ThingDef>
+  
+</Defs>

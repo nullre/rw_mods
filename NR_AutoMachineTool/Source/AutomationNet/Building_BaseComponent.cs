@@ -50,13 +50,21 @@ namespace NR_AutoMachineTool
             return true;
         }
 
-        public override void Tick()
+        protected override void StartWork()
         {
-            base.Tick();
-
-            if (base.State == WorkingState.Working)
+            base.StartWork();
+            if (this.Spawned)
             {
-                this.WorkingTick(this.working, this.workAmount);
+                this.MapManager.EachTickAction(this.WorkingTick);
+            }
+        }
+
+        protected override void FinishWork()
+        {
+            base.FinishWork();
+            if (this.Spawned)
+            {
+                this.MapManager.RemoveEachTickAction(this.WorkingTick);
             }
         }
 
@@ -68,7 +76,19 @@ namespace NR_AutoMachineTool
             }
         }
 
-        protected abstract void WorkingTick(T working, float workAmount);
+        private bool WorkingTick()
+        {
+            if (!this.Spawned || this.State != WorkingState.Working)
+            {
+                return true;
+            }
+            this.WorkingTick(this.Working, this.CurrentWorkAmount);
+            return false;
+        }
+
+        protected virtual void WorkingTick(T working, float workAmount)
+        {
+        }
 
         public override IntVec3 OutputCell()
         {

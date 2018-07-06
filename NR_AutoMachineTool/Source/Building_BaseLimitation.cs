@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public abstract class Building_BaseLimitation<T> : Building_Base<T>, IProductLimitation where T : Thing
+    public abstract class Building_BaseLimitation<T> : Building_BaseMachine<T>, IProductLimitation where T : Thing
     {
         public int ProductLimitCount { get => this.productLimitCount; set => this.productLimitCount = value; }
         public bool ProductLimitation { get => this.productLimitation; set => this.productLimitation = value; }
