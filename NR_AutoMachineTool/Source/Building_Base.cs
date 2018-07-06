@@ -174,9 +174,12 @@ namespace NR_AutoMachineTool
             this.CleanupWorkingEffect();
             if (this.working.Spawned && this.showProgressBar)
             {
-                this.progressBar = DefDatabase<EffecterDef>.GetNamed("NR_AutoMachineTool_ProgressBar").Spawn();
-                this.progressBar.EffectTick(ProgressBarTarget(), TargetInfo.Invalid);
-                ((MoteProgressBar2)((SubEffecter_ProgressBar)progressBar.children[0]).mote).progressGetter = () => (this.CurrentWorkAmount / this.totalWorkAmount);
+                Option(ProgressBarTarget()).ForEach(t =>
+                {
+                    this.progressBar = DefDatabase<EffecterDef>.GetNamed("NR_AutoMachineTool_ProgressBar").Spawn();
+                    this.progressBar.EffectTick(ProgressBarTarget(), TargetInfo.Invalid);
+                    ((MoteProgressBar2)((SubEffecter_ProgressBar)progressBar.children[0]).mote).progressGetter = () => (this.CurrentWorkAmount / this.totalWorkAmount);
+                });
             }
         }
 

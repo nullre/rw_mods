@@ -124,13 +124,18 @@ namespace NR_AutoMachineTool
         {
             base.SpawnSetup(map, respawningAfterLoad);
             this.workTable = Nothing<Building_WorkTable>();
-            this.WorkTableSetting();
         }
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
             this.workTable.ForEach(this.AllowWorkTable);
             base.DeSpawn();
+        }
+
+        public override void PostMapInit()
+        {
+            base.PostMapInit();
+            this.WorkTableSetting();
         }
 
         protected override void Reset()
