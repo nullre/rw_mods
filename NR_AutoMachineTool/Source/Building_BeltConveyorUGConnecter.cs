@@ -91,7 +91,7 @@ namespace NR_AutoMachineTool
 
         private Vector3 CarryPosition()
         {
-            var workLeft = this.stuck ? 0.8f : this.WorkLeft;
+            var workLeft = this.stuck ? 0.8f : Mathf.Clamp01(this.WorkLeft);
             return (this.Rotation.FacingCell.ToVector3() * (1f - workLeft)) + this.Position.ToVector3() + new Vector3(0.5f, 10f, 0.5f);
         }
 
