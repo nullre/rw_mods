@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>Building_NR_AutoMachineTool_Miner</defName>
+    <label>AutoMiner</label>
+    <thingClass>NR_AutoMachineTool.Building_Miner</thingClass>
+    <description>Automatic mining of designated ore.
+It consumes enormous electricity.</description>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Buildings/Miner</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <constructEffect>ConstructMetal</constructEffect>
+    <costList>
+      <Steel>4000</Steel>
+      <Plasteel>2000</Plasteel>
+      <Uranium>1000</Uranium>
+      <Gold>2000</Gold>
+      <ComponentSpacer>15</ComponentSpacer>
+    </costList>
+    <altitudeLayer>Building</altitudeLayer>
+    <fillPercent>0.5</fillPercent>
+    <useHitPoints>True</useHitPoints>
+    <statBases>
+      <WorkToBuild>2000</WorkToBuild>
+      <MaxHitPoints>180</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
+    <passability>PassThroughOnly</passability>
+    <pathCost>70</pathCost>
+    <hasInteractionCell>false</hasInteractionCell>
+    <surfaceType>Item</surfaceType>
+    <rotatable>false</rotatable>
+    <recipes>
+    </recipes>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
+    <researchPrerequisites>
+      <li>ResearchProject_NR_AutoMachineTool_AutoMiner</li>
+    </researchPrerequisites>
+    <inspectorTabs>
+      <li>NR_AutoMachineTool.ITab_PowerSupply</li>
+      <li>NR_AutoMachineTool.ITab_Bills2</li>
+    </inspectorTabs>
+
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <placeWorkers>
+      <li>NR_AutoMachineTool.PlaceWorker_Miner</li>
+    </placeWorkers>
+  </ThingDef>
+</Defs>

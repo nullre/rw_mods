@@ -24,6 +24,9 @@
   <ResearchProject_NR_AutoMachineTool_AutoAnimalCaretaker.label>自動動物飼育</ResearchProject_NR_AutoMachineTool_AutoAnimalCaretaker.label>
   <ResearchProject_NR_AutoMachineTool_AutoAnimalCaretaker.description>動物世話機と屠畜機が作成可能になります。</ResearchProject_NR_AutoMachineTool_AutoAnimalCaretaker.description>
 
+  <ResearchProject_NR_AutoMachineTool_AutoMiner.label>自動採掘</ResearchProject_NR_AutoMachineTool_AutoMiner.label>
+  <ResearchProject_NR_AutoMachineTool_AutoMiner.description>自動採掘機が作成可能になります。</ResearchProject_NR_AutoMachineTool_AutoMiner.description>
+
   <ResearchProject_NR_AutoMachineTool_AutomationNet.label>自動化ネット(experimental)</ResearchProject_NR_AutoMachineTool_AutomationNet.label>
   <ResearchProject_NR_AutoMachineTool_AutomationNet.description>自動化ネットが構築できます。</ResearchProject_NR_AutoMachineTool_AutomationNet.description>
 

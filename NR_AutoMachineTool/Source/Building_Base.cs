@@ -272,7 +272,10 @@ namespace NR_AutoMachineTool
                 MapManager.RemoveAfterAction(this.FinishWork);
                 MapManager.NextAction(this.FinishWork);
             }
-            MapManager.AfterAction(30, this.CheckWork);
+            else
+            {
+                MapManager.AfterAction(30, this.CheckWork);
+            }
         }
 
         protected virtual void FinishWork()
@@ -281,6 +284,8 @@ namespace NR_AutoMachineTool
             {
                 return;
             }
+            MapManager.RemoveAfterAction(this.CheckWork);
+            MapManager.RemoveAfterAction(this.FinishWork);
             if (!this.IsActive())
             {
                 this.Reset();
@@ -298,7 +303,6 @@ namespace NR_AutoMachineTool
                 this.State = WorkingState.Placing;
                 this.CleanupWorkingEffect();
                 this.working = null;
-                MapManager.RemoveAfterAction(this.CheckWork);
                 MapManager.NextAction(this.Placing);
             }
             else
@@ -320,7 +324,6 @@ namespace NR_AutoMachineTool
                 MapManager.AfterAction(30, Ready);
                 return;
             }
-
             if (this.PlaceProduct(ref this.products))
             {
                 this.State = WorkingState.Ready;
@@ -390,7 +393,7 @@ namespace NR_AutoMachineTool
             switch (this.State)
             {
                 case WorkingState.Working:
-                    if (float.IsInfinity(this.GetTotalWorkAmount(this.working)))
+                    if (float.IsInfinity(this.totalWorkAmount))
                     {
                         msg += "NR_AutoMachineTool.StatWorkingNoParam".Translate();
                     }

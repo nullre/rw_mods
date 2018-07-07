@@ -99,4 +99,7 @@
   <!-- AutomationNet -->
   <NR_AutoMachineTool.AutomationNet.MustOnPipe>オートメーションネットパイプの上に設置しなければなりません。</NR_AutoMachineTool.AutomationNet.MustOnPipe>
   <NR_AutoMachineTool.AutomationNet.MustFacingSlotGroup>備蓄ゾーンやロッカー等に面していなければなりません。</NR_AutoMachineTool.AutomationNet.MustFacingSlotGroup>
+
+  <!-- AutoMiner -->
+  <NR_AutoMachineTool.AutoMiner.MineOre>{0} を採掘する</NR_AutoMachineTool.AutoMiner.MineOre>
 </LanguageData>

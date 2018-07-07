@@ -71,6 +71,7 @@
     <Compile Include="Source\Building_BeltConveyorUGConnecter.cs" />
     <Compile Include="Source\AutomationNet\Building_AutomationPipe.cs" />
     <Compile Include="Source\AutomationNet\Building_RepairComponent.cs" />
+    <Compile Include="Source\Building_Miner.cs" />
     <Compile Include="Source\Building_Hervester.cs" />
     <Compile Include="Source\Building_ItemPuller.cs" />
     <Compile Include="Source\Building_Planter.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Source\Graphic_Linked2.cs" />
     <Compile Include="Source\Graphic_LinkedConveyor.cs" />
     <Compile Include="Source\Graphic_Selectable.cs" />
+    <Compile Include="Source\ITab_Bills2.cs" />
     <Compile Include="Source\ITab_Slaughterhouse.cs" />
     <Compile Include="Source\ITab_ProductLimitation.cs" />
     <Compile Include="Source\MachineSettings.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Source\AutomationNet\AutomationNetGrid.cs" />
     <Compile Include="Source\AutomationNet\AutomationNetManager.cs" />
     <Compile Include="Source\AutomationNet\AutomationNet.cs" />
+    <Compile Include="Source\PlaceWorker_Miner.cs" />
     <Compile Include="Source\RS.cs" />
     <Compile Include="Source\SectionLayer_UGConveyor.cs" />
     <Compile Include="Source\SpecialThingFilterWorker_Fresh.cs" />
@@ -153,6 +156,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Planter.xml" />
+    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Miner.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Languages\English\Keyed\NR_AutoMachineTool.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -162,6 +168,7 @@
     </Content>
     <Content Include="Languages\Japanese\DefInjected\ResearchProjectDefs\NR_AutoMachineTool.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_AutomationNet.xml" />
+    <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Miner.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Slauterhouse.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_AnimalResourceGatherer.xml">
       <SubType>Designer</SubType>

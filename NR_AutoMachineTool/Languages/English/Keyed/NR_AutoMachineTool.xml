@@ -99,4 +99,7 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <!-- AutomationNet -->
   <NR_AutoMachineTool.AutomationNet.MustOnPipe>It must be installed on the Automation Net pipe.</NR_AutoMachineTool.AutomationNet.MustOnPipe>
   <NR_AutoMachineTool.AutomationNet.MustFacingSlotGroup>It must face stockpiling zones and lockers etc.</NR_AutoMachineTool.AutomationNet.MustFacingSlotGroup>
+
+  <!-- AutoMiner -->
+  <NR_AutoMachineTool.AutoMiner.MineOre>Mining {0}</NR_AutoMachineTool.AutoMiner.MineOre>
 </LanguageData>

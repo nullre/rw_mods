@@ -33,6 +33,7 @@ namespace NR_AutoMachineTool
         }
     }
 
+    // TODO:本体更新時に合わせる.
     static class GenRecipe2
     {
         public static IEnumerable<Thing> MakeRecipeProducts(RecipeDef recipeDef, IRecipeProductWorker worker, List<Thing> ingredients, Thing dominantIngredient, IBillGiver billGiver)

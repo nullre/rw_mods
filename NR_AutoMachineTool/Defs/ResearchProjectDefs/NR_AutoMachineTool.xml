@@ -151,6 +151,24 @@
   </ResearchProjectDef>
 
   <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_AutoMiner</defName>
+    <label>Automatic mining.</label>
+    <description>AutoMiner can be created.</description>
+    <baseCost>8000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>MultiAnalyzer</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>4</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>ResearchProject_NR_AutoMachineTool_AutomationNet</defName>
     <label>Automation Net (experimental)</label>
     <description>Automation Net can be created.</description>

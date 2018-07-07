@@ -232,7 +232,7 @@ namespace NR_MaterialEnergy
             r.defaultIngredientFilter.SetDisallowAll(null);
             r.fixedIngredientFilter.RecalculateDisplayRootCategory();
             r.ResolveReferences();
-            r.products.Add(new ThingCountClass(energyThingDef, count));
+            r.products.Add(new ThingDefCount(energyThingDef, count));
             r.allowMixingIngredients = true;
 
             return r;
@@ -263,7 +263,7 @@ namespace NR_MaterialEnergy
             
             r.fixedIngredientFilter.RecalculateDisplayRootCategory();
             r.ResolveReferences();
-            r.products.Add(new ThingCountClass(product, productCount));
+            r.products.Add(new ThingDefCount(product, productCount));
 
             return r;
         }

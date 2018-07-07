@@ -27,6 +27,9 @@ namespace NR_AutoMachineTool
         public RangeMachineSetting slaughterSetting = SlaughterDefault();
         public static readonly Func<RangeMachineSetting> SlaughterDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 20000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000 };
 
+        public BasicMachineSetting minerSetting = MinerDefault();
+        public static readonly Func<BasicMachineSetting> MinerDefault = () => new BasicMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 10000, maxSupplyPowerForSpeed = 1000000 };
+
         private List<RangeSkillMachineSetting> autoMachineToolSetting = CreateAutoMachineToolDefault();
 
         private static List<RangeSkillMachineSetting> CreateAutoMachineToolDefault()
@@ -70,6 +73,7 @@ namespace NR_AutoMachineTool
             this.pullerSetting = PullerDefault();
             this.gathererSetting = GathererDefault();
             this.slaughterSetting = SlaughterDefault();
+            this.minerSetting = MinerDefault();
         }
 
         public override void ExposeData()
@@ -83,6 +87,7 @@ namespace NR_AutoMachineTool
             Scribe_Deep.Look<BasicMachineSetting>(ref this.pullerSetting, "pullerSetting");
             Scribe_Deep.Look<RangeMachineSetting>(ref this.gathererSetting, "gathererSetting");
             Scribe_Deep.Look<RangeMachineSetting>(ref this.slaughterSetting, "slaughterSetting");
+            Scribe_Deep.Look<BasicMachineSetting>(ref this.minerSetting, "minerSetting");
 
             this.autoMachineToolSetting = this.autoMachineToolSetting ?? CreateAutoMachineToolDefault();
             this.planterSetting = this.planterSetting ?? CreatePlanterDefault();
@@ -92,6 +97,7 @@ namespace NR_AutoMachineTool
             this.pullerSetting = this.pullerSetting ?? PullerDefault();
             this.gathererSetting = this.gathererSetting ?? GathererDefault();
             this.slaughterSetting = this.slaughterSetting ?? SlaughterDefault();
+            this.minerSetting = this.minerSetting ?? MinerDefault();
 
             Option(this.DataExposed).ForEach(e => e(this, new EventArgs()));
         }
@@ -154,6 +160,10 @@ namespace NR_AutoMachineTool
 
             DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_Slaughterhouse").label, list);
             DrawSetting(list, this.slaughterSetting);
+            list.GapLine();
+
+            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_Miner").label, list);
+            DrawSetting(list, this.minerSetting);
             list.GapLine();
 
             // Restore
