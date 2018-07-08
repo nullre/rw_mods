@@ -87,25 +87,12 @@ namespace NR_AutoMachineTool
 
         private string compName;
 
-        protected override float GetTotalWorkAmount(Pawn working)
-        {
-            if (this.comp is CompShearable)
-            {
-                return 1700f;
-            }
-            else if (this.comp is CompMilkable)
-            {
-                return 400f;
-            }
-            return 1000f;
-        }
-
         protected override bool WorkIntrruption(Pawn working)
         {
             return !activeGetter(this.comp) || this.comp.Fullness < 0.5f;
         }
 
-        protected override bool TryStartWorking(out Pawn target)
+        protected override bool TryStartWorking(out Pawn target, out float workAmount)
         {
             var animal = FacingRect(this.Position, this.Rotation, this.GetRange())
                 .Where(c => (this.Position + this.Rotation.FacingCell).GetRoom(this.Map) == c.GetRoom(this.Map))
@@ -116,10 +103,20 @@ namespace NR_AutoMachineTool
                 .FirstOption()
                 .GetOrDefault(null);
             target = null;
+            workAmount = 0f;
             if (animal != null)
             {
                 target = animal.Animal;
                 this.comp = animal.Comp;
+                if (this.comp is CompShearable)
+                {
+                    workAmount = 1700f;
+                }
+                else if (this.comp is CompMilkable)
+                {
+                    workAmount = 400f;
+                }
+                workAmount = 1000f;
                 PawnUtility.ForceWait(target, 15000, null, true);
             }
             return animal != null;

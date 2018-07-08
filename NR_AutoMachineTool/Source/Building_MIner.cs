@@ -34,6 +34,7 @@ namespace NR_AutoMachineTool
         public Building_Miner()
         {
             this.billStack = new BillStack(this);
+            base.forcePlace = false;
         }
 
         public override void ExposeData()
@@ -42,27 +43,28 @@ namespace NR_AutoMachineTool
 
             Scribe_Values.Look<int>(ref this.outputIndex, "outputIndex");
             Scribe_Deep.Look(ref this.billStack, "billStack", new object[]{ this });
-            Scribe_References.Look(ref this.doingBill, "doingBill");
-        }
-
-        protected override float GetTotalWorkAmount(Building_Miner working)
-        {
-            return this.doingBill.recipe.workAmount;
+            Scribe_References.Look(ref this.workingBill, "workingBill");
+            if(this.workingBill == null)
+            {
+                this.readyOnStart = true;
+            }
         }
 
         protected override bool WorkIntrruption(Building_Miner working)
         {
-            return !this.doingBill.ShouldDoNow();
+            return !this.workingBill.ShouldDoNow();
         }
 
-        private Bill doingBill;
+        private Bill workingBill;
 
-        protected override bool TryStartWorking(out Building_Miner target)
+        protected override bool TryStartWorking(out Building_Miner target, out float workAmount)
         {
             target = this;
+            workAmount = 0;
             if (this.billStack.AnyShouldDoNow)
             {
-                this.doingBill = this.billStack.FirstShouldDoNow;
+                this.workingBill = this.billStack.FirstShouldDoNow;
+                workAmount = this.workingBill.recipe.workAmount;
                 return true;
             }
             return false;
@@ -70,7 +72,8 @@ namespace NR_AutoMachineTool
 
         protected override bool FinishWorking(Building_Miner working, out List<Thing> products)
         {
-            products = GenRecipe2.MakeRecipeProducts(this.doingBill.recipe, this, new List<Thing>(), null, this).ToList();
+            products = GenRecipe2.MakeRecipeProducts(this.workingBill.recipe, this, new List<Thing>(), null, this).ToList();
+            this.workingBill.Notify_IterationCompleted(null, new List<Thing>());
             return true;
         }
 
@@ -158,27 +161,41 @@ namespace NR_AutoMachineTool
     {
         static RecipeRegister()
         {
-            var recipeDefs = DefDatabase<ThingDef>.AllDefs
-                .Where(d => d.deepCommonality > 0f && d.deepCountPerCell > 0)
-                .Select(d => CreateMineRecipe(d)).ToList();
+            var mineables = DefDatabase<ThingDef>.AllDefs
+                .Where(d => d.mineable && d.building != null && d.building.mineableThing != null && d.building.mineableYield > 0)
+                .Where(d => d.building.isResourceRock || d.building.isNaturalRock)
+                .Select(d => new ThingDefCountClass(d.building.mineableThing, d.building.mineableYield))
+                .ToList();
+
+            var mineablesSet = mineables.Select(d => d.thingDef).ToHashSet();
+
+            mineables.AddRange(
+                DefDatabase<ThingDef>.AllDefs
+                    .Where(d => d.deepCommonality > 0f && d.deepCountPerPortion > 0)
+                    .Where(d => !mineablesSet.Contains(d))
+                    .Select(d => new ThingDefCountClass(d, d.deepCountPerPortion)));
+
+            var recipeDefs = mineables.Select(CreateMiningRecipe).ToList();
+
             DefDatabase<RecipeDef>.Add(recipeDefs);
             DefDatabase<ThingDef>.GetNamed("Building_NR_AutoMachineTool_Miner").recipes = recipeDefs;
         }
 
-        private static RecipeDef CreateMineRecipe(ThingDef def)
+        private static RecipeDef CreateMiningRecipe(ThingDefCountClass defCount)
         {
             RecipeDef r = new RecipeDef();
-            r.defName = "Recipe_NR_AutoMachineTool_Mine_" + def.defName;
-            r.label = "NR_AutoMachineTool.AutoMiner.MineOre".Translate(def.label);
-            r.jobString = "NR_AutoMachineTool.AutoMiner.MineOre".Translate(def.label);
-            r.workAmount = StatDefOf.MarketValue.Worker.GetValue(StatRequest.For(def, null)) * def.deepCountPerCell * 1000;
+            r.defName = "Recipe_NR_AutoMachineTool_Mine_" + defCount.thingDef.defName;
+            r.label = "NR_AutoMachineTool.AutoMiner.MineOre".Translate(defCount.thingDef.label);
+            r.jobString = "NR_AutoMachineTool.AutoMiner.MineOre".Translate(defCount.thingDef.label);
+
+            r.workAmount = Mathf.Max(10000f, StatDefOf.MarketValue.Worker.GetValue(StatRequest.For(defCount.thingDef, null)) * defCount.count * 1000);
             r.workSpeedStat = StatDefOf.WorkToMake;
             r.efficiencyStat = StatDefOf.WorkToMake;
 
-            r.workSkill = SkillDefOf.Crafting;
+            r.workSkill = SkillDefOf.Mining;
             r.workSkillLearnFactor = 0;
 
-            r.products = new List<ThingDefCountClass>().Append(new ThingDefCountClass(def, def.deepCountPerCell));
+            r.products = new List<ThingDefCountClass>().Append(defCount);
             r.defaultIngredientFilter = new ThingFilter();
 
             return r;

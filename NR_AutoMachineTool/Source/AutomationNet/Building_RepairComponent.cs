@@ -28,11 +28,6 @@ namespace NR_AutoMachineTool
             Scribe_Values.Look<float>(ref this.prevAmount, "prevAmount", 0f);
         }
 
-        protected override float GetTotalWorkAmount(Building working)
-        {
-            return float.PositiveInfinity;
-        }
-
         protected override float WorkAmountPerTick => this.consumer.suppliedEnergy * 0.001f;
 
         protected override bool WorkIntrruption(Building working)
@@ -44,8 +39,9 @@ namespace NR_AutoMachineTool
             return !working.Spawned || working.HitPoints >= working.MaxHitPoints;
         }
 
-        protected override Building TargetThing()
+        protected override Building TargetThing(out float workAmount)
         {
+            workAmount = float.PositiveInfinity;
             return this.Position.GetThingList(this.Map)
                 .SelectMany(t => Option(t as Building))
                 .Where(NeedRepair).ToList()
@@ -54,9 +50,9 @@ namespace NR_AutoMachineTool
                 .GetOrDefault(null);
         }
 
-        protected override bool TryStartWorking(out Building target)
+        protected override bool TryStartWorking(out Building target, out float workAmount)
         {
-            var result = base.TryStartWorking(out target);
+            var result = base.TryStartWorking(out target, out workAmount);
             if(result) this.prevAmount = 0;
             return result;
         }

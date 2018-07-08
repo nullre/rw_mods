@@ -24,17 +24,12 @@ namespace NR_AutoMachineTool
         public override int MinPowerForRange { get => this.Setting.HarvesterTier(Extension.tier).minSupplyPowerForRange; }
         public override int MaxPowerForRange { get => this.Setting.HarvesterTier(Extension.tier).maxSupplyPowerForRange; }
 
-        protected override float GetTotalWorkAmount(Plant working)
-        {
-            return working.def.plant.harvestWork;
-        }
-
         protected override bool WorkIntrruption(Plant working)
         {
             return !working.Spawned || (!working.Blighted && !working.HarvestableNow);
         }
 
-        protected override bool TryStartWorking(out Plant target)
+        protected override bool TryStartWorking(out Plant target, out float workAmount)
         {
             var plant = FacingRect(this.Position, this.Rotation, this.GetRange())
                 .Where(c => c.GetPlantable(this.Map).HasValue)
@@ -47,6 +42,7 @@ namespace NR_AutoMachineTool
                 .FirstOption()
                 .GetOrDefault(null);
             target = plant;
+            workAmount = target?.def.plant.harvestWork ?? 0f;
             return target != null;
         }
 

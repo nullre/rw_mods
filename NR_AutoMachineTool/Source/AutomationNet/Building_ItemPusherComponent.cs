@@ -24,11 +24,6 @@ namespace NR_AutoMachineTool
         public int MaxCount { get => Math.Max(1, Mathf.RoundToInt(this.consumer.UsableEnergyNow / 10)); }
         public int? Count { get => this.keepCount; set => this.keepCount = value ?? 10 ; }
 
-        protected override float GetTotalWorkAmount(Thing working)
-        {
-            return working.stackCount * 100;
-        }
-
         public override void ExposeData()
         {
             base.ExposeData();
@@ -56,10 +51,10 @@ namespace NR_AutoMachineTool
             }
         }
 
-        protected override Thing TargetThing()
+        protected override Thing TargetThing(out float workAmount)
         {
             var storage = this.consumer.connectedNet.StorageItems().Where(t => this.filter.Allows(t)).ToList();
-            return Option(this.Map.haulDestinationManager.SlotGroupAt(this.Position + this.Rotation.FacingCell))
+            var target = Option(this.Map.haulDestinationManager.SlotGroupAt(this.Position + this.Rotation.FacingCell))
                 .SelectMany(g =>
                 {
                     var stored = g.HeldThings.Where(t => this.filter.Allows(t))
@@ -87,6 +82,9 @@ namespace NR_AutoMachineTool
                 })
                 .Select(a => a.Thing.SplitOff(Math.Min(MaxCount, Math.Min(a.Thing.stackCount, a.Need))))
                 .GetOrDefault(null);
+
+            workAmount = (target?.stackCount ?? 0f) * 100f;
+            return target;
         }
 
         protected override float WorkAmountPerTick => this.consumer.suppliedEnergy * 0.01f;

@@ -15,11 +15,6 @@ namespace NR_AutoMachineTool
 {
     public class Building_ExtinguishComponent : Building_BaseComponent<Fire>
     {
-        protected override float GetTotalWorkAmount(Fire working)
-        {
-            return float.PositiveInfinity;
-        }
-
         protected override float WorkAmountPerTick => this.consumer.suppliedEnergy * 0.000001f;
 
         protected override bool WorkIntrruption(Fire working)
@@ -31,8 +26,9 @@ namespace NR_AutoMachineTool
             return !working.Spawned || working.fireSize <= 0;
         }
 
-        protected override Fire TargetThing()
+        protected override Fire TargetThing(out float workAmount)
         {
+            workAmount = float.PositiveInfinity;
             return this.Position.GetThingList(this.Map)
                 .SelectMany(t => Option(t as Fire))
                 .FirstOption()

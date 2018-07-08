@@ -30,9 +30,9 @@ namespace NR_AutoMachineTool
             return base.IsActive() && this.consumer.CanUseEnergy;
         }
 
-        protected override bool TryStartWorking(out T target)
+        protected override bool TryStartWorking(out T target, out float workAmount)
         {
-            var reuslt = (target = TargetThing()) != null;
+            var reuslt = (target = TargetThing(out workAmount)) != null;
 
             if (reuslt)
             {
@@ -41,7 +41,7 @@ namespace NR_AutoMachineTool
             return reuslt;
         }
 
-        protected abstract T TargetThing();
+        protected abstract T TargetThing(out float workAmount);
 
         protected override bool FinishWorking(T working, out List<Thing> products)
         {

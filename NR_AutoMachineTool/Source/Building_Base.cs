@@ -36,6 +36,9 @@ namespace NR_AutoMachineTool
         protected bool showProgressBar = true;
         [Unsaved]
         protected bool placeFirstAbsorb = false;
+        [Unsaved]
+        protected bool readyOnStart = false;
+
         private MapTickManager mapManager;
 
         protected WorkingState State
@@ -104,31 +107,37 @@ namespace NR_AutoMachineTool
             return workingSet.Contains(thing);
         }
 
-        protected abstract float GetTotalWorkAmount(T working);
-
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
             this.mapManager = map.GetComponent<MapTickManager>();
-
-            if (this.State == WorkingState.Ready)
+            if (readyOnStart)
             {
                 MapManager.AfterAction(Rand.Range(0, 30), this.Ready);
+                this.state = WorkingState.Ready;
+                this.ResetValues();
             }
-            else if (this.State == WorkingState.Working)
+            else
             {
-                MapManager.NextAction(this.StartWork);
-            }
-            else if (this.State == WorkingState.Placing)
-            {
-                MapManager.NextAction(this.Placing);
+                if (this.State == WorkingState.Ready)
+                {
+                    MapManager.AfterAction(Rand.Range(0, 30), this.Ready);
+                }
+                else if (this.State == WorkingState.Working)
+                {
+                    MapManager.NextAction(this.StartWork);
+                }
+                else if (this.State == WorkingState.Placing)
+                {
+                    MapManager.NextAction(this.Placing);
+                }
             }
         }
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
+            this.ResetValues();
             this.ClearActions();
-            this.Reset();
             base.DeSpawn();
         }
 
@@ -143,6 +152,13 @@ namespace NR_AutoMachineTool
         }
 
         protected virtual void Reset()
+        {
+            this.ResetValues();
+            this.ClearActions();
+            MapManager.NextAction(this.Ready);
+        }
+
+        protected virtual void ResetValues()
         {
             if (this.State != WorkingState.Ready)
             {
@@ -196,18 +212,16 @@ namespace NR_AutoMachineTool
             }
             if (!this.IsActive())
             {
-                this.Reset();
+                this.ResetValues();
                 MapManager.AfterAction(30, Ready);
                 return;
             }
 
-            if (this.TryStartWorking(out this.working))
+            if (this.TryStartWorking(out this.working, out this.totalWorkAmount))
             {
                 this.State = WorkingState.Working;
-                this.totalWorkAmount = GetTotalWorkAmount(this.working);
                 this.workStartTick = Find.TickManager.TicksAbs;
                 MapManager.NextAction(this.StartWork);
-                MapManager.NextAction(this.CheckWork);
             }
             else
             {
@@ -233,7 +247,6 @@ namespace NR_AutoMachineTool
             if (!this.IsActive())
             {
                 this.Reset();
-                MapManager.AfterAction(30, Ready);
                 return;
             }
             CreateWorkingEffect();
@@ -241,14 +254,14 @@ namespace NR_AutoMachineTool
             MapManager.AfterAction(this.CalcRemainTick(), this.FinishWork);
         }
 
-        protected void ForceStartWork(T working)
+        protected void ForceStartWork(T working, float workAmount)
         {
-            this.Reset();
+            this.ResetValues();
             this.ClearActions();
 
             this.State = WorkingState.Working;
             this.working = working;
-            this.totalWorkAmount = GetTotalWorkAmount(this.working);
+            this.totalWorkAmount = workAmount;
             this.workStartTick = Find.TickManager.TicksAbs;
             MapManager.NextAction(StartWork);
         }
@@ -262,14 +275,12 @@ namespace NR_AutoMachineTool
             if (!this.IsActive())
             {
                 this.Reset();
-                MapManager.RemoveAfterAction(this.FinishWork);
-                MapManager.AfterAction(30, Ready);
                 return;
             }
+
             if (this.CurrentWorkAmount >= this.totalWorkAmount)
             {
                 // 作業中に電力が変更されて終わってしまった場合、次TickでFinish呼び出し.
-                MapManager.RemoveAfterAction(this.FinishWork);
                 MapManager.NextAction(this.FinishWork);
             }
             else
@@ -289,13 +300,11 @@ namespace NR_AutoMachineTool
             if (!this.IsActive())
             {
                 this.Reset();
-                MapManager.AfterAction(30, Ready);
                 return;
             }
             if (this.WorkIntrruption(this.working))
             {
                 this.Reset();
-                MapManager.NextAction(this.Ready);
                 return;
             }
             if (this.FinishWorking(this.working, out this.products))
@@ -307,7 +316,7 @@ namespace NR_AutoMachineTool
             }
             else
             {
-                this.Reset();
+                this.ResetValues();
                 MapManager.NextAction(this.Ready);
             }
         }
@@ -321,13 +330,12 @@ namespace NR_AutoMachineTool
             if (!this.IsActive())
             {
                 this.Reset();
-                MapManager.AfterAction(30, Ready);
                 return;
             }
             if (this.PlaceProduct(ref this.products))
             {
                 this.State = WorkingState.Ready;
-                this.Reset();
+                this.ResetValues();
                 MapManager.NextAction(Ready);
             }
             else
@@ -340,7 +348,7 @@ namespace NR_AutoMachineTool
 
         protected abstract bool WorkIntrruption(T working);
 
-        protected abstract bool TryStartWorking(out T target);
+        protected abstract bool TryStartWorking(out T target, out float workAmount);
 
         protected abstract bool FinishWorking(T working, out List<Thing> products);
 
@@ -374,7 +382,6 @@ namespace NR_AutoMachineTool
                         GenPlace.TryPlaceThing(target, OutputCell(), this.Map, ThingPlaceMode.Near);
                         return total;
                     }
-                    return total;
                 }
                 return total.Append(target);
             });

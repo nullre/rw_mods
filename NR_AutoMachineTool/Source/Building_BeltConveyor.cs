@@ -91,9 +91,6 @@ namespace NR_AutoMachineTool
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
             var targets = LinkTargetConveyor();
-
-            this.Reset();
-
             base.DeSpawn();
 
             targets.ForEach(x => x.Unlink(this));
@@ -179,7 +176,7 @@ namespace NR_AutoMachineTool
             {
                 if (t.Spawned) t.DeSpawn();
                 this.dest = rot;
-                this.ForceStartWork(t);
+                this.ForceStartWork(t, 1f);
                 return true;
             }
             else
@@ -252,8 +249,7 @@ namespace NR_AutoMachineTool
                 }
             }
 
-            var dir = default(Rot4);
-            if (this.SendableConveyor(thing, out dir))
+            if (this.SendableConveyor(thing, out Rot4 dir))
             {
                 // 他に流す方向があれば、やり直し.
                 this.Reset();
@@ -355,18 +351,14 @@ namespace NR_AutoMachineTool
                 .ForEach(s => s.NortifyReceivable());
         }
 
-        protected override float GetTotalWorkAmount(Thing working)
-        {
-            return 1f;
-        }
-
         protected override bool WorkIntrruption(Thing working)
         {
             return false;
         }
 
-        protected override bool TryStartWorking(out Thing target)
+        protected override bool TryStartWorking(out Thing target, out float workAmount)
         {
+            workAmount = 1f;
             if (this.IsUnderground)
             {
                 target = null;
@@ -375,7 +367,7 @@ namespace NR_AutoMachineTool
             target = this.Position.GetThingList(this.Map).Where(t => t.def.category == ThingCategory.Item).FirstOption().GetOrDefault(null);
             if (target != null)
             {
-                this.ReceiveThing(this.IsUnderground, target);
+                this.dest = Destination(target, true);
             }
             return target != null;
         }

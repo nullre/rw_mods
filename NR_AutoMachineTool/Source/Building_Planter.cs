@@ -36,17 +36,12 @@ namespace NR_AutoMachineTool
 
         public override bool Glowable => true;
 
-        protected override float GetTotalWorkAmount(Thing working)
-        {
-            return working.def.plant.sowWork;
-        }
-
         protected override bool WorkIntrruption(Thing working)
         {
             return !working.Spawned;
         }
 
-        protected override bool TryStartWorking(out Thing target)
+        protected override bool TryStartWorking(out Thing target, out float workAmount)
         {
             target = GenRadial.RadialCellsAround(this.Position, this.GetRange(), true)
                 .Select(c => new { Cell = c, Plantable = c.GetPlantable(this.Map) })
@@ -73,6 +68,7 @@ namespace NR_AutoMachineTool
                     }
                     return Option(planting);
                 }).GetOrDefault(null);
+            workAmount = target?.def.plant.sowWork ?? 0f;
             return target != null;
         }
 

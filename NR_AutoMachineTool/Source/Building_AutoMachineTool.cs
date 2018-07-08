@@ -255,15 +255,16 @@ namespace NR_AutoMachineTool
                 .FirstOption();
         }
 
-        protected override bool TryStartWorking(out Building_AutoMachineTool target)
+        protected override bool TryStartWorking(out Building_AutoMachineTool target, out float workAmount)
         {
             target = this;
+            workAmount = 0;
             if (!this.workTable.Where(t => t.CurrentlyUsableForBills() && t.billStack.AnyShouldDoNow).HasValue)
             {
                 return false;
             }
             var consumable = Consumable();
-            return WorkableBill(consumable).Select(tuple =>
+            var result = WorkableBill(consumable).Select(tuple =>
             {
                 this.bill = tuple.Value1;
                 tuple.Value2.Select(v => v.thing).SelectMany(t => Option(t as Corpse)).ForEach(c => c.Strip());
@@ -281,13 +282,10 @@ namespace NR_AutoMachineTool
                         compColorable.Color = this.dominant.DrawColor;
                     }
                 }
-                return true;
-            }).GetOrDefault(false);
-        }
-
-        protected override float GetTotalWorkAmount(Building_AutoMachineTool working)
-        {
-            return this.bill.recipe.WorkAmountTotal(this.bill.recipe.UsesUnfinishedThing ? this.dominant.def : null);
+                return new { Result = true, WorkAmount = this.bill.recipe.WorkAmountTotal(this.bill.recipe.UsesUnfinishedThing ? this.dominant.def : null) };
+            }).GetOrDefault(new { Result = false, WorkAmount = 0f });
+            workAmount = result.WorkAmount;
+            return result.Result;
         }
 
         protected override bool FinishWorking(Building_AutoMachineTool working, out List<Thing> products)

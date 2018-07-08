@@ -23,40 +23,11 @@ namespace NR_AutoMachineTool
         {
             base.MapComponentTick();
 
-            this.removeEachTickActions.ForEach(a => this.eachTickActions.Remove(a));
-            this.removeEachTickActions.Clear();
+            var removeSet = this.eachTickActions.ToList().Where(f => f()).ToHashSet();
 
-            this.removeTickActions.ForEach(a => this.tickActionsDict.ForEach(kv => kv.Value.Remove(a)));
-            this.removeTickActions.Clear();
+            removeSet.ForEach(r => this.eachTickActions.Remove(r));
 
-            this.eachTickActions.AddRange(this.addEachTickActions);
-            this.addEachTickActions.Clear();
-
-            this.addTickActionsDict.ForEach(kv =>
-            {
-                List<Action> list = null;
-                if (!this.tickActionsDict.TryGetValue(kv.Key, out list))
-                {
-                    list = new List<Action>();
-                    this.tickActionsDict[kv.Key] = list;
-                }
-                list.AddRange(kv.Value);
-            });
-
-            this.addTickActionsDict.Clear();
-
-            this.eachTickActions.RemoveAll(f =>
-            {
-                if (!this.removeEachTickActions.Contains(f))
-                    return f();
-                return true;
-            });
-
-            this.tickActionsDict.GetOption(Find.TickManager.TicksGame).ForEach(l => l.ForEach(a =>
-            {
-                if (!this.removeTickActions.Contains(a))
-                    a();
-            }));
+            this.tickActionsDict.GetOption(Find.TickManager.TicksGame).ForEach(s => s.ToList().ForEach(a => a()));
             this.tickActionsDict.Remove(Find.TickManager.TicksGame);
         }
 
@@ -78,30 +49,22 @@ namespace NR_AutoMachineTool
             }
         }
 
-        private Dictionary<int, List<Action>> tickActionsDict = new Dictionary<int, List<Action>>();
+        private Dictionary<int, HashSet<Action>> tickActionsDict = new Dictionary<int, HashSet<Action>>();
 
-        private List<Func<bool>> eachTickActions = new List<Func<bool>>();
-
-        private Dictionary<int, List<Action>> addTickActionsDict = new Dictionary<int, List<Action>>();
-
-        private List<Func<bool>> addEachTickActions = new List<Func<bool>>();
-
-        private List<Action> removeTickActions = new List<Action>();
-
-        private List<Func<bool>> removeEachTickActions = new List<Func<bool>>();
+        private HashSet<Func<bool>> eachTickActions = new HashSet<Func<bool>>();
 
         public void AfterAction(int ticks, Action act)
         {
             if (ticks < 1)
                 ticks = 1;
-            List<Action> list = null;
-            if (!this.addTickActionsDict.TryGetValue(Find.TickManager.TicksGame + ticks, out list))
+
+            if (!this.tickActionsDict.TryGetValue(Find.TickManager.TicksGame + ticks, out HashSet<Action> set))
             {
-                list = new List<Action>();
-                this.addTickActionsDict[Find.TickManager.TicksGame + ticks] = list;
+                set = new HashSet<Action>();
+                this.tickActionsDict[Find.TickManager.TicksGame + ticks] = set;
             }
-            list.Add(act);
-            this.removeTickActions.RemoveAll(a => a == act);
+
+            set.Add(act);
         }
 
         public void NextAction(Action act)
@@ -111,20 +74,17 @@ namespace NR_AutoMachineTool
 
         public void EachTickAction(Func<bool> act)
         {
-            this.removeEachTickActions.RemoveAll(a => a == act);
-            this.addEachTickActions.Add(act);
+            this.eachTickActions.Add(act);
         }
 
         public void RemoveAfterAction(Action act)
         {
-            this.addTickActionsDict.ForEach(kv => kv.Value.RemoveAll(a => a == act));
-            this.removeTickActions.Add(act);
+            this.tickActionsDict.ForEach(kv => kv.Value.Remove(act));
         }
 
         public void RemoveEachTickAction(Func<bool> act)
         {
-            this.addEachTickActions.RemoveAll(a => a == act);
-            this.removeEachTickActions.Add(act);
+            this.eachTickActions.Remove(act);
         }
     }
 }

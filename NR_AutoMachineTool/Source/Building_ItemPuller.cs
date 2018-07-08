@@ -90,19 +90,15 @@ namespace NR_AutoMachineTool
             return base.IsActive() && this.active;
         }
 
-        protected override float GetTotalWorkAmount(Thing working)
-        {
-            return Math.Min(working.stackCount, PullCount) * 10f;
-        }
-
         protected override bool WorkIntrruption(Thing working)
         {
             return !working.Spawned || working.Destroyed;
         }
 
-        protected override bool TryStartWorking(out Thing target)
+        protected override bool TryStartWorking(out Thing target, out float workAmount)
         {
             target = TargetThing().GetOrDefault(null);
+            workAmount = Math.Min(target?.stackCount ?? 0f, PullCount) * 10f;
             return target != null;
         }
 

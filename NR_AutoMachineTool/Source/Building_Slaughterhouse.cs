@@ -69,18 +69,14 @@ namespace NR_AutoMachineTool
             }).ToHashSet();
         }
 
-        protected override float GetTotalWorkAmount(Pawn working)
-        {
-            return 400f;
-        }
-
         protected override bool WorkIntrruption(Pawn working)
         {
             return working.Dead || !working.Spawned;
         }
 
-        protected override bool TryStartWorking(out Pawn target)
+        protected override bool TryStartWorking(out Pawn target, out float workAmount)
         {
+            workAmount = 400f;
             target = null;
             var tmp = FacingRect(this.Position, this.Rotation, this.GetRange())
                 .Where(c => (this.Position + this.Rotation.FacingCell).GetRoom(this.Map) == c.GetRoom(this.Map))

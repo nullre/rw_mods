@@ -39,7 +39,6 @@ namespace NR_AutoMachineTool
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
             var targets = LinkTargetConveyor();
-            this.Reset();
 
             base.DeSpawn();
 
@@ -107,7 +106,7 @@ namespace NR_AutoMachineTool
             if (this.State == WorkingState.Ready)
             {
                 if (t.Spawned) t.DeSpawn();
-                this.ForceStartWork(t);
+                this.ForceStartWork(t, 1f);
                 return true;
             }
             else
@@ -201,19 +200,15 @@ namespace NR_AutoMachineTool
             }
         }
 
-        protected override float GetTotalWorkAmount(Thing working)
-        {
-            return 1f;
-        }
-
         protected override bool WorkIntrruption(Thing working)
         {
             return false;
         }
 
-        protected override bool TryStartWorking(out Thing target)
+        protected override bool TryStartWorking(out Thing target, out float workAmount)
         {
             target = null;
+            workAmount = 1f;
             return false;
         }
 
