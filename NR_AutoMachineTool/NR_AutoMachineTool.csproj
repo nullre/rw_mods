@@ -223,11 +223,11 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetPath)" "$(ProjectDir)Assemblies"
-rd /s /q "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_AutoMachineTool"
-xcopy /Y /I /E "$(ProjectDir)Assemblies" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_AutoMachineTool\Assemblies"
-xcopy /Y /I /E "$(ProjectDir)Defs" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_AutoMachineTool\Defs"
-xcopy /Y /I /E "$(ProjectDir)About" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_AutoMachineTool\About"
-xcopy /Y /I /E "$(ProjectDir)Textures" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_AutoMachineTool\Textures"
-xcopy /Y /I /E "$(ProjectDir)Languages" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\NR_AutoMachineTool\Languages"</PostBuildEvent>
+rd /s /q "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)"
+xcopy /Y /I /E "$(ProjectDir)Assemblies" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Assemblies"
+xcopy /Y /I /E "$(ProjectDir)Defs" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Defs"
+xcopy /Y /I /E "$(ProjectDir)About" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\About"
+xcopy /Y /I /E "$(ProjectDir)Textures" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Textures"
+xcopy /Y /I /E "$(ProjectDir)Languages" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Languages"</PostBuildEvent>
   </PropertyGroup>
 </Project>
