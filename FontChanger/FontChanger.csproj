@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{23E975FC-945A-4597-9DBB-4C72E23B5028}</ProjectGuid>
+    <ProjectGuid>{19C596AB-D353-4614-ACAE-4A9AA82C90A2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NR_MaterialEnergy</RootNamespace>
-    <AssemblyName>NR_MaterialEnergy</AssemblyName>
+    <RootNamespace>FontChanger</RootNamespace>
+    <AssemblyName>FontChanger</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -42,58 +42,25 @@
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\IngredientValueGetter_Energy.cs" />
-    <Compile Include="Source\Bill_Production2.cs" />
-    <Compile Include="Source\ITab_MaterializeBills.cs" />
-    <Compile Include="Source\Building_MaterialMachine.cs" />
-    <Compile Include="Source\Utilities\Ops.cs" />
-    <Compile Include="Source\Utilities\Option.cs" />
-    <Compile Include="Source\Utilities\Tuple.cs" />
+    <Compile Include="Source\ModSetting_FontChanger.cs" />
+    <Compile Include="Source\Mod_FontChanger.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About\About.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="About\image01.png" />
-    <Content Include="About\preview.png" />
-    <Content Include="About\PublishedFileId.txt" />
-    <Content Include="Defs\ResearchProjectDefs\NR_MaterialEnergy.xml" />
-    <Content Include="Defs\ThingDefs\NR_MaterialEnergy.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Defs\WorkGiverDef\NR_MaterialEnergy.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Languages\English\DefInjected\ResearchProjectDefs\NR_MaterialEnergy.xml" />
-    <Content Include="Languages\English\DefInjected\ThingDefs\NR_MaterialEnergy.xml" />
-    <Content Include="Languages\English\DefInjected\WorkGiverDef\NR_MaterialEnergy.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Languages\English\Keyed\NR_MaterialEnergy.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Languages\Japanese\Keyed\NR_MaterialEnergy.xml" />
-    <Content Include="Textures\NR_MaterialEnergy\Building\MaterialMachine.png" />
-    <Content Include="Textures\NR_MaterialEnergy\Items\Energy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assemblies\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="README_en.md" />
-    <None Include="README.md" />
+    <Content Include="About\About.xml" />
+    <Content Include="Assemblies\FontChanger.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetPath)" "$(ProjectDir)Assemblies"
 rd /s /q "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)"
 xcopy /Y /I /E "$(ProjectDir)Assemblies" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Assemblies"
-xcopy /Y /I /E "$(ProjectDir)Defs" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Defs"
 xcopy /Y /I /E "$(ProjectDir)About" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\About"
-xcopy /Y /I /E "$(ProjectDir)Textures" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Textures"
-xcopy /Y /I /E "$(ProjectDir)Languages" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Languages"</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
