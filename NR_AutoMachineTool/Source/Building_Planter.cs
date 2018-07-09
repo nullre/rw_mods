@@ -36,7 +36,7 @@ namespace NR_AutoMachineTool
 
         public override bool Glowable => true;
 
-        protected override bool WorkIntrruption(Thing working)
+        protected override bool WorkInterruption(Thing working)
         {
             return !working.Spawned;
         }

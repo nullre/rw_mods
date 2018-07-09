@@ -345,13 +345,13 @@ namespace NR_AutoMachineTool
         {
             new Rot4[] { this.Rotation.Opposite, this.Rotation.Opposite.RotateAsNew(RotationDirection.Clockwise), this.Rotation.Opposite.RotateAsNew(RotationDirection.Counterclockwise) }
                 .Select(r => this.Position + r.FacingCell)
-                .SelectMany(p => p.GetThingList(this.Map))
+                .SelectMany(p => p.GetThingList(this.Map).ToList())
                 .Where(t => t.def.category == ThingCategory.Building)
                 .SelectMany(t => Option(t as IBeltConbeyorSender))
                 .ForEach(s => s.NortifyReceivable());
         }
 
-        protected override bool WorkIntrruption(Thing working)
+        protected override bool WorkInterruption(Thing working)
         {
             return false;
         }

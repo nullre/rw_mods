@@ -50,7 +50,7 @@ namespace NR_AutoMachineTool
             }
         }
 
-        protected override bool WorkIntrruption(Building_Miner working)
+        protected override bool WorkInterruption(Building_Miner working)
         {
             return !this.workingBill.ShouldDoNow();
         }
@@ -95,6 +95,36 @@ namespace NR_AutoMachineTool
         public int GetSkillLevel(SkillDef def)
         {
             return 20;
+        }
+
+
+        [Unsaved]
+        private Option<Effecter> workingEffect = Nothing<Effecter>();
+
+        protected override void CleanupWorkingEffect()
+        {
+            base.CleanupWorkingEffect();
+
+            this.workingEffect.ForEach(e => e.Cleanup());
+            this.workingEffect = Nothing<Effecter>();
+
+            MapManager.RemoveEachTickAction(this.EffectTick);
+        }
+
+        protected override void CreateWorkingEffect()
+        {
+            base.CreateWorkingEffect();
+
+            this.workingEffect = this.workingEffect.Fold(() => Option(this.workingBill.recipe.effectWorking).Select(e => e.Spawn()))(e => Option(e));
+
+            MapManager.EachTickAction(this.EffectTick);
+        }
+
+        protected bool EffectTick()
+        {
+            // this.workingEffect.ForEach(e => e.EffectTick(new TargetInfo(this.OutputCell(), this.Map), new TargetInfo(this)));
+            this.workingEffect.ForEach(e => e.EffectTick(new TargetInfo(this), new TargetInfo(this)));
+            return !this.workingEffect.HasValue;
         }
 
 
@@ -197,6 +227,8 @@ namespace NR_AutoMachineTool
 
             r.products = new List<ThingDefCountClass>().Append(defCount);
             r.defaultIngredientFilter = new ThingFilter();
+
+            r.effectWorking = EffecterDefOf.Drill;
 
             return r;
         }

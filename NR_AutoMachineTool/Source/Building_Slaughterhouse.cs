@@ -69,7 +69,7 @@ namespace NR_AutoMachineTool
             }).ToHashSet();
         }
 
-        protected override bool WorkIntrruption(Pawn working)
+        protected override bool WorkInterruption(Pawn working)
         {
             return working.Dead || !working.Spawned;
         }

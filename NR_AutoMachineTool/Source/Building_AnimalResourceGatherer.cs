@@ -87,7 +87,7 @@ namespace NR_AutoMachineTool
 
         private string compName;
 
-        protected override bool WorkIntrruption(Pawn working)
+        protected override bool WorkInterruption(Pawn working)
         {
             return !activeGetter(this.comp) || this.comp.Fullness < 0.5f;
         }

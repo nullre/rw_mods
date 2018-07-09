@@ -90,7 +90,7 @@ namespace NR_AutoMachineTool
             return base.IsActive() && this.active;
         }
 
-        protected override bool WorkIntrruption(Thing working)
+        protected override bool WorkInterruption(Thing working)
         {
             return !working.Spawned || working.Destroyed;
         }

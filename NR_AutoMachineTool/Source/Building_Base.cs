@@ -155,7 +155,6 @@ namespace NR_AutoMachineTool
         {
             if (this.State != WorkingState.Ready)
             {
-                this.CleanupWorkingEffect();
                 this.products.ForEach(t =>
                 {
                     if (!t.Spawned)
@@ -164,6 +163,7 @@ namespace NR_AutoMachineTool
                     }
                 });
             }
+            this.CleanupWorkingEffect();
             this.State = WorkingState.Ready;
             this.totalWorkAmount = 0;
             this.workStartTick = 0;
@@ -277,7 +277,11 @@ namespace NR_AutoMachineTool
                 this.ForceReady();
                 return;
             }
-
+            if (this.WorkInterruption(this.working))
+            {
+                this.ForceReady();
+                return;
+            }
             if (this.CurrentWorkAmount >= this.totalWorkAmount)
             {
                 // 作業中に電力が変更されて終わってしまった場合、次TickでFinish呼び出し.
@@ -302,7 +306,7 @@ namespace NR_AutoMachineTool
                 this.ForceReady();
                 return;
             }
-            if (this.WorkIntrruption(this.working))
+            if (this.WorkInterruption(this.working))
             {
                 this.ForceReady();
                 return;
@@ -346,7 +350,7 @@ namespace NR_AutoMachineTool
 
         protected abstract float WorkAmountPerTick { get; }
 
-        protected abstract bool WorkIntrruption(T working);
+        protected abstract bool WorkInterruption(T working);
 
         protected abstract bool TryStartWorking(out T target, out float workAmount);
 

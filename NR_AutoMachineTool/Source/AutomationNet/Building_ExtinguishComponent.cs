@@ -17,7 +17,7 @@ namespace NR_AutoMachineTool
     {
         protected override float WorkAmountPerTick => this.consumer.suppliedEnergy * 0.000001f;
 
-        protected override bool WorkIntrruption(Fire working)
+        protected override bool WorkInterruption(Fire working)
         {
             if (working.fireSize <= 0 && working.Spawned)
             {

@@ -24,7 +24,7 @@ namespace NR_AutoMachineTool
         public override int MinPowerForRange { get => this.Setting.HarvesterTier(Extension.tier).minSupplyPowerForRange; }
         public override int MaxPowerForRange { get => this.Setting.HarvesterTier(Extension.tier).maxSupplyPowerForRange; }
 
-        protected override bool WorkIntrruption(Plant working)
+        protected override bool WorkInterruption(Plant working)
         {
             return !working.Spawned || (!working.Blighted && !working.HarvestableNow);
         }

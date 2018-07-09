@@ -96,7 +96,7 @@ namespace NR_AutoMachineTool
             return r;
         }
 
-        protected override bool WorkIntrruption(Thing working)
+        protected override bool WorkInterruption(Thing working)
         {
             return false;
         }

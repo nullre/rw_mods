@@ -30,7 +30,7 @@ namespace NR_AutoMachineTool
 
         protected override float WorkAmountPerTick => this.consumer.suppliedEnergy * 0.001f;
 
-        protected override bool WorkIntrruption(Building working)
+        protected override bool WorkInterruption(Building working)
         {
             if(working.HitPoints >= working.MaxHitPoints)
             {

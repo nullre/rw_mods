@@ -106,7 +106,7 @@ namespace NR_AutoMachineTool
         {
             Option(this.TryGetComp<CompGlower>()).ForEach(glower =>
             {
-                var tmp = this.TryGetComp<CompPowerTrader>().PowerOn;
+                var tmp = this.TryGetComp<CompFlickable>().SwitchIsOn;
                 glower.Props.glowRadius = this.Glow ? (this.GetRange() + 2f) * 2f : 0;
                 glower.Props.overlightRadius = this.Glow ? (this.GetRange() + 2.1f) : 0;
                 this.TryGetComp<CompFlickable>().SwitchIsOn = !tmp;

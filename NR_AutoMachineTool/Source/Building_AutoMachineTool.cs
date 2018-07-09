@@ -63,6 +63,8 @@ namespace NR_AutoMachineTool
         private bool forbidItem = false;
 
         [Unsaved]
+        private Option<Effecter> workingEffect = Nothing<Effecter>();
+        [Unsaved]
         private Option<Sustainer> workingSound = Nothing<Sustainer>();
         [Unsaved]
         private Option<Building_WorkTable> workTable;
@@ -146,7 +148,7 @@ namespace NR_AutoMachineTool
                 {
                     this.ingredients.ForEach(t => GenPlace.TryPlaceThing(t, P, this.M, ThingPlaceMode.Near));
                 }
-                else
+                else 
                 {
                     GenPlace.TryPlaceThing(this.unfinished, P, this.M, ThingPlaceMode.Near);
                     this.unfinished.Destroy(DestroyMode.Cancel);
@@ -163,16 +165,31 @@ namespace NR_AutoMachineTool
         {
             base.CleanupWorkingEffect();
 
+            this.workingEffect.ForEach(e => e.Cleanup());
+            this.workingEffect = Nothing<Effecter>();
+
             this.workingSound.ForEach(s => s.End());
             this.workingSound = Nothing<Sustainer>();
+
+            MapManager.RemoveEachTickAction(this.EffectTick);
         }
 
         protected override void CreateWorkingEffect()
         {
             base.CreateWorkingEffect();
             
+            this.workingEffect = this.workingEffect.Fold(() => Option(this.bill.recipe.effectWorking).Select(e => e.Spawn()))(e => Option(e));
+
             this.workingSound = this.workingSound.Fold(() => this.workTable.SelectMany(t => Option(this.bill.recipe.soundWorking).Select(s => s.TrySpawnSustainer(t))))(s => Option(s))
                 .Peek(s => s.Maintain());
+
+            MapManager.EachTickAction(this.EffectTick);
+        }
+
+        protected bool EffectTick()
+        {
+            this.workingEffect.ForEach(e => this.workTable.ForEach(w => e.EffectTick(new TargetInfo(this), new TargetInfo(w))));
+            return !this.workingEffect.HasValue;
         }
 
         private int billCount = 0;
@@ -282,7 +299,7 @@ namespace NR_AutoMachineTool
                         compColorable.Color = this.dominant.DrawColor;
                     }
                 }
-                return new { Result = true, WorkAmount = this.bill.recipe.WorkAmountTotal(this.bill.recipe.UsesUnfinishedThing ? this.dominant.def : null) };
+                return new { Result = true, WorkAmount = this.bill.recipe.WorkAmountTotal(this.bill.recipe.UsesUnfinishedThing ? this.dominant?.def : null) };
             }).GetOrDefault(new { Result = false, WorkAmount = 0f });
             workAmount = result.WorkAmount;
             return result.Result;
@@ -505,7 +522,7 @@ namespace NR_AutoMachineTool
             return RegionAndRoomQuery.GetRoom(this, type);
         }
 
-        protected override bool WorkIntrruption(Building_AutoMachineTool working)
+        protected override bool WorkInterruption(Building_AutoMachineTool working)
         {
             if (!this.workTable.HasValue)
             {
@@ -517,6 +534,10 @@ namespace NR_AutoMachineTool
                 return true;
             }
             if(currentTable.Value != this.workTable.Value)
+            {
+                return true;
+            }
+            if(this.bill == null || !this.bill.ShouldDoNow())
             {
                 return true;
             }
