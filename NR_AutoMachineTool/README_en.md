@@ -10,7 +10,7 @@ Thanks to the producers of these mods.
 ---
 ## AutoMachineTool
 
-![AutoMachineTool](/NR_AutoMachineTool/About/image01.png)
+![AutoMachineTool](/NR_AutoMachineTool/About/Desc_AutoMachineTool.png)
 
 ### Usage
 - Research on automatic machine tool.
@@ -38,8 +38,8 @@ Thanks to the producers of these mods.
 ---
 ## BeltConveyor
 
-![BeltConveyor](/NR_AutoMachineTool/About/image02.png)  
-![Underground conveyor](/NR_AutoMachineTool/About/image07.png)
+![BeltConveyor](/NR_AutoMachineTool/About/Desc_BeltConveyor1.png)  
+![Underground conveyor](/NR_AutoMachineTool/About/Desc_BeltConveyor2.png)
 
 ### Usage
 - Research on belt conveyor.
@@ -67,7 +67,7 @@ Thanks to the producers of these mods.
 ---
 ## Item Puller
 
-![ItemPuller](/NR_AutoMachineTool/About/image03.png)
+![ItemPuller](/NR_AutoMachineTool/About/Desc_ItemPuller.png)
 
 ### Usage
 - Research on belt conveyor.
@@ -92,7 +92,7 @@ Thanks to the producers of these mods.
 ---
 ## Planter
 
-![Planter](/NR_AutoMachineTool/About/image05.png)
+![Planter](/NR_AutoMachineTool/About/Desc_Planter.png)
 
 ### Usage
 - Research on Automatic Agriculture.
@@ -115,7 +115,7 @@ Thanks to the producers of these mods.
 ---
 ## Harvester
 
-![Harvester](/NR_AutoMachineTool/About/image06.png)
+![Harvester](/NR_AutoMachineTool/About/Desc_Harvester.png)
 
 ### Usage
 - Research on Automatic Agriculture.
@@ -141,7 +141,7 @@ Thanks to the producers of these mods.
 ---
 ## AnimalResourceGatherer
 
-![AnimalResourceGatherer](/NR_AutoMachineTool/About/image08.png)
+![AnimalResourceGatherer](/NR_AutoMachineTool/About/Desc_AnimalResourceGatherer.png)
 
 ### Usage
 - Research on Automatic animal caretaker.
@@ -165,7 +165,7 @@ Thanks to the producers of these mods.
 ---
 ## Slaughterhouse
 
-![Slaughterhouse](/NR_AutoMachineTool/About/image09.png)
+![Slaughterhouse](/NR_AutoMachineTool/About/Desc_Slaughterhouse.png)
 
 ### Usage
 - Research on Automatic animal caretaker.
@@ -184,6 +184,62 @@ Thanks to the producers of these mods.
 - If the output destination is not a belt conveyor and the item already exists, it will be placed near the output destination.
 - The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands.
 - I think balance is not good.
+
+### TODO
+
+---
+## AutoMiner
+
+![AutoMiner](/NR_AutoMachineTool/About/Desc_Miner.png)
+
+### Usage
+- Research on Automatic mining.
+- Install in an arbitrary place。
+- Select the AutoMiner and set mining from the processing tab.
+- The AutoMiner will mining.
+
+### Function
+- You can select the AutoMiner and change the power supply amount from the power tab. If the power supply amount is large, the mining speed increases.
+- You can specify the output destination. If the output destination is in the stockpiling zone and the finished product can be placed, it is placed somewhere in the stockpiling zone containing the output destination.
+
+### Caution
+- If the output destination is a belt conveyor and the item already exists, the item will be placed in placement.
+- If the output destination is not a belt conveyor and the item already exists, it will wait for placement.
+- I think balance is not good.
+
+### TODO
+
+---
+## AutoCleaner
+
+![AutoCleaner](/NR_AutoMachineTool/About/Desc_Cleaner.png)
+
+### Usage
+- Research on Automatic cleaning.
+- Install in a place where dirt will occur.
+- The AutoCleaner cleans the dirt in the range.
+
+### Function
+- You can select the AutoCleaner and change the power supply amount from the power tab. If the power supply is large, the cleaning speed and cleaning range will rise.
+- If Pawn within the range is dirty, drop dirt.
+
+### Caution
+- I think balance is not good.
+
+### TODO
+
+---
+## WallLight
+
+![WallLight](/NR_AutoMachineTool/About/Desc_WallLight.png)
+
+### Usage
+- Install on the wall.
+
+### Function
+- It glows.
+
+### 注意
 
 ### TODO
 

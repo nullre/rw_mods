@@ -11,7 +11,7 @@ I'm Japanese. I can't understand English, sorry...
 ---
 ## 自動工作機械
 
-![自動工作機械](/NR_AutoMachineTool/About/image01.png)
+![自動工作機械](/NR_AutoMachineTool/About/Desc_AutoMachineTool.png)
 
 ### 使い方
 - 自動工作機械の研究をします。
@@ -39,8 +39,8 @@ I'm Japanese. I can't understand English, sorry...
 ---
 ## ベルトコンベア
 
-![ベルトコンベア](/NR_AutoMachineTool/About/image02.png)  
-![地下コンベア](/NR_AutoMachineTool/About/image07.png)
+![ベルトコンベア](/NR_AutoMachineTool/About/Desc_BeltConveyor1.png)  
+![地下コンベア](/NR_AutoMachineTool/About/Desc_BeltConveyor2.png)
 
 ### 使い方
 - ベルトコンベアの研究をします。
@@ -68,7 +68,7 @@ I'm Japanese. I can't understand English, sorry...
 ---
 ## アイテム引き出し機
 
-![アイテム引き出し機](/NR_AutoMachineTool/About/image03.png)
+![アイテム引き出し機](/NR_AutoMachineTool/About/Desc_ItemPuller.png)
 
 ### 使い方
 - ベルトコンベアの研究をします。
@@ -93,7 +93,7 @@ I'm Japanese. I can't understand English, sorry...
 ---
 ## 種蒔き機
 
-![種蒔き機](/NR_AutoMachineTool/About/image05.png)
+![種蒔き機](/NR_AutoMachineTool/About/Desc_Planter.png)
 
 ### 使い方
 - 自動農業の研究をします。
@@ -116,7 +116,7 @@ I'm Japanese. I can't understand English, sorry...
 ---
 ## 収穫機
 
-![収穫機](/NR_AutoMachineTool/About/image06.png)
+![収穫機](/NR_AutoMachineTool/About/Desc_Harvester.png)
 
 ### 使い方
 - 自動農業の研究をします。
@@ -142,7 +142,7 @@ I'm Japanese. I can't understand English, sorry...
 ---
 ## 動物世話機
 
-![動物世話機](/NR_AutoMachineTool/About/image08.png)
+![動物世話機](/NR_AutoMachineTool/About/Desc_AnimalResourceGatherer.png)
 
 ### 使い方
 - 自動動物飼育の研究をします。
@@ -166,7 +166,7 @@ I'm Japanese. I can't understand English, sorry...
 ---
 ## 屠畜機
 
-![屠畜機](/NR_AutoMachineTool/About/image09.png)
+![屠畜機](/NR_AutoMachineTool/About/Desc_Slaughterhouse.png)
 
 ### 使い方
 - 自動動物飼育の研究をします。
@@ -187,6 +187,62 @@ I'm Japanese. I can't understand English, sorry...
 - バランスは、良くないと思います。
 
 ### TODO
+
+---
+## 自動採掘機
+
+![自動採掘機](/NR_AutoMachineTool/About/Desc_Miner.png)
+
+### 使い方
+- 自動採掘の研究をします。
+- 任意の場所に設置します。
+- 自動採掘機を選択し、加工タブから採掘の設定を行います。
+- 自動採掘機が採掘を行います。
+
+### 機能
+- 自動採掘機を選択し、電力タブから電力供給量の変更ができます。電力供給量が大きい場合には、作成速度が上がります。
+- 出力先の指定ができます。出力先が備蓄ゾーンで採掘品が配置可能な場合には、出力先が含まれる備蓄ゾーン内のどこかに配置されます。
+
+### 注意
+- 出力先がベルトコンベアの場合でアイテムがすでに存在する場合、アイテム配置待ちになります。
+- 出力先がベルトコンベアでない場合でアイテムがすでに存在する場合、配置待ちになります。
+- バランスは、良くないと思います。
+
+### TODO
+
+---
+## 自動清掃機
+
+![自動清掃機](/NR_AutoMachineTool/About/Desc_Cleaner.png)
+
+### 使い方
+- 自動清掃の研究をします。
+- 汚れが発生する場所に設置します。
+- 自動清掃機が範囲内の汚れを清掃します。
+
+### 機能
+- 自動清掃機を選択し、電力タブから電力供給量の変更ができます。電力供給量が大きい場合には、作成速度や清掃範囲が上がります。
+- 範囲内のPawnが汚れている場合、汚れを落とします。
+
+### 注意
+- バランスは、良くないと思います。
+
+### TODO
+
+## 壁埋込みライト
+
+![壁埋め込みライト](/NR_AutoMachineTool/About/Desc_WallLight.png)
+
+### 使い方
+- 壁の上に設置します。
+
+### 機能
+- 光ります。
+
+### 注意
+
+### TODO
+
 
 ---
 ## 全体

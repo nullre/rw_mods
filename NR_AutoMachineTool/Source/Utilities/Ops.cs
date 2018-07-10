@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Reflection;
+using System.Reflection.Emit;
 
 using RimWorld;
 using Verse;
@@ -156,7 +159,7 @@ namespace NR_AutoMachineTool.Utilities
 
         #region for rimworld
 
-//        public static void L(object obj) { Log.Message(obj == null ? "null" : obj.ToString()); }
+        public static void L(object obj) { Log.Message(obj == null ? "null" : obj.ToString()); }
 
         public static bool PlaceItem(Thing t, IntVec3 cell, bool forbid, Map map, bool firstAbsorbStack = false)
         {
@@ -279,5 +282,60 @@ namespace NR_AutoMachineTool.Utilities
             return p.ageTracker.CurLifeStageIndex >= 2;
         }
         #endregion
+
+        public static Func<T, TValue> GenerateGetFieldDelegate<T, TValue>(FieldInfo field)
+        {
+            var d = new DynamicMethod("getter", typeof(TValue), new Type[] { typeof(T) }, true);
+            var g = d.GetILGenerator();
+            g.Emit(OpCodes.Ldarg_0);
+            g.Emit(OpCodes.Ldfld, field);
+            g.Emit(OpCodes.Ret);
+
+            return (Func<T, TValue>)d.CreateDelegate(typeof(Func<T, TValue>));
+        }
+
+        public static Action<T, TValue> GenerateSetFieldDelegate<T, TValue>(FieldInfo field)
+        {
+            var d = new DynamicMethod("setter", typeof(void), new Type[] { typeof(T), typeof(TValue) }, true);
+            var g = d.GetILGenerator();
+            g.Emit(OpCodes.Ldarg_0);
+            g.Emit(OpCodes.Ldarg_1);
+            g.Emit(OpCodes.Stfld, field);
+            g.Emit(OpCodes.Ret);
+
+            return (Action<T, TValue>)d.CreateDelegate(typeof(Action<T, TValue>));
+        }
+
+        public static Func<T, TResult> GenerateMeshodDelegate<T, TResult>(MethodInfo getter)
+        {
+            var instanceParam = Expression.Parameter(typeof(T), "instance");
+            var args = new List<ParameterExpression>() { };
+            var callExp = Expression.Call(instanceParam, getter, args.Cast<Expression>());
+            return Expression.Lambda<Func<T, TResult>>(callExp, new List<ParameterExpression>().Append(instanceParam).Append(args)).Compile();
+        }
+
+        public static Func<T, TParam1, TResult> GenerateMeshodDelegate<T, TParam1, TResult>(MethodInfo getter)
+        {
+            var instanceParam = Expression.Parameter(typeof(T), "instance");
+            var args = new List<ParameterExpression>() { Expression.Parameter(typeof(TParam1), "param1") };
+            var callExp = Expression.Call(instanceParam, getter, args.Cast<Expression>());
+            return Expression.Lambda<Func<T, TParam1, TResult>>(callExp, new List<ParameterExpression>().Append(instanceParam).Append(args)).Compile();
+        }
+
+        public static Action<T> GenerateVoidMeshodDelegate<T>(MethodInfo getter)
+        {
+            var instanceParam = Expression.Parameter(typeof(T), "instance");
+            var args = new List<ParameterExpression>() { };
+            var callExp = Expression.Call(instanceParam, getter, args.Cast<Expression>());
+            return Expression.Lambda<Action<T>>(callExp, new List<ParameterExpression>().Append(instanceParam)).Compile();
+        }
+
+        public static Action<T, TParam1> GenerateVoidMeshodDelegate<T, TParam1>(MethodInfo getter)
+        {
+            var instanceParam = Expression.Parameter(typeof(T), "instance");
+            var args = new List<ParameterExpression>() { Expression.Parameter(typeof(TParam1), "param1") };
+            var callExp = Expression.Call(instanceParam, getter, args.Cast<Expression>());
+            return Expression.Lambda<Action<T, TParam1>>(callExp, new List<ParameterExpression>().Append(instanceParam)).Compile();
+        }
     }
 }

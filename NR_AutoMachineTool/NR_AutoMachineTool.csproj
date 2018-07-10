@@ -74,6 +74,7 @@
     <Compile Include="Source\Building_Miner.cs" />
     <Compile Include="Source\Building_Hervester.cs" />
     <Compile Include="Source\Building_ItemPuller.cs" />
+    <Compile Include="Source\Building_Cleaner.cs" />
     <Compile Include="Source\Building_Planter.cs" />
     <Compile Include="Source\Building_Slaughterhouse.cs" />
     <Compile Include="Source\AutomationNet\CompAutomationEnergyTransmitter.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Source\AutomationNet\CompAutomationEnergySupplier.cs" />
     <Compile Include="Source\AutomationNet\Graphic_LinkedAutomationNet.cs" />
     <Compile Include="Source\Graphic_Linked2.cs" />
+    <Compile Include="Source\Graphic_WallLight.cs" />
     <Compile Include="Source\Graphic_LinkedConveyor.cs" />
     <Compile Include="Source\Graphic_Selectable.cs" />
     <Compile Include="Source\ITab_Bills2.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Source\AutomationNet\AutomationNetManager.cs" />
     <Compile Include="Source\AutomationNet\AutomationNet.cs" />
     <Compile Include="Source\PlaceWorker_Miner.cs" />
+    <Compile Include="Source\PlaceWorker_Cleaner.cs" />
     <Compile Include="Source\RS.cs" />
     <Compile Include="Source\SectionLayer_UGConveyor.cs" />
     <Compile Include="Source\SpecialThingFilterWorker_Fresh.cs" />
@@ -143,6 +146,12 @@
     </Content>
     <Content Include="Defs\ResearchProjectDefs\NR_AutoMachineTool.xml" />
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_AutomationNet.xml" />
+    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Cleaner.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_WallLight.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Slaughterhouse.xml" />
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_AnimalResourceGatherer.xml" />
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Harvester.xml" />
@@ -168,6 +177,8 @@
     </Content>
     <Content Include="Languages\Japanese\DefInjected\ResearchProjectDefs\NR_AutoMachineTool.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_AutomationNet.xml" />
+    <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_WallLight.xml" />
+    <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Cleaner.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Miner.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Slauterhouse.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_AnimalResourceGatherer.xml">

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <Building_NR_AutoMachineTool_Cleaner.description>自動的に範囲内の汚れを掃除します。
+汚れているPawnの汚れも落とします。</Building_NR_AutoMachineTool_Cleaner.description>
+
+  <Building_NR_AutoMachineTool_Cleaner.label>自動清掃機</Building_NR_AutoMachineTool_Cleaner.label>
+</LanguageData>

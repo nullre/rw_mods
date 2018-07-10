@@ -169,6 +169,24 @@
   </ResearchProjectDef>
 
   <ResearchProjectDef>
+    <defName>ResearchProject_NR_AutoMachineTool_AutoCleaner</defName>
+    <label>Automatic cleaning.</label>
+    <description>AutoCleaner can be created.</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>MultiAnalyzer</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <tab>NR_AutoMachineTool_ResearchTab</tab>
+    <researchViewX>1</researchViewX>
+    <researchViewY>4</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>ResearchProject_NR_AutoMachineTool_AutomationNet</defName>
     <label>Automation Net (experimental)</label>
     <description>Automation Net can be created.</description>

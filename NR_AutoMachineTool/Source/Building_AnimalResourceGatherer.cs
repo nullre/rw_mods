@@ -26,30 +26,10 @@ namespace NR_AutoMachineTool
         static Building_AnimalResourceGatherer()
         {
             var compType = typeof(CompHasGatherableBodyResource);
-            resourceDefGetter = GenerateGetterDelegate<CompHasGatherableBodyResource, ThingDef>(compType.GetProperty("ResourceDef", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true));
-            activeGetter = GenerateGetterDelegate<CompHasGatherableBodyResource, bool>(compType.GetProperty("Active", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true));
-            resourceAmountGetter = GenerateGetterDelegate<CompHasGatherableBodyResource, int>(compType.GetProperty("ResourceAmount", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true));
+            resourceDefGetter = GenerateMeshodDelegate<CompHasGatherableBodyResource, ThingDef>(compType.GetProperty("ResourceDef", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true));
+            activeGetter = GenerateMeshodDelegate<CompHasGatherableBodyResource, bool>(compType.GetProperty("Active", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true));
+            resourceAmountGetter = GenerateMeshodDelegate<CompHasGatherableBodyResource, int>(compType.GetProperty("ResourceAmount", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true));
             fullnessSetter = GenerateSetFieldDelegate<CompHasGatherableBodyResource, float>(compType.GetField("fullness", BindingFlags.NonPublic | BindingFlags.Instance));
-        }
-
-        private static Func<T, TValue> GenerateGetterDelegate<T, TValue>(MethodInfo getter)
-        {
-            var instanceParam = Expression.Parameter(typeof(T), "instance");
-            return Expression.Lambda<Func<T, TValue>>(
-                Expression.Call(instanceParam, getter),
-                instanceParam).Compile();
-        }
-
-        private static Action<T, TValue> GenerateSetFieldDelegate<T, TValue>(FieldInfo field)
-        {
-            var d = new DynamicMethod("setter", typeof(void), new Type[] { typeof(T), typeof(TValue) }, true);
-            var g = d.GetILGenerator();
-            g.Emit(OpCodes.Ldarg_0);
-            g.Emit(OpCodes.Ldarg_1);
-            g.Emit(OpCodes.Stfld, field);
-            g.Emit(OpCodes.Ret);
-
-            return (Action<T, TValue>)d.CreateDelegate(typeof(Action<T, TValue>));
         }
 
         protected override float SpeedFactor { get => this.Setting.gathererSetting.speedFactor; }

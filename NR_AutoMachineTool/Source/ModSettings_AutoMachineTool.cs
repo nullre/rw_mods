@@ -30,6 +30,9 @@ namespace NR_AutoMachineTool
         public BasicMachineSetting minerSetting = MinerDefault();
         public static readonly Func<BasicMachineSetting> MinerDefault = () => new BasicMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 10000, maxSupplyPowerForSpeed = 1000000 };
 
+        public RangeMachineSetting cleanerSetting = CleanerDefault();
+        public static readonly Func<RangeMachineSetting> CleanerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 20000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000 };
+
         private List<RangeSkillMachineSetting> autoMachineToolSetting = CreateAutoMachineToolDefault();
 
         private static List<RangeSkillMachineSetting> CreateAutoMachineToolDefault()
@@ -74,20 +77,22 @@ namespace NR_AutoMachineTool
             this.gathererSetting = GathererDefault();
             this.slaughterSetting = SlaughterDefault();
             this.minerSetting = MinerDefault();
+            this.cleanerSetting = CleanerDefault();
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Collections.Look<RangeSkillMachineSetting>(ref this.autoMachineToolSetting, "autoMachineToolSetting");
-            Scribe_Collections.Look<RangeSkillMachineSetting>(ref this.planterSetting, "planterSetting");
-            Scribe_Collections.Look<RangeSkillMachineSetting>(ref this.harvesterSetting, "harvesterSetting");
+            Scribe_Collections.Look(ref this.autoMachineToolSetting, "autoMachineToolSetting");
+            Scribe_Collections.Look(ref this.planterSetting, "planterSetting");
+            Scribe_Collections.Look(ref this.harvesterSetting, "harvesterSetting");
 
-            Scribe_Deep.Look<BasicMachineSetting>(ref this.beltConveyorSetting, "beltConveyorSetting");
-            Scribe_Deep.Look<BasicMachineSetting>(ref this.pullerSetting, "pullerSetting");
-            Scribe_Deep.Look<RangeMachineSetting>(ref this.gathererSetting, "gathererSetting");
-            Scribe_Deep.Look<RangeMachineSetting>(ref this.slaughterSetting, "slaughterSetting");
-            Scribe_Deep.Look<BasicMachineSetting>(ref this.minerSetting, "minerSetting");
+            Scribe_Deep.Look(ref this.beltConveyorSetting, "beltConveyorSetting");
+            Scribe_Deep.Look(ref this.pullerSetting, "pullerSetting");
+            Scribe_Deep.Look(ref this.gathererSetting, "gathererSetting");
+            Scribe_Deep.Look(ref this.slaughterSetting, "slaughterSetting");
+            Scribe_Deep.Look(ref this.minerSetting, "minerSetting");
+            Scribe_Deep.Look(ref this.cleanerSetting, "cleanerSetting");
 
             this.autoMachineToolSetting = this.autoMachineToolSetting ?? CreateAutoMachineToolDefault();
             this.planterSetting = this.planterSetting ?? CreatePlanterDefault();
@@ -98,6 +103,7 @@ namespace NR_AutoMachineTool
             this.gathererSetting = this.gathererSetting ?? GathererDefault();
             this.slaughterSetting = this.slaughterSetting ?? SlaughterDefault();
             this.minerSetting = this.minerSetting ?? MinerDefault();
+            this.cleanerSetting = this.cleanerSetting ?? CleanerDefault();
 
             Option(this.DataExposed).ForEach(e => e(this, new EventArgs()));
         }
@@ -164,6 +170,10 @@ namespace NR_AutoMachineTool
 
             DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_Miner").label, list);
             DrawSetting(list, this.minerSetting);
+            list.GapLine();
+
+            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_Cleaner").label, list);
+            DrawSetting(list, this.cleanerSetting);
             list.GapLine();
 
             // Restore

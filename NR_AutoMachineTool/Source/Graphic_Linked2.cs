@@ -43,6 +43,11 @@ namespace NR_AutoMachineTool
             this.drawSize = req.drawSize;
             this.subGraphic.Init(req);
 
+            this.CreateSubMats();
+        }
+
+        public void CreateSubMats()
+        {
             Vector2 mainTextureScale = new Vector2(0.25f, 0.25f);
             for (int i = 0; i < 16; i++)
             {
@@ -103,6 +108,7 @@ namespace NR_AutoMachineTool
             var g = new T();
             g.subGraphic = this.subGraphic.GetColoredVersion(newShader, newColor, newColorTwo);
             g.data = this.data;
+            g.CreateSubMats();
             return g;
         }
     }
