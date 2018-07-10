@@ -97,9 +97,9 @@ namespace NR_AutoMachineTool
             if (this.products == null)
                 this.products = new List<Thing>();
             if (this.working == null && this.State == WorkingState.Working)
-                this.State = WorkingState.Ready;
+                this.ForceReady();
             if (this.products.Count == 0 && this.State == WorkingState.Placing)
-                this.State = WorkingState.Ready;
+                this.ForceReady();
         }
 
         protected static bool InWorking(T thing)
@@ -316,7 +316,15 @@ namespace NR_AutoMachineTool
                 this.State = WorkingState.Placing;
                 this.CleanupWorkingEffect();
                 this.working = null;
-                MapManager.NextAction(this.Placing);
+                if(this.products == null || this.products.Count == 0)
+                {
+                    this.Reset();
+                    MapManager.NextAction(this.Ready);
+                }
+                else
+                {
+                    MapManager.NextAction(this.Placing);
+                }
             }
             else
             {
@@ -336,6 +344,7 @@ namespace NR_AutoMachineTool
                 this.ForceReady();
                 return;
             }
+
             if (this.PlaceProduct(ref this.products))
             {
                 this.State = WorkingState.Ready;

@@ -48,7 +48,6 @@
         <basePowerConsumption>50</basePowerConsumption>
         <shortCircuitInRain>false</shortCircuitInRain>
       </li>
-      <li Class="CompProperties_Breakdownable"/>
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Glower">
         <glowRadius>15</glowRadius>

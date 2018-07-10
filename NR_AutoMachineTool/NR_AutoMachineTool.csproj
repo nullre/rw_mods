@@ -127,16 +127,19 @@
     <Content Include="About\About.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="About\image01.png" />
-    <Content Include="About\image02.png" />
-    <Content Include="About\image03.png" />
-    <Content Include="About\image04.png" />
-    <Content Include="About\image05.png" />
-    <Content Include="About\image06.png" />
-    <Content Include="About\image07.png" />
-    <Content Include="About\image08.png" />
-    <Content Include="About\image09.png" />
+    <Content Include="About\Desc_AnimalResourceGatherer.png" />
+    <Content Include="About\Desc_AutoMachineTool.png" />
+    <Content Include="About\Desc_BeltConveyor1.png" />
+    <Content Include="About\Desc_BeltConveyor2.png" />
+    <Content Include="About\Desc_Cleaner.png" />
+    <Content Include="About\Desc_Harvester.png" />
+    <Content Include="About\Desc_ItemPuller.png" />
+    <Content Include="About\Desc_Miner.png" />
+    <Content Include="About\Desc_Planter.png" />
+    <Content Include="About\Desc_Slaughterhouse.png" />
+    <Content Include="About\Desc_WallLight.png" />
     <Content Include="About\preview.png" />
+    <Content Include="About\preview1.png" />
     <Content Include="Defs\DesignationCategoryDef\NR_AutoMachineTool.xml" />
     <Content Include="Defs\Effects\NR_AutoMachineTool_Effects.xml">
       <SubType>Designer</SubType>

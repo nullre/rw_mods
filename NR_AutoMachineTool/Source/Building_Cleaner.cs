@@ -40,7 +40,8 @@ namespace NR_AutoMachineTool
         protected override bool TryStartWorking(out Filth target, out float workAmount)
         {
             var cells = GenRadial.RadialCellsAround(this.Position, this.GetRange(), true)
-                .Where(c => c.GetRoom(Find.CurrentMap) == this.GetRoom());
+                .Where(c => c.GetRoom(Find.CurrentMap) == this.GetRoom())
+                .ToList();
 
             cells.SelectMany(c => c.GetThingList(this.Map).ToList())
                 .SelectMany(t => Option(t as Pawn))
