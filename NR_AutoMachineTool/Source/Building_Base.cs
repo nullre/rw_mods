@@ -38,6 +38,8 @@ namespace NR_AutoMachineTool
         protected bool placeFirstAbsorb = false;
         [Unsaved]
         protected bool readyOnStart = false;
+        [Unsaved]
+        protected int startCheckIntervalTicks = 30;
 
         private MapTickManager mapManager;
 
@@ -225,7 +227,7 @@ namespace NR_AutoMachineTool
             }
             else
             {
-                MapManager.AfterAction(30, Ready);
+                MapManager.AfterAction(this.startCheckIntervalTicks, Ready);
             }
         }
 

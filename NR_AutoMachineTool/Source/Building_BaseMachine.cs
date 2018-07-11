@@ -72,6 +72,8 @@ namespace NR_AutoMachineTool
                     this.SupplyPowerForSpeed = this.MinPowerForSpeed;
             }
             LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting.DataExposed += this.ReloadSettings;
+
+            this.MapManager.NextAction(this.SetPower);
         }
 
         protected override bool IsActive()

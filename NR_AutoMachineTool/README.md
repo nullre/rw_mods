@@ -6,7 +6,7 @@
 これらのMODの製作者様に感謝します。
 
 I'm Japanese. I can't understand English, sorry...  
-[machine translation](/NR_AutoMachineTool/README_en.md)
+[English (machine translation)](/NR_AutoMachineTool/README_en.md)
 
 ---
 ## 自動工作機械
@@ -217,12 +217,12 @@ I'm Japanese. I can't understand English, sorry...
 
 ### 使い方
 - 自動清掃の研究をします。
-- 汚れが発生する場所に設置します。
+- 汚れが発生する場所や汚れを持ち込む場所に設置します。
 - 自動清掃機が範囲内の汚れを清掃します。
 
 ### 機能
 - 自動清掃機を選択し、電力タブから電力供給量の変更ができます。電力供給量が大きい場合には、作成速度や清掃範囲が上がります。
-- 範囲内のPawnが汚れている場合、汚れを落とします。
+- 範囲内のPawnが汚れている場合、汚れを落とします。その後、掃除します。
 
 ### 注意
 - バランスは、良くないと思います。

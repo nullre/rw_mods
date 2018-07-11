@@ -537,10 +537,6 @@ namespace NR_AutoMachineTool
             {
                 return true;
             }
-            if(this.bill == null || !this.bill.ShouldDoNow())
-            {
-                return true;
-            }
             return !this.workTable.Value.CurrentlyUsableForBills();
         }
 

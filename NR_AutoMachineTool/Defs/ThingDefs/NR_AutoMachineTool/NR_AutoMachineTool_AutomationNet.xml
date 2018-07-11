@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+  <!--
   <ThingDef ParentName="BuildingBase">
     <defName>Building_NR_AutoMachineTool_AutomationNetPipe</defName>
     <label>Automation Net Pipe</label>
@@ -164,6 +165,7 @@ Energy is supplied to the pipe.</description>
       </li>
     </comps>
   </ThingDef>
+  -->
 <!--
   <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetConsumer_Base">
     <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Repair</defName>
@@ -207,6 +209,7 @@ Pipe component must install on the pipe.</description>
     </researchPrerequisites>
   </ThingDef>
 -->
+  <!--
   <ThingDef ParentName="Building_NR_AutoMachineTool_AutomationNetComponent_Base">
     <defName>Building_NR_AutoMachineTool_AutomationNetComponent_Storage</defName>
     <label>Storage pipe component</label>
@@ -270,4 +273,5 @@ Pipe component must install on the pipe.</description>
     </inspectorTabs>
     <placingDraggableDimensions>0</placingDraggableDimensions>
   </ThingDef>
+  -->
 </Defs>

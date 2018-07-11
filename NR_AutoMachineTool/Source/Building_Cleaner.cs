@@ -25,6 +25,11 @@ namespace NR_AutoMachineTool
         public override int MinPowerForRange { get => this.Setting.cleanerSetting.minSupplyPowerForRange; }
         public override int MaxPowerForRange { get => this.Setting.cleanerSetting.maxSupplyPowerForRange; }
 
+        public Building_Cleaner()
+        {
+            this.startCheckIntervalTicks = 15;
+        }
+
         static Building_Cleaner()
         {
             tryDropFilth = GenerateVoidMeshodDelegate<Pawn_FilthTracker>(typeof(Pawn_FilthTracker).GetMethod("TryDropFilth", BindingFlags.NonPublic | BindingFlags.Instance));

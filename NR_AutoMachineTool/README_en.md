@@ -216,12 +216,12 @@ Thanks to the producers of these mods.
 
 ### Usage
 - Research on Automatic cleaning.
-- Install in a place where dirt will occur.
+- Install in a location where dirt or dirt will be brought in.
 - The AutoCleaner cleans the dirt in the range.
 
 ### Function
 - You can select the AutoCleaner and change the power supply amount from the power tab. If the power supply is large, the cleaning speed and cleaning range will rise.
-- If Pawn within the range is dirty, drop dirt.
+- If Pawn within the range is dirty, drop dirt. Then AutoCleaner will clean it.
 
 ### Caution
 - I think balance is not good.
