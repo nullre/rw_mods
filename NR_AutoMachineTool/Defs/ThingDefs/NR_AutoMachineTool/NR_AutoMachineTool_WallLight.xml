@@ -28,7 +28,7 @@
     <placeWorkers>
       <li>NR_AutoMachineTool.PlaceWorker_WallEmbedded</li>
     </placeWorkers>
-    <altitudeLayer>Building</altitudeLayer>
+    <altitudeLayer>BuildingOnTop</altitudeLayer>
     <fillPercent>0</fillPercent>
     <useHitPoints>True</useHitPoints>
     <statBases>
