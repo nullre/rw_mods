@@ -28,6 +28,11 @@ namespace NR_AutoMachineTool
                 return false;
             }
 
+            if(parent.Position + parent.Rotation.FacingCell == c)
+            {
+                return true;
+            }
+
             var blueprint = parent as Blueprint != null;
             var def = blueprint ? (ThingDef)parent.def.entityDefToBuild : parent.def;
 
@@ -82,15 +87,6 @@ namespace NR_AutoMachineTool
                         .ForEach(r => Printer_Plane.PrintPlane(layer, thing.TrueCenter(), this.drawSize, this.arrow01, r.AsAngle));
                 }
             }
-        }
-
-        public override Material LinkedMaterial(Thing parent, LinkDirections linkSet)
-        {
-            if(linkSet == LinkDirections.None && (parent.Rotation == Rot4.West || parent.Rotation == Rot4.East))
-            {
-                return this.subMats[(int)LinkDirections.Left];
-            }
-            return this.subMats[(int)linkSet];
         }
     }
 }

@@ -284,7 +284,7 @@ namespace NR_AutoMachineTool
             var result = WorkableBill(consumable).Select(tuple =>
             {
                 this.bill = tuple.Value1;
-                tuple.Value2.Select(v => v.thing).SelectMany(t => Option(t as Corpse)).ForEach(c => c.Strip());
+//                tuple.Value2.Select(v => v.thing).SelectMany(t => Option(t as Corpse)).ForEach(c => c.Strip());
                 this.ingredients = tuple.Value2.Select(t => t.thing.SplitOff(t.count)).ToList();
                 this.dominant = this.DominantIngredient(this.ingredients);
                 if (this.bill.recipe.UsesUnfinishedThing)

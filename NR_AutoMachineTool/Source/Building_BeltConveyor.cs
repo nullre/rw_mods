@@ -368,6 +368,7 @@ namespace NR_AutoMachineTool
             if (target != null)
             {
                 this.dest = Destination(target, true);
+                if (target.Spawned) target.DeSpawn();
             }
             return target != null;
         }
