@@ -20,9 +20,16 @@ namespace NR_AutoMachineTool
         Placing
     }
 
-    public abstract class Building_Base<T> : Building where T : Thing
+    public interface IProductOutput
     {
-        protected ModSetting_AutoMachineTool Setting { get => LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; }
+        IntVec3 OutputCell();
+    }
+
+    public abstract class Building_Base<T> : Building, IProductOutput where T : Thing
+    {
+        protected ModSetting_AutoMachineTool Setting => ModSetting;
+
+        protected static ModSetting_AutoMachineTool ModSetting { get => LoadedModManager.GetMod<Mod_AutoMachineTool>().Setting; }
 
         private WorkingState state;
         private static HashSet<T> workingSet = new HashSet<T>();
@@ -64,7 +71,7 @@ namespace NR_AutoMachineTool
         {
         }
 
-        protected void ClearActions()
+        protected virtual void ClearActions()
         {
             this.MapManager.RemoveAfterAction(this.Ready);
             this.MapManager.RemoveAfterAction(this.Placing);
@@ -233,6 +240,10 @@ namespace NR_AutoMachineTool
 
         private int CalcRemainTick()
         {
+            if (float.IsInfinity(this.totalWorkAmount))
+            {
+                return int.MaxValue;
+            }
             return Mathf.Max(1, Mathf.CeilToInt((this.totalWorkAmount - this.CurrentWorkAmount) / this.WorkAmountPerTick));
         }
 
@@ -417,7 +428,7 @@ namespace NR_AutoMachineTool
                 case WorkingState.Working:
                     if (float.IsInfinity(this.totalWorkAmount))
                     {
-                        msg += "NR_AutoMachineTool.StatWorkingNoParam".Translate();
+                        msg += "NR_AutoMachineTool.StatWorkingNotParam".Translate();
                     }
                     else
                     {

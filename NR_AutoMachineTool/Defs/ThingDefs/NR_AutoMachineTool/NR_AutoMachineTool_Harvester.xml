@@ -33,7 +33,8 @@ Harvester starts harvesting plants in the agricultural zone within range.</descr
     <rotatable>true</rotatable>
 
     <placeWorkers>
-      <li>NR_AutoMachineTool.PlaceWorker_Harvester</li>
+      <li>NR_AutoMachineTool.PlaceWorker_TargetCellsHilight</li>
+      <li>NR_AutoMachineTool.PlaceWorker_OutputCellsHilight</li>
     </placeWorkers>
 
     <category>Building</category>
@@ -61,6 +62,7 @@ Harvester starts harvesting plants in the agricultural zone within range.</descr
       <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
       <li>NR_AutoMachineTool.ITab_ProductLimitation</li>
     </inspectorTabs>
+
   </ThingDef>
 
 
@@ -85,6 +87,8 @@ Harvester starts harvesting plants in the agricultural zone within range.</descr
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
         <tier>1</tier>
+        <targetCellResolverType>NR_AutoMachineTool.Building_HarvesterTargetCellResolver</targetCellResolverType>
+        <outputCellResolverType>NR_AutoMachineTool.OutputCellResolver</outputCellResolverType>
       </li>
     </modExtensions>
   </ThingDef>
@@ -111,6 +115,8 @@ Harvester starts harvesting plants in the agricultural zone within range.</descr
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
         <tier>2</tier>
+        <targetCellResolverType>NR_AutoMachineTool.Building_HarvesterTargetCellResolver</targetCellResolverType>
+        <outputCellResolverType>NR_AutoMachineTool.OutputCellResolver</outputCellResolverType>
       </li>
     </modExtensions>
   </ThingDef>
@@ -137,6 +143,8 @@ Harvester starts harvesting plants in the agricultural zone within range.</descr
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
         <tier>3</tier>
+        <targetCellResolverType>NR_AutoMachineTool.Building_HarvesterTargetCellResolver</targetCellResolverType>
+        <outputCellResolverType>NR_AutoMachineTool.OutputCellResolver</outputCellResolverType>
       </li>
     </modExtensions>
   </ThingDef>

@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,6 +42,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -66,11 +68,12 @@
     <Compile Include="Source\Building_Base.cs" />
     <Compile Include="Source\Building_BaseLimitation.cs" />
     <Compile Include="Source\Building_BaseRange.cs" />
-    <Compile Include="Source\Building_Base_old.cs" />
+    <Compile Include="Source\PlaceWorker_InputCellsHilight.cs" />
     <Compile Include="Source\Building_BeltConveyor.cs" />
     <Compile Include="Source\Building_BeltConveyorUGConnecter.cs" />
     <Compile Include="Source\AutomationNet\Building_AutomationPipe.cs" />
     <Compile Include="Source\AutomationNet\Building_RepairComponent.cs" />
+    <Compile Include="Source\Building_Repairer.cs" />
     <Compile Include="Source\Building_Miner.cs" />
     <Compile Include="Source\Building_Hervester.cs" />
     <Compile Include="Source\Building_ItemPuller.cs" />
@@ -91,18 +94,16 @@
     <Compile Include="Source\MachineSettings.cs" />
     <Compile Include="Source\MapTickManager.cs" />
     <Compile Include="Source\MoteProgressBar2.cs" />
-    <Compile Include="Source\PlaceWorker_FacingRect.cs" />
+    <Compile Include="Source\PlaceWorker_OutputCellsHilight.cs" />
     <Compile Include="Source\AutomationNet\CompAutomation.cs" />
     <Compile Include="Source\AutomationNet\AutomationNetMaker.cs" />
     <Compile Include="Source\AutomationNet\AutomationNetGrid.cs" />
     <Compile Include="Source\AutomationNet\AutomationNetManager.cs" />
     <Compile Include="Source\AutomationNet\AutomationNet.cs" />
-    <Compile Include="Source\PlaceWorker_Miner.cs" />
-    <Compile Include="Source\PlaceWorker_Cleaner.cs" />
+    <Compile Include="Source\PlaceWorker_TargetCellsHilight.cs" />
     <Compile Include="Source\RS.cs" />
     <Compile Include="Source\SectionLayer_UGConveyor.cs" />
     <Compile Include="Source\SpecialThingFilterWorker_Fresh.cs" />
-    <Compile Include="Source\Building_AutoMachineTool_old.cs" />
     <Compile Include="Source\GenRecipe2.cs" />
     <Compile Include="Source\IBeltConbeyorSender.cs" />
     <Compile Include="Source\IBeltConbeyorLinkable.cs" />
@@ -113,10 +114,6 @@
     <Compile Include="Source\ModExtension_AutoMachineTool.cs" />
     <Compile Include="Source\Mod_AuctoMachineTool.cs" />
     <Compile Include="Source\ModSettings_AutoMachineTool.cs" />
-    <Compile Include="Source\PlaceWorker_Harvester.cs" />
-    <Compile Include="Source\PlaceWorker_Planter.cs" />
-    <Compile Include="Source\PlaceWorker_InputHighlight.cs" />
-    <Compile Include="Source\PlaceWorker_OutputHighlight.cs" />
     <Compile Include="Source\PlaceWorker_WallEmbedded.cs" />
     <Compile Include="Source\PlaceWorker_AutoMachineTool.cs" />
     <Compile Include="Source\Utilities\Ops.cs" />
@@ -149,6 +146,9 @@
     </Content>
     <Content Include="Defs\ResearchProjectDefs\NR_AutoMachineTool.xml" />
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_AutomationNet.xml" />
+    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Repairer.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Cleaner.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -180,6 +180,7 @@
     </Content>
     <Content Include="Languages\Japanese\DefInjected\ResearchProjectDefs\NR_AutoMachineTool.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_AutomationNet.xml" />
+    <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Repairer.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_WallLight.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Cleaner.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Miner.xml" />
@@ -211,37 +212,27 @@
     <Content Include="Textures\NR_AutoMachineTool\Buildings\AutomationNet\Special\CompStorageOverlay.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\AutomationNet\Special\NetOverlay.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\AutomationNet\StorageComponent.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG\BeltConveyor00.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG\BeltConveyor01.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG\BeltConveyor02.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG\BeltConveyor03.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG\BeltConveyor04.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG\BeltConveyor05.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG\BeltConveyor06.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG\BeltConveyor07.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG\BeltConveyor991_arrow.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG\BeltConveyor992_arrow.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor00.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor01.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor02.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor03.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor04.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor05.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor06.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor07.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor991_arrow.png" />
-    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor\BeltConveyor992_arrow.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorIcon.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUG.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyorUGIcon.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor_arrow00.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\BeltConveyor_arrow01.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\Cleaner.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\ConveyorToFloor.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\ConveyorToUnderground.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Harvester1.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Harvester2.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Harvester3.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\Miner.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Planter1.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Planter2.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Planter3.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Puller\Puller0.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Puller\Puller1.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Slaughterhouse.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\WallLight.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\WallLightIcon.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\Forbid.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\OutputDirection.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\Play.png" />

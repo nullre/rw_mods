@@ -15,14 +15,10 @@ namespace NR_AutoMachineTool
 {
     public class Building_Harvester : Building_BaseRange<Plant>
     {
-        private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
-        protected override int? SkillLevel { get => this.Setting.HarvesterTier(Extension.tier).skillLevel; }
         protected override float SpeedFactor { get => this.Setting.HarvesterTier(Extension.tier).speedFactor; }
 
         public override int MinPowerForSpeed { get => this.Setting.HarvesterTier(Extension.tier).minSupplyPowerForSpeed; }
         public override int MaxPowerForSpeed { get => this.Setting.HarvesterTier(Extension.tier).maxSupplyPowerForSpeed; }
-        public override int MinPowerForRange { get => this.Setting.HarvesterTier(Extension.tier).minSupplyPowerForRange; }
-        public override int MaxPowerForRange { get => this.Setting.HarvesterTier(Extension.tier).maxSupplyPowerForRange; }
 
         protected override bool WorkInterruption(Plant working)
         {
@@ -31,9 +27,8 @@ namespace NR_AutoMachineTool
 
         protected override bool TryStartWorking(out Plant target, out float workAmount)
         {
-            var plant = FacingRect(this.Position, this.Rotation, this.GetRange())
+            var plant = this.GetTargetCells()
                 .Where(c => c.GetPlantable(this.Map).HasValue)
-                .Where(c => (this.Position + this.Rotation.FacingCell).GetRoom(this.Map) == c.GetRoom(this.Map))
                 .SelectMany(c => c.GetThingList(this.Map))
                 .SelectMany(t => Option(t as Plant))
                 .Where(p => !InWorking(p))
@@ -60,6 +55,32 @@ namespace NR_AutoMachineTool
                 working.Destroy();
             }
             return true;
+        }
+    }
+
+    public class Building_HarvesterTargetCellResolver : BaseTargetCellResolver
+    {
+        public override int MinPowerForRange => this.Setting.HarvesterTier(this.Parent.tier).minSupplyPowerForRange;
+        public override int MaxPowerForRange => this.Setting.HarvesterTier(this.Parent.tier).maxSupplyPowerForRange;
+
+        public override IEnumerable<IntVec3> GetRangeCells(IntVec3 pos, Map map, Rot4 rot, int range)
+        {
+            return FacingRect(pos, rot, range)
+                .Where(c => (pos + rot.FacingCell).GetRoom(map) == c.GetRoom(map));
+        }
+
+        public override Color GetColor(IntVec3 cell, Map map, Rot4 rot, CellPattern cellPattern)
+        {
+            var col = base.GetColor(cell, map, rot, cellPattern);
+            if (cell.GetPlantable(map).HasValue)
+            {
+                col = Color.green;
+                if (cellPattern == CellPattern.BlurprintMax)
+                {
+                    col = col.A(0.5f);
+                }
+            }
+            return col;
         }
     }
 }

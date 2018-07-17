@@ -33,7 +33,8 @@ AnimalResourceGatherer starts milking and shearing from animals within range.</d
     <rotatable>true</rotatable>
 
     <placeWorkers>
-      <li>NR_AutoMachineTool.PlaceWorker_FacingRect</li>
+      <li>NR_AutoMachineTool.PlaceWorker_TargetCellsHilight</li>
+      <li>NR_AutoMachineTool.PlaceWorker_OutputCellsHilight</li>
     </placeWorkers>
 
     <category>Building</category>
@@ -61,6 +62,12 @@ AnimalResourceGatherer starts milking and shearing from animals within range.</d
       <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
       <li>NR_AutoMachineTool.ITab_ProductLimitation</li>
     </inspectorTabs>
+
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <targetCellResolverType>NR_AutoMachineTool.Building_AnimalResourceGathererTargetCellResolver</targetCellResolverType>
+      </li>
+    </modExtensions>
   </ThingDef>
 
 

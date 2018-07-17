@@ -42,8 +42,12 @@
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_BeltConveyor</li>
     </researchPrerequisites>
-    
+
     <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <outputCellResolverType>NR_AutoMachineTool.Building_ItemPullerCellResolver</outputCellResolverType>
+        <inputCellResolverType>NR_AutoMachineTool.Building_ItemPullerCellResolver</inputCellResolverType>
+      </li>
     </modExtensions>
 
     <inspectorTabs>
@@ -71,8 +75,8 @@ Since the drawing machine is in a non-operating state in the post-installation s
       <li Class="CompProperties_Flickable"/>
     </comps>
     <placeWorkers>
-      <li>NR_AutoMachineTool.PlaceWorker_OutputHighlight</li>
-      <li>NR_AutoMachineTool.PlaceWorker_InputHighlight</li>
+      <li>NR_AutoMachineTool.PlaceWorker_OutputCellsHilight</li>
+      <li>NR_AutoMachineTool.PlaceWorker_InputCellsHilight</li>
     </placeWorkers>
   </ThingDef>
 
@@ -100,8 +104,8 @@ Since the drawing machine is in a non-operating state in the post-installation s
     </graphicData>
     <placeWorkers>
       <li>NR_AutoMachineTool.PlaceWorker_WallEmbedded</li>
-      <li>NR_AutoMachineTool.PlaceWorker_OutputHighlight</li>
-      <li>NR_AutoMachineTool.PlaceWorker_InputHighlight</li>
+      <li>NR_AutoMachineTool.PlaceWorker_OutputCellsHilight</li>
+      <li>NR_AutoMachineTool.PlaceWorker_InputCellsHilight</li>
     </placeWorkers>
   </ThingDef>
 </Defs>

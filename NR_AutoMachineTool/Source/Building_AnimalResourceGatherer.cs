@@ -36,8 +36,6 @@ namespace NR_AutoMachineTool
 
         public override int MinPowerForSpeed { get => this.Setting.gathererSetting.minSupplyPowerForSpeed; }
         public override int MaxPowerForSpeed { get => this.Setting.gathererSetting.maxSupplyPowerForSpeed; }
-        public override int MinPowerForRange { get => this.Setting.gathererSetting.minSupplyPowerForRange; }
-        public override int MaxPowerForRange { get => this.Setting.gathererSetting.maxSupplyPowerForRange; }
 
         protected override void Reset()
         {
@@ -117,6 +115,18 @@ namespace NR_AutoMachineTool
             this.comp = null;
 
             return true;
+        }
+    }
+
+    public class Building_AnimalResourceGathererTargetCellResolver : BaseTargetCellResolver
+    {
+        public override int MinPowerForRange => this.Setting.gathererSetting.minSupplyPowerForRange;
+        public override int MaxPowerForRange => this.Setting.gathererSetting.maxSupplyPowerForRange;
+
+        public override IEnumerable<IntVec3> GetRangeCells(IntVec3 pos, Map map, Rot4 rot, int range)
+        {
+            return FacingRect(pos, rot, range)
+                .Where(c => (pos + rot.FacingCell).GetRoom(map) == c.GetRoom(map));
         }
     }
 }

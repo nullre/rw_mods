@@ -233,4 +233,16 @@ namespace NR_AutoMachineTool
             return r;
         }
     }
+
+    public class Building_MinerOutputCellResolver : OutputCellResolver
+    {
+        public override IntVec3 OutputCell(IntVec3 cell, Map map, Rot4 rot)
+        {
+            return cell.GetThingList(map)
+                .FirstOption()
+                .Select(b => b as Building_Miner)
+                .Select(b => b.OutputCell())
+                .GetOrDefault(cell + IntVec3.North);
+        }
+    }
 }

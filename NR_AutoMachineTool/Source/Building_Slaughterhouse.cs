@@ -19,8 +19,6 @@ namespace NR_AutoMachineTool
 
         public override int MinPowerForSpeed { get => this.Setting.slaughterSetting.minSupplyPowerForSpeed; }
         public override int MaxPowerForSpeed { get => this.Setting.slaughterSetting.maxSupplyPowerForSpeed; }
-        public override int MinPowerForRange { get => this.Setting.slaughterSetting.minSupplyPowerForRange; }
-        public override int MaxPowerForRange { get => this.Setting.slaughterSetting.maxSupplyPowerForRange; }
 
         public Dictionary<ThingDef, SlaughterSettings> Settings { get => this.slaughterSettings; }
 
@@ -78,8 +76,7 @@ namespace NR_AutoMachineTool
         {
             workAmount = 400f;
             target = null;
-            var tmp = FacingRect(this.Position, this.Rotation, this.GetRange())
-                .Where(c => (this.Position + this.Rotation.FacingCell).GetRoom(this.Map) == c.GetRoom(this.Map))
+            var tmp = GetTargetCells()
                 .SelectMany(c => c.GetThingList(this.Map))
                 .Where(t => t.def.category == ThingCategory.Pawn)
                 .SelectMany(t => Option(t as Pawn))
@@ -116,6 +113,18 @@ namespace NR_AutoMachineTool
             working.Corpse.DeSpawn();
             working.Corpse.SetForbidden(false);
             return true;
+        }
+    }
+
+    public class Building_SlaughterhouseTargetCellResolver : BaseTargetCellResolver
+    {
+        public override int MinPowerForRange => this.Setting.slaughterSetting.minSupplyPowerForRange;
+        public override int MaxPowerForRange => this.Setting.slaughterSetting.maxSupplyPowerForRange;
+
+        public override IEnumerable<IntVec3> GetRangeCells(IntVec3 pos, Map map, Rot4 rot, int range)
+        {
+            return FacingRect(pos, rot, range)
+                .Where(c => (pos + rot.FacingCell).GetRoom(map) == c.GetRoom(map));
         }
     }
 }

@@ -28,7 +28,7 @@
   <NR_AutoMachineTool.OutputDirectionW>西</NR_AutoMachineTool.OutputDirectionW>
   <NR_AutoMachineTool.OutputDirectionNW>北西</NR_AutoMachineTool.OutputDirectionNW>
 
-  <NR_AutoMachineTool.SettingName>自動工作機械設定</NR_AutoMachineTool.SettingName>
+  <NR_AutoMachineTool.SettingName>自動工作機械</NR_AutoMachineTool.SettingName>
   <NR_AutoMachineTool.SettingTier>Tier [{0}]</NR_AutoMachineTool.SettingTier>
   <NR_AutoMachineTool.SettingSkillLevel>スキルレベル({0})</NR_AutoMachineTool.SettingSkillLevel>
   

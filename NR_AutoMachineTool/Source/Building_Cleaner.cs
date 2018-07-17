@@ -17,13 +17,10 @@ namespace NR_AutoMachineTool
 {
     public class Building_Cleaner : Building_BaseRange<Filth>
     {
-        private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
         protected override float SpeedFactor { get => this.Setting.cleanerSetting.speedFactor; }
 
         public override int MinPowerForSpeed { get => this.Setting.cleanerSetting.minSupplyPowerForSpeed; }
         public override int MaxPowerForSpeed { get => this.Setting.cleanerSetting.maxSupplyPowerForSpeed; }
-        public override int MinPowerForRange { get => this.Setting.cleanerSetting.minSupplyPowerForRange; }
-        public override int MaxPowerForRange { get => this.Setting.cleanerSetting.maxSupplyPowerForRange; }
 
         public Building_Cleaner()
         {
@@ -44,9 +41,7 @@ namespace NR_AutoMachineTool
 
         protected override bool TryStartWorking(out Filth target, out float workAmount)
         {
-            var cells = GenRadial.RadialCellsAround(this.Position, this.GetRange(), true)
-                .Where(c => c.GetRoom(Find.CurrentMap) == this.GetRoom())
-                .ToList();
+            var cells = this.GetTargetCells().ToList();
 
             cells.SelectMany(c => c.GetThingList(this.Map).ToList())
                 .SelectMany(t => Option(t as Pawn))
@@ -103,6 +98,18 @@ namespace NR_AutoMachineTool
         {
             this.workingEffect.ForEach(e => e.EffectTick(new TargetInfo(this.Working), TargetInfo.Invalid));
             return !this.workingEffect.HasValue;
+        }
+    }
+
+    public class Building_CleanerTargetCellResolver : BaseTargetCellResolver
+    {
+        public override int MinPowerForRange => this.Setting.cleanerSetting.minSupplyPowerForRange;
+        public override int MaxPowerForRange => this.Setting.cleanerSetting.maxSupplyPowerForRange;
+
+        public override IEnumerable<IntVec3> GetRangeCells(IntVec3 pos, Map map, Rot4 rot, int range)
+        {
+            return GenRadial.RadialCellsAround(pos, range, true)
+                .Where(c => c.GetRoom(Find.CurrentMap) == pos.GetRoom(map));
         }
     }
 }

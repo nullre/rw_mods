@@ -97,15 +97,10 @@ namespace NR_AutoMachineTool
             "NW"
         };
 
-        private ModExtension_AutoMachineTool Extension { get { return this.def.GetModExtension<ModExtension_AutoMachineTool>(); } }
-
         protected override int? SkillLevel { get { return this.Setting.AutoMachineToolTier(Extension.tier).skillLevel; } }
         public override int MaxPowerForSpeed { get { return this.Setting.AutoMachineToolTier(Extension.tier).maxSupplyPowerForSpeed; } }
         public override int MinPowerForSpeed { get { return this.Setting.AutoMachineToolTier(Extension.tier).minSupplyPowerForSpeed; } }
         protected override float SpeedFactor { get { return this.Setting.AutoMachineToolTier(Extension.tier).speedFactor; } }
-
-        public override int MinPowerForRange => this.Setting.AutoMachineToolTier(Extension.tier).minSupplyPowerForRange;
-        public override int MaxPowerForRange => this.Setting.AutoMachineToolTier(Extension.tier).maxSupplyPowerForRange;
 
         public override bool Glowable => false;
 
@@ -329,15 +324,9 @@ namespace NR_AutoMachineTool
             return this.Position + this.adjacent[this.outputIndex];
         }
 
-        public IEnumerable<IntVec3> IngredientScanCell()
-        {
-            // this.CellsAdjacent8WayAndInside()
-            return GenAdj.CellsOccupiedBy(this.Position, this.Rotation, this.def.Size + new IntVec2(this.GetRange() * 2, this.GetRange() * 2));
-        }
-
         private List<Thing> Consumable()
         {
-            return this.IngredientScanCell()
+            return this.GetTargetCells()
                 .SelectMany(c => c.GetThingList(M))
                 .Where(c => c.def.category == ThingCategory.Item)
                 .ToList();
@@ -512,11 +501,6 @@ namespace NR_AutoMachineTool
             return msg;
         }
 
-        public override int GetRange()
-        {
-            return Mathf.RoundToInt(this.SupplyPowerForRange / 500) + 1;
-        }
-
         public Room GetRoom(RegionType type)
         {
             return RegionAndRoomQuery.GetRoom(this, type);
@@ -551,6 +535,36 @@ namespace NR_AutoMachineTool
             public Thing thing;
 
             public int count;
+        }
+    }
+
+    public class Building_AutoMachineToolCellResolver : BaseTargetCellResolver, IOutputCellResolver
+    {
+        public override int MinPowerForRange => this.Setting.AutoMachineToolTier(this.Parent.tier).minSupplyPowerForRange;
+        public override int MaxPowerForRange => this.Setting.AutoMachineToolTier(this.Parent.tier).maxSupplyPowerForRange;
+
+        public override IEnumerable<IntVec3> GetRangeCells(IntVec3 pos, Map map, Rot4 rot, int range)
+        {
+            return GenAdj.CellsOccupiedBy(pos, rot, new IntVec2(1, 1) + new IntVec2(range * 2, range * 2));
+        }
+
+        public override int GetRange(float power)
+        {
+            return Mathf.RoundToInt(power / 500) + 1;
+        }
+
+        public IntVec3 OutputCell(IntVec3 cell, Map map, Rot4 rot)
+        {
+            return cell.GetThingList(map)
+                .FirstOption()
+                .Select(b => b as Building_AutoMachineTool)
+                .Select(b => b.OutputCell())
+                .GetOrDefault(cell + IntVec3.North);
+        }
+
+        public IEnumerable<IntVec3> OutputZoneCells(IntVec3 cell, Map map, Rot4 rot)
+        {
+            return this.OutputCell(cell, map, rot).SlotGroupCells(map);
         }
     }
 }

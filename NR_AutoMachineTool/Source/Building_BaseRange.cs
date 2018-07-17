@@ -13,10 +13,17 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
+    public interface IRange
+    {
+        int GetRange();
+        IntVec3 Position { get; }
+        Rot4 Rotation { get; }
+    }
+
     public abstract class Building_BaseRange<T> : Building_BaseLimitation<T>, IRange, IAgricultureMachine where T : Thing
     {
-        public abstract int MinPowerForRange { get; }
-        public abstract int MaxPowerForRange { get; }
+        public int MinPowerForRange => this.Extension.TargetCellResolver.MinPowerForRange;
+        public int MaxPowerForRange => this.Extension.TargetCellResolver.MaxPowerForRange;
 
         public virtual bool Glowable { get => false; }
 
@@ -32,6 +39,13 @@ namespace NR_AutoMachineTool
                     this.ChangeGlow();
                 }
             }
+        }
+
+        protected ModExtension_AutoMachineTool Extension => this.def.GetModExtension<ModExtension_AutoMachineTool>();
+
+        protected IEnumerable<IntVec3> GetTargetCells()
+        {
+            return this.Extension.TargetCellResolver.GetRangeCells(this.Position, this.Map, this.Rotation, this.GetRange());
         }
 
         public float SupplyPowerForRange
@@ -57,9 +71,9 @@ namespace NR_AutoMachineTool
             Scribe_Values.Look<bool>(ref this.glow, "glow", false);
         }
 
-        public virtual int GetRange()
+        public int GetRange()
         {
-            return Mathf.RoundToInt(this.supplyPowerForRange / 500) + 3;
+            return this.Extension.TargetCellResolver.GetRange(this.SupplyPowerForRange);
         }
 
         protected override void ReloadSettings(object sender, EventArgs e)

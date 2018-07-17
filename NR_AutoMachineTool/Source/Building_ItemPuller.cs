@@ -110,4 +110,34 @@ namespace NR_AutoMachineTool
             return true;
         }
     }
+
+    public class Building_ItemPullerCellResolver : IOutputCellResolver, IInputCellResolver
+    {
+        public ModExtension_AutoMachineTool Parent { get; set; }
+
+        public Color GetColor(IntVec3 cell, Map map, Rot4 rot, CellPattern cellPattern)
+        {
+            return cellPattern.ToColor();
+        }
+
+        public IntVec3 InputCell(IntVec3 cell, Map map, Rot4 rot)
+        {
+            return cell + rot.Opposite.FacingCell;
+        }
+
+        public IEnumerable<IntVec3> InputZoneCells(IntVec3 cell, Map map, Rot4 rot)
+        {
+            return InputCell(cell, map, rot).SlotGroupCells(map);
+        }
+
+        public IntVec3 OutputCell(IntVec3 cell, Map map, Rot4 rot)
+        {
+            return cell + rot.FacingCell;
+        }
+
+        public IEnumerable<IntVec3> OutputZoneCells(IntVec3 cell, Map map, Rot4 rot)
+        {
+            return OutputCell(cell, map, rot).SlotGroupCells(map);
+        }
+    }
 }

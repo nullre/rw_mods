@@ -30,6 +30,9 @@
   <ResearchProject_NR_AutoMachineTool_AutoCleaner.label>自動清掃</ResearchProject_NR_AutoMachineTool_AutoCleaner.label>
   <ResearchProject_NR_AutoMachineTool_AutoCleaner.description>自動清掃機が作成可能になります。</ResearchProject_NR_AutoMachineTool_AutoCleaner.description>
 
+  <ResearchProject_NR_AutoMachineTool_AutoRepair.label>自動修理</ResearchProject_NR_AutoMachineTool_AutoRepair.label>
+  <ResearchProject_NR_AutoMachineTool_AutoRepair.description>自動修理機が作成可能になります。</ResearchProject_NR_AutoMachineTool_AutoRepair.description>
+
   <ResearchProject_NR_AutoMachineTool_AutomationNet.label>自動化ネット(experimental)</ResearchProject_NR_AutoMachineTool_AutomationNet.label>
   <ResearchProject_NR_AutoMachineTool_AutomationNet.description>自動化ネットが構築できます。</ResearchProject_NR_AutoMachineTool_AutomationNet.description>
 

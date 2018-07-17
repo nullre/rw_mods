@@ -34,7 +34,8 @@ Slaughterhouse starts slaughter animals within range.</description>
     <rotatable>true</rotatable>
 
     <placeWorkers>
-      <li>NR_AutoMachineTool.PlaceWorker_FacingRect</li>
+      <li>NR_AutoMachineTool.PlaceWorker_TargetCellsHilight</li>
+      <li>NR_AutoMachineTool.PlaceWorker_OutputCellsHilight</li>
     </placeWorkers>
 
     <category>Building</category>
@@ -62,6 +63,13 @@ Slaughterhouse starts slaughter animals within range.</description>
       <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
       <li>NR_AutoMachineTool.ITab_Slaughterhouse</li>
     </inspectorTabs>
+
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <targetCellResolverType>NR_AutoMachineTool.Building_SlaughterhouseTargetCellResolver</targetCellResolverType>
+        <outputCellResolverType>NR_AutoMachineTool.OutputCellResolver</outputCellResolverType>
+      </li>
+    </modExtensions>
   </ThingDef>
 
 

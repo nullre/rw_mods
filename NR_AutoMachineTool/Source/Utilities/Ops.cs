@@ -281,6 +281,13 @@ namespace NR_AutoMachineTool.Utilities
         {
             return p.ageTracker.CurLifeStageIndex >= 2;
         }
+
+        public static Color A(this Color color, float a)
+        {
+            Color c = color;
+            c.a = a;
+            return c;
+        }
         #endregion
 
         public static Func<T, TValue> GenerateGetFieldDelegate<T, TValue>(FieldInfo field)

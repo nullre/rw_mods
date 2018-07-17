@@ -38,7 +38,7 @@ Planter starts planting plants in the agricultural zone within range.</descripti
     <rotatable>false</rotatable>
 
     <placeWorkers>
-      <li>NR_AutoMachineTool.PlaceWorker_Planter</li>
+      <li>NR_AutoMachineTool.PlaceWorker_TargetCellsHilight</li>
     </placeWorkers>
 
     <category>Building</category>
@@ -78,6 +78,7 @@ Planter starts planting plants in the agricultural zone within range.</descripti
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
         <tier>1</tier>
+        <targetCellResolverType>NR_AutoMachineTool.Building_PlanterTargetCellResolver</targetCellResolverType>
       </li>
     </modExtensions>
   </ThingDef>
@@ -104,6 +105,7 @@ Planter starts planting plants in the agricultural zone within range.</descripti
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
         <tier>2</tier>
+        <targetCellResolverType>NR_AutoMachineTool.Building_PlanterTargetCellResolver</targetCellResolverType>
       </li>
     </modExtensions>
   </ThingDef>
@@ -130,6 +132,7 @@ Planter starts planting plants in the agricultural zone within range.</descripti
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
         <tier>3</tier>
+        <targetCellResolverType>NR_AutoMachineTool.Building_PlanterTargetCellResolver</targetCellResolverType>
       </li>
     </modExtensions>
   </ThingDef>

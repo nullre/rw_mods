@@ -7,6 +7,7 @@
 - It is made with reference to Project RimFactory.(https://steamcommunity.com/sharedfiles/filedetails/?id=1206316724)  
 Thanks to the producers of these mods.
 
+
 ---
 ## AutoMachineTool
 
@@ -30,10 +31,7 @@ Thanks to the producers of these mods.
 - If you destroy a work table or automatic machine tool during work, material may be lost.
 - I think balance is not good.
 - If MOD is deleted while there is a processing request for the target work table, save data will be damaged.
-
-### TODO
-- Balancing.
-- Dealing with save.
+- The light color range at installation is the range maximum setting range.
 
 ---
 ## BeltConveyor
@@ -61,9 +59,6 @@ Thanks to the producers of these mods.
 - I think balance is not good.
 - With the belt conveyor selected, you can see the underground conveyor.
 
-### TODO
-- Speed ​​change function
-
 ---
 ## Item Puller
 
@@ -86,9 +81,6 @@ Thanks to the producers of these mods.
 - If the output destination is not a belt conveyor and the item already exists, it will be placed near the output destination.
 - I think balance is not good.
 
-### TODO
-- Speed ​​change function
-
 ---
 ## Planter
 
@@ -109,8 +101,7 @@ Thanks to the producers of these mods.
 - Even if there are plants that are not designated as agriculture zones, they will not reap.
 - The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands. It can be avoided by canceling all processing requests or by removing them after disassembling the automatic machine tool.
 - I think balance is not good.
-
-### TODO
+- The light color range at installation is the range maximum setting range.
 
 ---
 ## Harvester
@@ -135,8 +126,7 @@ Thanks to the producers of these mods.
 - Harvester will harvest if harvestable, even if there are plants not specified in the agriculture zone.
 - The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands.
 - I think balance is not good.
-
-### TODO
+- The light color range at installation is the range maximum setting range.
 
 ---
 ## AnimalResourceGatherer
@@ -159,8 +149,7 @@ Thanks to the producers of these mods.
 - If the output destination is not a belt conveyor and the item already exists, it will be placed near the output destination.
 - The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands.
 - I think balance is not good.
-
-### TODO
+- The light color range at installation is the range maximum setting range.
 
 ---
 ## Slaughterhouse
@@ -184,8 +173,7 @@ Thanks to the producers of these mods.
 - If the output destination is not a belt conveyor and the item already exists, it will be placed near the output destination.
 - The frame at the time of placement is the frame when electric power is minimum. By setting power after installation the frame expands.
 - I think balance is not good.
-
-### TODO
+- The light color range at installation is the range maximum setting range.
 
 ---
 ## AutoMiner
@@ -207,8 +195,6 @@ Thanks to the producers of these mods.
 - If the output destination is not a belt conveyor and the item already exists, it will wait for placement.
 - I think balance is not good.
 
-### TODO
-
 ---
 ## AutoCleaner
 
@@ -225,8 +211,7 @@ Thanks to the producers of these mods.
 
 ### Caution
 - I think balance is not good.
-
-### TODO
+- The light color range at installation is the range maximum setting range.
 
 ---
 ## WallLight
@@ -239,9 +224,27 @@ Thanks to the producers of these mods.
 ### Function
 - It glows.
 
-### 注意
+### Caution
 
-### TODO
+---
+## AutoRepairer
+
+![AutoRepairer](/NR_AutoMachineTool/About/Desc_Repairer.png)
+
+### Usage
+- Research on Automatic repairing.
+- Install it near where you need repair.
+- Automatically repair building and pawn's equipment in the range.
+
+### Function
+- You can select the AutoRepairer and change the power supply amount from the power tab. If the power supply is large, the speed and range will rise.
+- If the HP of the building in the range is decreasing, repair it.
+- If the HP of weapons and clothes equipped by Pawn within the range is decreasing, repair it.
+- Extinguish the fire within the range.
+
+### Caution
+- I think balance is not good.
+- The light color range at installation is the range maximum setting range.
 
 ---
 ## Overall

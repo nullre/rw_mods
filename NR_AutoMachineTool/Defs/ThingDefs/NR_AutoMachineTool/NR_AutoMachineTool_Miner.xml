@@ -57,7 +57,13 @@ It consumes enormous electricity.</description>
 
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <placeWorkers>
-      <li>NR_AutoMachineTool.PlaceWorker_Miner</li>
+      <li>NR_AutoMachineTool.PlaceWorker_OutputCellsHilight</li>
     </placeWorkers>
+
+    <modExtensions>
+      <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
+        <outputCellResolverType>NR_AutoMachineTool.Building_MinerOutputCellResolver</outputCellResolverType>
+      </li>
+    </modExtensions>
   </ThingDef>
 </Defs>

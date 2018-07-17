@@ -2,12 +2,12 @@
 <Defs>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>Building_NR_AutoMachineTool_Cleaner</defName>
-    <label>AutoCleaner</label>
-    <thingClass>NR_AutoMachineTool.Building_Cleaner</thingClass>
-    <description>Automatically cleans the dirt in the range. It also removes the dirt of dirty Pawn.</description>
+    <defName>Building_NR_AutoMachineTool_Repairer</defName>
+    <label>AutoRepairer</label>
+    <thingClass>NR_AutoMachineTool.Building_Repairer</thingClass>
+    <description>Automatically repair building and pawn's equipment in the range.</description>
     <graphicData>
-      <texPath>NR_AutoMachineTool/Buildings/Cleaner</texPath>
+      <texPath>NR_AutoMachineTool/Buildings/Repairer</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
@@ -46,7 +46,7 @@
     </comps>
     <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
     <researchPrerequisites>
-      <li>ResearchProject_NR_AutoMachineTool_AutoCleaner</li>
+      <li>ResearchProject_NR_AutoMachineTool_AutoRepair</li>
     </researchPrerequisites>
     <inspectorTabs>
       <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
@@ -59,7 +59,7 @@
 
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
-        <targetCellResolverType>NR_AutoMachineTool.Building_CleanerTargetCellResolver</targetCellResolverType>
+        <targetCellResolverType>NR_AutoMachineTool.Building_RepairerTargetCellResolver</targetCellResolverType>
       </li>
     </modExtensions>
   </ThingDef>

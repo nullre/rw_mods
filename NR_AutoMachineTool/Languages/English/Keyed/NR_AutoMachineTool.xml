@@ -28,7 +28,7 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool.OutputDirectionW>West</NR_AutoMachineTool.OutputDirectionW>
   <NR_AutoMachineTool.OutputDirectionNW>Northwest</NR_AutoMachineTool.OutputDirectionNW>
 
-  <NR_AutoMachineTool.SettingName>AutoMachineTool setting</NR_AutoMachineTool.SettingName>
+  <NR_AutoMachineTool.SettingName>AutoMachineTool</NR_AutoMachineTool.SettingName>
   <NR_AutoMachineTool.SettingTier>Tier [{0}]</NR_AutoMachineTool.SettingTier>
   <NR_AutoMachineTool.SettingSkillLevel>Skill level({0})</NR_AutoMachineTool.SettingSkillLevel>
   

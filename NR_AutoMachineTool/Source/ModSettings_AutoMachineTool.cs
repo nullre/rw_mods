@@ -33,6 +33,9 @@ namespace NR_AutoMachineTool
         public RangeMachineSetting cleanerSetting = CleanerDefault();
         public static readonly Func<RangeMachineSetting> CleanerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 20000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000 };
 
+        public RangeMachineSetting repairerSetting = RepairerDefault();
+        public static readonly Func<RangeMachineSetting> RepairerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 10000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 5000 };
+
         private List<RangeSkillMachineSetting> autoMachineToolSetting = CreateAutoMachineToolDefault();
 
         private static List<RangeSkillMachineSetting> CreateAutoMachineToolDefault()
@@ -55,14 +58,14 @@ namespace NR_AutoMachineTool
             };
         }
 
-        private List<RangeSkillMachineSetting> harvesterSetting = CreateHarvesterDefault();
+        private List<RangeMachineSetting> harvesterSetting = CreateHarvesterDefault();
 
-        private static List<RangeSkillMachineSetting> CreateHarvesterDefault()
+        private static List<RangeMachineSetting> CreateHarvesterDefault()
         {
-            return new List<RangeSkillMachineSetting> {
-                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 1000, minSupplyPowerForSpeed = 300, maxSupplyPowerForSpeed = 1000, skillLevel = 0, speedFactor = 1f },
-                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 5000, skillLevel = 0, speedFactor = 1.5f },
-                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 5000, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 10000, skillLevel = 0, speedFactor = 2f }
+            return new List<RangeMachineSetting> {
+                new RangeMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 1000, minSupplyPowerForSpeed = 300, maxSupplyPowerForSpeed = 1000, speedFactor = 1f },
+                new RangeMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 5000, speedFactor = 1.5f },
+                new RangeMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 5000, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 10000, speedFactor = 2f }
             };
         }
 
@@ -78,6 +81,7 @@ namespace NR_AutoMachineTool
             this.slaughterSetting = SlaughterDefault();
             this.minerSetting = MinerDefault();
             this.cleanerSetting = CleanerDefault();
+            this.repairerSetting = RepairerDefault();
         }
 
         public override void ExposeData()
@@ -93,6 +97,7 @@ namespace NR_AutoMachineTool
             Scribe_Deep.Look(ref this.slaughterSetting, "slaughterSetting");
             Scribe_Deep.Look(ref this.minerSetting, "minerSetting");
             Scribe_Deep.Look(ref this.cleanerSetting, "cleanerSetting");
+            Scribe_Deep.Look(ref this.repairerSetting, "repairerSetting");
 
             this.autoMachineToolSetting = this.autoMachineToolSetting ?? CreateAutoMachineToolDefault();
             this.planterSetting = this.planterSetting ?? CreatePlanterDefault();
@@ -104,6 +109,7 @@ namespace NR_AutoMachineTool
             this.slaughterSetting = this.slaughterSetting ?? SlaughterDefault();
             this.minerSetting = this.minerSetting ?? MinerDefault();
             this.cleanerSetting = this.cleanerSetting ?? CleanerDefault();
+            this.repairerSetting = this.repairerSetting?? RepairerDefault();
 
             Option(this.DataExposed).ForEach(e => e(this, new EventArgs()));
         }
@@ -120,10 +126,10 @@ namespace NR_AutoMachineTool
             return this.planterSetting[tier - 1];
         }
 
-        public RangeSkillMachineSetting HarvesterTier(int tier)
+        public RangeMachineSetting HarvesterTier(int tier)
         {
             this.harvesterSetting = this.harvesterSetting ?? CreateHarvesterDefault();
-            return this.planterSetting[tier - 1];
+            return this.harvesterSetting[tier - 1];
         }
 
         public event EventHandler DataExposed;
@@ -132,49 +138,48 @@ namespace NR_AutoMachineTool
 
         public void DoSetting(Rect inRect)
         {
-            var viewRect = new Rect(inRect.x, inRect.y, inRect.width - 30f, 3800f);
+            var tierMachines = new[] {
+                new { Name= "NR_AutoMachineTool.AutoMachineTool", Setting = this.autoMachineToolSetting.Cast<BasicMachineSetting>() },
+                new { Name= "NR_AutoMachineTool.Planter", Setting = this.planterSetting.Cast<BasicMachineSetting>() },
+                new { Name= "NR_AutoMachineTool.Harvester", Setting = this.harvesterSetting.Cast<BasicMachineSetting>() },
+            };
+
+            var machines = new[]
+            {
+                new { Name="Building_NR_AutoMachineTool_BeltConveyor", Setting = (BasicMachineSetting)this.beltConveyorSetting},
+                new { Name="Building_NR_AutoMachineTool_Puller", Setting = (BasicMachineSetting)this.pullerSetting},
+                new { Name="Building_NR_AutoMachineTool_AnimalResourceGatherer", Setting = (BasicMachineSetting)this.gathererSetting},
+                new { Name="Building_NR_AutoMachineTool_Slaughterhouse", Setting = (BasicMachineSetting)this.slaughterSetting},
+                new { Name="Building_NR_AutoMachineTool_Miner", Setting = (BasicMachineSetting)this.minerSetting},
+                new { Name="Building_NR_AutoMachineTool_Cleaner", Setting = (BasicMachineSetting)this.cleanerSetting},
+                new { Name="Building_NR_AutoMachineTool_Repairer", Setting = (BasicMachineSetting)this.repairerSetting},
+            };
+
+            var width = inRect.width - 30f;
+
+            var height =
+                tierMachines.Select(a => Text.CalcHeight(a.Name.Translate(), width) + a.Setting.Select(s => s.GetHeight() + 42f + 12f).Sum()).Sum() +
+                machines.Select(a => Text.CalcHeight(ThingDef.Named(a.Name).label, width) + a.Setting.GetHeight() + 12f).Sum() + 50f;
+
+            var viewRect = new Rect(inRect.x, inRect.y, width, height);
             Widgets.BeginScrollView(inRect, ref this.scrollPosition, viewRect);
             var list = new Listing_Standard();
             list.Begin(viewRect);
 
-            int index = 0;
-            DrawMachineName("NR_AutoMachineTool.AutoMachineTool".Translate(), list);
-            this.autoMachineToolSetting.ForEach(s => DrawTier(list, s, ++index));
-            list.GapLine();
+            tierMachines.ForEach(a =>
+            {
+                int i = 0;
+                DrawMachineName(a.Name.Translate(), list);
+                a.Setting.ForEach(s => DrawTier(list, s, ++i));
+                list.GapLine();
+            });
 
-            index = 0;
-            DrawMachineName("NR_AutoMachineTool.Planter".Translate(), list);
-            this.planterSetting.ForEach(s => DrawTier(list, s, ++index));
-            list.GapLine();
-
-            index = 0;
-            DrawMachineName("NR_AutoMachineTool.Harvester".Translate(), list);
-            this.harvesterSetting.ForEach(s => DrawTier(list, s, ++index));
-            list.GapLine();
-
-            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_BeltConveyor").label, list);
-            DrawSetting(list, this.beltConveyorSetting);
-            list.GapLine();
-
-            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_Puller").label, list);
-            DrawSetting(list, this.pullerSetting);
-            list.GapLine();
-
-            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_AnimalResourceGatherer").label, list);
-            DrawSetting(list, this.gathererSetting);
-            list.GapLine();
-
-            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_Slaughterhouse").label, list);
-            DrawSetting(list, this.slaughterSetting);
-            list.GapLine();
-
-            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_Miner").label, list);
-            DrawSetting(list, this.minerSetting);
-            list.GapLine();
-
-            DrawMachineName(ThingDef.Named("Building_NR_AutoMachineTool_Cleaner").label, list);
-            DrawSetting(list, this.cleanerSetting);
-            list.GapLine();
+            machines.ForEach(a =>
+            {
+                DrawMachineName(ThingDef.Named(a.Name).label, list);
+                DrawSetting(list, a.Setting);
+                list.GapLine();
+            });
 
             // Restore
             if (Widgets.ButtonText(list.GetRect(30f).RightHalf().RightHalf(), "NR_AutoMachineTool.SettingReset".Translate()))
