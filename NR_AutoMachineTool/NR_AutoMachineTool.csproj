@@ -133,6 +133,7 @@
     <Content Include="About\Desc_ItemPuller.png" />
     <Content Include="About\Desc_Miner.png" />
     <Content Include="About\Desc_Planter.png" />
+    <Content Include="About\Desc_Repairer.png" />
     <Content Include="About\Desc_Slaughterhouse.png" />
     <Content Include="About\Desc_WallLight.png" />
     <Content Include="About\preview.png" />
