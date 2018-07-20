@@ -52,7 +52,7 @@ Planter starts planting plants in the agricultural zone within range.</descripti
     <selectable>True</selectable>
 
     <inspectorTabs>
-      <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
+      <li>NR_AutoMachineTool.ITab_RangePowerSupply</li>
       <li>NR_AutoMachineTool.ITab_ProductLimitation</li>
     </inspectorTabs>
   </ThingDef>

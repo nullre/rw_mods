@@ -247,6 +247,28 @@ Thanks to the producers of these mods.
 - The light color range at installation is the range maximum setting range.
 
 ---
+## Stunner
+
+![Stunner](/NR_AutoMachineTool/About/Desc_Stunner.png)
+
+### Usage
+- Research on Automatic stunner.
+- Automatically stun hostile pawn in the range.
+
+### Function
+- You can select the Stunner and change the power supply amount from the power tab. If the power supply is large, the speed and range will rise.
+- Animals in violence will also stun.
+- Stunner kills the mechanoid.
+
+### Caution
+- Prisoners are excluded.
+- Prisoners under jailbreak are eligible.
+- Fleeing Pawns is excluded.
+- After a while the stunning condition will be lifted.
+- I think balance is not good.
+- The light color range at installation is the range maximum setting range.
+
+---
 ## Overall
 
 ### TODO

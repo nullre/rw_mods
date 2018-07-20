@@ -96,8 +96,7 @@ namespace NR_AutoMachineTool
         public override IEnumerable<IntVec3> GetRangeCells(IntVec3 pos, Map map, Rot4 rot, int range)
         {
             return GenRadial.RadialCellsAround(pos, range, true)
-                .Where(c => c.GetRoom(map) == pos.GetRoom(map))
-                .Where(c => !c.GetThingList(Find.CurrentMap).Any(t => t.def.passability == Traversability.Impassable));
+                .Where(c => c.GetRoom(map) == pos.GetRoom(map));
         }
 
         public override Color GetColor(IntVec3 cell, Map map, Rot4 rot, CellPattern cellPattern)
@@ -113,5 +112,7 @@ namespace NR_AutoMachineTool
             }
             return col;
         }
+
+        public override bool NeedClearingCache => true;
     }
 }

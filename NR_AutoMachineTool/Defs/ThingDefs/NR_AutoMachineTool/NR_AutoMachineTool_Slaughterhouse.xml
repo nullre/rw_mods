@@ -60,7 +60,7 @@ Slaughterhouse starts slaughter animals within range.</description>
     <selectable>True</selectable>
 
     <inspectorTabs>
-      <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
+      <li>NR_AutoMachineTool.ITab_RangePowerSupply</li>
       <li>NR_AutoMachineTool.ITab_Slaughterhouse</li>
     </inspectorTabs>
 

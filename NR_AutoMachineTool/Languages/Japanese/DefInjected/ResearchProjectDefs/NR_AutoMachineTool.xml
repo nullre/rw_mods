@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
+  <NR_AutoMachineTool_ResearchTab.label>自動工作</NR_AutoMachineTool_ResearchTab.label>
+  
   <ResearchProject_NR_AutoMachineTool_Tier1.label>自動工作機械 Tier1</ResearchProject_NR_AutoMachineTool_Tier1.label>
   <ResearchProject_NR_AutoMachineTool_Tier1.description>自動工作機械Tier1が作成可能になります。</ResearchProject_NR_AutoMachineTool_Tier1.description>
 
@@ -32,6 +34,9 @@
 
   <ResearchProject_NR_AutoMachineTool_AutoRepair.label>自動修理</ResearchProject_NR_AutoMachineTool_AutoRepair.label>
   <ResearchProject_NR_AutoMachineTool_AutoRepair.description>自動修理機が作成可能になります。</ResearchProject_NR_AutoMachineTool_AutoRepair.description>
+
+  <ResearchProject_NR_AutoMachineTool_Stun.label>電撃放射</ResearchProject_NR_AutoMachineTool_Stun.label>
+  <ResearchProject_NR_AutoMachineTool_Stun.description>電撃放射機が作成可能になります。</ResearchProject_NR_AutoMachineTool_Stun.description>
 
   <ResearchProject_NR_AutoMachineTool_AutomationNet.label>自動化ネット(experimental)</ResearchProject_NR_AutoMachineTool_AutomationNet.label>
   <ResearchProject_NR_AutoMachineTool_AutomationNet.description>自動化ネットが構築できます。</ResearchProject_NR_AutoMachineTool_AutomationNet.description>

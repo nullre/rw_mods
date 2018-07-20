@@ -24,10 +24,42 @@ namespace NR_AutoMachineTool
             base.MapComponentTick();
 
             var removeSet = this.eachTickActions.ToList().Where(f => f()).ToHashSet();
-
             removeSet.ForEach(r => this.eachTickActions.Remove(r));
 
             this.tickActionsDict.GetOption(Find.TickManager.TicksGame).ForEach(s => s.ToList().ForEach(a => a()));
+            /*
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+
+            var beforeCount = GC.CollectionCount(0);
+
+            StringBuilder b = new StringBuilder();
+            var tickers = this.tickActionsDict.GetOption(Find.TickManager.TicksGame);
+            if (tickers.HasValue)
+            {
+                foreach(var a in tickers.Value.ToList())
+                {
+                    System.Diagnostics.Stopwatch sw2 = new System.Diagnostics.Stopwatch();
+                    sw2.Start();
+                    a();
+                    sw2.Stop();
+                    var micros = (double)sw2.ElapsedTicks / (double)System.Diagnostics.Stopwatch.Frequency * 1000d * 1000d;
+                    b.Append(a.Target.GetType().ToString() + "." + a.Method.Name + " / elapse : " + micros + "\n");
+                }
+            }
+
+            var afterCount = GC.CollectionCount(0);
+
+            sw.Stop();
+            var millis = (double)sw.ElapsedTicks / (double)System.Diagnostics.Stopwatch.Frequency * 1000d;
+            if (millis > 2d)
+            {
+                var actions = this.tickActionsDict.GetOption(Find.TickManager.TicksGame).GetOrDefault(new HashSet<Action>());
+                L("millis : " + millis + " / gcCount : " + (afterCount - beforeCount));
+                L("methods : " + b.ToString());
+            }
+            */
+
             this.tickActionsDict.Remove(Find.TickManager.TicksGame);
         }
 

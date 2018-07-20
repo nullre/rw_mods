@@ -29,22 +29,22 @@ namespace NR_AutoMachineTool
             var machine = center.GetThingList(map).Where(t => t.def == def).SelectMany(t => Option(t as IRange)).FirstOption();
             if (machine.HasValue)
             {
-                ext.TargetCellResolver.GetRangeCells(center, map, rot, machine.Value.GetRange()).ToList().Select(c => new { Cell = c, Color = ext.TargetCellResolver.GetColor(c, map, rot, CellPattern.Instance) })
+                machine.Value.GetAllTargetCells().Select(c => new { Cell = c, Color = ext.TargetCellResolver.GetColor(c, map, rot, CellPattern.Instance) })
                     .GroupBy(a => a.Color)
                     .ForEach(g => GenDraw.DrawFieldEdges(g.Select(a => a.Cell).ToList(), g.Key));
             }
             else
             {
-                var min = ext.TargetCellResolver.GetRangeCells(center, map, rot, ext.TargetCellResolver.MinRange()).ToList();
-                var max = ext.TargetCellResolver.GetRangeCells(center, map, rot, ext.TargetCellResolver.MaxRange()).ToList();
+                var min = ext.TargetCellResolver.GetRangeCells(center, map, rot, ext.TargetCellResolver.MinRange());
+                var max = ext.TargetCellResolver.GetRangeCells(center, map, rot, ext.TargetCellResolver.MaxRange());
                 min.Select(c => new { Cell = c, Color = ext.TargetCellResolver.GetColor(c, map, rot, CellPattern.BlurprintMin) })
-                    .ToList().Append(max.Select(c => new { Cell = c, Color = ext.TargetCellResolver.GetColor(c, map, rot, CellPattern.BlurprintMax) }).ToList())
+                    .Concat(max.Select(c => new { Cell = c, Color = ext.TargetCellResolver.GetColor(c, map, rot, CellPattern.BlurprintMax) }))
                     .GroupBy(a => a.Color)
                     .ForEach(g => GenDraw.DrawFieldEdges(g.Select(a => a.Cell).ToList(), g.Key));
             }
 
             map.listerThings.ThingsOfDef(def).SelectMany(t => Option(t as IRange)).Where(r => r.Position != center).ForEach(r =>
-                    ext.TargetCellResolver.GetRangeCells(r.Position, map, r.Rotation, r.GetRange()).ToList().Select(c => new { Cell = c, Color = ext.TargetCellResolver.GetColor(c, map, rot, CellPattern.OtherInstance) })
+                    r.GetAllTargetCells().Select(c => new { Cell = c, Color = ext.TargetCellResolver.GetColor(c, map, rot, CellPattern.OtherInstance) })
                         .GroupBy(a => a.Color)
                         .ForEach(g => GenDraw.DrawFieldEdges(g.Select(a => a.Cell).ToList(), g.Key)));
         }

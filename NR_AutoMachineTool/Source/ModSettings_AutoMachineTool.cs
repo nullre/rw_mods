@@ -31,19 +31,22 @@ namespace NR_AutoMachineTool
         public static readonly Func<BasicMachineSetting> MinerDefault = () => new BasicMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 10000, maxSupplyPowerForSpeed = 1000000 };
 
         public RangeMachineSetting cleanerSetting = CleanerDefault();
-        public static readonly Func<RangeMachineSetting> CleanerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 20000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2000 };
+        public static readonly Func<RangeMachineSetting> CleanerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 20000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 3000 };
 
         public RangeMachineSetting repairerSetting = RepairerDefault();
-        public static readonly Func<RangeMachineSetting> RepairerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 10000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 5000 };
+        public static readonly Func<RangeMachineSetting> RepairerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 10000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 10000 };
+
+        public RangeMachineSetting stunnerSetting = StunnerDefault();
+        public static readonly Func<RangeMachineSetting> StunnerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 50000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 10000 };
 
         private List<RangeSkillMachineSetting> autoMachineToolSetting = CreateAutoMachineToolDefault();
 
         private static List<RangeSkillMachineSetting> CreateAutoMachineToolDefault()
         {
             return new List<RangeSkillMachineSetting> {
-                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 1000, minSupplyPowerForSpeed = 100, maxSupplyPowerForSpeed = 1000, skillLevel = 5, speedFactor = 1f },
-                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 1500, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 5000, skillLevel = 10, speedFactor = 1.5f },
-                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 2500, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 100000, skillLevel = 20, speedFactor = 2f }
+                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 500, minSupplyPowerForSpeed = 100, maxSupplyPowerForSpeed = 1000, skillLevel = 5, speedFactor = 1f },
+                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 500, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 5000, skillLevel = 10, speedFactor = 1.5f },
+                new RangeSkillMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 1000, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 100000, skillLevel = 20, speedFactor = 2f }
             };
         }
 
@@ -98,6 +101,7 @@ namespace NR_AutoMachineTool
             Scribe_Deep.Look(ref this.minerSetting, "minerSetting");
             Scribe_Deep.Look(ref this.cleanerSetting, "cleanerSetting");
             Scribe_Deep.Look(ref this.repairerSetting, "repairerSetting");
+            Scribe_Deep.Look(ref this.stunnerSetting, "stunnerSetting");
 
             this.autoMachineToolSetting = this.autoMachineToolSetting ?? CreateAutoMachineToolDefault();
             this.planterSetting = this.planterSetting ?? CreatePlanterDefault();
@@ -110,6 +114,7 @@ namespace NR_AutoMachineTool
             this.minerSetting = this.minerSetting ?? MinerDefault();
             this.cleanerSetting = this.cleanerSetting ?? CleanerDefault();
             this.repairerSetting = this.repairerSetting?? RepairerDefault();
+            this.stunnerSetting = this.stunnerSetting ?? StunnerDefault();
 
             Option(this.DataExposed).ForEach(e => e(this, new EventArgs()));
         }
@@ -153,12 +158,13 @@ namespace NR_AutoMachineTool
                 new { Name="Building_NR_AutoMachineTool_Miner", Setting = (BasicMachineSetting)this.minerSetting},
                 new { Name="Building_NR_AutoMachineTool_Cleaner", Setting = (BasicMachineSetting)this.cleanerSetting},
                 new { Name="Building_NR_AutoMachineTool_Repairer", Setting = (BasicMachineSetting)this.repairerSetting},
+                new { Name="Building_NR_AutoMachineTool_Stunner", Setting = (BasicMachineSetting)this.stunnerSetting},
             };
 
             var width = inRect.width - 30f;
 
             var height =
-                tierMachines.Select(a => Text.CalcHeight(a.Name.Translate(), width) + a.Setting.Select(s => s.GetHeight() + 42f + 12f).Sum()).Sum() +
+                tierMachines.Select(a => Text.CalcHeight(a.Name.Translate(), width) + 12f + a.Setting.Select(s => s.GetHeight() + 42f + 12f).Sum()).Sum() +
                 machines.Select(a => Text.CalcHeight(ThingDef.Named(a.Name).label, width) + a.Setting.GetHeight() + 12f).Sum() + 50f;
 
             var viewRect = new Rect(inRect.x, inRect.y, width, height);

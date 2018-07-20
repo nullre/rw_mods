@@ -201,7 +201,7 @@ namespace NR_AutoMachineTool
             {
                 Option(ProgressBarTarget()).ForEach(t =>
                 {
-                    this.progressBar = DefDatabase<EffecterDef>.GetNamed("NR_AutoMachineTool_ProgressBar").Spawn();
+                    this.progressBar = DefDatabase<EffecterDef>.GetNamed("NR_AutoMachineTool_Effect_ProgressBar").Spawn();
                     this.progressBar.EffectTick(ProgressBarTarget(), TargetInfo.Invalid);
                     ((MoteProgressBar2)((SubEffecter_ProgressBar)progressBar.children[0]).mote).progressGetter = () => (this.CurrentWorkAmount / this.totalWorkAmount);
                 });
@@ -457,7 +457,6 @@ namespace NR_AutoMachineTool
         {
             var quot = count / def.stackLimit;
             var remain = count % def.stackLimit;
-
             return Enumerable.Range(0, quot + 1)
                 .Select((c, i) => i == quot ? remain : def.stackLimit)
                 .Select(c =>

@@ -68,6 +68,8 @@
     <Compile Include="Source\Building_Base.cs" />
     <Compile Include="Source\Building_BaseLimitation.cs" />
     <Compile Include="Source\Building_BaseRange.cs" />
+    <Compile Include="Source\Building_Stunner.cs" />
+    <Compile Include="Source\MoteLightning.cs" />
     <Compile Include="Source\PlaceWorker_InputCellsHilight.cs" />
     <Compile Include="Source\Building_BeltConveyor.cs" />
     <Compile Include="Source\Building_BeltConveyorUGConnecter.cs" />
@@ -107,7 +109,7 @@
     <Compile Include="Source\GenRecipe2.cs" />
     <Compile Include="Source\IBeltConbeyorSender.cs" />
     <Compile Include="Source\IBeltConbeyorLinkable.cs" />
-    <Compile Include="Source\ITab_AgriculturePowerSupply.cs" />
+    <Compile Include="Source\ITab_RangePowerSupply.cs" />
     <Compile Include="Source\ITab_PowerSupply.cs" />
     <Compile Include="Source\ITab_PullerFilter.cs" />
     <Compile Include="Source\ITab_ConveyorFilter.cs" />
@@ -135,6 +137,7 @@
     <Content Include="About\Desc_Planter.png" />
     <Content Include="About\Desc_Repairer.png" />
     <Content Include="About\Desc_Slaughterhouse.png" />
+    <Content Include="About\Desc_Stunner.png" />
     <Content Include="About\Desc_WallLight.png" />
     <Content Include="About\preview.png" />
     <Content Include="About\preview1.png" />
@@ -142,11 +145,17 @@
     <Content Include="Defs\Effects\NR_AutoMachineTool_Effects.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Defs\HediffDefs\NR_AutoMachineTool_Hediffs.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Defs\Misc\NR_AutoMachineTool_SpecialThingFilters.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Defs\ResearchProjectDefs\NR_AutoMachineTool.xml" />
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_AutomationNet.xml" />
+    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Stunner.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Repairer.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -168,19 +177,25 @@
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Planter.xml" />
+    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Planter.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Miner.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Languages\English\Keyed\NR_AutoMachineTool.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Languages\Japanese\DefInjected\HediffDefs\NR_AutoMachineTool.xml" />
     <Content Include="Languages\Japanese\DefInjected\DesignationCategoryDef\NR_AutoMachineTool.xml" />
     <Content Include="Languages\Japanese\DefInjected\SpecialThingFilterDefs\NR_AutoMachineTool_SpecialThingFilters.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Languages\Japanese\DefInjected\ResearchProjectDefs\NR_AutoMachineTool.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_AutomationNet.xml" />
+    <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Stunner.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Repairer.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_WallLight.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Cleaner.xml" />
@@ -234,6 +249,7 @@
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Slaughterhouse.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\WallLight.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\WallLightIcon.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Things\Mote\Lightning.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\Forbid.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\OutputDirection.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\Play.png" />

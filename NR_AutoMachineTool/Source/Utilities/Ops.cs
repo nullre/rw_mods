@@ -247,11 +247,20 @@ namespace NR_AutoMachineTool.Utilities
             return copy;
         }
 
-        public static List<IntVec3> FacingRect(IntVec3 pos, Rot4 dir, int range)
+        public static IEnumerable<IntVec3> FacingRect(IntVec3 pos, Rot4 dir, int range)
         {
             var rightAngle = dir;
             rightAngle.Rotate(RotationDirection.Clockwise);
-            return Enumerable.Range(1, range * 2 + 1).SelectMany(a => Enumerable.Range(-range, range * 2 + 1).Select(c => rightAngle.FacingCell.ToVector3() * c).Select(v => v + (a * dir.FacingCell.ToVector3()))).Select(x => pos + x.ToIntVec3()).ToList();
+            var ret = new List<IntVec3>();
+            var xoffset = dir.FacingCell.x * range + dir.FacingCell.x + pos.x;
+            var zoffset = dir.FacingCell.z * range + dir.FacingCell.z + pos.z;
+            for (int x = -range; x <= range; x++)
+            {
+                for(int z = -range; z <= range ; z++)
+                {
+                    yield return new IntVec3(x + xoffset, pos.y, z + zoffset);
+                }
+            }
         }
 
         public static Rot4 RotateAsNew(this Rot4 rot, RotationDirection dir)
@@ -263,9 +272,26 @@ namespace NR_AutoMachineTool.Utilities
 
         public static Option<IPlantToGrowSettable> GetPlantable(this IntVec3 pos, Map map)
         {
+            /*
             return Option(pos.GetZone(map) as IPlantToGrowSettable)
                 .Fold(() => pos.GetThingList(map).Where(t => t.def.category == ThingCategory.Building).SelectMany(t => Option(t as IPlantToGrowSettable)).FirstOption())
                 (x => Option(x));
+            */
+            var p = pos.GetZone(map) as IPlantToGrowSettable;
+            if (p != null)
+            {
+                return Option(p);
+            }
+            foreach (var t in pos.GetThingList(map))
+            {
+                if (t.def.category == ThingCategory.Building)
+                {
+                    p = t as IPlantToGrowSettable;
+                    if (p != null)
+                        return Option(p);
+                }
+            }
+            return Nothing<IPlantToGrowSettable>();
         }
 
         public static Option<Pawn> GetGatherable(this IntVec3 pos, Map map)

@@ -120,6 +120,7 @@ namespace NR_AutoMachineTool
         int MaxPowerForRange { get; }
         int MinPowerForRange { get; }
         int GetRange(float power);
+        bool NeedClearingCache { get; }
     }
 
     public static class ITargetCellResolverExtension
@@ -141,6 +142,7 @@ namespace NR_AutoMachineTool
 
         public abstract int MinPowerForRange { get; }
         public abstract int MaxPowerForRange { get; }
+        public abstract bool NeedClearingCache { get; }
         public ModExtension_AutoMachineTool Parent { get; set; }
 
         public virtual int GetRange(float power)

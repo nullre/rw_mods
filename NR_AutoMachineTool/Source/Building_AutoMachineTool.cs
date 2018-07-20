@@ -50,6 +50,7 @@ namespace NR_AutoMachineTool
         public Building_AutoMachineTool()
         {
             this.forcePlace = false;
+            this.targetEnumrationCount = 0;
         }
 
         private Map M { get { return this.Map; } }
@@ -326,7 +327,7 @@ namespace NR_AutoMachineTool
 
         private List<Thing> Consumable()
         {
-            return this.GetTargetCells()
+            return this.GetAllTargetCells()
                 .SelectMany(c => c.GetThingList(M))
                 .Where(c => c.def.category == ThingCategory.Item)
                 .ToList();
@@ -542,6 +543,7 @@ namespace NR_AutoMachineTool
     {
         public override int MinPowerForRange => this.Setting.AutoMachineToolTier(this.Parent.tier).minSupplyPowerForRange;
         public override int MaxPowerForRange => this.Setting.AutoMachineToolTier(this.Parent.tier).maxSupplyPowerForRange;
+        public override bool NeedClearingCache => false;
 
         public override IEnumerable<IntVec3> GetRangeCells(IntVec3 pos, Map map, Rot4 rot, int range)
         {

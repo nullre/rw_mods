@@ -2,7 +2,7 @@
 <Defs>
 
   <EffecterDef>
-    <defName>NR_AutoMachineTool_ProgressBar</defName>
+    <defName>NR_AutoMachineTool_Effect_ProgressBar</defName>
     <children>
       <li>
         <subEffecterClass>SubEffecter_ProgressBar</subEffecterClass>
@@ -20,6 +20,28 @@
     <altitudeLayer>MetaOverlays</altitudeLayer>
     <mote>
       <solidTime>240</solidTime>
+    </mote>
+  </ThingDef>
+
+  <EffecterDef>
+    <defName>NR_AutoMachineTool_Effect_Lightning</defName>
+    <children>
+      <li>
+        <subEffecterClass>SubEffecter_InteractSymbol</subEffecterClass>
+        <moteDef>NR_AutoMachineTool_Mote_Lightning</moteDef>
+      </li>
+    </children>
+  </EffecterDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>NR_AutoMachineTool_Mote_Lightning</defName>
+    <graphicData>
+      <texPath>NR_AutoMachineTool/Things/Mote/Lightning</texPath>
+    </graphicData>
+    <thingClass>NR_AutoMachineTool.MoteLightning</thingClass>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <mote>
+      <solidTime>0.5</solidTime>
     </mote>
   </ThingDef>
   

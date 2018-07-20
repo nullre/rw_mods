@@ -2,21 +2,21 @@
 <Defs>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>Building_NR_AutoMachineTool_Cleaner</defName>
-    <label>AutoCleaner</label>
-    <thingClass>NR_AutoMachineTool.Building_Cleaner</thingClass>
-    <description>Automatically cleans the dirt in the range. It also removes the dirt of dirty Pawn.</description>
+    <defName>Building_NR_AutoMachineTool_Stunner</defName>
+    <label>Stunner</label>
+    <thingClass>NR_AutoMachineTool.Building_Stunner</thingClass>
+    <description>Automatically stun hostile Pawn in the range.</description>
     <graphicData>
-      <texPath>NR_AutoMachineTool/Buildings/Cleaner</texPath>
+      <texPath>NR_AutoMachineTool/Buildings/Stunner</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
     <constructEffect>ConstructMetal</constructEffect>
     <costList>
-      <Steel>200</Steel>
-      <Plasteel>100</Plasteel>
-      <Uranium>10</Uranium>
-      <ComponentSpacer>3</ComponentSpacer>
+      <Steel>1000</Steel>
+      <Plasteel>1000</Plasteel>
+      <Uranium>100</Uranium>
+      <ComponentSpacer>10</ComponentSpacer>
     </costList>
     <altitudeLayer>Building</altitudeLayer>
     <fillPercent>0.5</fillPercent>
@@ -46,7 +46,7 @@
     </comps>
     <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
     <researchPrerequisites>
-      <li>ResearchProject_NR_AutoMachineTool_AutoCleaner</li>
+      <li>ResearchProject_NR_AutoMachineTool_Stun</li>
     </researchPrerequisites>
     <inspectorTabs>
       <li>NR_AutoMachineTool.ITab_RangePowerSupply</li>
@@ -59,7 +59,7 @@
 
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
-        <targetCellResolverType>NR_AutoMachineTool.Building_CleanerTargetCellResolver</targetCellResolverType>
+        <targetCellResolverType>NR_AutoMachineTool.Building_StunnerTargetCellResolver</targetCellResolverType>
       </li>
     </modExtensions>
   </ThingDef>

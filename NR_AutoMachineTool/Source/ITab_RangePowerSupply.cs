@@ -13,7 +13,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 namespace NR_AutoMachineTool
 {
 
-    public interface IAgricultureMachine
+    public interface IRangePowerSupplyMachine
     {
         int MinPowerForSpeed { get; }
         int MaxPowerForSpeed { get; }
@@ -27,11 +27,11 @@ namespace NR_AutoMachineTool
         bool Glow { get; set; }
     }
 
-    class ITab_AgriculturePowerSupply : ITab
+    class ITab_RangePowerSupply : ITab
     {
         private static readonly Vector2 WinSize = new Vector2(500f, 380f);
 
-        public ITab_AgriculturePowerSupply()
+        public ITab_RangePowerSupply()
         {
             this.size = WinSize;
             this.labelKey = "NR_AutoMachineTool.SupplyPowerTab";
@@ -44,7 +44,7 @@ namespace NR_AutoMachineTool
 
         private string descriptionForRange;
 
-        private IAgricultureMachine Machine { get => (IAgricultureMachine)this.SelThing; }
+        private IRangePowerSupplyMachine Machine { get => (IRangePowerSupplyMachine)this.SelThing; }
 
         protected override void FillTab()
         {

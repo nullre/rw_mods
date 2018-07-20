@@ -59,7 +59,7 @@ AnimalResourceGatherer starts milking and shearing from animals within range.</d
     <selectable>True</selectable>
 
     <inspectorTabs>
-      <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
+      <li>NR_AutoMachineTool.ITab_RangePowerSupply</li>
       <li>NR_AutoMachineTool.ITab_ProductLimitation</li>
     </inspectorTabs>
 

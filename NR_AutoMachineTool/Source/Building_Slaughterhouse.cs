@@ -126,5 +126,7 @@ namespace NR_AutoMachineTool
             return FacingRect(pos, rot, range)
                 .Where(c => (pos + rot.FacingCell).GetRoom(map) == c.GetRoom(map));
         }
+
+        public override bool NeedClearingCache => true;
     }
 }

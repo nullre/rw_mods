@@ -111,5 +111,7 @@ namespace NR_AutoMachineTool
             return GenRadial.RadialCellsAround(pos, range, true)
                 .Where(c => c.GetRoom(Find.CurrentMap) == pos.GetRoom(map));
         }
+
+        public override bool NeedClearingCache => true;
     }
 }

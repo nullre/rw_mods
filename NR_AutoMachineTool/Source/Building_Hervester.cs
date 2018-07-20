@@ -31,14 +31,21 @@ namespace NR_AutoMachineTool
                 .Where(c => c.GetPlantable(this.Map).HasValue)
                 .SelectMany(c => c.GetThingList(this.Map))
                 .SelectMany(t => Option(t as Plant))
-                .Where(p => !InWorking(p))
-                .Where(p => (p.HarvestableNow && p.LifeStage == PlantLifeStage.Mature) || p.Blighted)
-                .Where(p => !IsLimit(p.def.plant.harvestedThingDef) || p.Blighted)
+                .Where(p => Harvestable(p))
                 .FirstOption()
                 .GetOrDefault(null);
+
             target = plant;
             workAmount = target?.def.plant.harvestWork ?? 0f;
             return target != null;
+        }
+
+        private bool Harvestable(Plant p)
+        {
+            return p.Blighted || (
+                (p.HarvestableNow && p.LifeStage == PlantLifeStage.Mature) &&
+                !InWorking(p) &&
+                !IsLimit(p.def.plant.harvestedThingDef));
         }
 
         protected override bool FinishWorking(Plant working, out List<Thing> products)
@@ -82,5 +89,7 @@ namespace NR_AutoMachineTool
             }
             return col;
         }
+
+        public override bool NeedClearingCache => true;
     }
 }

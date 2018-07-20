@@ -20,6 +20,8 @@ namespace NR_AutoMachineTool
         public override int MinPowerForSpeed => this.Setting.repairerSetting.minSupplyPowerForSpeed;
         public override int MaxPowerForSpeed => this.Setting.repairerSetting.maxSupplyPowerForSpeed;
 
+        private static readonly Func<Projectile, Thing> getLauncher = GenerateGetFieldDelegate<Projectile, Thing>(typeof(Projectile).GetField("launcher", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance));
+
         public Building_Repairer()
         {
             base.forcePlace = false;
@@ -53,20 +55,35 @@ namespace NR_AutoMachineTool
             this.repairAmount = 0f;
             target = this;
 
+            /*
             var things = GetTargetCells()
                 .SelectMany(c => c.GetThingList(this.Map))
                 .ToList();
+            */
 
-            this.working = things
-                .SelectMany(t => Option(t as Fire))
+            var cells = this.GetAllTargetCells();
+
+            /*
+            this.working = things.SelectMany(t => Option(t as Projectile))
+                .Where(t => getLauncher(t).Faction != Faction.OfPlayer)
                 .FirstOption()
                 .GetOrDefault(null);
+            */
 
             if (this.working == null)
             {
-                this.working = things
+                this.working = this.Map.listerThings.ThingsInGroup(ThingRequestGroup.Fire).Where(t => cells.Contains(t.Position))
+                // this.working = things
+                    .SelectMany(t => Option(t as Fire))
+                    .FirstOption()
+                    .GetOrDefault(null);
+            }
+
+            if (this.working == null)
+            {
+                this.working = this.Map.listerBuildingsRepairable.RepairableBuildings(Faction.OfPlayer).Where(t => cells.Contains(t.Position))
+                // this.working = things.Where(p => p.Faction == Faction.OfPlayer)
                     .Where(t => t.def.category == ThingCategory.Building)
-                    .Where(p => p.Faction == Faction.OfPlayer)
                     .Where(t => t.HitPoints < t.MaxHitPoints)
                     .FirstOption()
                     .GetOrDefault(null);
@@ -74,11 +91,8 @@ namespace NR_AutoMachineTool
 
             if (this.working == null)
             {
-                var pp = things.Where(t => t.def.category == ThingCategory.Pawn)
-                    .Where(p => p.Faction == Faction.OfPlayer)
-                    .SelectMany(t => Option(t as Pawn))
-                    .FirstOption().GetOrDefault(null);
-                this.pawn = things.Where(t => t.def.category == ThingCategory.Pawn)
+                this.pawn = this.Map.listerThings.ThingsInGroup(ThingRequestGroup.Pawn).Where(t => cells.Contains(t.Position))
+                // this.pawn = things.Where(t => t.def.category == ThingCategory.Pawn)
                     .SelectMany(t => Option(t as Pawn))
                     .Where(p => p.equipment != null && p.equipment.AllEquipmentListForReading != null)
                     .Where(p => p.equipment.AllEquipmentListForReading.Cast<Thing>().ToList().Append<Thing>(p.apparel.WornApparel.Cast<Thing>().ToList()).Any(t => t.HitPoints < t.MaxHitPoints))
@@ -89,10 +103,11 @@ namespace NR_AutoMachineTool
                     this.working = this.pawn.equipment.AllEquipmentListForReading.Cast<Thing>().ToList().Append<Thing>(this.pawn.apparel.WornApparel.Cast<Thing>().ToList()).Where(t => t.HitPoints < t.MaxHitPoints).First();
                 }
             }
+
             workAmount = this.working == null ? 0 : float.PositiveInfinity;
             if (this.working != null)
             {
-                this.progressBar = DefDatabase<EffecterDef>.GetNamed("NR_AutoMachineTool_ProgressBar").Spawn();
+                this.progressBar = DefDatabase<EffecterDef>.GetNamed("NR_AutoMachineTool_Effect_ProgressBar").Spawn();
                 this.progressBar.EffectTick(new TargetInfo(this.pawn ?? this.working), TargetInfo.Invalid);
                 if (this.working is Fire)
                 {
@@ -146,6 +161,14 @@ namespace NR_AutoMachineTool
             {
                 return true;
             }
+            /*
+            if (this.working is Projectile)
+            {
+                MoteMaker.ThrowLightningGlow(this.working.DrawPos, this.Map, 1f);
+                this.working.Destroy();
+                return true;
+            }
+            */
             if (this.working is Fire)
             {
                 var fire = (Fire)this.working;
@@ -171,6 +194,11 @@ namespace NR_AutoMachineTool
             if (this.working.HitPoints >= this.working.MaxHitPoints)
             {
                 this.working.HitPoints = this.working.MaxHitPoints;
+                var building = this.working as Building;
+                if (building != null)
+                {
+                    this.Map.listerBuildingsRepairable.Notify_BuildingRepaired(building);
+                }
                 return true;
             }
             return false;
@@ -203,5 +231,7 @@ namespace NR_AutoMachineTool
         {
             return GenRadial.RadialCellsAround(pos, range, true);
         }
+
+        public override bool NeedClearingCache => false;
     }
 }

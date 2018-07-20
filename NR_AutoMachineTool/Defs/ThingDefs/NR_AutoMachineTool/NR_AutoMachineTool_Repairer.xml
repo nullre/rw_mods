@@ -49,7 +49,7 @@
       <li>ResearchProject_NR_AutoMachineTool_AutoRepair</li>
     </researchPrerequisites>
     <inspectorTabs>
-      <li>NR_AutoMachineTool.ITab_AgriculturePowerSupply</li>
+      <li>NR_AutoMachineTool.ITab_RangePowerSupply</li>
     </inspectorTabs>
 
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
