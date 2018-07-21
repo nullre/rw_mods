@@ -27,6 +27,7 @@ namespace NR_AutoMachineTool
             base.forcePlace = false;
             base.readyOnStart = true;
             base.showProgressBar = false;
+            base.targetEnumrationCount = 0;
         }
 
         public override void ExposeData()

@@ -26,8 +26,7 @@ namespace NR_AutoMachineTool
             var removeSet = this.eachTickActions.ToList().Where(f => f()).ToHashSet();
             removeSet.ForEach(r => this.eachTickActions.Remove(r));
 
-            this.tickActionsDict.GetOption(Find.TickManager.TicksGame).ForEach(s => s.ToList().ForEach(a => a()));
-            /*
+#if DEBUG
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 
@@ -48,18 +47,24 @@ namespace NR_AutoMachineTool
                 }
             }
 
-            var afterCount = GC.CollectionCount(0);
+            var gcCount = GC.CollectionCount(0) - beforeCount;
 
             sw.Stop();
             var millis = (double)sw.ElapsedTicks / (double)System.Diagnostics.Stopwatch.Frequency * 1000d;
             if (millis > 2d)
             {
-                var actions = this.tickActionsDict.GetOption(Find.TickManager.TicksGame).GetOrDefault(new HashSet<Action>());
-                L("millis : " + millis + " / gcCount : " + (afterCount - beforeCount));
-                L("methods : " + b.ToString());
+                if(gcCount >= 1)
+                {
+                    L("called GC");
+                }
+                else
+                {
+                    L("millis : " + millis + " / methods : " + b.ToString());
+                }
             }
-            */
-
+#else
+            this.tickActionsDict.GetOption(Find.TickManager.TicksGame).ForEach(s => s.ToList().ForEach(a => a()));
+#endif
             this.tickActionsDict.Remove(Find.TickManager.TicksGame);
         }
 

@@ -256,7 +256,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assemblies\" />
-    <Folder Include="Lib\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README_en.md" />

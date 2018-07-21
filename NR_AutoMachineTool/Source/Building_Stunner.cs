@@ -25,6 +25,7 @@ namespace NR_AutoMachineTool
         public Building_Stunner()
         {
             this.readyOnStart = true;
+            base.targetEnumrationCount = 0;
         }
 
         protected override bool WorkInterruption(Pawn working)

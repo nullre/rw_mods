@@ -180,8 +180,9 @@ namespace NR_AutoMachineTool.Utilities
         }
 
         #region for rimworld
-
-//        public static void L(object obj) { Log.Message(obj == null ? "null" : obj.ToString()); }
+#if DEBUG
+        public static void L(object obj) { Log.Message(obj == null ? "null" : obj.ToString()); }
+#endif
 
         public static bool PlaceItem(Thing t, IntVec3 cell, bool forbid, Map map, bool firstAbsorbStack = false)
         {
@@ -327,7 +328,7 @@ namespace NR_AutoMachineTool.Utilities
             c.a = a;
             return c;
         }
-        #endregion
+#endregion
 
         public static Func<T, TValue> GenerateGetFieldDelegate<T, TValue>(FieldInfo field)
         {

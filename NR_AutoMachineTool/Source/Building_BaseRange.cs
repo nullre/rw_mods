@@ -205,7 +205,7 @@ namespace NR_AutoMachineTool
             if (SplitTargetCells)
             {
                 this.nextTargetCells = true;
-                return this.GetCurrentSplittedTargetCells(); ;
+                return this.GetCurrentSplittedTargetCells();
             }
             else
             {
@@ -213,7 +213,7 @@ namespace NR_AutoMachineTool
             }
         }
 
-        /*
+#if DEBUG
         public override void Draw()
         {
             base.Draw();
@@ -223,7 +223,7 @@ namespace NR_AutoMachineTool
                 GenDraw.DrawFieldEdges(this.GetCurrentSplittedTargetCells(), Color.red);
             }
         }
-        */
+#endif
 
         protected override void Ready()
         {
