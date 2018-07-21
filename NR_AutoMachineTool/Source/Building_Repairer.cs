@@ -91,9 +91,8 @@ namespace NR_AutoMachineTool
 
             if (this.working == null)
             {
-                this.pawn = this.Map.listerThings.ThingsInGroup(ThingRequestGroup.Pawn).Where(t => cells.Contains(t.Position))
-                // this.pawn = things.Where(t => t.def.category == ThingCategory.Pawn)
-                    .SelectMany(t => Option(t as Pawn))
+                this.pawn = this.Map.mapPawns.SpawnedPawnsInFaction(Faction.OfPlayer).Where(t => cells.Contains(t.Position))
+                // this.pawn = things.Where(t => t.def.category == ThingCategory.Pawn).SelectMany(t => Option(t as Pawn))
                     .Where(p => p.equipment != null && p.equipment.AllEquipmentListForReading != null)
                     .Where(p => p.equipment.AllEquipmentListForReading.Cast<Thing>().ToList().Append<Thing>(p.apparel.WornApparel.Cast<Thing>().ToList()).Any(t => t.HitPoints < t.MaxHitPoints))
                     .FirstOption()

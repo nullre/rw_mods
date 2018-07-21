@@ -40,7 +40,7 @@ namespace NR_AutoMachineTool
         protected override bool TryStartWorking(out Pawn target, out float workAmount)
         {
             var allCells = this.GetAllTargetCells();
-            var pawns = this.Map.listerThings.ThingsInGroup(ThingRequestGroup.Pawn).Where(p => allCells.Contains(p.Position)).SelectMany(t => Option(t as Pawn))
+            var pawns = this.Map.mapPawns.AllPawns.Where(p => allCells.Contains(p.Position))
             // var pawns = this.GetTargetCells().SelectMany(c => c.GetThingList(this.Map)).SelectMany(t => Option(t as Pawn))
                 .Where(p => p.Faction != Faction.OfPlayer)
                 .Where(p => !p.Dead && !p.Downed)

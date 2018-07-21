@@ -63,19 +63,57 @@ namespace NR_AutoMachineTool
         }
 
         [Unsaved]
+        protected int targetEnumrationCount = 200;
+
+        [Unsaved]
         private bool nextTargetCells = false;
 
         [Unsaved]
         private HashSet<IntVec3> allTargetCellsCache;
 
+        [Unsaved]
+        private List<List<IntVec3>> splittedTargetCells;
+
+        [Unsaved]
+        private int splittedTargetCellsIndex = 0;
+
+        private const int CACHE_CLEAR_INTERVAL_TICKS = 180;
+
         public IEnumerable<IntVec3> GetAllTargetCells()
         {
-            if(this.allTargetCellsCache == null)
+            this.CacheTargetCells();
+            return allTargetCellsCache;
+        }
+
+        private void CacheTargetCells()
+        {
+            if (this.allTargetCellsCache == null)
             {
                 this.allTargetCellsCache = this.Extension.TargetCellResolver.GetRangeCells(this.Position, this.Map, this.Rotation, this.GetRange()).ToHashSet();
+                if (this.targetEnumrationCount > 0)
+                {
+                    this.splittedTargetCells = this.allTargetCellsCache.ToList().Grouped(this.targetEnumrationCount);
+                }
             }
+        }
 
-            return allTargetCellsCache;
+        private List<IntVec3> GetCurrentSplittedTargetCells()
+        {
+            this.CacheTargetCells();
+            if (this.splittedTargetCellsIndex >= this.splittedTargetCells.Count)
+            {
+                this.splittedTargetCellsIndex = 0;
+            }
+            return this.splittedTargetCells[this.splittedTargetCellsIndex];
+        }
+
+        private void NextSplittedTargetCells()
+        {
+            this.splittedTargetCellsIndex++;
+            if (this.splittedTargetCellsIndex >= this.splittedTargetCells.Count)
+            {
+                this.splittedTargetCellsIndex = 0;
+            }
         }
 
         private void ClearAllTargetCellCache()
@@ -85,7 +123,7 @@ namespace NR_AutoMachineTool
                 this.allTargetCellsCache = null;
                 if (this.Extension.TargetCellResolver.NeedClearingCache)
                 {
-                    MapManager.AfterAction(180, this.ClearAllTargetCellCache);
+                    MapManager.AfterAction(CACHE_CLEAR_INTERVAL_TICKS, this.ClearAllTargetCellCache);
                 }
             }
         }
@@ -151,11 +189,9 @@ namespace NR_AutoMachineTool
                 g.props = newProp;
             });
             this.ChangeGlow();
-            this.targetCellEnumerator = RoundRobbinTargetCells();
-
             if (this.Extension.TargetCellResolver.NeedClearingCache)
             {
-                MapManager.AfterAction(180, this.ClearAllTargetCellCache);
+                MapManager.AfterAction(CACHE_CLEAR_INTERVAL_TICKS, this.ClearAllTargetCellCache);
             }
         }
 
@@ -169,7 +205,7 @@ namespace NR_AutoMachineTool
             if (SplitTargetCells)
             {
                 this.nextTargetCells = true;
-                return this.targetCells;
+                return this.GetCurrentSplittedTargetCells(); ;
             }
             else
             {
@@ -182,59 +218,23 @@ namespace NR_AutoMachineTool
         {
             base.Draw();
 
-            if (Find.Selector.FirstSelectedObject == this && this.targetCells != null)
+            if (Find.Selector.FirstSelectedObject == this && this.SplitTargetCells)
             {
-                GenDraw.DrawFieldEdges(this.targetCells.ToList(), Color.red);
+                GenDraw.DrawFieldEdges(this.GetCurrentSplittedTargetCells(), Color.red);
             }
         }
         */
 
-        protected int targetEnumrationCount = 100;
-
-        protected bool splitCells = false;
-
         protected override void Ready()
         {
-            if (targetCells == null && SplitTargetCells)
-            {
-                this.targetCells = NextTargetCells();
-                this.nextTargetCells = false;
-            }
             base.Ready();
             if (this.State == WorkingState.Ready && SplitTargetCells && this.nextTargetCells)
-            {
-                this.targetCells = NextTargetCells();
+            { 
+                this.NextSplittedTargetCells();
                 this.nextTargetCells = false;
             }
         }
 
         private bool SplitTargetCells => this.targetEnumrationCount > 0 && this.GetAllTargetCells().Count() > this.targetEnumrationCount;
-
-        private HashSet<IntVec3> targetCells;
-
-        private HashSet<IntVec3> NextTargetCells()
-        {
-            var set = new HashSet<IntVec3>();
-            for(var i = 0; i < this.targetEnumrationCount; i++)
-            {
-                targetCellEnumerator.MoveNext();
-                set.Add(targetCellEnumerator.Current);
-            }
-            return set;
-        }
-
-        private IEnumerator<IntVec3> targetCellEnumerator;
-
-        private IEnumerator<IntVec3> RoundRobbinTargetCells()
-        {
-            while (true)
-            {
-                var e = this.GetAllTargetCells();
-                foreach (var cell in e)
-                {
-                    yield return cell;
-                }
-            }
-        }
     }
 }

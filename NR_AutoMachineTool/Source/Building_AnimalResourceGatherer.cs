@@ -72,9 +72,11 @@ namespace NR_AutoMachineTool
 
         protected override bool TryStartWorking(out Pawn target, out float workAmount)
         {
-            var animal = FacingRect(this.Position, this.Rotation, this.GetRange())
-                .Where(c => (this.Position + this.Rotation.FacingCell).GetRoom(this.Map) == c.GetRoom(this.Map))
-                .SelectMany(c => c.GetGatherable(this.Map))
+            var animal = GetTargetCells()
+                .SelectMany(c => c.GetThingList(this.Map))
+                .SelectMany(t => Option(t as Pawn))
+                .Where(p => p.Faction == Faction.OfPlayer)
+                .Where(p => p.TryGetComp<CompHasGatherableBodyResource>() != null)
                 .SelectMany(a => a.GetComps<CompHasGatherableBodyResource>().Select(c => new { Animal = a, Comp = c }))
                 .Where(a => activeGetter(a.Comp) && a.Comp.Fullness >= 0.5f)
                 .Where(a => !IsLimit(resourceDefGetter(a.Comp)))

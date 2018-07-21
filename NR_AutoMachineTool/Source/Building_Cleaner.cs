@@ -41,7 +41,7 @@ namespace NR_AutoMachineTool
 
         protected override bool TryStartWorking(out Filth target, out float workAmount)
         {
-            var cells = this.GetTargetCells().ToList();
+            var cells = this.GetTargetCells();
 
             cells.SelectMany(c => c.GetThingList(this.Map).ToList())
                 .SelectMany(t => Option(t as Pawn))

@@ -157,6 +157,28 @@ namespace NR_AutoMachineTool.Utilities
             return new Tuple<T1, T2, T3>(v1, v2, v3);
         }
 
+        public static IEnumerable<IEnumerable<T>> Grouped<T>(this IEnumerable<T> source, int size)
+        {
+            while (source.Any())
+            {
+                yield return source.Take(size);
+                source = source.Skip(size);
+            }
+        }
+
+        public static List<List<T>> Grouped<T>(this List<T> source, int size)
+        {
+            var l = new List<List<T>>();
+            var idx = 0;
+            while (idx < source.Count)
+            {
+                var count = Mathf.Min(size, source.Count - idx);
+                l.Add(source.GetRange(idx, count));
+                idx += count;
+            }
+            return l;
+        }
+
         #region for rimworld
 
 //        public static void L(object obj) { Log.Message(obj == null ? "null" : obj.ToString()); }
@@ -292,15 +314,6 @@ namespace NR_AutoMachineTool.Utilities
                 }
             }
             return Nothing<IPlantToGrowSettable>();
-        }
-
-        public static Option<Pawn> GetGatherable(this IntVec3 pos, Map map)
-        {
-            return pos.GetThingList(map).Where(t => t.def.category == ThingCategory.Pawn)
-                .SelectMany(t => Option(t as Pawn))
-                .Where(p => p.Faction == Faction.OfPlayer)
-                .Where(p => p.TryGetComp<CompHasGatherableBodyResource>() != null)
-                .FirstOption();
         }
 
         public static bool IsAdult(this Pawn p)
