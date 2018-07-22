@@ -2,13 +2,13 @@
 <ModMetaData>
   <name>NR_AutoMachineTool</name>
   <author>nullre</author>
-  <url>https://github.com/nullre/rw_mods/tree/master/NR_AutoMachineTool/</url>
+  <url>https://github.com/nullre/rw_mods/blob/rw_1.0/NR_AutoMachineTool/</url>
   <targetVersion>1.0.0</targetVersion>
   <description><![CDATA[自動化するための以下の機械を追加します。
 自動工作機, ベルトコンベア, アイテム引き出し機, 種蒔き機, 収穫機, 屠畜機, 動物世話機, 自動採掘機, 自動清掃機, 壁埋め込みライト, 自動修理機, 電撃放射機
 
 使い方
-https://github.com/nullre/rw_mods/blob/for_rw1.0/NR_AutoMachineTool/README.md
+https://github.com/nullre/rw_mods/blob/rw_1.0/NR_AutoMachineTool/README.md
 開発中のため、仕様が頻繁に変わる可能性があります。
 あと、バギーかもしれません。
 
@@ -29,7 +29,7 @@ Add the following building for automation.
 AutoMachineTool, BeltConveyor, Item Puller, Planter, Harvester, Slaughterhouse, AnimalResourceGatherer, AutoMiner, AutoCleaner, WallLight, AutoRepairer, Stunner
 
 Usage (machine translation)
-https://github.com/nullre/rw_mods/blob/for_rw1.0/NR_AutoMachineTool/README_en.md
+https://github.com/nullre/rw_mods/blob/rw_1.0/NR_AutoMachineTool/README_en.md
 
 Because it is under development, specifications may change frequently.
 Also, it may be a buggy.
