@@ -78,7 +78,7 @@ namespace NR_AutoMachineTool
 
     public interface IInputCellResolver
     {
-        IntVec3 InputCell(IntVec3 cell, Map map, Rot4 rot);
+        Option<IntVec3> InputCell(IntVec3 cell, Map map, Rot4 rot);
         IEnumerable<IntVec3> InputZoneCells(IntVec3 cell, Map map, Rot4 rot);
         ModExtension_AutoMachineTool Parent { get; set; }
         Color GetColor(IntVec3 cell, Map map, Rot4 rot, CellPattern cellPattern);
@@ -86,7 +86,7 @@ namespace NR_AutoMachineTool
 
     public interface IOutputCellResolver
     {
-        IntVec3 OutputCell(IntVec3 cell, Map map, Rot4 rot);
+        Option<IntVec3> OutputCell(IntVec3 cell, Map map, Rot4 rot);
         IEnumerable<IntVec3> OutputZoneCells(IntVec3 cell, Map map, Rot4 rot);
         ModExtension_AutoMachineTool Parent { get; set; }
         Color GetColor(IntVec3 cell, Map map, Rot4 rot, CellPattern cellPattern);
@@ -96,14 +96,16 @@ namespace NR_AutoMachineTool
     {
         public ModExtension_AutoMachineTool Parent { get; set; }
 
-        public virtual IntVec3 OutputCell(IntVec3 cell, Map map, Rot4 rot)
+        public virtual Option<IntVec3> OutputCell(IntVec3 cell, Map map, Rot4 rot)
         {
-            return cell + rot.Opposite.FacingCell;
+            return Option(cell + rot.Opposite.FacingCell);
         }
+
+        private static readonly List<IntVec3> EmptyList = new List<IntVec3>();
 
         public virtual IEnumerable<IntVec3> OutputZoneCells(IntVec3 cell, Map map, Rot4 rot)
         {
-            return this.OutputCell(cell, map, rot).SlotGroupCells(map);
+            return this.OutputCell(cell, map, rot).Select(c => c.SlotGroupCells(map)).GetOrDefault(EmptyList);
         }
 
         public virtual Color GetColor(IntVec3 cell, Map map, Rot4 rot, CellPattern cellPattern)
@@ -178,7 +180,7 @@ namespace NR_AutoMachineTool
                 case CellPattern.BlurprintMin:
                     return Color.white;
                 case CellPattern.BlurprintMax:
-                    return Color.white.A(0.5f);
+                    return Color.gray.A(0.6f);
                 case CellPattern.Instance:
                     return Color.white;
                 case CellPattern.OtherInstance:

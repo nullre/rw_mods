@@ -127,6 +127,11 @@ namespace NR_AutoMachineTool
                 .Where(c => (pos + rot.FacingCell).GetRoom(map) == c.GetRoom(map));
         }
 
+        public override int GetRange(float power)
+        {
+            return Mathf.RoundToInt(power / 500) + 1;
+        }
+
         public override bool NeedClearingCache => true;
     }
 }

@@ -555,18 +555,19 @@ namespace NR_AutoMachineTool
             return Mathf.RoundToInt(power / 500) + 1;
         }
 
-        public IntVec3 OutputCell(IntVec3 cell, Map map, Rot4 rot)
+        public Option<IntVec3> OutputCell(IntVec3 cell, Map map, Rot4 rot)
         {
             return cell.GetThingList(map)
-                .FirstOption()
                 .Select(b => b as Building_AutoMachineTool)
-                .Select(b => b.OutputCell())
-                .GetOrDefault(cell + IntVec3.North);
+                .FirstOption()
+                .Select(b => b.OutputCell());
         }
+
+        private readonly static List<IntVec3> EmptyList = new List<IntVec3>();
 
         public IEnumerable<IntVec3> OutputZoneCells(IntVec3 cell, Map map, Rot4 rot)
         {
-            return this.OutputCell(cell, map, rot).SlotGroupCells(map);
+            return this.OutputCell(cell, map, rot).Select(c => c.SlotGroupCells(map)).GetOrDefault(EmptyList);
         }
     }
 }

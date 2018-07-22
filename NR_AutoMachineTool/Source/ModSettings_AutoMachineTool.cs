@@ -34,7 +34,7 @@ namespace NR_AutoMachineTool
         public static readonly Func<RangeMachineSetting> CleanerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 500, maxSupplyPowerForSpeed = 20000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 3000 };
 
         public RangeMachineSetting repairerSetting = RepairerDefault();
-        public static readonly Func<RangeMachineSetting> RepairerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 10000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 10000 };
+        public static readonly Func<RangeMachineSetting> RepairerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 20000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 10000 };
 
         public RangeMachineSetting stunnerSetting = StunnerDefault();
         public static readonly Func<RangeMachineSetting> StunnerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 50000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 10000 };

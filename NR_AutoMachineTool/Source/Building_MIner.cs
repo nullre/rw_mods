@@ -42,9 +42,9 @@ namespace NR_AutoMachineTool
             base.ExposeData();
 
             Scribe_Values.Look<int>(ref this.outputIndex, "outputIndex");
-            Scribe_Deep.Look(ref this.billStack, "billStack", new object[]{ this });
+            Scribe_Deep.Look(ref this.billStack, "billStack", new object[] { this });
             Scribe_References.Look(ref this.workingBill, "workingBill");
-            if(this.workingBill == null)
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && this.workingBill == null)
             {
                 this.readyOnStart = true;
             }
@@ -125,6 +125,11 @@ namespace NR_AutoMachineTool
             // this.workingEffect.ForEach(e => e.EffectTick(new TargetInfo(this.OutputCell(), this.Map), new TargetInfo(this)));
             this.workingEffect.ForEach(e => e.EffectTick(new TargetInfo(this), new TargetInfo(this)));
             return !this.workingEffect.HasValue;
+        }
+
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
         }
 
 
@@ -236,13 +241,12 @@ namespace NR_AutoMachineTool
 
     public class Building_MinerOutputCellResolver : OutputCellResolver
     {
-        public override IntVec3 OutputCell(IntVec3 cell, Map map, Rot4 rot)
+        public override Option<IntVec3> OutputCell(IntVec3 cell, Map map, Rot4 rot)
         {
             return cell.GetThingList(map)
-                .FirstOption()
                 .Select(b => b as Building_Miner)
-                .Select(b => b.OutputCell())
-                .GetOrDefault(cell + IntVec3.North);
+                .FirstOption()
+                .Select(b => b.OutputCell());
         }
     }
 }

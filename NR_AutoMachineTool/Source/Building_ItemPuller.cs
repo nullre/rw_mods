@@ -120,24 +120,26 @@ namespace NR_AutoMachineTool
             return cellPattern.ToColor();
         }
 
-        public IntVec3 InputCell(IntVec3 cell, Map map, Rot4 rot)
+        public Option<IntVec3> InputCell(IntVec3 cell, Map map, Rot4 rot)
         {
-            return cell + rot.Opposite.FacingCell;
+            return Option(cell + rot.Opposite.FacingCell);
         }
+
+        private static readonly List<IntVec3> EmptyList = new List<IntVec3>();
 
         public IEnumerable<IntVec3> InputZoneCells(IntVec3 cell, Map map, Rot4 rot)
         {
-            return InputCell(cell, map, rot).SlotGroupCells(map);
+            return InputCell(cell, map, rot).Select(c => c.SlotGroupCells(map)).GetOrDefault(EmptyList);
         }
 
-        public IntVec3 OutputCell(IntVec3 cell, Map map, Rot4 rot)
+        public Option<IntVec3> OutputCell(IntVec3 cell, Map map, Rot4 rot)
         {
-            return cell + rot.FacingCell;
+            return Option(cell + rot.FacingCell);
         }
 
         public IEnumerable<IntVec3> OutputZoneCells(IntVec3 cell, Map map, Rot4 rot)
         {
-            return OutputCell(cell, map, rot).SlotGroupCells(map);
+            return OutputCell(cell, map, rot).Select(c => c.SlotGroupCells(map)).GetOrDefault(EmptyList);
         }
     }
 }

@@ -89,9 +89,9 @@ namespace NR_AutoMachineTool
         {
             base.ExposeData();
 
-            Scribe_Values.Look<WorkingState>(ref this.state, "workingState", WorkingState.Ready);
-            Scribe_Values.Look<float>(ref this.totalWorkAmount, "totalWorkAmount", 0f);
-            Scribe_Values.Look<int>(ref this.workStartTick, "workStartTick", 0);
+            Scribe_Values.Look(ref this.state, "workingState", WorkingState.Ready);
+            Scribe_Values.Look(ref this.totalWorkAmount, "totalWorkAmount", 0f);
+            Scribe_Values.Look(ref this.workStartTick, "workStartTick", 0);
             Scribe_Collections.Look<Thing>(ref this.products, "products", LookMode.Deep);
 
             if (WorkingIsDespawned())
@@ -120,6 +120,7 @@ namespace NR_AutoMachineTool
         {
             base.SpawnSetup(map, respawningAfterLoad);
             this.mapManager = map.GetComponent<MapTickManager>();
+
             if (readyOnStart)
             {
                 this.State = WorkingState.Ready;
@@ -264,7 +265,10 @@ namespace NR_AutoMachineTool
             }
             CreateWorkingEffect();
             MapManager.AfterAction(30, this.CheckWork);
-            MapManager.AfterAction(this.CalcRemainTick(), this.FinishWork);
+            if (!float.IsInfinity(this.totalWorkAmount))
+            {
+                MapManager.AfterAction(this.CalcRemainTick(), this.FinishWork);
+            }
         }
 
         protected void ForceStartWork(T working, float workAmount)
@@ -432,7 +436,10 @@ namespace NR_AutoMachineTool
                     }
                     else
                     {
-                        msg += "NR_AutoMachineTool.StatWorking".Translate(Mathf.RoundToInt(this.CurrentWorkAmount), Mathf.RoundToInt(this.totalWorkAmount), Mathf.RoundToInt(((this.CurrentWorkAmount) / this.totalWorkAmount) * 100));
+                        msg += "NR_AutoMachineTool.StatWorking".Translate(
+                            Mathf.RoundToInt(Math.Min(this.CurrentWorkAmount, this.totalWorkAmount)),
+                            Mathf.RoundToInt(this.totalWorkAmount),
+                            Mathf.RoundToInt(Mathf.Clamp01(this.CurrentWorkAmount / this.totalWorkAmount)) * 100);
                     }
                     break;
                 case WorkingState.Ready:
@@ -450,7 +457,14 @@ namespace NR_AutoMachineTool
 
         public void NortifyReceivable()
         {
-            this.Placing();
+            if (this.State == WorkingState.Placing && this.Spawned)
+            {
+                if (!this.MapManager.IsExecutingThisTick(this.Placing))
+                {
+                    this.MapManager.RemoveAfterAction(this.Placing);
+                    this.MapManager.NextAction(this.Placing);
+                }
+            }
         }
 
         protected List<Thing> CreateThings(ThingDef def, int count)

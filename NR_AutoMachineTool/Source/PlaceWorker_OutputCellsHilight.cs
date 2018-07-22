@@ -25,8 +25,8 @@ namespace NR_AutoMachineTool
                 return;
             }
 
-            GenDraw.DrawFieldEdges(new List<IntVec3>().Append(ext.OutputCellResolver.OutputCell(center, map, rot)),
-                ext.OutputCellResolver.GetColor(ext.OutputCellResolver.OutputCell(center, map, rot), map, rot, CellPattern.OutputCell));
+            ext.OutputCellResolver.OutputCell(center, map, rot).ForEach(c =>
+                GenDraw.DrawFieldEdges(new List<IntVec3>().Append(c), ext.OutputCellResolver.GetColor(c, map, rot, CellPattern.OutputCell)));
             ext.OutputCellResolver.OutputZoneCells(center, map, rot)
                 .Select(c => new { Cell = c, Color = ext.OutputCellResolver.GetColor(c, map, rot, CellPattern.OutputZone) })
                 .GroupBy(a => a.Color)

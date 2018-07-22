@@ -66,6 +66,7 @@ AnimalResourceGatherer starts milking and shearing from animals within range.</d
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
         <targetCellResolverType>NR_AutoMachineTool.Building_AnimalResourceGathererTargetCellResolver</targetCellResolverType>
+        <outputCellResolverType>NR_AutoMachineTool.OutputCellResolver</outputCellResolverType>
       </li>
     </modExtensions>
   </ThingDef>

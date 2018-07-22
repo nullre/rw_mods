@@ -1,10 +1,10 @@
 ﻿### machine translation
 
 # Rimworld automatic machine tool MOD.
-- It is made with reference to S.A.L.: Auto-crafters 2.0.(http://steamcommunity.com/sharedfiles/filedetails/?id=932193652)
-- It is made with reference to S.A.L.: Extra Crafters.(http://steamcommunity.com/sharedfiles/filedetails/?id=940984361)
-- It is made with reference to Industrial Rollers.(http://steamcommunity.com/sharedfiles/filedetails/?id=940984361)  
-- It is made with reference to Project RimFactory.(https://steamcommunity.com/sharedfiles/filedetails/?id=1206316724)  
+- This MOD is made with reference to S.A.L.: Auto-crafters 2.0.(http://steamcommunity.com/sharedfiles/filedetails/?id=932193652)
+- This MOD is made with reference to S.A.L.: Extra Crafters.(http://steamcommunity.com/sharedfiles/filedetails/?id=940984361)
+- This MOD is made with reference to Industrial Rollers.(http://steamcommunity.com/sharedfiles/filedetails/?id=940984361)  
+- This MOD is made with reference to Project RimFactory.(https://steamcommunity.com/sharedfiles/filedetails/?id=1206316724)  
 Thanks to the producers of these mods.
 
 
@@ -119,6 +119,7 @@ Thanks to the producers of these mods.
 - Even if the destination can not be placed in the stockpiling zone, it will be placed in the cell specified as the output destination.
 - As the tier goes up, you can create the Harvester with a high skill level.
 - You can select the Harvester and restrict processing by the stock quantity of the product from the Limitation tab.
+- Cut blighted plants.
 
 ### Caution
 - If the output destination is a belt conveyor and the item already exists, the item will be placed in placement.
@@ -262,8 +263,8 @@ Thanks to the producers of these mods.
 
 ### Caution
 - Prisoners are excluded.
-- Prisoners under jailbreak are eligible.
-- Fleeing Pawns is excluded.
+- Prisoners under jailbreak are included.
+- Fleeing Pawns are excluded.
 - After a while the stunning condition will be lifted.
 - I think balance is not good.
 - The light color range at installation is the range maximum setting range.

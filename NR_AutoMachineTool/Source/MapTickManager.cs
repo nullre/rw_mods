@@ -43,7 +43,7 @@ namespace NR_AutoMachineTool
                     a();
                     sw2.Stop();
                     var micros = (double)sw2.ElapsedTicks / (double)System.Diagnostics.Stopwatch.Frequency * 1000d * 1000d;
-                    b.Append(a.Target.GetType().ToString() + "." + a.Method.Name + " / elapse : " + micros + "\n");
+                    b.Append(a.Target.GetType().ToString() + "." + a.Method.Name + " / elapse : " + micros + "micros \n");
                 }
             }
 
@@ -55,7 +55,7 @@ namespace NR_AutoMachineTool
             {
                 if(gcCount >= 1)
                 {
-                    L("called GC");
+                    L("GC called");
                 }
                 else
                 {
@@ -122,6 +122,11 @@ namespace NR_AutoMachineTool
         public void RemoveEachTickAction(Func<bool> act)
         {
             this.eachTickActions.Remove(act);
+        }
+
+        public bool IsExecutingThisTick(Action act)
+        {
+            return this.tickActionsDict.GetOption(Find.TickManager.TicksGame).Select(l => l.Contains(act)).GetOrDefault(false);
         }
     }
 }

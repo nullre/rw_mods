@@ -172,7 +172,7 @@ namespace NR_AutoMachineTool
             if (this.working is Fire)
             {
                 var fire = (Fire)this.working;
-                fire.fireSize -= this.WorkAmountPerTick * 0.1f;
+                fire.fireSize -= this.WorkAmountPerTick * 0.05f;
                 if (fire.fireSize <= 0)
                 {
                     fire.fireSize = 0;
@@ -206,7 +206,7 @@ namespace NR_AutoMachineTool
 
         protected override float Factor2()
         {
-            return base.Factor2() * 0.2f;
+            return base.Factor2() * 0.05f;
         }
 
         protected override void ClearActions()

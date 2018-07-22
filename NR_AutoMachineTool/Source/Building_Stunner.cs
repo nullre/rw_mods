@@ -58,7 +58,7 @@ namespace NR_AutoMachineTool
 
             target = raid.Concat(manhunter).FirstOption().GetOrDefault(null);
 
-            workAmount = 2000f;
+            workAmount = 3000f;
             return target != null;
         }
 
