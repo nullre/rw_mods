@@ -24,6 +24,10 @@ namespace NR_AutoMachineTool
         BillStack billStack { get; }
         Map Map { get; }
         IntVec3 Position { get; }
+        Bill MakeNewBill(RecipeDef recipe);
+        IEnumerable<RecipeDef> AllRecipes { get; }
+        bool IsRemovable(RecipeDef recipe);
+        void RemoveRecipe(RecipeDef recipe);
     }
 
     // TODO:本体更新時に合わせる.
@@ -101,18 +105,19 @@ namespace NR_AutoMachineTool
             Func<List<FloatMenuOption>> recipeOptionsMaker = delegate
             {
                 List<FloatMenuOption> list = new List<FloatMenuOption>();
-                for (int i = 0; i < this.SelTable.def.AllRecipes.Count; i++)
+                foreach(var recipe in this.SelTable.AllRecipes)
                 {
-                    if (this.SelTable.def.AllRecipes[i].AvailableNow)
+                    if (recipe.AvailableNow)
                     {
-                        RecipeDef recipe = this.SelTable.def.AllRecipes[i];
+                        bool deletable = this.SelTable.IsRemovable(recipe);
+
                         list.Add(new FloatMenuOption(recipe.LabelCap, delegate
                         {
                             if (!this.SelTable.Map.mapPawns.FreeColonists.Any((Pawn col) => recipe.PawnSatisfiesSkillRequirements(col)))
                             {
                                 Bill.CreateNoPawnsWithSkillDialog(recipe);
                             }
-                            Bill bill2 = recipe.MakeNewBill();
+                            Bill bill2 = this.SelTable.MakeNewBill(recipe);
                             this.SelTable.billStack.AddBill(bill2);
                             if (recipe.conceptLearned != null)
                             {
@@ -122,7 +127,18 @@ namespace NR_AutoMachineTool
                             {
                                 TutorSystem.Notify_Event("AddBill-" + recipe.LabelCap);
                             }
-                        }, MenuOptionPriority.Default, null, null, 29f, (Rect r) => Widgets.InfoCardButton(r.x + 5f, r.y + (r.height - 24f) / 2f, recipe), null));
+                        }, MenuOptionPriority.Default, null, null, deletable ? 58f : 29f, (Rect r) =>
+                        {
+                            if (deletable)
+                            {
+                                if (Widgets.ButtonImage(new Rect(r.x + 34f, r.y + (r.height - 24f), 24f, 24f), RS.DeleteX))
+                                {
+                                    this.SelTable.RemoveRecipe(recipe);
+                                    return true;
+                                }
+                            }
+                            return Widgets.InfoCardButton(r.x + 5f, r.y + (r.height - 24f) / 2f, recipe);
+                        }, null));
                     }
                 }
                 if (!list.Any<FloatMenuOption>())

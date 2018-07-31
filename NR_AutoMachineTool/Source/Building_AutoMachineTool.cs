@@ -15,7 +15,12 @@ namespace NR_AutoMachineTool
 {
     public class Building_AutoMachineTool : Building_BaseRange<Building_AutoMachineTool>, IRecipeProductWorker
     {
-        public class Bill_ProductionPawnForbidded : Bill_Production
+        public interface IBill_PawnForbidded
+        {
+            Bill Original { get; set; }
+        }
+
+        public class Bill_ProductionPawnForbidded : Bill_Production, IBill_PawnForbidded
         {
             public Bill_ProductionPawnForbidded() : base()
             {
@@ -29,9 +34,49 @@ namespace NR_AutoMachineTool
             {
                 return false;
             }
+
+            public override void ExposeData()
+            {
+                base.ExposeData();
+                Scribe_Deep.Look(ref this.original, "original");
+                if (Scribe.mode == LoadSaveMode.PostLoadInit)
+                {
+                    this.original.billStack = this.billStack;
+                }
+            }
+
+            public Bill original;
+
+            public Bill Original { get => this.original; set => this.original = value; }
+
+            public override Bill Clone()
+            {
+                var clone = (Bill_Production)this.original.Clone();
+                return this.CopyTo(clone);
+            }
+
+            public override void Notify_DoBillStarted(Pawn billDoer)
+            {
+                base.Notify_DoBillStarted(billDoer);
+                Option(this.original).ForEach(o => o.Notify_DoBillStarted(billDoer));
+            }
+
+            public override void Notify_IterationCompleted(Pawn billDoer, List<Thing> ingredients)
+            {
+                base.Notify_IterationCompleted(billDoer, ingredients);
+                Option(this.original).ForEach(o => o.Notify_IterationCompleted(billDoer, ingredients));
+            }
+
+            public override void Notify_PawnDidWork(Pawn p)
+            {
+                base.Notify_PawnDidWork(p);
+                Option(this.original).ForEach(o => o.Notify_PawnDidWork(p));
+            }
+
+            // proxy call. override other properties and methods.
         }
 
-        public class Bill_ProductionWithUftPawnForbidded : Bill_ProductionWithUft
+        public class Bill_ProductionWithUftPawnForbidded : Bill_ProductionWithUft, IBill_PawnForbidded
         {
             public Bill_ProductionWithUftPawnForbidded() : base()
             {
@@ -45,6 +90,46 @@ namespace NR_AutoMachineTool
             {
                 return false;
             }
+
+            public override void ExposeData()
+            {
+                base.ExposeData();
+                Scribe_Deep.Look(ref this.original, "original");
+                if (Scribe.mode == LoadSaveMode.PostLoadInit)
+                {
+                    this.original.billStack = this.billStack;
+                }
+            }
+
+            public Bill original;
+
+            public Bill Original { get => this.original; set => this.original = value; }
+
+            public override Bill Clone()
+            {
+                var clone = (Bill_ProductionWithUft)this.original.Clone();
+                return this.CopyTo(clone);
+            }
+
+            public override void Notify_DoBillStarted(Pawn billDoer)
+            {
+                base.Notify_DoBillStarted(billDoer);
+                Option(this.original).ForEach(o => o.Notify_DoBillStarted(billDoer));
+            }
+
+            public override void Notify_IterationCompleted(Pawn billDoer, List<Thing> ingredients)
+            {
+                base.Notify_IterationCompleted(billDoer, ingredients);
+                Option(this.original).ForEach(o => o.Notify_IterationCompleted(billDoer, ingredients));
+            }
+
+            public override void Notify_PawnDidWork(Pawn p)
+            {
+                base.Notify_PawnDidWork(p);
+                Option(this.original).ForEach(o => o.Notify_PawnDidWork(p));
+            }
+
+            // proxy call. override other properties and methods.
         }
 
         public Building_AutoMachineTool()
@@ -188,48 +273,69 @@ namespace NR_AutoMachineTool
             return !this.workingEffect.HasValue;
         }
 
-        private int billCount = 0;
-
-        private void ForbidWorkTable(Building_WorkTable worktable, bool force)
+        private void ForbidWorkTable(Building_WorkTable worktable)
         {
-            if (billCount != worktable.BillStack.Count || Find.TickManager.TicksGame % 30 == 0 || force)
-            {
-                this.ReplaceBill<Bill_Production, Bill_ProductionWithUft, Bill_ProductionPawnForbidded, Bill_ProductionWithUftPawnForbidded>(worktable);
-            }
-            this.billCount = worktable.BillStack.Count;
+            this.ForbidBills(worktable);
         }
 
         private void AllowWorkTable(Building_WorkTable worktable)
         {
-            this.ReplaceBill<Bill_ProductionPawnForbidded, Bill_ProductionWithUftPawnForbidded, Bill_Production, Bill_ProductionWithUft>(worktable);
+            this.AllowBills(worktable);
         }
 
-        private bool ReplaceBill<BILL_FROM, BILL_FROM_UFT, BILL_TO, BILL_TO_UFT>(Building_WorkTable worktable)
-            where BILL_FROM : Bill_Production
-            where BILL_FROM_UFT : Bill_ProductionWithUft
-            where BILL_TO : Bill_Production
-            where BILL_TO_UFT : Bill_ProductionWithUft
+        private void ForbidBills(Building_WorkTable worktable)
         {
-            if (worktable.billStack.Bills.Any(b => b.GetType() == typeof(BILL_FROM) || b.GetType() == typeof(BILL_FROM_UFT)))
+            if(worktable.BillStack.Bills.Any(b => !(b is IBill_PawnForbidded)))
             {
-                var tmp = new List<Bill>().Append(worktable.billStack.Bills);
-                worktable.billStack.Clear();
-                tmp.ForEach(b =>
+                var tmp = worktable.BillStack.Bills.ToList();
+                worktable.BillStack.Clear();
+                worktable.BillStack.Bills.AddRange(tmp.SelectMany(b =>
                 {
-                    if (b is BILL_FROM_UFT)
+                    var forbidded = b as IBill_PawnForbidded;
+                    if (forbidded == null)
                     {
-                        worktable.billStack.AddBill(((BILL_FROM_UFT)b).CopyTo((BILL_TO_UFT)Activator.CreateInstance(typeof(BILL_TO_UFT), b.recipe)));
-                        b.deleted = true;
+                        if (b is Bill_ProductionWithUft)
+                        {
+                            forbidded = ((Bill_ProductionWithUft)b).CopyTo((Bill_ProductionWithUftPawnForbidded)Activator.CreateInstance(typeof(Bill_ProductionWithUftPawnForbidded), b.recipe));
+                            ((Bill_Production)b).repeatMode = BillRepeatModeDefOf.Forever;
+                            forbidded.Original = b;
+                        }
+                        else if (b is Bill_Production)
+                        {
+                            forbidded = ((Bill_Production)b).CopyTo((Bill_ProductionPawnForbidded)Activator.CreateInstance(typeof(Bill_ProductionPawnForbidded), b.recipe));
+                            ((Bill_Production)b).repeatMode = BillRepeatModeDefOf.Forever;
+                            forbidded.Original = b;
+                        }
                     }
-                    else if (b is BILL_FROM)
-                    {
-                        worktable.billStack.AddBill(((BILL_FROM)b).CopyTo((BILL_TO)Activator.CreateInstance(typeof(BILL_TO), b.recipe)));
-                        b.deleted = true;
-                    }
-                });
-                return true;
+                    return Option((Bill)forbidded);
+                }));
             }
-            return false;
+        }
+
+        private void AllowBills(Building_WorkTable worktable)
+        {
+            if (worktable.BillStack.Bills.Any(b => b is IBill_PawnForbidded))
+            {
+                var tmp = worktable.BillStack.Bills.ToList();
+                worktable.BillStack.Clear();
+                worktable.BillStack.Bills.AddRange(tmp.SelectMany(b =>
+                {
+                    var forbidded = b as IBill_PawnForbidded;
+                    Bill unforbbided = b;
+                    if (forbidded != null)
+                    {
+                        if (b is Bill_ProductionWithUft)
+                        {
+                            unforbbided = ((Bill_ProductionWithUft)b).CopyTo((Bill_ProductionWithUft)Activator.CreateInstance(forbidded.Original?.GetType() ?? typeof(Bill_ProductionWithUft), b.recipe));
+                        }
+                        else if (b is Bill_Production)
+                        {
+                            unforbbided = ((Bill_Production)b).CopyTo((Bill_Production)Activator.CreateInstance(forbidded.Original?.GetType() ?? typeof(Bill_Production), b.recipe));
+                        }
+                    }
+                    return Option(unforbbided);
+                }));
+            }
         }
 
         protected override TargetInfo ProgressBarTarget()
@@ -244,7 +350,7 @@ namespace NR_AutoMachineTool
             {
                 this.AllowWorkTable(this.workTable.Value);
             }
-            currentWotkTable.ForEach(w => this.ForbidWorkTable(w, !this.workTable.HasValue));
+            currentWotkTable.ForEach(w => this.ForbidWorkTable(w));
             this.workTable = currentWotkTable;
         }
 
@@ -558,7 +664,7 @@ namespace NR_AutoMachineTool
         public Option<IntVec3> OutputCell(IntVec3 cell, Map map, Rot4 rot)
         {
             return cell.GetThingList(map)
-                .Select(b => b as Building_AutoMachineTool)
+                .SelectMany(b => Option(b as Building_AutoMachineTool))
                 .FirstOption()
                 .Select(b => b.OutputCell());
         }

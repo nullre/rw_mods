@@ -4,43 +4,44 @@
   <author>nullre</author>
   <url>https://github.com/nullre/rw_mods/blob/rw_1.0/NR_AutoMachineTool/</url>
   <targetVersion>1.0.0</targetVersion>
-  <description><![CDATA[自動化するための以下の機械を追加します。
-自動工作機, ベルトコンベア, アイテム引き出し機, 種蒔き機, 収穫機, 屠畜機, 動物世話機, 自動採掘機, 自動清掃機, 壁埋め込みライト, 自動修理機, 電撃放射機
-
-使い方
-https://github.com/nullre/rw_mods/blob/rw_1.0/NR_AutoMachineTool/README.md
-開発中のため、仕様が頻繁に変わる可能性があります。
-あと、バギーかもしれません。
-
-- S.A.L.: Auto-crafters 2.0 を参考に作られています。( http://steamcommunity.com/sharedfiles/filedetails/?id=932193652 )
-- S.A.L.: Extra Crafters を参考に作られています。( http://steamcommunity.com/sharedfiles/filedetails/?id=940984361 )
-- Industrial Rollers を参考に作られています。( http://steamcommunity.com/sharedfiles/filedetails/?id=784327493 )
-- Project RimFactory を参考に作られています。(https://steamcommunity.com/sharedfiles/filedetails/?id=1206316724)  
-これらのMODの製作者様に感謝します。
-
-注意
-当MODの再配布を禁じます。
-
-I'm Japanese. I can't understand English, sorry...
+  <description><![CDATA[I'm Japanese. I can't understand English, sorry...
 
 ***** machine translation *****
 
 Add the following building for automation.
-AutoMachineTool, BeltConveyor, Item Puller, Planter, Harvester, Slaughterhouse, AnimalResourceGatherer, AutoMiner, AutoCleaner, WallLight, AutoRepairer, Stunner
+AutoMachineTool, BeltConveyor, Item Puller, Planter, Harvester, Slaughterhouse, AnimalResourceGatherer, AutoMiner, AutoCleaner, WallLight, AutoRepairer, Stunner, Material Converter
 
-Usage (machine translation)
-https://github.com/nullre/rw_mods/blob/rw_1.0/NR_AutoMachineTool/README_en.md
-
+[url=https://github.com/nullre/rw_mods/blob/rw_1.0/NR_AutoMachineTool/README_en.md]Usage (machine translation)[/url]
 Because it is under development, specifications may change frequently.
 Also, it may be a buggy.
-
-- This MOD is made with reference to S.A.L.: Auto-crafters 2.0.( http://steamcommunity.com/sharedfiles/filedetails/?id=932193652 )
-- This MOD is made with reference to S.A.L.: Extra Crafters.( http://steamcommunity.com/sharedfiles/filedetails/?id=940984361 )
-- This MOD is made with reference to Industrial Rollers.( http://steamcommunity.com/sharedfiles/filedetails/?id=940984361 )
-- This MOD is made with reference to Project RimFactory.(https://steamcommunity.com/sharedfiles/filedetails/?id=1206316724)  
+[list]
+  [*]This MOD is made with reference to [url=https://steamcommunity.com/sharedfiles/filedetails/?id=932193652] S.A.L.: Auto-crafters 2.0[/url].
+  [*]This MOD is made with reference to [url=https://steamcommunity.com/sharedfiles/filedetails/?id=940984361]S.A.L.: Extra Crafters[/url].
+  [*]This MOD is made with reference to [url=https://steamcommunity.com/sharedfiles/filedetails/?id=784327493]Industrial Rollers[/url].
+  [*]This MOD is made with reference to [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1206316724]Project RimFactory[/url].
+[/list]
 Thanks to the producers of these mods.
 
 Caution
 Redistribution of this MOD data is prohibited.
+
+---
+
+自動化するための以下の機械を追加します。
+自動工作機, ベルトコンベア, アイテム引き出し機, 種蒔き機, 収穫機, 屠畜機, 動物世話機, 自動採掘機, 自動清掃機, 壁埋め込みライト, 自動修理機, 電撃放射機, 物質変換器
+
+[url=https://github.com/nullre/rw_mods/blob/rw_1.0/NR_AutoMachineTool/README.md]使い方[/url]
+開発中のため、仕様が頻繁に変わる可能性があります。
+あと、バギーかもしれません。
+[list]
+  [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=932193652] S.A.L.: Auto-crafters 2.0 [/url] を参考に作られています。
+  [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=940984361] S.A.L.: Extra Crafters[/url] を参考に作られています。
+  [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=784327493] Industrial Rollers [/url] を参考に作られています。
+  [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=1206316724] Project RimFactory[/url] を参考に作られています。
+[/list]
+これらのMODの製作者様に感謝します。
+
+注意
+当MODの再配布を禁じます。
 ]]></description>
 </ModMetaData>

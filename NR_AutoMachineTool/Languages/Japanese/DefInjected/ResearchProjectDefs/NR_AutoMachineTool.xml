@@ -49,5 +49,8 @@
 
   <ResearchProject_NR_AutoMachineTool_AutomationNetItemTransfer.label>アイテム転送パイプコンポーネント(experimental)</ResearchProject_NR_AutoMachineTool_AutomationNetItemTransfer.label>
   <ResearchProject_NR_AutoMachineTool_AutomationNetItemTransfer.description>自動化ネットのストレージ/アイテム引き出しパイプコンポーネントが作成可能になります。</ResearchProject_NR_AutoMachineTool_AutomationNetItemTransfer.description>
-  
+
+  <ResearchProject_NR_AutoMachineTool_MaterialEnergy.label>物質エネルギー</ResearchProject_NR_AutoMachineTool_MaterialEnergy.label>
+  <ResearchProject_NR_AutoMachineTool_MaterialEnergy.description>物質変換機を作成可能になる。</ResearchProject_NR_AutoMachineTool_MaterialEnergy.description>
+
 </LanguageData>

@@ -102,4 +102,15 @@ Even if the output destination is in the stockpiling zone, the finished product 
 
   <!-- AutoMiner -->
   <NR_AutoMachineTool.AutoMiner.MineOre>Mining {0}</NR_AutoMachineTool.AutoMiner.MineOre>
+
+  <!-- MaterialMachine -->
+  <NR_AutoMachineTool.MaterialMachine.RecipeToEnergyLabel>Energize material({0})</NR_AutoMachineTool.MaterialMachine.RecipeToEnergyLabel>
+  <NR_AutoMachineTool.MaterialMachine.RecipeToEnergyJobName>Energize material({0})</NR_AutoMachineTool.MaterialMachine.RecipeToEnergyJobName>
+  <NR_AutoMachineTool.MaterialMachine.RecipeMaterializeLabel>Materialize {1} {0} ({3}) (Energy consumption : {2})</NR_AutoMachineTool.MaterialMachine.RecipeMaterializeLabel>
+  <NR_AutoMachineTool.MaterialMachine.RecipeMaterializeJobName>Materialize {0}</NR_AutoMachineTool.MaterialMachine.RecipeMaterializeJobName>
+  <NR_AutoMachineTool.MaterialMachine.RecipeMaterializeStuff>{0}</NR_AutoMachineTool.MaterialMachine.RecipeMaterializeStuff>
+  <NR_AutoMachineTool.MaterialMachine.RecipeEnergyDescription>Must have {0} Energy</NR_AutoMachineTool.MaterialMachine.RecipeEnergyDescription>
+  <NR_AutoMachineTool.MaterialMachine.RecipeScanMaterialLabel>Scan and register conversion recipe</NR_AutoMachineTool.MaterialMachine.RecipeScanMaterialLabel>
+  <NR_AutoMachineTool.MaterialMachine.RecipeScanMaterialJobName>Scan material</NR_AutoMachineTool.MaterialMachine.RecipeScanMaterialJobName>
+  
 </LanguageData>

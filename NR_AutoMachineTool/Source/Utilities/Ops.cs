@@ -242,7 +242,7 @@ namespace NR_AutoMachineTool.Utilities
             return Option(map.haulDestinationManager.SlotGroupAt(c)).Select(g => g.CellsList).GetOrDefault(new List<IntVec3>().Append(c));
         }
 
-        public static Bill_Production CopyTo(this Bill_Production bill, Bill_Production copy)
+        public static TO CopyTo<FROM, TO>(this FROM bill, TO copy) where FROM : Bill_Production where TO : Bill_Production
         {
             copy.allowedSkillRange = bill.allowedSkillRange;
             copy.billStack = bill.billStack;
@@ -327,6 +327,21 @@ namespace NR_AutoMachineTool.Utilities
             Color c = color;
             c.a = a;
             return c;
+        }
+
+public static float GetEnergyAmount(ThingDef def)
+        {
+            return ConvertEnergyAmount(StatDefOf.MarketValue.Worker.GetValue(StatRequest.For(def, null)));
+        }
+
+        public static float GetEnergyAmount(ThingDef def, ThingDef stuffDef)
+        {
+            return ConvertEnergyAmount(StatDefOf.MarketValue.Worker.GetValue(StatRequest.For(def, stuffDef)));
+        }
+
+        public static float ConvertEnergyAmount(float marketValue)
+        {
+            return marketValue * 0.1f;
         }
 #endregion
 

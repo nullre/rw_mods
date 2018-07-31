@@ -102,4 +102,15 @@
 
   <!-- AutoMiner -->
   <NR_AutoMachineTool.AutoMiner.MineOre>{0} を採掘する</NR_AutoMachineTool.AutoMiner.MineOre>
+
+  <!-- MaterialMachine -->
+  <NR_AutoMachineTool.MaterialMachine.RecipeToEnergyLabel>物質をエネルギー化する({0})</NR_AutoMachineTool.MaterialMachine.RecipeToEnergyLabel>
+  <NR_AutoMachineTool.MaterialMachine.RecipeToEnergyJobName>物質をエネルギー化する({0})</NR_AutoMachineTool.MaterialMachine.RecipeToEnergyJobName>
+  <NR_AutoMachineTool.MaterialMachine.RecipeMaterializeLabel>{1} {0} を{3}個 実体化する (エネルギー使用量 : {2})</NR_AutoMachineTool.MaterialMachine.RecipeMaterializeLabel>
+  <NR_AutoMachineTool.MaterialMachine.RecipeMaterializeJobName>{0} を実体化する</NR_AutoMachineTool.MaterialMachine.RecipeMaterializeJobName>
+  <NR_AutoMachineTool.MaterialMachine.RecipeMaterializeStuff>{0}製</NR_AutoMachineTool.MaterialMachine.RecipeMaterializeStuff>
+  <NR_AutoMachineTool.MaterialMachine.RecipeEnergyDescription>{0}のエネルギーとなる物質が必要</NR_AutoMachineTool.MaterialMachine.RecipeEnergyDescription>
+  <NR_AutoMachineTool.MaterialMachine.RecipeScanMaterialLabel>スキャンして変換レシピ登録</NR_AutoMachineTool.MaterialMachine.RecipeScanMaterialLabel>
+  <NR_AutoMachineTool.MaterialMachine.RecipeToEnergyJobName>スキャンする</NR_AutoMachineTool.MaterialMachine.RecipeToEnergyJobName>
+  
 </LanguageData>

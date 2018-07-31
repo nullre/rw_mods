@@ -29,6 +29,17 @@ namespace NR_AutoMachineTool
 
         BillStack ITabBillTable.billStack => this.BillStack;
 
+        public IEnumerable<RecipeDef> AllRecipes => this.def.AllRecipes;
+
+        public bool IsRemovable(RecipeDef recipe)
+        {
+            return false;
+        }
+
+        public void RemoveRecipe(RecipeDef recipe)
+        {
+        }
+
         public BillStack billStack;
 
         public Building_Miner()
@@ -163,7 +174,7 @@ namespace NR_AutoMachineTool
         private int outputIndex = 0;
 
         private IntVec3[] adjacent =
-{
+        {
             new IntVec3(0, 0, 1),
             new IntVec3(1, 0, 1),
             new IntVec3(1, 0, 0),
@@ -188,6 +199,11 @@ namespace NR_AutoMachineTool
         public override IntVec3 OutputCell()
         {
             return this.Position + this.adjacent[this.outputIndex];
+        }
+
+        public Bill MakeNewBill(RecipeDef recipe)
+        {
+            return recipe.MakeNewBill();
         }
     }
 
@@ -244,7 +260,7 @@ namespace NR_AutoMachineTool
         public override Option<IntVec3> OutputCell(IntVec3 cell, Map map, Rot4 rot)
         {
             return cell.GetThingList(map)
-                .Select(b => b as Building_Miner)
+                .SelectMany(b => Option(b as Building_Miner))
                 .FirstOption()
                 .Select(b => b.OutputCell());
         }

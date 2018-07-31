@@ -28,6 +28,8 @@ namespace NR_AutoMachineTool
             OutputDirectionIcon = ContentFinder<Texture2D>.Get("NR_AutoMachineTool/UI/OutputDirection", true);
             ForbidIcon = ContentFinder<Texture2D>.Get("NR_AutoMachineTool/UI/Forbid", true);
             PlayIcon = ContentFinder<Texture2D>.Get("NR_AutoMachineTool/UI/Play", true);
+
+            DeleteX = ContentFinder<Texture2D>.Get("UI/Buttons/Delete", true);
         }
 
         public static readonly Texture2D PregnantIcon;
@@ -43,5 +45,7 @@ namespace NR_AutoMachineTool
         public static readonly Texture2D OutputDirectionIcon;
         public static readonly Texture2D ForbidIcon;
         public static readonly Texture2D PlayIcon;
+
+        public static readonly Texture2D DeleteX;
     }
 }

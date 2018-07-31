@@ -60,6 +60,7 @@
     <Compile Include="Source\AutomationNet\SectionLayer_AutomationNet.cs" />
     <Compile Include="Source\AutomationNet\Building_BaseComponent.cs" />
     <Compile Include="Source\AutomationNet\CompProperties_Automation.cs" />
+    <Compile Include="Source\Bill_ProductionNotifyComplete.cs" />
     <Compile Include="Source\Building_AnimalResourceGatherer.cs" />
     <Compile Include="Source\AutomationNet\Building_BaseAutomation.cs" />
     <Compile Include="Source\AutomationNet\Building_EnergyGenerator.cs" />
@@ -68,7 +69,9 @@
     <Compile Include="Source\Building_Base.cs" />
     <Compile Include="Source\Building_BaseLimitation.cs" />
     <Compile Include="Source\Building_BaseRange.cs" />
+    <Compile Include="Source\Building_MaterialMachine.cs" />
     <Compile Include="Source\Building_Stunner.cs" />
+    <Compile Include="Source\IngredientValueGetter_Energy.cs" />
     <Compile Include="Source\MoteLightning.cs" />
     <Compile Include="Source\PlaceWorker_InputCellsHilight.cs" />
     <Compile Include="Source\Building_BeltConveyor.cs" />
@@ -139,8 +142,10 @@
     <Content Include="About\Desc_Slaughterhouse.png" />
     <Content Include="About\Desc_Stunner.png" />
     <Content Include="About\Desc_WallLight.png" />
+    <Content Include="About\Desc_MaterialMachine.png" />
     <Content Include="About\preview.png" />
     <Content Include="About\preview1.png" />
+    <Content Include="About\PublishedFileId.txt" />
     <Content Include="Defs\DesignationCategoryDef\NR_AutoMachineTool.xml" />
     <Content Include="Defs\Effects\NR_AutoMachineTool_Effects.xml">
       <SubType>Designer</SubType>
@@ -152,6 +157,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Defs\ResearchProjectDefs\NR_AutoMachineTool.xml" />
+    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_MaterialConverter.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_AutomationNet.xml" />
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Stunner.xml">
       <SubType>Designer</SubType>
@@ -183,6 +191,9 @@
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Miner.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Defs\WorkGiverDef\NR_AutoMachineTool.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Languages\English\Keyed\NR_AutoMachineTool.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -192,6 +203,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Languages\Japanese\DefInjected\ResearchProjectDefs\NR_AutoMachineTool.xml" />
+    <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_MaterialConverter.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_AutomationNet.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Stunner.xml">
       <SubType>Designer</SubType>
@@ -209,6 +221,9 @@
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Puller.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool_Conveyor.xml" />
     <Content Include="Languages\Japanese\DefInjected\ThingDefs\NR_AutoMachineTool.xml" />
+    <Content Include="Languages\Japanese\DefInjected\WorkGiverDef\NR_MaterialEnergy.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Languages\Japanese\Keyed\NR_AutoMachineTool.xml" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\AnimalResourceGatherer.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\AutoMachineTool.png" />
@@ -240,15 +255,22 @@
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Harvester1.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Harvester2.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Harvester3.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\MaterialMachine_east.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\MaterialMachine_north.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\MaterialMachine_south.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\MaterialMachine_west.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Miner.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Planter1.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Planter2.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Planter3.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Puller\Puller0.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Puller\Puller1.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\Repairer.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\Slaughterhouse.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Buildings\Stunner.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\WallLight.png" />
     <Content Include="Textures\NR_AutoMachineTool\Buildings\WallLightIcon.png" />
+    <Content Include="Textures\NR_AutoMachineTool\Items\Energy.png" />
     <Content Include="Textures\NR_AutoMachineTool\Things\Mote\Lightning.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\Forbid.png" />
     <Content Include="Textures\NR_AutoMachineTool\UI\OutputDirection.png" />
