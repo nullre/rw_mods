@@ -2,20 +2,20 @@
 <Defs>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>Building_NR_AutoMachineTool_Cleaner</defName>
-    <label>AutoCleaner</label>
-    <thingClass>NR_AutoMachineTool.Building_Cleaner</thingClass>
-    <description>Automatically cleans the dirt in the range. It also removes the dirt of dirty Pawn.</description>
+    <defName>Building_NR_AutoMachineTool_Shield</defName>
+    <label>Shield Generator</label>
+    <thingClass>NR_AutoMachineTool.Building_Shield</thingClass>
+    <description>Protect within range, from bullets, hostile faction DropPod, crashed ship part.</description>
     <graphicData>
-      <texPath>NR_AutoMachineTool/Buildings/Cleaner</texPath>
+      <texPath>NR_AutoMachineTool/Buildings/Shield</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
     <constructEffect>ConstructMetal</constructEffect>
     <costList>
-      <Steel>200</Steel>
-      <Plasteel>100</Plasteel>
-      <Uranium>10</Uranium>
+      <Steel>500</Steel>
+      <Plasteel>300</Plasteel>
+      <Uranium>100</Uranium>
       <ComponentSpacer>3</ComponentSpacer>
     </costList>
     <altitudeLayer>Building</altitudeLayer>
@@ -46,7 +46,7 @@
     </comps>
     <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
     <researchPrerequisites>
-      <li>ResearchProject_NR_AutoMachineTool_AutoCleaner</li>
+      <li>ResearchProject_NR_AutoMachineTool_Shild</li>
     </researchPrerequisites>
     <inspectorTabs>
       <li>NR_AutoMachineTool.ITab_RangePowerSupply</li>
@@ -59,9 +59,8 @@
 
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
-        <targetCellResolverType>NR_AutoMachineTool.Building_CleanerTargetCellResolver</targetCellResolverType>
+        <targetCellResolverType>NR_AutoMachineTool.Building_ShieldTargetCellResolver</targetCellResolverType>
       </li>
     </modExtensions>
-
   </ThingDef>
 </Defs>

@@ -53,4 +53,11 @@
   <ResearchProject_NR_AutoMachineTool_MaterialEnergy.label>物質エネルギー</ResearchProject_NR_AutoMachineTool_MaterialEnergy.label>
   <ResearchProject_NR_AutoMachineTool_MaterialEnergy.description>物質変換機を作成可能になる。</ResearchProject_NR_AutoMachineTool_MaterialEnergy.description>
 
+  <ResearchProject_NR_AutoMachineTool_Shild.label>シールド</ResearchProject_NR_AutoMachineTool_Shild.label>
+  <ResearchProject_NR_AutoMachineTool_Shild.description>シールド発生機を作成可能になる。</ResearchProject_NR_AutoMachineTool_Shild.description>
+
+  <ResearchProject_NR_AutoMachineTool_Generator.label>強力な電力</ResearchProject_NR_AutoMachineTool_Generator.label>
+  <ResearchProject_NR_AutoMachineTool_Generator.description>強力発電機を作成可能になる。</ResearchProject_NR_AutoMachineTool_Generator.description>
+
+
 </LanguageData>

@@ -38,7 +38,6 @@ AnimalResourceGatherer starts milking and shearing from animals within range.</d
     </placeWorkers>
 
     <category>Building</category>
-    <tickerType>Normal</tickerType>
 
     <passability>Impassable</passability>
     <blockWind>true</blockWind>

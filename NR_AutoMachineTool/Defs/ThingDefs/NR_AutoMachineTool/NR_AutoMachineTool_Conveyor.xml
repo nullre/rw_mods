@@ -8,7 +8,6 @@
     <drawerType>MapMeshAndRealTime</drawerType>
     
     <thingClass>NR_AutoMachineTool.Building_BeltConveyor</thingClass>
-    <tickerType>Never</tickerType>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
     
     <statBases>
@@ -177,7 +176,6 @@ Connect to the underground conveyor entrance and exit and use.</description>
     <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
     <drawerType>RealtimeOnly</drawerType>
 
-    <tickerType>Normal</tickerType>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
 
     <statBases>

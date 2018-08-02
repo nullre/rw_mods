@@ -17,6 +17,7 @@ namespace NR_AutoMachineTool
     {
         public MapTickManager(Map map) : base(map)
         {
+            this.thingsList = new ThingLister(map);
         }
 
         public override void MapComponentTick()
@@ -127,6 +128,35 @@ namespace NR_AutoMachineTool
         public bool IsExecutingThisTick(Action act)
         {
             return this.tickActionsDict.GetOption(Find.TickManager.TicksGame).Select(l => l.Contains(act)).GetOrDefault(false);
+        }
+
+        private ThingLister thingsList;
+
+        public ThingLister ThingsList => thingsList;
+    }
+
+    public class ThingLister
+    {
+        public ThingLister(Map map)
+        {
+            this.map = map;
+        }
+
+        private Map map;
+
+        private Dictionary<Type, List<ThingDef>> typeDic = new Dictionary<Type, List<ThingDef>>();
+
+        public IEnumerable<T> ForAssignableFrom<T>() where T : Thing
+        {
+            if (!typeDic.TryGetValue(typeof(T), out List<ThingDef> defs))
+            {
+                defs = DefDatabase<ThingDef>.AllDefs.Where(d => typeof(T).IsAssignableFrom(d.thingClass)).ToList();
+                typeDic[typeof(T)] = defs;
+#if DEBUG
+                L("ThingLister type : " + typeof(T) + " / defs count : " + defs.Count);
+#endif
+            }
+            return defs.SelectMany(d => this.map.listerThings.ThingsOfDef(d)).Cast<T>();
         }
     }
 }

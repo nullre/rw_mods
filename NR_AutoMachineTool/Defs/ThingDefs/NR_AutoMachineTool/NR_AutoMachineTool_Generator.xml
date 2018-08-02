@@ -2,31 +2,32 @@
 <Defs>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>Building_NR_AutoMachineTool_Cleaner</defName>
-    <label>AutoCleaner</label>
-    <thingClass>NR_AutoMachineTool.Building_Cleaner</thingClass>
-    <description>Automatically cleans the dirt in the range. It also removes the dirt of dirty Pawn.</description>
+    <defName>Building_NR_AutoMachineTool_Generator</defName>
+    <label>PowerfulPowerPlant</label>
+    <thingClass>Building</thingClass>
+    <description>Powerful power plant.</description>
     <graphicData>
-      <texPath>NR_AutoMachineTool/Buildings/Cleaner</texPath>
+      <texPath>NR_AutoMachineTool/Buildings/Generator</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1,1)</drawSize>
+      <drawSize>(2,2)</drawSize>
     </graphicData>
     <constructEffect>ConstructMetal</constructEffect>
     <costList>
-      <Steel>200</Steel>
-      <Plasteel>100</Plasteel>
-      <Uranium>10</Uranium>
-      <ComponentSpacer>3</ComponentSpacer>
+      <NR_AutoMachineTool_MaterialEnergy>10000</NR_AutoMachineTool_MaterialEnergy>
+      <Plasteel>2000</Plasteel>
+      <Uranium>2000</Uranium>
+      <ComponentSpacer>30</ComponentSpacer>
+      <AIPersonaCore>1</AIPersonaCore>
     </costList>
     <altitudeLayer>Building</altitudeLayer>
     <fillPercent>0.5</fillPercent>
     <useHitPoints>True</useHitPoints>
     <statBases>
-      <WorkToBuild>2000</WorkToBuild>
+      <WorkToBuild>10000</WorkToBuild>
       <MaxHitPoints>180</MaxHitPoints>
       <Flammability>1.0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <designationCategory>NR_AutoMachineTool_DesignationCategory</designationCategory>
     <passability>PassThroughOnly</passability>
     <pathCost>70</pathCost>
@@ -38,30 +39,25 @@
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <basePowerConsumption>0</basePowerConsumption>
-        <shortCircuitInRain>false</shortCircuitInRain>
+        <basePowerConsumption>-1000000</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
       </li>
-      <li Class="CompProperties_Breakdownable"/>
-      <li Class="CompProperties_Flickable"/>
     </comps>
     <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
     <researchPrerequisites>
-      <li>ResearchProject_NR_AutoMachineTool_AutoCleaner</li>
+      <li>ResearchProject_NR_AutoMachineTool_Generator</li>
     </researchPrerequisites>
     <inspectorTabs>
-      <li>NR_AutoMachineTool.ITab_RangePowerSupply</li>
     </inspectorTabs>
 
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <placeWorkers>
-      <li>NR_AutoMachineTool.PlaceWorker_TargetCellsHilight</li>
     </placeWorkers>
 
     <modExtensions>
       <li Class="NR_AutoMachineTool.ModExtension_AutoMachineTool">
-        <targetCellResolverType>NR_AutoMachineTool.Building_CleanerTargetCellResolver</targetCellResolverType>
+        <outputCellResolverType>NR_AutoMachineTool.Building_ShieldTargetCellResolver</outputCellResolverType>
       </li>
     </modExtensions>
-
   </ThingDef>
 </Defs>

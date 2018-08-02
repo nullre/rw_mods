@@ -39,6 +39,9 @@ namespace NR_AutoMachineTool
         public RangeMachineSetting stunnerSetting = StunnerDefault();
         public static readonly Func<RangeMachineSetting> StunnerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 50000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 10000 };
 
+        public RangeMachineSetting shieldSetting = ShieldDefault();
+        public static readonly Func<RangeMachineSetting> ShieldDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 10000, maxSupplyPowerForSpeed = 10000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 10000 };
+
         private List<RangeSkillMachineSetting> autoMachineToolSetting = CreateAutoMachineToolDefault();
 
         private static List<RangeSkillMachineSetting> CreateAutoMachineToolDefault()
@@ -115,6 +118,7 @@ namespace NR_AutoMachineTool
             this.cleanerSetting = this.cleanerSetting ?? CleanerDefault();
             this.repairerSetting = this.repairerSetting?? RepairerDefault();
             this.stunnerSetting = this.stunnerSetting ?? StunnerDefault();
+            this.shieldSetting = this.shieldSetting ?? ShieldDefault();
 
             Option(this.DataExposed).ForEach(e => e(this, new EventArgs()));
         }
@@ -159,6 +163,7 @@ namespace NR_AutoMachineTool
                 new { Name="Building_NR_AutoMachineTool_Cleaner", Setting = (BasicMachineSetting)this.cleanerSetting},
                 new { Name="Building_NR_AutoMachineTool_Repairer", Setting = (BasicMachineSetting)this.repairerSetting},
                 new { Name="Building_NR_AutoMachineTool_Stunner", Setting = (BasicMachineSetting)this.stunnerSetting},
+                new { Name="Building_NR_AutoMachineTool_Shield", Setting = (BasicMachineSetting)this.shieldSetting},
             };
 
             var width = inRect.width - 30f;

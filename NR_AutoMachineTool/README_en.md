@@ -183,7 +183,7 @@ Thanks to the producers of these mods.
 
 ### Usage
 - Research on Automatic mining.
-- Install in an arbitrary place。
+- Install in an arbitrary place.
 - Select the AutoMiner and set mining from the processing tab.
 - The AutoMiner will mining.
 
@@ -260,15 +260,16 @@ Thanks to the producers of these mods.
 - You can select the Stunner and change the power supply amount from the power tab. If the power supply is large, the speed and range will rise.
 - Animals in violence will also stun.
 - Stunner kills the mechanoid.
-
-### Caution
 - Prisoners are excluded.
 - Prisoners under jailbreak are included.
 - Fleeing Pawns are excluded.
+
+### Caution
 - After a while the stunning condition will be lifted.
 - I think balance is not good.
 - The light color range at installation is the range maximum setting range.
 
+---
 ## Material Converter
 
 ![material converter](/NR_AutoMachineTool/About/Desc_MaterialMachine.png)
@@ -295,6 +296,40 @@ Thanks to the producers of these mods.
 - All energy filters are turned off by default.
 - Since conversion loss occurs, even if you return to the same material after energy conversion, it will not be the same number.
 - Those with materials such as iron are somewhat required for materials at the time of material conversion.
+- I think balance is not good.
+
+---
+## Shield Generator
+
+![Shield Generator](/NR_AutoMachineTool/About/Desc_Shield.png)
+
+### Usage
+- Research on Shield generator.
+- Install Shield generator.
+- The shield generator destroys and protects within range, from bullets, hostile faction DropPod, crashed ship part.
+
+### Function
+- Drop pods other than hostile factions will not be destroyed.
+- Player faction bullets will not be destroyed.
+- You can select the Shield generator and change the power supply amount from the power tab. If the power supply is large, the range will rise.
+
+### Caution
+- I think balance is not good.
+
+---
+## PowerfulPowerPlant
+
+![PowerfulPowerPlant](/NR_AutoMachineTool/About/Desc_Generator.png)
+
+### Usage
+- Research on Powerful power.
+- Install PowerfulPowerPlant.
+- Connect the PowerfulPowerPlant and the conduit.
+
+### Function
+- generate electricity.
+
+### Caution
 - I think balance is not good.
 
 ---

@@ -40,7 +40,6 @@ The AutoMachineTool executes a requested craft that can be created with the mate
     </placeWorkers>
 
     <category>Building</category>
-    <tickerType>Normal</tickerType>
 
     <repairEffect>Repair</repairEffect>
     <constructEffect>ConstructMetal</constructEffect>

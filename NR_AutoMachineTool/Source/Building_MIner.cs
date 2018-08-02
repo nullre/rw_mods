@@ -85,6 +85,7 @@ namespace NR_AutoMachineTool
         {
             products = GenRecipe2.MakeRecipeProducts(this.workingBill.recipe, this, new List<Thing>(), null, this).ToList();
             this.workingBill.Notify_IterationCompleted(null, new List<Thing>());
+            this.workingBill = null;
             return true;
         }
 

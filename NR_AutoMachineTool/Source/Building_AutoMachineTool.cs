@@ -356,8 +356,8 @@ namespace NR_AutoMachineTool
 
         protected override void Ready()
         {
-            base.Ready();
             this.WorkTableSetting();
+            base.Ready();
         }
 
         private IntVec3 FacingCell()

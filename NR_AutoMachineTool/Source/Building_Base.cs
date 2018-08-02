@@ -125,13 +125,13 @@ namespace NR_AutoMachineTool
             {
                 this.State = WorkingState.Ready;
                 this.Reset();
-                MapManager.AfterAction(Rand.Range(0, 30), this.Ready);
+                MapManager.AfterAction(Rand.Range(0, this.startCheckIntervalTicks), this.Ready);
             }
             else
             {
                 if (this.State == WorkingState.Ready)
                 {
-                    MapManager.AfterAction(Rand.Range(0, 30), this.Ready);
+                    MapManager.AfterAction(Rand.Range(0, this.startCheckIntervalTicks), this.Ready);
                 }
                 else if (this.State == WorkingState.Working)
                 {

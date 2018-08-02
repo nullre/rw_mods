@@ -63,7 +63,7 @@ namespace NR_AutoMachineTool
         }
 
         [Unsaved]
-        protected int targetEnumrationCount = 200;
+        protected int targetEnumrationCount = 100;
 
         [Unsaved]
         private bool nextTargetCells = false;

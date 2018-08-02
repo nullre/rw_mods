@@ -69,6 +69,8 @@
     <researchPrerequisites>
       <li>ResearchProject_NR_AutoMachineTool_MaterialEnergy</li>
     </researchPrerequisites>
+
+    <tickerType>Never</tickerType>
   </ThingDef>
 
   <ThingDef ParentName="ResourceBase">
@@ -84,7 +86,7 @@
     <useHitPoints>false</useHitPoints>
     <statBases>
       <MarketValue>1</MarketValue>
-      <Mass>0.01</Mass>
+      <Mass>0.0001</Mass>
     </statBases>
     <thingCategories>
       <li>ResourcesRaw</li>
