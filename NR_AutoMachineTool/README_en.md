@@ -306,7 +306,7 @@ Thanks to the producers of these mods.
 ### Usage
 - Research on Shield generator.
 - Install Shield generator.
-- The shield generator destroys and protects within range, from bullets, hostile faction DropPod, crashed ship part.
+- The shield generator destroys and protects within range, from bullets, hostile faction DropPod, crashed ship part, meteorite.
 
 ### Function
 - Drop pods other than hostile factions will not be destroyed.
