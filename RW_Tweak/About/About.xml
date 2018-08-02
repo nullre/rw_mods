@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>RW_Tweak</name>
+  <author>nullre</author>
+  <targetVersion>1.0.0</targetVersion>
+  <description>
+    This MOD contains Harmony https://github.com/pardeike/Harmony
+    Harmony License https://github.com/pardeike/Harmony/blob/master/LICENSE
+  </description>
+</ModMetaData>

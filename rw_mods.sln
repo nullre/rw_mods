@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NR_AutoMachineTool", "NR_Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NR_MaterialEnergy", "NR_MaterialEnergy\NR_MaterialEnergy.csproj", "{23E975FC-945A-4597-9DBB-4C72E23B5028}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FontChanger", "FontChanger\FontChanger.csproj", "{19C596AB-D353-4614-ACAE-4A9AA82C90A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RW_Tweak", "RW_Tweak\RW_Tweak.csproj", "{5A9B6EF1-C8C4-4E5B-BB99-A68A9C652F41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{23E975FC-945A-4597-9DBB-4C72E23B5028}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23E975FC-945A-4597-9DBB-4C72E23B5028}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23E975FC-945A-4597-9DBB-4C72E23B5028}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19C596AB-D353-4614-ACAE-4A9AA82C90A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19C596AB-D353-4614-ACAE-4A9AA82C90A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19C596AB-D353-4614-ACAE-4A9AA82C90A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19C596AB-D353-4614-ACAE-4A9AA82C90A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A9B6EF1-C8C4-4E5B-BB99-A68A9C652F41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A9B6EF1-C8C4-4E5B-BB99-A68A9C652F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A9B6EF1-C8C4-4E5B-BB99-A68A9C652F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A9B6EF1-C8C4-4E5B-BB99-A68A9C652F41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

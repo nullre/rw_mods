@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 
 using Verse;
+using RimWorld;
 using UnityEngine;
 
-namespace FontChanger
+namespace RW_Tweak
 {
-    public class ModSetting_FontChanger : ModSettings
+    public class ModSetting_RW_Tweak : ModSettings
     {
         private Dictionary<int, string> fontName = new Dictionary<int, string>();
         private Dictionary<int, int> fontSize = new Dictionary<int, int>();
@@ -17,6 +18,36 @@ namespace FontChanger
         {
             var list = new Listing_Standard();
             list.Begin(inRect);
+
+            list.CheckboxLabeled("No Random Quality", ref this.noRandomQuality);
+            
+            if (this.noRandomQuality)
+            {
+                var length = Enum.GetValues(typeof(QualityCategory)).Length;
+                for(int i = 0; i < length - 1; i++)
+                {
+                    var l = qualityThreshold[i];
+                    var buf = l.ToString();
+                    var min = 0;
+                    var max = 20;
+                    if(i > 0)
+                    {
+                        min = qualityThreshold[i - 1];
+                    }
+                    if(i < length - 2)
+                    {
+                        max = qualityThreshold[i + 1];
+                    }
+                    list.TextFieldNumericLabeled(((QualityCategory)i).ToString().Translate() + " MaxLevel", ref l, ref buf, min, max);
+                    qualityThreshold[i] = l;
+                    list.Gap();
+                }
+                list.TextEntryLabeled(((QualityCategory)length - 1).ToString().Translate() + " MaxLevel", "20");
+            }
+
+            list.GapLine();
+            list.CheckboxLabeled("No XP Down", ref this.noXPDown);
+            list.GapLine();
 
             GameFont defaultFont = Text.Font;
 
@@ -59,6 +90,22 @@ namespace FontChanger
             list.End();
         }
 
+        public bool noRandomQuality = false;
+
+        public List<int> qualityThreshold = defaultQualityThreshold();
+
+        private static Func<List<int>> defaultQualityThreshold = () => new List<int> {
+                2, // Awful
+                5, // Poor
+                9, // Normal
+                12, // Good
+                16, // Excellent
+                19 // Masterwork
+                   // Legendary
+        };
+
+        public bool noXPDown = false;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -68,6 +115,12 @@ namespace FontChanger
                 this.fontName = new Dictionary<int, string>();
             if (this.fontSize == null)
                 this.fontSize = new Dictionary<int, int>();
+
+            Scribe_Values.Look(ref this.noRandomQuality, "noRandomQuality", false);
+            Scribe_Values.Look(ref this.noXPDown, "noXPDown", false);
+
+            Scribe_Collections.Look(ref this.qualityThreshold, "qualityThreshold");
+            this.qualityThreshold = this.qualityThreshold ?? defaultQualityThreshold();
         }
 
         public void UpdateFont(int index)
@@ -91,7 +144,7 @@ namespace FontChanger
 
             for (var i = 0; i < defaultFonts.Length; i++)
             {
-                LoadedModManager.GetMod<Mod_FontChanger>().Setting.UpdateFont(i);
+                LoadedModManager.GetMod<Mod_RW_Tweak>().Setting.UpdateFont(i);
             }
         }
     }
