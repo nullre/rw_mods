@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 using Verse;
 using RimWorld;
@@ -125,9 +126,20 @@ namespace RW_Tweak
 
         public void UpdateFont(int index)
         {
-            Text.fontStyles[index].font = this.fontName.ContainsKey(index) ?
+            var font = this.fontName.ContainsKey(index) ?
                 Font.CreateDynamicFontFromOSFont(this.fontName[index], this.fontSize.ContainsKey(index) ? this.fontSize[index] : FontSetting.defaultFonts[index].fontSize) :
                 FontSetting.defaultFonts[index];
+
+            Text.fontStyles[index].font = font;
+            Text.textFieldStyles[index].font = font;
+            Text.textAreaStyles[index].font = font;
+            Text.textAreaReadOnlyStyles[index].font = font;
+
+            var lineHeights = (float[])typeof(Text).GetField("lineHeights", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+            var spaceBetweenLines = (float[])typeof(Text).GetField("spaceBetweenLines", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+
+            lineHeights[index] = Text.CalcHeight("W", 999f);
+            spaceBetweenLines[index] = Text.CalcHeight("W\nW", 999f) - Text.CalcHeight("W", 999f) * 2f;
         }
     }
 

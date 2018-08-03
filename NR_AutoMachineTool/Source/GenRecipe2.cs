@@ -27,7 +27,7 @@ namespace NR_AutoMachineTool
         {
             if(stat == StatDefOf.FoodPoisonChance)
             {
-                return 0.003f;
+                return 0.0005f;
             }
             return 1.0f;
         }
