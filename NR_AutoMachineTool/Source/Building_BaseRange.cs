@@ -121,11 +121,20 @@ namespace NR_AutoMachineTool
             if (this.IsActive())
             {
                 this.allTargetCellsCache = null;
+            }
+            if (this.Spawned)
+            {
                 if (this.Extension.TargetCellResolver.NeedClearingCache)
                 {
                     MapManager.AfterAction(CACHE_CLEAR_INTERVAL_TICKS, this.ClearAllTargetCellCache);
                 }
             }
+        }
+
+        protected override void ClearActions()
+        {
+            base.ClearActions();
+            this.MapManager.RemoveAfterAction(this.ClearAllTargetCellCache);
         }
 
         public override void ExposeData()
@@ -163,10 +172,10 @@ namespace NR_AutoMachineTool
                 glower.Props.glowRadius = this.Glow ? (this.GetRange() + 2f) * 2f : 0;
                 glower.Props.overlightRadius = this.Glow ? (this.GetRange() + 2.1f) : 0;
                 this.TryGetComp<CompFlickable>().SwitchIsOn = !tmp;
-                this.TryGetComp<CompPowerTrader>().PowerOn = !tmp;
+                // this.TryGetComp<CompPowerTrader>().PowerOn = !tmp;
                 glower.UpdateLit(this.Map);
                 this.TryGetComp<CompFlickable>().SwitchIsOn = tmp;
-                this.TryGetComp<CompPowerTrader>().PowerOn = tmp;
+                // this.TryGetComp<CompPowerTrader>().PowerOn = tmp;
                 glower.UpdateLit(this.Map);
             });
         }
