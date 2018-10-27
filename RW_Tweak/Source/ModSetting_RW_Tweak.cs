@@ -138,8 +138,8 @@ namespace RW_Tweak
             var lineHeights = (float[])typeof(Text).GetField("lineHeights", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
             var spaceBetweenLines = (float[])typeof(Text).GetField("spaceBetweenLines", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 
-            lineHeights[index] = Text.CalcHeight("W", 999f);
-            spaceBetweenLines[index] = Text.CalcHeight("W\nW", 999f) - Text.CalcHeight("W", 999f) * 2f;
+            lineHeights[index] = Text.fontStyles[index].CalcHeight(new GUIContent("W"), 999f);
+            spaceBetweenLines[index] = Text.fontStyles[index].CalcHeight(new GUIContent("W\nW"), 999f) - Text.fontStyles[index].CalcHeight(new GUIContent("W"), 999f) * 2f;
         }
     }
 
