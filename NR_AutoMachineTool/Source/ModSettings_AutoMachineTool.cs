@@ -39,8 +39,8 @@ namespace NR_AutoMachineTool
         public RangeMachineSetting stunnerSetting = StunnerDefault();
         public static readonly Func<RangeMachineSetting> StunnerDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 1000, maxSupplyPowerForSpeed = 50000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 10000 };
 
-        public RangeMachineSetting shieldSetting = ShieldDefault();
-        public static readonly Func<RangeMachineSetting> ShieldDefault = () => new RangeMachineSetting() { speedFactor = 1f, minSupplyPowerForSpeed = 10000, maxSupplyPowerForSpeed = 10000, minSupplyPowerForRange = 0, maxSupplyPowerForRange = 10000 };
+        public SimpleRangeMachineSetting shieldSetting = ShieldDefault();
+        public static readonly Func<SimpleRangeMachineSetting> ShieldDefault = () => new SimpleRangeMachineSetting() { minSupplyPowerForRange = 0, maxSupplyPowerForRange = 10000 };
 
         private List<RangeSkillMachineSetting> autoMachineToolSetting = CreateAutoMachineToolDefault();
 
@@ -88,6 +88,8 @@ namespace NR_AutoMachineTool
             this.minerSetting = MinerDefault();
             this.cleanerSetting = CleanerDefault();
             this.repairerSetting = RepairerDefault();
+            this.stunnerSetting = StunnerDefault();
+            this.shieldSetting = ShieldDefault();
         }
 
         public override void ExposeData()
@@ -105,6 +107,7 @@ namespace NR_AutoMachineTool
             Scribe_Deep.Look(ref this.cleanerSetting, "cleanerSetting");
             Scribe_Deep.Look(ref this.repairerSetting, "repairerSetting");
             Scribe_Deep.Look(ref this.stunnerSetting, "stunnerSetting");
+            Scribe_Deep.Look(ref this.shieldSetting, "shieldSetting");
 
             this.autoMachineToolSetting = this.autoMachineToolSetting ?? CreateAutoMachineToolDefault();
             this.planterSetting = this.planterSetting ?? CreatePlanterDefault();
@@ -148,22 +151,22 @@ namespace NR_AutoMachineTool
         public void DoSetting(Rect inRect)
         {
             var tierMachines = new[] {
-                new { Name= "NR_AutoMachineTool.AutoMachineTool", Setting = this.autoMachineToolSetting.Cast<BasicMachineSetting>() },
-                new { Name= "NR_AutoMachineTool.Planter", Setting = this.planterSetting.Cast<BasicMachineSetting>() },
-                new { Name= "NR_AutoMachineTool.Harvester", Setting = this.harvesterSetting.Cast<BasicMachineSetting>() },
+                new { Name= "NR_AutoMachineTool.AutoMachineTool", Setting = this.autoMachineToolSetting.Cast<IMachineSetting>() },
+                new { Name= "NR_AutoMachineTool.Planter", Setting = this.planterSetting.Cast<IMachineSetting>() },
+                new { Name= "NR_AutoMachineTool.Harvester", Setting = this.harvesterSetting.Cast<IMachineSetting>() },
             };
 
             var machines = new[]
             {
-                new { Name="Building_NR_AutoMachineTool_BeltConveyor", Setting = (BasicMachineSetting)this.beltConveyorSetting},
-                new { Name="Building_NR_AutoMachineTool_Puller", Setting = (BasicMachineSetting)this.pullerSetting},
-                new { Name="Building_NR_AutoMachineTool_AnimalResourceGatherer", Setting = (BasicMachineSetting)this.gathererSetting},
-                new { Name="Building_NR_AutoMachineTool_Slaughterhouse", Setting = (BasicMachineSetting)this.slaughterSetting},
-                new { Name="Building_NR_AutoMachineTool_Miner", Setting = (BasicMachineSetting)this.minerSetting},
-                new { Name="Building_NR_AutoMachineTool_Cleaner", Setting = (BasicMachineSetting)this.cleanerSetting},
-                new { Name="Building_NR_AutoMachineTool_Repairer", Setting = (BasicMachineSetting)this.repairerSetting},
-                new { Name="Building_NR_AutoMachineTool_Stunner", Setting = (BasicMachineSetting)this.stunnerSetting},
-                new { Name="Building_NR_AutoMachineTool_Shield", Setting = (BasicMachineSetting)this.shieldSetting},
+                new { Name="Building_NR_AutoMachineTool_BeltConveyor", Setting = (IMachineSetting)this.beltConveyorSetting},
+                new { Name="Building_NR_AutoMachineTool_Puller", Setting = (IMachineSetting)this.pullerSetting},
+                new { Name="Building_NR_AutoMachineTool_AnimalResourceGatherer", Setting = (IMachineSetting)this.gathererSetting},
+                new { Name="Building_NR_AutoMachineTool_Slaughterhouse", Setting = (IMachineSetting)this.slaughterSetting},
+                new { Name="Building_NR_AutoMachineTool_Miner", Setting = (IMachineSetting)this.minerSetting},
+                new { Name="Building_NR_AutoMachineTool_Cleaner", Setting = (IMachineSetting)this.cleanerSetting},
+                new { Name="Building_NR_AutoMachineTool_Repairer", Setting = (IMachineSetting)this.repairerSetting},
+                new { Name="Building_NR_AutoMachineTool_Stunner", Setting = (IMachineSetting)this.stunnerSetting},
+                new { Name="Building_NR_AutoMachineTool_Shield", Setting = (IMachineSetting)this.shieldSetting},
             };
 
             var width = inRect.width - 30f;
@@ -202,7 +205,7 @@ namespace NR_AutoMachineTool
             Widgets.EndScrollView();
         }
 
-        private void DrawTier(Listing_Standard list, BasicMachineSetting s, int tier)
+        private void DrawTier(Listing_Standard list, IMachineSetting s, int tier)
         {
             var rect = list.GetRect(s.GetHeight() + 42f);
             var inList = new Listing_Standard();
@@ -215,7 +218,7 @@ namespace NR_AutoMachineTool
             inList.End();
         }
 
-        private void DrawSetting(Listing_Standard list, BasicMachineSetting s)
+        private void DrawSetting(Listing_Standard list, IMachineSetting s)
         {
             var rect = list.GetRect(s.GetHeight());
             var inList = new Listing_Standard();

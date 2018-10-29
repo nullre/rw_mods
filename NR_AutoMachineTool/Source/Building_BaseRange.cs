@@ -43,6 +43,8 @@ namespace NR_AutoMachineTool
             }
         }
 
+        public virtual bool SpeedSetting => true;
+
         protected ModExtension_AutoMachineTool Extension => this.def.GetModExtension<ModExtension_AutoMachineTool>();
 
         private float supplyPowerForRange;

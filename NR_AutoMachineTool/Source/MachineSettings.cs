@@ -13,26 +13,14 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class BasicMachineSetting : IExposable
+    public interface IMachineSetting : IExposable
     {
-        public int minSupplyPowerForSpeed;
-        public int maxSupplyPowerForSpeed;
-        public float speedFactor;
+        void DrawModSetting(Listing list);
+        float GetHeight();
+    }
 
-        public virtual void ExposeData()
-        {
-            Scribe_Values.Look<int>(ref this.minSupplyPowerForSpeed, "minSupplyPowerForSpeed", 100);
-            Scribe_Values.Look<int>(ref this.maxSupplyPowerForSpeed, "maxSupplyPowerForSpeed", 10000);
-            Scribe_Values.Look<float>(ref this.speedFactor, "speedFactor");
-        }
-
-        protected virtual IEnumerable<Action<Listing>> ListDrawAction()
-        {
-            yield return (list) => DrawPower(list, "NR_AutoMachineTool.SettingMinSupplyPower", "NR_AutoMachineTool.Speed", ref this.minSupplyPowerForSpeed, 0, 100000);
-            yield return (list) => DrawPower(list, "NR_AutoMachineTool.SettingMaxSupplyPower", "NR_AutoMachineTool.Speed", ref this.maxSupplyPowerForSpeed, 0, 10000000);
-            yield return (list) => DrawSpeedFactor(list, ref this.speedFactor);
-        }
-
+    public abstract class BaseMachineSetting : IMachineSetting
+    {
         public void DrawModSetting(Listing list)
         {
             ListDrawAction().ForEach(a =>
@@ -43,12 +31,12 @@ namespace NR_AutoMachineTool
             this.FinishDrawModSetting();
         }
 
+        protected abstract IEnumerable<Action<Listing>> ListDrawAction();
+
+        public abstract void ExposeData();
+
         protected virtual void FinishDrawModSetting()
         {
-            if (this.minSupplyPowerForSpeed > this.maxSupplyPowerForSpeed)
-            {
-                this.minSupplyPowerForSpeed = this.maxSupplyPowerForSpeed;
-            }
         }
 
         public float GetHeight()
@@ -76,6 +64,53 @@ namespace NR_AutoMachineTool
             var rect = list.GetRect(30f);
             Widgets.Label(rect.LeftHalf(), "NR_AutoMachineTool.SettingSkillLevel".Translate(skillLevel));
             skillLevel = (int)Widgets.HorizontalSlider(rect.RightHalf(), skillLevel, 1, 20, true, "NR_AutoMachineTool.SettingSkillLevel".Translate(skillLevel), 1.ToString(), 20.ToString(), 1);
+        }
+    }
+
+    public class SimpleRangeMachineSetting : BaseMachineSetting
+    {
+        public int minSupplyPowerForRange;
+        public int maxSupplyPowerForRange;
+
+        public override void ExposeData()
+        {
+            Scribe_Values.Look<int>(ref this.minSupplyPowerForRange, "minSupplyPowerForRange", 0);
+            Scribe_Values.Look<int>(ref this.maxSupplyPowerForRange, "maxSupplyPowerForRange", 5000);
+        }
+
+        protected override IEnumerable<Action<Listing>> ListDrawAction()
+        {
+            yield return (list) => DrawPower(list, "NR_AutoMachineTool.SettingMinSupplyPower", "NR_AutoMachineTool.Range", ref this.minSupplyPowerForRange, 0, 1000);
+            yield return (list) => DrawPower(list, "NR_AutoMachineTool.SettingMaxSupplyPower", "NR_AutoMachineTool.Range", ref this.maxSupplyPowerForRange, 0, 20000);
+        }
+    }
+
+    public class BasicMachineSetting : BaseMachineSetting
+    {
+        public int minSupplyPowerForSpeed;
+        public int maxSupplyPowerForSpeed;
+        public float speedFactor;
+
+        public override void ExposeData()
+        {
+            Scribe_Values.Look<int>(ref this.minSupplyPowerForSpeed, "minSupplyPowerForSpeed", 100);
+            Scribe_Values.Look<int>(ref this.maxSupplyPowerForSpeed, "maxSupplyPowerForSpeed", 10000);
+            Scribe_Values.Look<float>(ref this.speedFactor, "speedFactor");
+        }
+
+        protected override IEnumerable<Action<Listing>> ListDrawAction()
+        {
+            yield return (list) => DrawPower(list, "NR_AutoMachineTool.SettingMinSupplyPower", "NR_AutoMachineTool.Speed", ref this.minSupplyPowerForSpeed, 0, 100000);
+            yield return (list) => DrawPower(list, "NR_AutoMachineTool.SettingMaxSupplyPower", "NR_AutoMachineTool.Speed", ref this.maxSupplyPowerForSpeed, 0, 10000000);
+            yield return (list) => DrawSpeedFactor(list, ref this.speedFactor);
+        }
+
+        protected override void FinishDrawModSetting()
+        {
+            if (this.minSupplyPowerForSpeed > this.maxSupplyPowerForSpeed)
+            {
+                this.minSupplyPowerForSpeed = this.maxSupplyPowerForSpeed;
+            }
         }
     }
 
@@ -117,7 +152,7 @@ namespace NR_AutoMachineTool
             yield return actions[0];
             yield return actions[1];
             yield return (list) => DrawPower(list, "NR_AutoMachineTool.SettingMinSupplyPower", "NR_AutoMachineTool.Range", ref this.minSupplyPowerForRange, 0, 1000);
-            yield return (list) => DrawPower(list, "NR_AutoMachineTool.SettingMaxSupplyPower", "NR_AutoMachineTool.Range", ref this.maxSupplyPowerForRange, 0, 10000);
+            yield return (list) => DrawPower(list, "NR_AutoMachineTool.SettingMaxSupplyPower", "NR_AutoMachineTool.Range", ref this.maxSupplyPowerForRange, 0, 20000);
             yield return actions[2];
         }
 

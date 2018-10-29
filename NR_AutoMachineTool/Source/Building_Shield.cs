@@ -17,10 +17,11 @@ namespace NR_AutoMachineTool
 {
     public class Building_Shield : Building_BaseRange<Thing>
     {
-        protected override float SpeedFactor { get => this.Setting.shieldSetting.speedFactor; }
+        protected override float SpeedFactor => 1f;
+        public override int MinPowerForSpeed => 10000;
+        public override int MaxPowerForSpeed => 10000;
 
-        public override int MinPowerForSpeed { get => this.Setting.shieldSetting.minSupplyPowerForSpeed; }
-        public override int MaxPowerForSpeed { get => this.Setting.shieldSetting.maxSupplyPowerForSpeed; }
+        public override bool SpeedSetting => false;
 
         public Building_Shield()
         {

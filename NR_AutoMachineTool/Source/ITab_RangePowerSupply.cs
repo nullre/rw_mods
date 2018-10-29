@@ -25,11 +25,12 @@ namespace NR_AutoMachineTool
 
         bool Glowable { get; }
         bool Glow { get; set; }
+        bool SpeedSetting { get; }
     }
 
     class ITab_RangePowerSupply : ITab
     {
-        private static readonly Vector2 WinSize = new Vector2(500f, 380f);
+        private static readonly Vector2 WinSize = new Vector2(600f, 380f);
 
         public ITab_RangePowerSupply()
         {
@@ -63,23 +64,26 @@ namespace NR_AutoMachineTool
             list.Gap();
             var rect = new Rect();
 
-            // for speed
-            rect = list.GetRect(50f);
-            Widgets.Label(rect, descriptionForSpeed);
-            list.Gap();
+            if (this.Machine.SpeedSetting)
+            {
+                // for speed
+                rect = list.GetRect(50f);
+                Widgets.Label(rect, descriptionForSpeed);
+                list.Gap();
 
-            rect = list.GetRect(50f);
-            var speed = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPowerForSpeed, (float)minPowerSpeed, (float)maxPowerSpeed, true, valueLabelForSpeed, minPowerSpeed.ToString(), maxPowerSpeed.ToString(), 100);
-            this.Machine.SupplyPowerForSpeed = speed;
-            list.Gap();
+                rect = list.GetRect(50f);
+                var speed = (int)Widgets.HorizontalSlider(rect, (float)this.Machine.SupplyPowerForSpeed, (float)minPowerSpeed, (float)maxPowerSpeed, true, valueLabelForSpeed, minPowerSpeed.ToString(), maxPowerSpeed.ToString(), 100);
+                this.Machine.SupplyPowerForSpeed = speed;
+                list.Gap();
 
-            rect = list.GetRect(30f);
-            string buf = this.Machine.SupplyPowerForSpeed.ToString();
-            int power = (int)this.Machine.SupplyPowerForSpeed;
-            Widgets.Label(rect.LeftHalf(), valueLabelForSpeed);
-            Widgets.TextFieldNumeric<int>(rect.RightHalf(), ref power, ref buf, this.Machine.SupplyPowerForSpeed, this.Machine.SupplyPowerForSpeed);
-            list.Gap();
-            this.Machine.SupplyPowerForSpeed = power;
+                rect = list.GetRect(30f);
+                string buf = this.Machine.SupplyPowerForSpeed.ToString();
+                int power = (int)this.Machine.SupplyPowerForSpeed;
+                Widgets.Label(rect.LeftHalf(), valueLabelForSpeed);
+                Widgets.TextFieldNumeric<int>(rect.RightHalf(), ref power, ref buf, this.Machine.SupplyPowerForSpeed, this.Machine.SupplyPowerForSpeed);
+                list.Gap();
+                this.Machine.SupplyPowerForSpeed = power;
+            }
 
             // for range
             rect = list.GetRect(50f);

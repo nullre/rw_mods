@@ -21,7 +21,7 @@ namespace NR_AutoMachineTool
 
     class ITab_PowerSupply : ITab
     {
-        private static readonly Vector2 WinSize = new Vector2(500f, 250f);
+        private static readonly Vector2 WinSize = new Vector2(600f, 250f);
 
         public ITab_PowerSupply()
         {
