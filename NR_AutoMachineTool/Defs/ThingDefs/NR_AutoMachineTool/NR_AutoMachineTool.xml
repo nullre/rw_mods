@@ -7,7 +7,8 @@
     <thingClass>NR_AutoMachineTool.Building_AutoMachineTool</thingClass>
     <description>Place the AutoMachineTool facing the work table.
 Set the output destination of the finished product.
-The AutoMachineTool executes a requested craft that can be created with the material in the surrounding eight squares from the work table creation request.</description>
+The AutoMachineTool executes a requested craft that can be created with the material in the surrounding squares from the work table creation request.
+By default, Tier 1 is Skill Level 5, Tier 2 is Skill Level 10, and Tier 3 is Skill Level 20.(Skill level can be changed by MOD setting)</description>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>

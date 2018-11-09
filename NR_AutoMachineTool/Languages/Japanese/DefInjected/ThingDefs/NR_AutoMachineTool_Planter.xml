@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <Building_NR_AutoMachineTool_Planter_TierOne.description>農業ゾーンの内部か付近に設置します。
-種蒔き機が範囲内の農業ゾーンに、植物を植えていきます。</Building_NR_AutoMachineTool_Planter_TierOne.description>
+種蒔き機が範囲内の農業ゾーンに、植物を植えていきます。
+デフォルトでは Tier1はスキルレベル5、Tier2はスキルレベル10、Tier3はスキルレベル20です。(スキルレベルはMOD設定で変更可能)</Building_NR_AutoMachineTool_Planter_TierOne.description>
 
   <Building_NR_AutoMachineTool_Planter_TierTwo.description>農業ゾーンの内部か付近に設置します。
-種蒔き機が範囲内の農業ゾーンに、植物を植えていきます</Building_NR_AutoMachineTool_Planter_TierTwo.description>
+種蒔き機が範囲内の農業ゾーンに、植物を植えていきます。
+デフォルトでは Tier1はスキルレベル5、Tier2はスキルレベル10、Tier3はスキルレベル20です。(スキルレベルはMOD設定で変更可能)</Building_NR_AutoMachineTool_Planter_TierTwo.description>
 
   <Building_NR_AutoMachineTool_Planter_TierThree.description>農業ゾーンの内部か付近に設置します。
-種蒔き機が範囲内の農業ゾーンに、植物を植えていきます</Building_NR_AutoMachineTool_Planter_TierThree.description>
+種蒔き機が範囲内の農業ゾーンに、植物を植えていきます。
+デフォルトでは Tier1はスキルレベル5、Tier2はスキルレベル10、Tier3はスキルレベル20です。(スキルレベルはMOD設定で変更可能)</Building_NR_AutoMachineTool_Planter_TierThree.description>
 
   <Building_NR_AutoMachineTool_Planter_TierOne.label>種蒔き機 Tier1</Building_NR_AutoMachineTool_Planter_TierOne.label>
   <Building_NR_AutoMachineTool_Planter_TierTwo.label>種蒔き機 Tier2</Building_NR_AutoMachineTool_Planter_TierTwo.label>

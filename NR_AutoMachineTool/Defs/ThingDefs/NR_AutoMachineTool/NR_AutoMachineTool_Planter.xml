@@ -6,7 +6,8 @@
     <defName>Building_NR_AutoMachineTool_Planter_Base</defName>
     <thingClass>NR_AutoMachineTool.Building_Planter</thingClass>
     <description>Place the Planter inside or near the agricultural zone.
-Planter starts planting plants in the agricultural zone within range.</description>
+Planter starts planting plants in the agricultural zone within range.
+By default, Tier 1 is Skill Level 5, Tier 2 is Skill Level 10, and Tier 3 is Skill Level 20.(Skill level can be changed by MOD setting)</description>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>

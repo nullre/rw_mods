@@ -2,15 +2,18 @@
 <LanguageData>
   <Building_NR_AutoMachineTool_TierOne.description>自動工作機械をワークテーブルに面して設置します。
 完成品の出力先を設定します。
-自動工作機械はワークテーブル作成依頼の中から、周囲8マスにある材料で作成可能な依頼のクラフトを実行します。</Building_NR_AutoMachineTool_TierOne.description>
+自動工作機械はワークテーブル作成依頼の中から、周囲のマスにある材料で作成可能な依頼のクラフトを実行します。
+デフォルトでは Tier1はスキルレベル5、Tier2はスキルレベル10、Tier3はスキルレベル20です。(スキルレベルはMOD設定で変更可能)</Building_NR_AutoMachineTool_TierOne.description>
 
   <Building_NR_AutoMachineTool_TierTwo.description>自動工作機械をワークテーブルに面して設置します。
 完成品の出力先を設定します。
-自動工作機械はワークテーブル作成依頼の中から、周囲8マスにある材料で作成可能な依頼のクラフトを実行します。</Building_NR_AutoMachineTool_TierTwo.description>
+自動工作機械はワークテーブル作成依頼の中から、周囲のマスにある材料で作成可能な依頼のクラフトを実行します。
+デフォルトでは Tier1はスキルレベル5、Tier2はスキルレベル10、Tier3はスキルレベル20です。(スキルレベルはMOD設定で変更可能)</Building_NR_AutoMachineTool_TierTwo.description>
 
   <Building_NR_AutoMachineTool_TierThree.description>自動工作機械をワークテーブルに面して設置します。
 完成品の出力先を設定します。
-自動工作機械はワークテーブル作成依頼の中から、周囲8マスにある材料で作成可能な依頼のクラフトを実行します。</Building_NR_AutoMachineTool_TierThree.description>
+自動工作機械はワークテーブル作成依頼の中から、周囲のマスにある材料で作成可能な依頼のクラフトを実行します。
+デフォルトでは Tier1はスキルレベル5、Tier2はスキルレベル10、Tier3はスキルレベル20です。(スキルレベルはMOD設定で変更可能)</Building_NR_AutoMachineTool_TierThree.description>
 
   <Building_NR_AutoMachineTool_TierOne.label>自動工作機械 Tier1</Building_NR_AutoMachineTool_TierOne.label>
   <Building_NR_AutoMachineTool_TierTwo.label>自動工作機械 Tier2</Building_NR_AutoMachineTool_TierTwo.label>
