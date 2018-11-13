@@ -329,7 +329,7 @@ namespace NR_AutoMachineTool.Utilities
             return c;
         }
 
-public static float GetEnergyAmount(ThingDef def)
+        public static float GetEnergyAmount(ThingDef def)
         {
             return ConvertEnergyAmount(StatDefOf.MarketValue.Worker.GetValue(StatRequest.For(def, null)));
         }

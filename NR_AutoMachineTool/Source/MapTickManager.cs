@@ -24,7 +24,7 @@ namespace NR_AutoMachineTool
         {
             base.MapComponentTick();
 
-            var removeSet = this.eachTickActions.ToList().Where(f => f()).ToHashSet();
+            var removeSet = this.eachTickActions.ToList().Where(Exec).ToHashSet();
             removeSet.ForEach(r => this.eachTickActions.Remove(r));
 
 #if DEBUG
@@ -41,7 +41,7 @@ namespace NR_AutoMachineTool
                 {
                     System.Diagnostics.Stopwatch sw2 = new System.Diagnostics.Stopwatch();
                     sw2.Start();
-                    a();
+                    Exec(a);
                     sw2.Stop();
                     var micros = (double)sw2.ElapsedTicks / (double)System.Diagnostics.Stopwatch.Frequency * 1000d * 1000d;
                     b.Append(a.Target.GetType().ToString() + "." + a.Method.Name + " / elapse : " + micros + "micros \n");
@@ -64,9 +64,34 @@ namespace NR_AutoMachineTool
                 }
             }
 #else
-            this.tickActionsDict.GetOption(Find.TickManager.TicksGame).ForEach(s => s.ToList().ForEach(a => a()));
+            this.tickActionsDict.GetOption(Find.TickManager.TicksGame).ForEach(s => s.ToList().ForEach(Exec));
 #endif
             this.tickActionsDict.Remove(Find.TickManager.TicksGame);
+        }
+
+        private static void Exec(Action act)
+        {
+            try
+            {
+                act();
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.ToString());
+            }
+        }
+
+        private static T Exec<T>(Func<T> func)
+        {
+            try
+            {
+                return func();
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.ToString());
+                return default(T);
+            }
         }
 
         public override void MapComponentUpdate()
@@ -156,7 +181,7 @@ namespace NR_AutoMachineTool
                 L("ThingLister type : " + typeof(T) + " / defs count : " + defs.Count);
 #endif
             }
-            return defs.SelectMany(d => this.map.listerThings.ThingsOfDef(d)).Cast<T>();
+            return defs.SelectMany(d => this.map.listerThings.ThingsOfDef(d)).SelectMany(t => Option(t as T));
         }
     }
 }
