@@ -199,6 +199,7 @@ namespace NR_AutoMachineTool
                 newProp.overlightRadius = g.Props.overlightRadius;
                 g.props = newProp;
             });
+            this.allTargetCellsCache = null;
             this.ChangeGlow();
             if (this.Extension.TargetCellResolver.NeedClearingCache)
             {
