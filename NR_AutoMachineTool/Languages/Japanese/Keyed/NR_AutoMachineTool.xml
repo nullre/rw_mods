@@ -47,6 +47,10 @@
   <NR_AutoMachineTool_Conveyor.OutputItemFilterText>出力する方向のアイテムのフィルタを設定します。</NR_AutoMachineTool_Conveyor.OutputItemFilterText>
   <NR_AutoMachineTool_Conveyor.OutputItemFilterNotOutputDestination> (未接続)</NR_AutoMachineTool_Conveyor.OutputItemFilterNotOutputDestination>
   <NR_AutoMachineTool_Conveyor.MustInWall>壁の中に設置しなければなりません。</NR_AutoMachineTool_Conveyor.MustInWall>
+  <NR_AutoMachineTool_Conveyor.DirectionPriority.VeryHigh>最高</NR_AutoMachineTool_Conveyor.DirectionPriority.VeryHigh>
+  <NR_AutoMachineTool_Conveyor.DirectionPriority.High>高い</NR_AutoMachineTool_Conveyor.DirectionPriority.High>
+  <NR_AutoMachineTool_Conveyor.DirectionPriority.Normal>通常</NR_AutoMachineTool_Conveyor.DirectionPriority.Normal>
+  <NR_AutoMachineTool_Conveyor.DirectionPriority.Low>低い</NR_AutoMachineTool_Conveyor.DirectionPriority.Low>
   
   <!-- ItemPuller -->
   <NR_AutoMachineTool_Puller.OutputItemFilterTab>フィルタ</NR_AutoMachineTool_Puller.OutputItemFilterTab>
@@ -78,7 +82,8 @@
   <NR_AutoMachineTool.EntierMap>マップ全体</NR_AutoMachineTool.EntierMap>
   <NR_AutoMachineTool.CountZone>在庫数確認ゾーン</NR_AutoMachineTool.CountZone>
   <NR_AutoMachineTool.Count>個数</NR_AutoMachineTool.Count>
-  
+  <NR_AutoMachineTool.Priority>優先度</NR_AutoMachineTool.Priority>
+
   <!-- Slaughterhouse -->
   <NR_AutoMachineTool.SlaughterhouseSetting.TabName>設定</NR_AutoMachineTool.SlaughterhouseSetting.TabName>
   <NR_AutoMachineTool.SlaughterhouseSetting.Description>屠畜対象の設定</NR_AutoMachineTool.SlaughterhouseSetting.Description>
@@ -112,5 +117,5 @@
   <NR_AutoMachineTool.MaterialMachine.RecipeEnergyDescription>{0}のエネルギーとなる物質が必要</NR_AutoMachineTool.MaterialMachine.RecipeEnergyDescription>
   <NR_AutoMachineTool.MaterialMachine.RecipeScanMaterialLabel>スキャンして変換レシピ登録</NR_AutoMachineTool.MaterialMachine.RecipeScanMaterialLabel>
   <NR_AutoMachineTool.MaterialMachine.RecipeToEnergyJobName>スキャンする</NR_AutoMachineTool.MaterialMachine.RecipeToEnergyJobName>
-  
+
 </LanguageData>

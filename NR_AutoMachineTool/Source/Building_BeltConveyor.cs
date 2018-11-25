@@ -14,6 +14,22 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
+    public enum DirectionPriority
+    {
+        VeryHigh = 4,
+        High = 3,
+        Normal = 2,
+        Low = 1
+    }
+
+    public static class DirectionPriorityExtension
+    {
+        public static string ToText(this DirectionPriority pri)
+        {
+            return ("NR_AutoMachineTool_Conveyor.DirectionPriority." + pri.ToString()).Translate();
+        }
+    }
+
     class Building_BeltConveyor : Building_BaseMachine<Thing>, IBeltConbeyorLinkable
     {
         public Building_BeltConveyor()
@@ -23,12 +39,16 @@ namespace NR_AutoMachineTool
 
         private Rot4 dest = default(Rot4);
         private Dictionary<Rot4, ThingFilter> filters = new Dictionary<Rot4, ThingFilter>();
+        private Dictionary<Rot4, DirectionPriority> priorities = new Rot4[] { Rot4.North, Rot4.East, Rot4.South, Rot4.West }.ToDictionary(d => d, _ => DirectionPriority.Normal);
         public static float supplyPower = 10f;
 
         [Unsaved]
         private int round = 0;
         [Unsaved]
         private List<Rot4> outputRot = new List<Rot4>();
+
+        [Unsaved]
+        private bool stuck = false;
 
         public IEnumerable<Rot4> OutputRots => this.outputRot;
 
@@ -53,17 +73,25 @@ namespace NR_AutoMachineTool
         }
 
         public Dictionary<Rot4, ThingFilter> Filters { get => this.filters; }
+        public Dictionary<Rot4, DirectionPriority> Priorities { get => this.priorities; }
+
+        public bool IsStuck => this.stuck;
 
         public override void ExposeData()
         {
             base.ExposeData();
 
-            Scribe_Values.Look<float>(ref supplyPower, "supplyPower", 10f);
-            Scribe_Values.Look<Rot4>(ref this.dest, "dest");
-            Scribe_Collections.Look<Rot4, ThingFilter>(ref this.filters, "filters", LookMode.Value, LookMode.Deep);
-            if(this.filters == null)
+            Scribe_Values.Look(ref supplyPower, "supplyPower", 10f);
+            Scribe_Values.Look(ref this.dest, "dest");
+            Scribe_Collections.Look(ref this.filters, "filters", LookMode.Value, LookMode.Deep);
+            if (this.filters == null)
             {
                 this.filters = new Dictionary<Rot4, ThingFilter>();
+            }
+            Scribe_Collections.Look(ref this.priorities, "priorities", LookMode.Value, LookMode.Value);
+            if (this.priorities == null)
+            {
+                this.priorities = new Rot4[] { Rot4.North, Rot4.East, Rot4.South, Rot4.West }.ToDictionary(d => d, _ => DirectionPriority.Normal);
             }
         }
 
@@ -154,7 +182,7 @@ namespace NR_AutoMachineTool
 
         private Vector3 CarryPosition()
         {
-            var workLeft = this.stuck ? 0.5f : Mathf.Clamp01(this.WorkLeft);
+            var workLeft = this.stuck ? Mathf.Clamp(Mathf.Abs(this.WorkLeft), 0f, 0.5f) : Mathf.Clamp01(this.WorkLeft);
             return (this.dest.FacingCell.ToVector3() * (1f - workLeft)) + this.Position.ToVector3() + new Vector3(0.5f, 10f, 0.5f);
         }
         
@@ -188,25 +216,32 @@ namespace NR_AutoMachineTool
 
         private Rot4 Destination(Thing t, bool doRotate)
         {
+            var conveyors = this.OutputBeltConveyor();
             var allowed = this.filters
                 .Where(f => f.Value.Allows(t.def)).Select(f => f.Key)
                 .ToList();
-            var placable = allowed.Where(r => this.OutputBeltConveyor().Where(l => l.Position == this.Position + r.FacingCell).FirstOption().Select(b => b.ReceivableNow(this.IsUnderground, t)).GetOrDefault(true))
+            var placeable = allowed.Where(r => conveyors.Where(l => l.Position == this.Position + r.FacingCell).FirstOption().Select(b => b.ReceivableNow(this.IsUnderground, t) || !b.IsStuck).GetOrDefault(true))
                 .ToList();
 
-            if (placable.Count == 0)
+            if (placeable.Count == 0)
             {
                 if(allowed.Count == 0)
                 {
-                    return this.Rotation;
+                    placeable = this.OutputRots.Where(r => conveyors.Where(l => l.Position == this.Position + r.FacingCell).FirstOption().Select(b => b.ReceivableNow(this.IsUnderground, t) || !b.IsStuck).GetOrDefault(true))
+                        .ToList();
                 }
-                placable = allowed;
+                else
+                {
+                    placeable = allowed;
+                }
             }
+            var maxPri = placeable.Select(r => this.priorities[r]).Max();
+            var dests = placeable.Where(r => this.priorities[r] == maxPri).ToList();
 
-            if (placable.Count <= this.round) this.round = 0;
+            if (dests.Count <= this.round) this.round = 0;
             var index = this.round;
             if (doRotate) this.round++;
-            return placable.ElementAt(index);
+            return dests.ElementAt(index);
         }
 
         private bool SendableConveyor(Thing t, out Rot4 dir)
@@ -260,9 +295,6 @@ namespace NR_AutoMachineTool
             this.stuck = true;
             return false;
         }
-
-        [Unsaved]
-        private bool stuck = false;
 
         public void Link(IBeltConbeyorLinkable link)
         {

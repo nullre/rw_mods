@@ -17,5 +17,6 @@ namespace NR_AutoMachineTool
         bool ReceiveThing(bool underground, Thing thing);
         bool IsUnderground { get; }
         IEnumerable<Rot4> OutputRots { get; }
+        bool IsStuck { get; }
     }
 }

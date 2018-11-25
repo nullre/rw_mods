@@ -21,6 +21,7 @@ namespace NR_AutoMachineTool
         public override float SupplyPowerForSpeed { get => Building_BeltConveyor.supplyPower; set => Building_BeltConveyor.supplyPower = (int)value; }
         public override int MinPowerForSpeed { get => this.Setting.beltConveyorSetting.minSupplyPowerForSpeed; }
         public override int MaxPowerForSpeed { get => this.Setting.beltConveyorSetting.maxSupplyPowerForSpeed; }
+        public bool IsStuck => this.stuck;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
@@ -90,7 +91,7 @@ namespace NR_AutoMachineTool
 
         private Vector3 CarryPosition()
         {
-            var workLeft = this.stuck ? 0.8f : Mathf.Clamp01(this.WorkLeft);
+            var workLeft = this.stuck ? Mathf.Clamp(Mathf.Abs(this.WorkLeft), 0f, 0.8f) : Mathf.Clamp01(this.WorkLeft);
             return (this.Rotation.FacingCell.ToVector3() * (1f - workLeft)) + this.Position.ToVector3() + new Vector3(0.5f, 10f, 0.5f);
         }
 

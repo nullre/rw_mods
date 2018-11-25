@@ -47,6 +47,10 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool_Conveyor.OutputItemFilterText>Set the filter for items in the output direction. direction</NR_AutoMachineTool_Conveyor.OutputItemFilterText>
   <NR_AutoMachineTool_Conveyor.OutputItemFilterNotOutputDestination> (Disconnected)</NR_AutoMachineTool_Conveyor.OutputItemFilterNotOutputDestination>
   <NR_AutoMachineTool_Conveyor.MustInWall>It must be installed in the wall.</NR_AutoMachineTool_Conveyor.MustInWall>
+  <NR_AutoMachineTool_Conveyor.DirectionPriority.VeryHigh>very high</NR_AutoMachineTool_Conveyor.DirectionPriority.VeryHigh>
+  <NR_AutoMachineTool_Conveyor.DirectionPriority.High>high</NR_AutoMachineTool_Conveyor.DirectionPriority.High>
+  <NR_AutoMachineTool_Conveyor.DirectionPriority.Normal>normal</NR_AutoMachineTool_Conveyor.DirectionPriority.Normal>
+  <NR_AutoMachineTool_Conveyor.DirectionPriority.Low>low</NR_AutoMachineTool_Conveyor.DirectionPriority.Low>
 
   <!-- ItemPuller -->
   <NR_AutoMachineTool_Puller.OutputItemFilterTab>Filter</NR_AutoMachineTool_Puller.OutputItemFilterTab>
@@ -78,6 +82,7 @@ Even if the output destination is in the stockpiling zone, the finished product 
   <NR_AutoMachineTool.EntierMap>Entier map</NR_AutoMachineTool.EntierMap>
   <NR_AutoMachineTool.CountZone>Stock count zone</NR_AutoMachineTool.CountZone>
   <NR_AutoMachineTool.Count>count</NR_AutoMachineTool.Count>
+  <NR_AutoMachineTool.Priority>priority</NR_AutoMachineTool.Priority>
 
   <!-- Slaughterhouse -->
   <NR_AutoMachineTool.SlaughterhouseSetting.TabName>Setting</NR_AutoMachineTool.SlaughterhouseSetting.TabName>

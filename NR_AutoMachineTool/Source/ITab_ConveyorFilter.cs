@@ -99,6 +99,16 @@ namespace NR_AutoMachineTool
             list.Gap();
 
             rect = list.GetRect(30f);
+            Widgets.Label(rect.LeftHalf(), "NR_AutoMachineTool.Priority".Translate());
+            if (Widgets.ButtonText(rect.RightHalf(), this.Conveyor.Priorities[dic.Where(kv => kv.Value).First().Key].ToText()))
+            {
+                Find.WindowStack.Add(new FloatMenu(GetEnumValues<DirectionPriority>().OrderByDescending(k => (int)k).Select(d => new FloatMenuOption(d.ToText(),
+                    () => this.Conveyor.Priorities[dic.Where(kv => kv.Value).First().Key] = d
+                    )).ToList()));
+            }
+            list.Gap();
+
+            rect = list.GetRect(30f);
             if (Widgets.ButtonText(rect, "NR_AutoMachineTool_Puller.FilterCopyFrom".Translate()))
             {
                 Find.WindowStack.Add(new FloatMenu(groups.Select(g => new FloatMenuOption(g.parent.SlotYielderLabel(),

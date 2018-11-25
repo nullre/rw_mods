@@ -179,6 +179,11 @@ namespace NR_AutoMachineTool.Utilities
             return l;
         }
 
+        public static IEnumerable<T> GetEnumValues<T>() where T : struct
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>();
+        }
+
         #region for rimworld
 #if DEBUG
         public static void L(object obj) { Log.Message(obj == null ? "null" : obj.ToString()); }
