@@ -54,6 +54,11 @@ namespace NR_AutoMachineTool
                 this.rotSelectedDic[this.Conveyor] = newDic;
             }
             Dictionary<Rot4, bool> dic = this.rotSelectedDic[this.Conveyor];
+            if (!this.Conveyor.Filters.ContainsKey(dic.Where(kv => kv.Value).First().Key))
+            {
+                new Dictionary<Rot4, bool>(dic).ForEach(x => dic[x.Key] = false);
+                dic[this.Conveyor.Filters.First().Key] = true;
+            }
             Listing_Standard list = new Listing_Standard();
             Rect inRect = new Rect(0f, 0f, WinSize.x, WinSize.y).ContractedBy(10f);
 
@@ -98,12 +103,19 @@ namespace NR_AutoMachineTool
             });
             list.Gap();
 
+            var selectedRotOpt = dic.Where(kv => kv.Value).Select(kv => kv.Key).FirstOption();
+            if (!selectedRotOpt.HasValue)
+            {
+                list.End();
+                return;
+            }
+            var selectedRot = selectedRotOpt.Value;
             rect = list.GetRect(30f);
             Widgets.Label(rect.LeftHalf(), "NR_AutoMachineTool.Priority".Translate());
-            if (Widgets.ButtonText(rect.RightHalf(), this.Conveyor.Priorities[dic.Where(kv => kv.Value).First().Key].ToText()))
+            if (Widgets.ButtonText(rect.RightHalf(), this.Conveyor.Priorities[selectedRot].ToText()))
             {
                 Find.WindowStack.Add(new FloatMenu(GetEnumValues<DirectionPriority>().OrderByDescending(k => (int)k).Select(d => new FloatMenuOption(d.ToText(),
-                    () => this.Conveyor.Priorities[dic.Where(kv => kv.Value).First().Key] = d
+                    () => this.Conveyor.Priorities[selectedRot] = d
                     )).ToList()));
             }
             list.Gap();
@@ -112,7 +124,7 @@ namespace NR_AutoMachineTool
             if (Widgets.ButtonText(rect, "NR_AutoMachineTool_Puller.FilterCopyFrom".Translate()))
             {
                 Find.WindowStack.Add(new FloatMenu(groups.Select(g => new FloatMenuOption(g.parent.SlotYielderLabel(),
-                    () => this.Conveyor.Filters[dic.Where(kv => kv.Value).First().Key].CopyAllowancesFrom(g.Settings.filter)
+                    () => this.Conveyor.Filters[selectedRot].CopyAllowancesFrom(g.Settings.filter)
                     )).ToList()));
             }
             list.Gap();
@@ -120,7 +132,7 @@ namespace NR_AutoMachineTool
             list.End();
             var height = list.CurHeight;
 
-            ThingFilterUI.DoThingFilterConfigWindow(inRect.BottomPartPixels(inRect.height - height), ref this.scrollPosition, this.Conveyor.Filters[dic.Where(kv => kv.Value).First().Key]);
+            ThingFilterUI.DoThingFilterConfigWindow(inRect.BottomPartPixels(inRect.height - height), ref this.scrollPosition, this.Conveyor.Filters[selectedRot]);
         }
     }
 }
