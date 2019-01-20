@@ -22,7 +22,7 @@ namespace NR_AutoMachineTool
         {
             this.Setting = this.GetSettings<ModSetting_AutoMachineTool>();
 
-            var hopmAsm = LoadedModManager.RunningMods.Where(m => m.Name.StartsWith("Harvest Organs Post Mortem - 2.0")).SelectMany(m => m.assemblies.loadedAssemblies)
+            var hopmAsm = LoadedModManager.RunningMods.Where(m => m.Name.StartsWith("Harvest Organs Post Mortem -")).SelectMany(m => m.assemblies.loadedAssemblies)
                 .Where(a => a.GetType("Autopsy.Mod") != null)
                 .FirstOption();
 
@@ -51,11 +51,12 @@ namespace NR_AutoMachineTool
             private Type recipeInfoType;
             private Type settingHandlerType;
 
-            private string Constants_AutopsyBasic;
-            private string Constants_AutopsyAdvanced;
-            private string Constants_AutopsyGlitterworld;
-            private string Constants_AutopsyAnimal;
+            private RecipeDef Recipe_AutopsyBasic;
+            private RecipeDef Recipe_AutopsyAdvanced;
+            private RecipeDef Recipe_AutopsyGlitterworld;
+            private RecipeDef Recipe_AutopsyAnimal;
             private MethodInfo traverseBody;
+            private Type autopsyRecipeDefsType;
 
             private static Dictionary<string, FieldInfo> fields = new Dictionary<string, FieldInfo>();
 
@@ -69,19 +70,13 @@ namespace NR_AutoMachineTool
 
                     hopm.modType = hopmAsm.GetType("Autopsy.Mod");
                     hopm.settingHandlerType = hugsAsm.GetType("HugsLib.Settings.SettingHandle`1");
-
                     hopm.recipeInfoType = hopmAsm.GetType("Autopsy.RecipeInfo");
 
-                    var utilType = hopmAsm.GetType("Autopsy.NewMedicaRecipesUtility");
+                    var utilType = hopmAsm.GetType("Autopsy.NewMedicalRecipesUtility");
                     var traverseBody = utilType.GetMethod("TraverseBody", new Type[]{ hopm.recipeInfoType, typeof(Corpse), typeof(float) });
                     hopm.traverseBody = traverseBody;
 
-
-                    var contentType = hopmAsm.GetType("Autopsy.Constants");
-                    hopm.Constants_AutopsyBasic = (string)contentType.GetField("AutopsyBasic", BindingFlags.Static | BindingFlags.Public).GetValue(null);
-                    hopm.Constants_AutopsyAdvanced = (string)contentType.GetField("AutopsyAdvanced", BindingFlags.Static | BindingFlags.Public).GetValue(null);
-                    hopm.Constants_AutopsyGlitterworld = (string)contentType.GetField("AutopsyGlitterworld", BindingFlags.Static | BindingFlags.Public).GetValue(null);
-                    hopm.Constants_AutopsyAnimal = (string)contentType.GetField("AutopsyAnimal", BindingFlags.Static | BindingFlags.Public).GetValue(null);
+                    hopm.autopsyRecipeDefsType = hopmAsm.GetType("Autopsy.Util.AutopsyRecipeDefs");
 
                     return Just(hopm);
                 }
@@ -94,6 +89,36 @@ namespace NR_AutoMachineTool
 
             private HopmMod()
             {
+            }
+
+            private bool initializedAtRuntime = false;
+
+            private void InitializeAtRuntime()
+            {
+                if (!this.initializedAtRuntime)
+                {
+                    this.Recipe_AutopsyBasic = (RecipeDef)this.autopsyRecipeDefsType.GetField("AutopsyBasic", BindingFlags.Static | BindingFlags.Public).GetValue(null);
+                    this.Recipe_AutopsyAdvanced = (RecipeDef)this.autopsyRecipeDefsType.GetField("AutopsyAdvanced", BindingFlags.Static | BindingFlags.Public).GetValue(null);
+                    this.Recipe_AutopsyGlitterworld = (RecipeDef)this.autopsyRecipeDefsType.GetField("AutopsyGlitterworld", BindingFlags.Static | BindingFlags.Public).GetValue(null);
+                    this.Recipe_AutopsyAnimal = (RecipeDef)this.autopsyRecipeDefsType.GetField("AutopsyAnimal", BindingFlags.Static | BindingFlags.Public).GetValue(null);
+                    if (this.Recipe_AutopsyBasic == null)
+                    {
+                        throw new FieldAccessException("Autopsy.Util.AutopsyRecipeDefs.AutopsyBasic へのアクセスに失敗.");
+                    }
+                    if (this.Recipe_AutopsyAdvanced == null)
+                    {
+                        throw new FieldAccessException("Autopsy.Util.AutopsyRecipeDefs.AutopsyAdvanced へのアクセスに失敗.");
+                    }
+                    if (this.Recipe_AutopsyGlitterworld == null)
+                    {
+                        throw new FieldAccessException("Autopsy.Util.AutopsyRecipeDefs.AutopsyGlitterworld へのアクセスに失敗.");
+                    }
+                    if (this.Recipe_AutopsyAnimal == null)
+                    {
+                        throw new FieldAccessException("Autopsy.Util.AutopsyRecipeDefs.AutopsyAnimal へのアクセスに失敗.");
+                    }
+                }
+                this.initializedAtRuntime = true;
             }
 
             private object GetValue(string fieldName)
@@ -110,40 +135,48 @@ namespace NR_AutoMachineTool
             public void Postfix_MakeRecipeProducts(ref IEnumerable<Thing> __result, RecipeDef recipeDef, float skillChance, List<Thing> ingredients)
             {
                 string prefix = null;
-                if (recipeDef.defName == Constants_AutopsyBasic)
+                InitializeAtRuntime();
+                try
                 {
-                    prefix = "Basic";
-                }
-                else if (recipeDef.defName == Constants_AutopsyAdvanced)
-                {
-                    prefix = "Advanced";
-                }
-                else if (recipeDef.defName == Constants_AutopsyGlitterworld)
-                {
-                    prefix = "Glitter";
-                }
-                else if (recipeDef.defName == Constants_AutopsyAnimal)
-                {
-                    prefix = "Animal";
-                }
-                if (prefix != null)
-                {
-                    var maxChance = prefix == "Animal" ? 0f : GetValue(prefix + "AutopsyOrganMaxChance");
-                    var age = prefix == "Animal" ? 0 : (int)GetValue(prefix + "AutopsyCorpseAge") * 2500;
-                    var frozen = prefix == "Animal" ? 0f : GetValue(prefix + "AutopsyFrozenDecay");
-                    var recipeSettings = Activator.CreateInstance(recipeInfoType,
-                        maxChance,
-                        age,
-                        GetValue(prefix + "AutopsyBionicMaxChance"),
-                        GetValue(prefix + "AutopsyMaxNumberOfOrgans"),
-                        frozen);
-                    skillChance *= (float)GetValue(prefix + "AutopsyMedicalSkillScaling");
+                    if (recipeDef.Equals(Recipe_AutopsyBasic))
+                    {
+                        prefix = "Basic";
+                    }
+                    else if (recipeDef.Equals(Recipe_AutopsyAdvanced))
+                    {
+                        prefix = "Advanced";
+                    }
+                    else if (recipeDef.Equals(Recipe_AutopsyGlitterworld))
+                    {
+                        prefix = "Glitter";
+                    }
+                    else if (recipeDef.Equals(Recipe_AutopsyAnimal))
+                    {
+                        prefix = "Animal";
+                    }
+                    if (prefix != null)
+                    {
+                        var maxChance = prefix == "Animal" ? 0f : GetValue(prefix + "AutopsyOrganMaxChance");
+                        var age = prefix == "Animal" ? 0 : (int)GetValue(prefix + "AutopsyCorpseAge") * 2500;
+                        var frozen = prefix == "Animal" ? 0f : GetValue(prefix + "AutopsyFrozenDecay");
+                        var recipeSettings = Activator.CreateInstance(recipeInfoType,
+                            maxChance,
+                            age,
+                            GetValue(prefix + "AutopsyBionicMaxChance"),
+                            GetValue(prefix + "AutopsyMaxNumberOfOrgans"),
+                            frozen);
+                        skillChance *= (float)GetValue(prefix + "AutopsyMedicalSkillScaling");
 
-                    List<Thing> result = __result as List<Thing> ?? __result.ToList();
-                    foreach (Corpse corpse in ingredients.OfType<Corpse>())
-                        result.AddRange((IEnumerable<Thing>)this.traverseBody.Invoke(null, new object[] { recipeSettings, corpse, skillChance }));
+                        List<Thing> result = __result as List<Thing> ?? __result.ToList();
+                        foreach (Corpse corpse in ingredients.OfType<Corpse>())
+                            result.AddRange((IEnumerable<Thing>)this.traverseBody.Invoke(null, new object[] { recipeSettings, corpse, skillChance }));
 
-                    __result = result;
+                        __result = result;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.ErrorOnce("HOPMの実行時エラー. " + e.ToString(), 1660882676);
                 }
             }
         }
