@@ -298,10 +298,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>md "$(ProjectDir)Assemblies"
-copy /Y "$(TargetPath)" "$(ProjectDir)Assemblies"
+    <PostBuildEvent>md "$(ProjectDir)1.0\Assemblies"
+copy /Y "$(TargetPath)" "$(ProjectDir)1.0\Assemblies"
 rd /s /q "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)"
-xcopy /Y /I /E "$(ProjectDir)Assemblies" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Assemblies"
+md "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\1.0"
+xcopy /Y /I /E "$(ProjectDir)1.0\Assemblies" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\1.0\Assemblies"
 xcopy /Y /I /E "$(ProjectDir)Defs" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Defs"
 xcopy /Y /I /E "$(ProjectDir)About" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\About"
 xcopy /Y /I /E "$(ProjectDir)Textures" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Textures"
