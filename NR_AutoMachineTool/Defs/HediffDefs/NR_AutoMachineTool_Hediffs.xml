@@ -4,6 +4,7 @@
   <HediffDef ParentName="DiseaseBase">
     <defName>NR_AutoMachineTool_Hediff_Unconsciousness</defName>
     <label>unconsciousness</label>
+    <description>unconsciousness.</description>
     <comps>
       <li Class="HediffCompProperties_Disappears">
         <disappearsAfterTicks>
