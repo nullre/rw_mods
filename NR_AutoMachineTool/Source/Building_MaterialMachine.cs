@@ -58,7 +58,7 @@ namespace NR_AutoMachineTool
                 if(DefDatabase<RecipeDef>.GetNamedSilentFail(defName) == null)
                 {
                     var count = Mathf.CeilToInt(GetEnergyAmount(this.thing, this.stuff) * prodCount / loss);
-                    var label = "NR_AutoMachineTool.MaterialMachine.RecipeMaterializeLabel".Translate(this.thing.label, this.stuff == null ? "" : "NR_AutoMachineTool.MaterialMachine.RecipeMaterializeStuff".Translate(this.stuff.label), count, prodCount);
+                    var label = "NR_AutoMachineTool.MaterialMachine.RecipeMaterializeLabel".Translate(this.thing.label, this.stuff == null ? "" : (string)"NR_AutoMachineTool.MaterialMachine.RecipeMaterializeStuff".Translate(this.stuff.label), count, prodCount);
                     var jobName = "NR_AutoMachineTool.MaterialMachine.RecipeMaterializeJobName".Translate(this.thing.label);
                     var recipe = CreateMaterializeRecipeDef(defName, label, jobName, workAmount, count, this.thing, this.prodCount, this.stuff);
                     DefDatabase<RecipeDef>.Add(recipe);

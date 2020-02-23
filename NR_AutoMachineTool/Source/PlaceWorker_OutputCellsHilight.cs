@@ -15,7 +15,7 @@ namespace NR_AutoMachineTool
 {
     class PlaceWorker_OutputCellsHilight : PlaceWorker
     {
-        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol, Thing thing = null)
         {
             Map map = Find.CurrentMap;
             var ext = def.GetModExtension<ModExtension_AutoMachineTool>();

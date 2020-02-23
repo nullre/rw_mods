@@ -439,7 +439,7 @@ namespace NR_AutoMachineTool
                 .ToList();
         }
 
-        private Option<Tuple<Bill, List<ThingAmount>>> WorkableBill(List<Thing> consumable)
+        private Option<NR_AutoMachineTool.Utilities.Tuple<Bill, List<ThingAmount>>> WorkableBill(List<Thing> consumable)
         {
             return this.workTable
                 .Where(t => t.CurrentlyUsableForBills())
@@ -585,7 +585,7 @@ namespace NR_AutoMachineTool
                     this.outputIndex++;
                 }
             };
-            direction.activateSound = SoundDefOf.Designate_AreaAdd;
+            direction.activateSound = SoundDefOf.Designate_DragAreaAdd;
             direction.defaultLabel = "NR_AutoMachineTool.SelectOutputDirectionLabel".Translate();
             direction.defaultDesc = "NR_AutoMachineTool.SelectOutputDirectionDesc".Translate();
             direction.icon = RS.OutputDirectionIcon;

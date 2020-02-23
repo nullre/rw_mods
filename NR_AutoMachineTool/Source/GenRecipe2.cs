@@ -195,7 +195,7 @@ namespace NR_AutoMachineTool
             }
             if (corpse.InnerPawn.RaceProps.BloodDef != null)
             {
-                FilthMaker.MakeFilth(worker.Position, worker.Map, corpse.InnerPawn.RaceProps.BloodDef, corpse.InnerPawn.LabelIndefinite(), 1);
+                FilthMaker.TryMakeFilth(worker.Position, worker.Map, corpse.InnerPawn.RaceProps.BloodDef, corpse.InnerPawn.LabelIndefinite(), 1);
             }
         }
     }

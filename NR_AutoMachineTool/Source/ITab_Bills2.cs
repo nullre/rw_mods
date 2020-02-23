@@ -125,7 +125,7 @@ namespace NR_AutoMachineTool
                             }
                             if (TutorSystem.TutorialMode)
                             {
-                                TutorSystem.Notify_Event("AddBill-" + recipe.LabelCap);
+                                TutorSystem.Notify_Event("AddBill-" + (string)recipe.LabelCap);
                             }
                         }, MenuOptionPriority.Default, null, null, deletable ? 58f : 29f, (Rect r) =>
                         {
