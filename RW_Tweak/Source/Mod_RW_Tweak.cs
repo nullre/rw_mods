@@ -5,7 +5,7 @@ using System.Text;
 using System.Reflection;
 using UnityEngine;
 using Verse;
-using Harmony;
+using HarmonyLib;
 
 namespace RW_Tweak
 {
@@ -15,7 +15,7 @@ namespace RW_Tweak
 
         public Mod_RW_Tweak(ModContentPack content) : base(content)
         {
-            HarmonyInstance.Create("Mod_RW_Tweak").PatchAll(Assembly.GetExecutingAssembly());
+            new Harmony("Mod_RW_Tweak").PatchAll(Assembly.GetExecutingAssembly());
             this.Setting = this.GetSettings<ModSetting_RW_Tweak>();
         }
 
