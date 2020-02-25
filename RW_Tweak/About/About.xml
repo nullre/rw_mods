@@ -2,7 +2,10 @@
 <ModMetaData>
   <name>RW_Tweak</name>
   <author>nullre</author>
-  <targetVersion>1.0.0</targetVersion>
+  <packageId>Nullre.RWTweak</packageId>
+  <supportedVersions>
+    <li>1.1</li>
+  </supportedVersions>
   <description>
     This MOD contains Harmony https://github.com/pardeike/Harmony
     Harmony License https://github.com/pardeike/Harmony/blob/master/LICENSE
