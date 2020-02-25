@@ -40,11 +40,12 @@ namespace NR_AutoMachineTool
         protected override bool TryStartWorking(out Thing target, out float workAmount)
         {
             var cells = this.GetAllTargetCells();
-            // Destroy DropPod, CrashedShipPart
+            // Destroy DropPod, CrashedShipPart, ShipChunk
             this.Map.listerThings.ThingsOfDef(ThingDefOf.DropPodIncoming).Cast<Skyfaller>()
                 .Where(f => cells.Contains(f.Position))
                 .Where(f => f.innerContainer.SelectMany(t => Option(t as IActiveDropPod)).SelectMany(d => d.Contents.innerContainer).Any(i => Faction.OfPlayer.HostileTo(i.Faction)))
                 .Concat(this.Map.listerThings.ThingsOfDef(ThingDefOf.CrashedShipPartIncoming).Cast<Skyfaller>())
+                .Concat(this.Map.listerThings.ThingsOfDef(ThingDefOf.ShipChunkIncoming).Cast<Skyfaller>())
                 .Concat(this.Map.listerThings.ThingsOfDef(ThingDefOf.MeteoriteIncoming).Cast<Skyfaller>())
                 .Where(f => cells.Contains(f.Position))
                 .Where(f => !workingSet.Contains(f))

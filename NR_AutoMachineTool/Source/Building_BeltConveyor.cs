@@ -108,11 +108,19 @@ namespace NR_AutoMachineTool
 
             if (!respawningAfterLoad)
             {
-                LinkTargetConveyor().ForEach(x =>
+                var conveyors = LinkTargetConveyor();
+                if (conveyors.Count == 0)
                 {
-                    x.Link(this);
-                    this.Link(x);
-                });
+                    this.FilterSetting();
+                }
+                else
+                {
+                    conveyors.ForEach(x =>
+                    {
+                        x.Link(this);
+                        this.Link(x);
+                    });
+                }
             }
         }
 
@@ -227,7 +235,12 @@ namespace NR_AutoMachineTool
             {
                 if(allowed.Count == 0)
                 {
-                    placeable = this.OutputRots.Where(r => conveyors.Where(l => l.Position == this.Position + r.FacingCell).FirstOption().Select(b => b.ReceivableNow(this.IsUnderground, t) || !b.IsStuck).GetOrDefault(true))
+                    placeable = this.OutputRots.Where(r =>
+                        conveyors
+                            .Where(l => l.Position == this.Position + r.FacingCell)
+                            .FirstOption()
+                            .Select(b => b.ReceivableNow(this.IsUnderground, t) || !b.IsStuck)
+                            .GetOrDefault(true))
                         .ToList();
                 }
                 else
@@ -235,6 +248,7 @@ namespace NR_AutoMachineTool
                     placeable = allowed;
                 }
             }
+
             var maxPri = placeable.Select(r => this.priorities[r]).Max();
             var dests = placeable.Where(r => this.priorities[r] == maxPri).ToList();
 
