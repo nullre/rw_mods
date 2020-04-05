@@ -74,21 +74,24 @@ namespace NR_AutoMachineTool
                 GUI.color = Color.gray;
                 Widgets.DrawTextureFitted(rect, TexButton.Paste, 1f);
                 GUI.color = Color.white;
-                TooltipHandler.TipRegion(rect, "PasteBillTip".Translate());
+                TooltipHandler.TipRegionByKey(rect, "PasteBillTip");
             }
             else if (!this.SelTable.def.AllRecipes.Contains(BillUtility.Clipboard.recipe) || !BillUtility.Clipboard.recipe.AvailableNow)
             {
                 GUI.color = Color.gray;
                 Widgets.DrawTextureFitted(rect, TexButton.Paste, 1f);
                 GUI.color = Color.white;
-                TooltipHandler.TipRegion(rect, "ClipboardBillNotAvailableHere".Translate());
+                TooltipHandler.TipRegionByKey(rect, "ClipboardBillNotAvailableHere");
             }
             else if (this.SelTable.billStack.Count >= 15)
             {
                 GUI.color = Color.gray;
                 Widgets.DrawTextureFitted(rect, TexButton.Paste, 1f);
                 GUI.color = Color.white;
-                TooltipHandler.TipRegion(rect, "PasteBillTip".Translate() + " (" + "PasteBillTip_LimitReached".Translate() + ")");
+                if (Mouse.IsOver(rect))
+                {
+                    TooltipHandler.TipRegion(rect, "PasteBillTip".Translate() + " (" + "PasteBillTip_LimitReached".Translate() + ")");
+                }
             }
             else
             {
@@ -99,7 +102,7 @@ namespace NR_AutoMachineTool
                     this.SelTable.billStack.AddBill(bill);
                     SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
                 }
-                TooltipHandler.TipRegion(rect, "PasteBillTip".Translate());
+                TooltipHandler.TipRegionByKey(rect, "PasteBillTip");
             }
             Rect rect2 = new Rect(0f, 0f, ITab_Bills2.WinSize.x, ITab_Bills2.WinSize.y).ContractedBy(10f);
             Func<List<FloatMenuOption>> recipeOptionsMaker = delegate
@@ -125,7 +128,7 @@ namespace NR_AutoMachineTool
                             }
                             if (TutorSystem.TutorialMode)
                             {
-                                TutorSystem.Notify_Event("AddBill-" + (string)recipe.LabelCap);
+                                TutorSystem.Notify_Event("AddBill-" + recipe.LabelCap.Resolve());
                             }
                         }, MenuOptionPriority.Default, null, null, deletable ? 58f : 29f, (Rect r) =>
                         {

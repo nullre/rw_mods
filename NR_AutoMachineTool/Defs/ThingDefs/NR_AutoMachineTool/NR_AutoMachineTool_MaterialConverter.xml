@@ -32,7 +32,9 @@
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
     </comps>
+    <!-- 何かしら設定していないと、ワーカーが割り当てられないので、ダミーのレシピを設定, 実際には実行時にオブジェクト毎に必要なものを出している. -->
     <recipes>
+      <li>NR_AutoMachineTool_DummyRecipe</li>
     </recipes>
 <!--
     <graphicData>
@@ -93,5 +95,9 @@
     </thingCategories>
     <stackLimit>500</stackLimit>
   </ThingDef>
-  
+
+  <RecipeDef>
+    <defName>NR_AutoMachineTool_DummyRecipe</defName>
+    <label>dummy</label>
+  </RecipeDef>
 </Defs>

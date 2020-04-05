@@ -206,6 +206,7 @@ namespace NR_AutoMachineTool
             r.efficiencyStat = StatDefOf.WorkToMake;
 
             r.workSkill = SkillDefOf.Crafting;
+            r.requiredGiverWorkType = WorkTypeDefOf.Crafting;
             r.workSkillLearnFactor = 0;
 
             return r;
