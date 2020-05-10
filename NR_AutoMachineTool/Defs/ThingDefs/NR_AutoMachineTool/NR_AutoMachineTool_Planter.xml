@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+  <!--==================== Dropdown Groups ====================-->
+  <DesignatorDropdownGroupDef>
+    <defName>NRPlanterGroup</defName>
+  </DesignatorDropdownGroupDef>
 
   <!-- base -->
   <ThingDef Name="Building_NR_AutoMachineTool_Planter_Base" Parent="BuildingBase" Abstract="True">
@@ -8,6 +12,7 @@
     <description>Place the Planter inside or near the agricultural zone.
 Planter starts planting plants in the agricultural zone within range.
 By default, Tier 1 is Skill Level 5, Tier 2 is Skill Level 10, and Tier 3 is Skill Level 20.(Skill level can be changed by MOD setting)</description>
+    <designatorDropdown>NRPlanterGroup</designatorDropdown>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>

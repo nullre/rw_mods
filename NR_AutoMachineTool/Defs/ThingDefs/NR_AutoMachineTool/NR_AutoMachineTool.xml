@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+  <!--==================== Dropdown Groups ====================-->
+  <DesignatorDropdownGroupDef>
+    <defName>NRAutoMachineGroup</defName>
+  </DesignatorDropdownGroupDef>
 
   <!-- base -->
   <ThingDef Name="Building_NR_AutoMachineTool_Base" Parent="BuildingBase" Abstract="True">
@@ -9,6 +13,7 @@
 Set the output destination of the finished product.
 The AutoMachineTool executes a requested craft that can be created with the material in the surrounding squares from the work table creation request.
 By default, Tier 1 is Skill Level 5, Tier 2 is Skill Level 10, and Tier 3 is Skill Level 20.(Skill level can be changed by MOD setting)</description>
+    <designatorDropdown>NRAutoMachineGroup</designatorDropdown>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
