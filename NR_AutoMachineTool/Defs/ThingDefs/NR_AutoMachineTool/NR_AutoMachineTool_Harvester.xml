@@ -1,12 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
+  <!--==================== Dropdown Groups ====================-->
+  <DesignatorDropdownGroupDef>
+    <defName>NRHarvesterGroup</defName>
+  </DesignatorDropdownGroupDef>
+
   <!-- base -->
   <ThingDef Name="Building_NR_AutoMachineTool_Harvester_Base" Parent="BuildingBase" Abstract="True">
     <defName>Building_NR_AutoMachineTool_Harvester_Base</defName>
     <thingClass>NR_AutoMachineTool.Building_Harvester</thingClass>
     <description>Place the Harvester inside or near the agricultural zone.
 Harvester starts harvesting plants in the agricultural zone within range.</description>
+    <designatorDropdown>NRHarvesterGroup</designatorDropdown>
     <altitudeLayer>Building</altitudeLayer>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
