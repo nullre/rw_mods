@@ -88,7 +88,7 @@ namespace NR_AutoMachineTool
 
         public abstract bool ShouldLinkWith(IntVec3 c, Thing parent);
 
-        public override void Print(SectionLayer layer, Thing thing)
+        public override void Print(SectionLayer layer, Thing thing, float extraRotation)
         {
             Material mat = this.LinkedDrawMatFrom(thing, thing.Position);
             Printer_Plane.PrintPlane(layer, thing.TrueCenter(), this.drawSize, mat);

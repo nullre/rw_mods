@@ -55,7 +55,7 @@ namespace NR_AutoMachineTool
             if (!working.Blighted)
             {
                 products = this.CreateThings(working.def.plant.harvestedThingDef, working.YieldNow());
-                working.PlantCollected();
+                working.PlantCollected(null);
             }
             else
             {

@@ -31,7 +31,7 @@ namespace NR_AutoMachineTool
 
         public override void CompPrintForAutomationGrid(SectionLayer layer)
         {
-            AutomationNetOverlayMats.GetOverlayGraphic((Building)this.parent).Print(layer, this.parent);
+            AutomationNetOverlayMats.GetOverlayGraphic((Building)this.parent).Print(layer, this.parent, 0);
         }
 
         public override void PostExposeData()

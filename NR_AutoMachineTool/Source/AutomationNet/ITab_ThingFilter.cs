@@ -9,6 +9,7 @@ using Verse.AI;
 using UnityEngine;
 using NR_AutoMachineTool.Utilities;
 using static NR_AutoMachineTool.Utilities.Ops;
+using static Verse.ThingFilterUI;
 
 namespace NR_AutoMachineTool
 {
@@ -82,8 +83,9 @@ namespace NR_AutoMachineTool
 
             list.End();
             var height = list.CurHeight;
-
-            ThingFilterUI.DoThingFilterConfigWindow(inRect.BottomPartPixels(inRect.height - height), ref this.scrollPosition, this.Machine.Filter);
+            UIState uistate = new UIState();
+            uistate.scrollPosition = this.scrollPosition;
+            ThingFilterUI.DoThingFilterConfigWindow(inRect.BottomPartPixels(inRect.height - height), uistate, this.Machine.Filter);
 
         }
     }

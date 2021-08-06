@@ -40,7 +40,7 @@ namespace NR_AutoMachineTool
 
         public virtual void CompPrintForAutomationGrid(SectionLayer layer)
         {
-            AutomationNetOverlayMats.LinkedOverlayGraphic.Print(layer, this.parent);
+            AutomationNetOverlayMats.LinkedOverlayGraphic.Print(layer, this.parent, 0);
         }
 
         public bool DestructWithPipe

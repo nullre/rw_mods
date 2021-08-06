@@ -194,7 +194,7 @@ namespace NR_AutoMachineTool.Utilities
             Action<Thing> effect = (item) =>
             {
                 item.def.soundDrop.PlayOneShot(item);
-                MoteMaker.ThrowDustPuff(item.Position, map, 0.5f);
+                //MoteMaker.ThrowDustPuff(item.Position, map, 0.5f);
             };
 
             Func<bool> absorb = () =>
@@ -262,7 +262,7 @@ namespace NR_AutoMachineTool.Utilities
             copy.limitToAllowedStuff = bill.limitToAllowedStuff;
             copy.paused = bill.paused;
             copy.pauseWhenSatisfied = bill.pauseWhenSatisfied;
-            copy.pawnRestriction = bill.pawnRestriction;
+            copy.SetPawnRestriction(bill.PawnRestriction);
             copy.qualityRange = bill.qualityRange;
             copy.recipe = bill.recipe;
             copy.repeatCount = bill.repeatCount;

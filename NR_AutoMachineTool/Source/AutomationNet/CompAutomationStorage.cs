@@ -24,7 +24,7 @@ namespace NR_AutoMachineTool
 
         public override void CompPrintForAutomationGrid(SectionLayer layer)
         {
-            AutomationNetOverlayMats.CompStorageOverlayGraphic.Print(layer, this.parent);
+            AutomationNetOverlayMats.CompStorageOverlayGraphic.Print(layer, this.parent, 0);
         }
     }
 }

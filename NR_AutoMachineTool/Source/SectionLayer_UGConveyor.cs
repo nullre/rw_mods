@@ -37,7 +37,7 @@ namespace NR_AutoMachineTool
             }
             if(Building_BeltConveyor.IsBeltConveyorDef(t.def) && Building_BeltConveyor.IsUndergroundDef(t.def))
             {
-                t.Graphic.Print(this, t);
+                t.Graphic.Print(this, t, 0);
             }
         }
     }

@@ -64,11 +64,11 @@ namespace NR_AutoMachineTool
             }
         }
 
-        public override void Print(SectionLayer layer, Thing thing)
+        public override void Print(SectionLayer layer, Thing thing, float extraRotation)
         {
             if (thing is Blueprint)
             {
-                base.Print(layer, thing);
+                base.Print(layer, thing, 0);
                 Printer_Plane.PrintPlane(layer, thing.TrueCenter() + new Vector3(0, 0.1f, 0), this.drawSize, this.arrow00, thing.Rotation.AsAngle);
             }
             else
@@ -79,7 +79,7 @@ namespace NR_AutoMachineTool
                     return;
                 }
 
-                base.Print(layer, thing);
+                base.Print(layer, thing, 0);
                 Printer_Plane.PrintPlane(layer, thing.TrueCenter() + new Vector3(0, 0.1f, 0), this.drawSize, this.arrow00, thing.Rotation.AsAngle);
                 if (conveyor != null)
                 {
