@@ -398,7 +398,7 @@ namespace NR_AutoMachineTool
                     CompColorable compColorable = this.unfinished.TryGetComp<CompColorable>();
                     if (compColorable != null)
                     {
-                        compColorable.Color = this.dominant.DrawColor;
+                        compColorable.SetColor(this.dominant.DrawColor);
                     }
                 }
                 return new { Result = true, WorkAmount = this.bill.recipe.WorkAmountTotal(this.bill.recipe.UsesUnfinishedThing ? this.dominant?.def : null) };
