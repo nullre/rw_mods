@@ -42,8 +42,8 @@ namespace NR_AutoMachineTool
         private List<SlotGroup> groups;
 
         public override bool IsVisible => Puller.Filter != null;
-        
-        private Vector2 scrollPosition;
+
+        private UIState uistate = new UIState();
 
         protected override void FillTab()
         {
@@ -66,9 +66,6 @@ namespace NR_AutoMachineTool
 
             list.End();
             var height = list.CurHeight;
-            UIState uistate = new UIState();
-            uistate.scrollPosition = this.scrollPosition;
-
             ThingFilterUI.DoThingFilterConfigWindow(inRect.BottomPartPixels(inRect.height - height), uistate, this.Puller.Filter);
 
         }

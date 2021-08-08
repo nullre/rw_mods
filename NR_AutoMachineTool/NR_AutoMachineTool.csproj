@@ -60,23 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\AutomationNet\AutomationNetOverlayMats.cs" />
-    <Compile Include="Source\AutomationNet\Building_ItemPusherComponent.cs" />
-    <Compile Include="Source\AutomationNet\Building_StorageComponent.cs" />
-    <Compile Include="Source\AutomationNet\Building_ExtinguishComponent.cs" />
-    <Compile Include="Source\AutomationNet\CompAutomationStorage.cs" />
-    <Compile Include="Source\AutomationNet\ITab_ThingFilter.cs" />
-    <Compile Include="Source\AutomationNet\OverlayDrawHandler_AutomationNet.cs" />
-    <Compile Include="Source\AutomationNet\PlaceWorker_AutomationNetComponent.cs" />
-    <Compile Include="Source\AutomationNet\PlaceWorker_MustFacingSlotGroup.cs" />
-    <Compile Include="Source\AutomationNet\PlaceWorker_HilightFacingSlotGroup.cs" />
-    <Compile Include="Source\AutomationNet\SectionLayer_AutomationNet.cs" />
-    <Compile Include="Source\AutomationNet\Building_BaseComponent.cs" />
-    <Compile Include="Source\AutomationNet\CompProperties_Automation.cs" />
     <Compile Include="Source\Bill_ProductionNotifyComplete.cs" />
     <Compile Include="Source\Building_AnimalResourceGatherer.cs" />
-    <Compile Include="Source\AutomationNet\Building_BaseAutomation.cs" />
-    <Compile Include="Source\AutomationNet\Building_EnergyGenerator.cs" />
     <Compile Include="Source\Building_AutoMachineTool.cs" />
     <Compile Include="Source\Building_BaseMachine.cs" />
     <Compile Include="Source\Building_Base.cs" />
@@ -90,8 +75,6 @@
     <Compile Include="Source\PlaceWorker_InputCellsHilight.cs" />
     <Compile Include="Source\Building_BeltConveyor.cs" />
     <Compile Include="Source\Building_BeltConveyorUGConnecter.cs" />
-    <Compile Include="Source\AutomationNet\Building_AutomationPipe.cs" />
-    <Compile Include="Source\AutomationNet\Building_RepairComponent.cs" />
     <Compile Include="Source\Building_Repairer.cs" />
     <Compile Include="Source\Building_Miner.cs" />
     <Compile Include="Source\Building_Hervester.cs" />
@@ -99,10 +82,6 @@
     <Compile Include="Source\Building_Cleaner.cs" />
     <Compile Include="Source\Building_Planter.cs" />
     <Compile Include="Source\Building_Slaughterhouse.cs" />
-    <Compile Include="Source\AutomationNet\CompAutomationEnergyTransmitter.cs" />
-    <Compile Include="Source\AutomationNet\CompAutomationEnergyConsumer.cs" />
-    <Compile Include="Source\AutomationNet\CompAutomationEnergySupplier.cs" />
-    <Compile Include="Source\AutomationNet\Graphic_LinkedAutomationNet.cs" />
     <Compile Include="Source\Graphic_Linked2.cs" />
     <Compile Include="Source\Graphic_WallLight.cs" />
     <Compile Include="Source\Graphic_LinkedConveyor.cs" />
@@ -114,11 +93,6 @@
     <Compile Include="Source\MapTickManager.cs" />
     <Compile Include="Source\MoteProgressBar2.cs" />
     <Compile Include="Source\PlaceWorker_OutputCellsHilight.cs" />
-    <Compile Include="Source\AutomationNet\CompAutomation.cs" />
-    <Compile Include="Source\AutomationNet\AutomationNetMaker.cs" />
-    <Compile Include="Source\AutomationNet\AutomationNetGrid.cs" />
-    <Compile Include="Source\AutomationNet\AutomationNetManager.cs" />
-    <Compile Include="Source\AutomationNet\AutomationNet.cs" />
     <Compile Include="Source\PlaceWorker_TargetCellsHilight.cs" />
     <Compile Include="Source\RS.cs" />
     <Compile Include="Source\SectionLayer_UGConveyor.cs" />
@@ -176,7 +150,6 @@
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_MaterialConverter.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_AutomationNet.xml" />
     <Content Include="Defs\ThingDefs\NR_AutoMachineTool\NR_AutoMachineTool_Generator.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -311,12 +284,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>md "$(ProjectDir)1.1\Assemblies"
-copy /Y "$(TargetPath)" "$(ProjectDir)1.1\Assemblies"
+    <PostBuildEvent>md "$(ProjectDir)Assemblies"
+copy /Y "$(TargetPath)" "$(ProjectDir)Assemblies"
 rd /s /q "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)"
-md "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\1.1"
-xcopy /Y /I /E "$(ProjectDir)1.0\Assemblies" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\1.0\Assemblies"
-xcopy /Y /I /E "$(ProjectDir)1.1\Assemblies" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\1.1\Assemblies"
+xcopy /Y /I /E "$(ProjectDir)Assemblies" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Assemblies"
 xcopy /Y /I /E "$(ProjectDir)Defs" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Defs"
 xcopy /Y /I /E "$(ProjectDir)About" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\About"
 xcopy /Y /I /E "$(ProjectDir)Textures" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(ProjectName)\Textures"

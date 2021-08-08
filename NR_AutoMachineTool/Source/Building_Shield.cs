@@ -81,7 +81,7 @@ namespace NR_AutoMachineTool
         {
             if (this.IsActive())
             {
-                //MoteMaker.ThrowLightningGlow(proj.DrawPos, this.Map, 1f);
+                FleckMaker.ThrowLightningGlow(proj.DrawPos, this.Map, 1f);
                 proj.Destroy();
             }
         }

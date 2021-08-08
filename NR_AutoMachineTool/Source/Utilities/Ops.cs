@@ -194,7 +194,7 @@ namespace NR_AutoMachineTool.Utilities
             Action<Thing> effect = (item) =>
             {
                 item.def.soundDrop.PlayOneShot(item);
-                //MoteMaker.ThrowDustPuff(item.Position, map, 0.5f);
+                FleckMaker.ThrowDustPuff(item.Position, map, 0.5f);
             };
 
             Func<bool> absorb = () =>

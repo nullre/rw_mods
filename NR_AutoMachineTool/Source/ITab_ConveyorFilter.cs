@@ -35,7 +35,7 @@ namespace NR_AutoMachineTool
 
         private Dictionary<Building_BeltConveyor, Dictionary<Rot4, bool>> rotSelectedDic = new Dictionary<Building_BeltConveyor, Dictionary<Rot4, bool>>();
 
-        private Vector2 scrollPosition;
+        private UIState uistate = new UIState();
 
         public override void OnOpen()
         {
@@ -132,8 +132,6 @@ namespace NR_AutoMachineTool
 
             list.End();
             var height = list.CurHeight;
-            UIState uistate = new UIState();
-            uistate.scrollPosition = this.scrollPosition;
             ThingFilterUI.DoThingFilterConfigWindow(inRect.BottomPartPixels(inRect.height - height), uistate, this.Conveyor.Filters[selectedRot]);
         }
     }

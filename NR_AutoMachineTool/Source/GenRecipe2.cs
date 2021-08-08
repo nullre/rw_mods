@@ -148,7 +148,7 @@ namespace NR_AutoMachineTool
             {
                 if (recipeDef.workSkill == null)
                 {
-                    Log.Error(recipeDef + " needs workSkill because it creates a product with a quality.", false);
+                    Log.Error(recipeDef + " needs workSkill because it creates a product with a quality.");
                 }
                 int level = worker.GetSkillLevel(recipeDef.workSkill);
                 QualityCategory qualityCategory = QualityUtility.GenerateQualityCreatedByPawn(level, false);

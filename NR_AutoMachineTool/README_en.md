@@ -339,6 +339,3 @@ Thanks to the producers of these mods.
 - Debug
 - I manage the image. . .
 - I want to improve my English. . .
-
-## Caution
-Redistribution of this MOD data is prohibited.
