@@ -12,7 +12,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Graphic_WallLight : Graphic_Link2<Graphic_WallLight>
+    public class Graphic_WallLight : Graphic_Linked2<Graphic_WallLight>
     {
         public Graphic_WallLight() : base()
         {

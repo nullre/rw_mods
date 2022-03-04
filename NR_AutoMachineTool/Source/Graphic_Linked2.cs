@@ -101,7 +101,7 @@ namespace NR_AutoMachineTool
         }
     }
 
-    public abstract class Graphic_Link2<T> : Graphic_Linked2 where T : Graphic_Linked2, new()
+    public abstract class Graphic_Linked2<T> : Graphic_Linked2 where T : Graphic_Linked2, new()
     {
         public override Graphic GetColoredVersion(Shader newShader, Color newColor, Color newColorTwo)
         {

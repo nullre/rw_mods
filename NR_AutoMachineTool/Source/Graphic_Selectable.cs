@@ -53,5 +53,10 @@ namespace NR_AutoMachineTool
 
             this.subGraphics.ForEach(g => Option(g.data).ForEach(d => d.drawRotated = true));
         }
+
+        public override Graphic GetColoredVersion(Shader newShader, Color newColor, Color newColorTwo)
+        {
+            return this.subGraphics[0].GetColoredVersion(newShader, newColor, newColorTwo);
+        }
     }
 }

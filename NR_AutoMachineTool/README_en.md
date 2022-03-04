@@ -339,3 +339,6 @@ Thanks to the producers of these mods.
 - Debug
 - I manage the image. . .
 - I want to improve my English. . .
+
+### License
+CC0

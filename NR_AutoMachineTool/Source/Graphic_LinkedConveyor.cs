@@ -12,7 +12,7 @@ using static NR_AutoMachineTool.Utilities.Ops;
 
 namespace NR_AutoMachineTool
 {
-    public class Graphic_LinkedConveyor : Graphic_Link2<Graphic_LinkedConveyor>
+    public class Graphic_LinkedConveyor : Graphic_Linked2<Graphic_LinkedConveyor>
     {
         public Graphic_LinkedConveyor() : base()
         {

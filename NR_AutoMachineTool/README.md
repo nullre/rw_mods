@@ -340,3 +340,5 @@ I'm Japanese. I can't understand English, sorry...
 - 画像を何とかする。。。
 - 英語を何とかしたい。。。
 
+### License
+CC0

@@ -1,5 +1,5 @@
 .vs/
 */obj/
 */bin/
-*.xcf
+*/xcf/
 *.dll
